@@ -10,7 +10,7 @@ export const DATE_FORMAT = "ddd MMM DD YYYY";
 
 // User profile information
 export const USER_NAME = "哈米d1ch";
-export const USER_SITE = "https://www.humid1ch.cn"; // At the same time, this is also the site retrieved by the i18n configuration.
+export const USER_SITE = "https://frosti-blogs.vercel.app"; // At the same time, this is also the site retrieved by the i18n configuration.
 export const USER_AVATAR = "/profile.png";
 
 // Server and transition settings
