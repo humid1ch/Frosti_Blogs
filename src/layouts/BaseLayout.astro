@@ -96,8 +96,10 @@ const { title, image } = Astro.props;
     const currentY = window.scrollY;
     const div = document.getElementById('back2topCard');
 
-    // 上滚显示，下滚隐藏
-    div.style.opacity = currentY < lastY ? 1 : 0;
+    if (!div)
+      return;
+
+    div.style.opacity = currentY < lastY ? '1' : '0';
     div.style.pointerEvents = currentY < lastY ? 'auto' : 'none';
 
     lastY = currentY;
