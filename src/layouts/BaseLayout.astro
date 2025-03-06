@@ -58,17 +58,21 @@ const { title, image } = Astro.props;
         {/* Sidebar */}
         <aside class="md:col-span-1 top-4 p-2 hidden md:block order-2 md:order-1 space-y-4">
           <Profile />
-          <CategoryCard />
-          <TagCard />
+          <div  id="tagCard">
+            <CategoryCard />
+            <TagCard />
+          </div>
           <ToolThemeSwitchCard />
+          <div id="ATocCard">
+            <TocCard/>
+          </div>
         </aside>
 
-        {/* Siderbar: Toc */} 
-          <div id="ATocCard" class="fixed right-0 top-20 grid gap-4 hidden md:block lg:p-4 md:grid-cols-1 text-base lg:text-lg z-50">
+        <!-- {/* Siderbar: Toc */} 
+          <div  class="fixed right-0 top-20 grid gap-4 hidden md:block lg:p-4 md:grid-cols-1 text-base lg:text-lg z-50">
             <aside class="w-64 p-2">
-              <TocCard />
             </aside>
-          </div>
+          </div> -->
         
         {/* Siderbar: back2top */}
         <div id="back2topCard" class="fixed right-0 bottom-0 grid grid-cols-1 lg:p-4 lg:text-lg z-50" style="transition: opacity 0.2s ease; pointer-events: none;">
@@ -113,17 +117,22 @@ const { title, image } = Astro.props;
 </script>
 
 <!-- 保证Toc只在 url包含/blog/ 的页面渲染 -->
+<!-- 且保证tag只在 url不包含/blog/ 的页面渲染 -->
 <script type="module">
   const updateTocDispaly = () => {
     const pathname = window.location.pathname;
     const toc = document.getElementById("ATocCard");
+    const tag = document.getElementById("tagCard");
 
     // 判断路径是否符合条件显示 Sidebar
     if (/^\/blog\/(?!\d+$)[^\/]+$/.test(pathname)) {
       toc.style.display = "block";
       toc.style.display = ""; // 恢复默认, 即 恢复 hidden md:block, 小尺寸隐藏
+      tag.style.display = "none";
     } else {
       toc.style.display = "none";
+      tag.style.display = "block";
+      tag.style.display = ""; // 恢复默认, 即 恢复 hidden md:block, 小尺寸隐藏
     }
   };
 

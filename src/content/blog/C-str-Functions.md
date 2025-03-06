@@ -1,31 +1,30 @@
 ---
-title: "[C语言] 字符串函数的相关介绍与模拟实现"
-pubDate: "2022-02-09"
-description: "strlen、strcpy、strcat……"
+title: '[C语言] 字符串函数的相关介绍与模拟实现'
+pubDate: '2022-02-09'
+description: 'strlen、strcpy、strcat……'
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/202306251811474.webp
-tags: ["C语言"]
+tags: ['C语言']
 ---
 
 # 字符串函数
 
-## 1. `strlen`
+## `strlen`
 
 ```c
 size_t strlen(const char* str );
 ```
 
-作用: 求字符串中`'\0'`前的字符串的长度
+作用: 
 
-要求: 字符串必须以`'\0'` 结束
+​	求字符串中`'\0'`前的字符串的长度
 
-示例
+要求: 
 
-模拟实现 `strlen`
+​	字符串必须以`'\0'` 结束
 
 ```c
 /* 可创建临时变量 */
-int my_strlen(const char* str)
-{
+int my_strlen(const char* str) {
     assert(str);
     int count = 0;
     
@@ -34,38 +33,40 @@ int my_strlen(const char* str)
     
     return count;
 }
+
 /* 不可创建临时变量 (递归)*/
-int my_strlen(const char* str)
-{
+int my_strlen(const char* str) {
 	if(!(*str))
 		return 0;
 	else
 		return 1+my_strlen(str+1);
 }
+
 /* 指针相减 */
-int my_strlen(char* str)
-{
+int my_strlen(char* str) {
 	char *pstr = str;
 	while(*pstr)
 		pstr++;
+    
 	return pstr-str;
 }
 ```
 
-在MSDN中, `strlen`函数的返回值是`size_t`, 也就是 `unsigned int`无符号整型。返回值是无符号整型, 我们在使用函数的时候, 如果没有注意到, 就可能写出下面这样的代码: 
+标准库中, `strlen()`的返回值是`size_t`, 也就是 `unsigned int`无符号整型
+
+在使用函数的时候, 如果没有注意到, 就可能写出下面这样的代码: 
 
 > ```c
 > #include <stdio.h>
 > #include <string.h>
 > 
-> int main()
-> {
->     if(strlen("asd") - strlen("asdasd") > 0)
->         printf(">\n");
+> int main() {
+> 	if(strlen("asd") - strlen("asdasd") > 0)
+>            printf(">\n");
 >     else
->         printf("<=\n");
->     
->     return 0;
+>            printf("<=\n");
+> 
+> 	return 0;
 > }
 > ```
 >
@@ -73,79 +74,74 @@ int my_strlen(char* str)
 >
 > 因为两个无符号整型相减, 结果肯定也是无符号整型, 所以结果肯定是大于 `0` 的
 
-我们模拟实现的`my_strlen`返回值是 `int` 类型, 就不会出现如果不小心写出错误的代码的问题。
+模拟实现的`my_strlen`返回值是 `int` 类型, 不会出现如果不小心写出错误的代码的问题
 
-## 2. `strcpy`
+## `strcpy`
 
 ```c
-char* strcpy(char* destination, const char* source );
+char* strcpy(char* dest, const char* source );
 ```
 
-作用: 将 `source` 字符串中的内容(包括`'\0'`), 拷贝至`destination`字符串中
+作用: 
 
-要求: 被拷贝的字符串(`soure`)中必须有 `'\0'`; `destination`空间必须足够大且可变(不被 `const` 修饰)
+​	将 `source` 字符串中的内容, 包括`'\0'`, 拷贝至`dest`字符串中
 
-示例
+要求: 
 
-模拟实现 `strcpy`
+​	`source`中必须存在 `'\0'`; `dest`空间必须足够大且可修改, 即不被 `const` 修饰
 
 ```c
-char* my_strcpy(char* dest, const char* src)
-{
+char* my_strcpy(char* dest, const char* src) {
     char* ret = dest;
     assert(dest && src);
     
     while(*dest++ = *scr++)
-    {
         ;
-    }
     
     return ret;
 }
 ```
 
-## 3. `strcat`
+## `strcat`
 
 ```c
-char* strcat (char* destination, const char* source);
+char* strcat (char* dest, const char* source);
 ```
 
-作用: 将 字符串`source`的内容, 追加到字符串`destination`后
+作用: 
 
-要求: 字符串`source`必须以`'\0'`结束；字符串`destination`空间足够大且可修改
+​	将 字符串`source`的内容, 追加到字符串`dest`后
 
-示例
+要求: 
 
-模拟实现 `strcat`
+​	字符串`source`必须以`'\0'`结束；`dest`指向空间足够大且可修改
 
 ```c
-char* my_strcat(char* dest, const char* src)
-{
+char* my_strcat(char* dest, const char* src) {
     char* ret = dest;
     assert(dest && src);
     
-    while(*dest)
-    {//注意: 循环里的"++" 不能放入循环条件里: 若放至 dest 后, 会跳过原 dest 中的 '\0'；若放至 dest 前, 如果dest首字符就为'\0'也会被跳过
+    while(*dest) {
+        // 注意: 循环里的"++" 不能放入循环条件里: 
+        // 若放至 dest 后, 会跳过原 dest 中的 '\0'；若放至 dest 前, 如果 dest 首字符为'\0'也会被跳过
         dest++;
     }
     while(*dest++ = *src++)
-    {
         ;
-    }
   	
     return ret;
 }
 ```
 
-
-
-## 4. `strcmp`
+## `strcmp`
 
 ```c
 int strcmp (const char* str1, const char* str2);
 ```
 
-作用: 比较两个字符串, 对应位置上字符的大小
+作用: 
+
+​	比较两个字符串, 对应位置上字符的大小
 
 > `str1 > str2`:	返回一个正数
 >
@@ -153,18 +149,14 @@ int strcmp (const char* str1, const char* str2);
 >
 > `str1 == str2`:	返回零
 
-示例
-
-模拟实现 `strcmp`
-
 ```c
-int my_strcmp(const char* str1, const char* str2)
-{
+int my_strcmp(const char* str1, const char* str2) {
     assert(str1 && str2);
-    while(*str1 == *str2)
-    {
+    
+    while(*str1 == *str2) {
         if(*str1 == '\0')
             return 0;
+        
         str1++;
         str2++;
     }
@@ -173,31 +165,32 @@ int my_strcmp(const char* str1, const char* str2)
 }
 ```
 
-## 5. `strncpy`
+## `strncpy`
 
 ```c
-char* strncat (char* destination, const char* source, size_t num);
+/* 受长度限制的字符串拷贝函数 */
+char* strncat (char* dest, const char* source, size_t num);
 ```
 
-受长度限制的字符串拷贝函数
+作用: 
 
-作用: 将 字符串`source`中的前 `num` 个字符, 拷贝到 字符串`destination`中。
+​	将 字符串`source`中的前 `num` 个字符, 拷贝到 字符串`dest`中
 
-(如果 `num` 大于 字符串 `source` 的长度, 多出的部分均存入 `'\0'`)
+​	如果`num`大于 字符串 `source` 的长度, 多出的部分均存入`'\0'`
 
-## 6. `strncat`
+## `strncat`
 
 ```c
-char* strncat (char* destination, const char* source, size_t num);
+char* strncat (char* dest, const char* source, size_t num);
 ```
 
 受长度限制的字符串追加函数
 
-作用: 将 字符串`source`中的前 `num` 个字符, 追加到 字符串`destination`后(从第一个`'\0'`开始算), 并在末尾放入`'\0'`
+作用: 将 字符串`source`中的前 `num` 个字符, 追加到 字符串`dest`后(从第一个`'\0'`开始算), 并在末尾放入`'\0'`
 
 (如果 `num` 大于 字符串 `source` 的长度, 则只追加已有的`source`字符串及末尾的 `'\0'`)
 
-## 7. `strncmp`
+## `strncmp`
 
 ```c
 int strncmp (const char* str1, const char* str2, size_t num);
@@ -207,38 +200,36 @@ int strncmp (const char* str1, const char* str2, size_t num);
 
 作用: 比较 字符串 `str2` 和 `str1` 对应的前 `num` 个字符的大小
 
-## 8. `strstr`
+## `strstr`
 
 ```c
 char* strstr(const char* string, const char* strCharSet);
 ```
 
-作用: 在 字符串`string`中, 查找第一个`strCharSet`字符串；若`strCharSet`指向长度为零的字符串(即, `strCharSet`为空), 则返回原字符串, 没找到返回空指针, 找到了返回找到的字符串的首字符地址。
+作用: 在 字符串`string`中, 查找第一个`strCharSet`字符串；若`strCharSet`指向长度为零的字符串(即, `strCharSet`为空), 则返回原字符串, 没找到返回空指针, 找到了返回找到的字符串的首字符地址
 
-示例
-
-模拟实现 `strstr`
+模拟实现 `strstr()`
 
 ```c
-char* my_strstr(const char* str, const char* substr)
-{
+char* my_strstr(const char* str, const char* substr) {
     assert(str && substr);
+    
     if(*substr == '\0')
         return str;
-    char* flag = (char*)str;	//记录本次查找的起始地址
-    char* str1;
-    char* str2;					//记录 查找的字符串
     
-    while(*flag)
-    {
-        str1 = flag;			//因本次查找中 起始位置需要一直知道, 所以将 flag 存入另一个指针变量
-        str2 = (char*)substr;	//每次循环从 查找字符串的首字符开始查找
-        while(*st1 && *str2 && (*str1 == str2))
-        {/*在此循环中查找, str1 与 str2 指向的字符都不为'\0', 且 相等时, 继续查找下一个字符
-           str2指向的字符为'\0'时, 查找成功*/
+    char* flag = (char*)str;	// 记录本次查找的起始地址
+    char* str1;
+    char* str2;					// 记录 查找的字符串
+    
+    while(*flag) {
+        str1 = flag;			// 因本次查找中 起始位置需要一直知道, 所以将 flag 存入另一个指针变量
+        str2 = (char*)substr;	// 每次循环从 查找字符串的首字符开始查找
+        while(*st1 && *str2 && (*str1 == str2)) {
+            /*在此循环中查找, str1 与 str2 指向的字符都不为'\0', 且 相等时, 继续查找下一个字符str2指向的字符为'\0'时, 查找成功*/
             str1++;
             str2++;
         }
+        
         if(*str2 == '\0')
             return flag;
         
@@ -249,7 +240,7 @@ char* my_strstr(const char* str, const char* substr)
 }
 ```
 
-## 9. `strtok`
+## `strtok`
 
 ```C
 char * strtok ( char * str, const char * sep );
@@ -265,7 +256,9 @@ char * strtok ( char * str, const char * sep );
 
 - `strtok`函数的第一个参数为 `NULL `, 函数将在同一个字符串中被保存的位置开始, 查找下一个标记。如果字符串中不存在更多的标记, 则返回 `NULL` 指针。
 
-  >即:	1. `strtok`函数在使用的时候, 因为会改变参数, 所以第一个参数需要是目标参数的临时拷贝
+  >即:
+  >
+  >1. `strtok`函数在使用的时候, 因为会改变参数, 所以第一个参数需要是目标参数的临时拷贝
   >
   >2. `strtok`函数在找第一个标记的时候, 函数的第一个参数不是`NULL`
   >
@@ -281,12 +274,12 @@ char * strtok ( char * str, const char * sep );
   >char* str = NULL;
   >for(str = strtok(buf, p); str != NULL; str = strtok(NULL, p))
   >{
-  >    printf("%s\n", str);
+  >   printf("%s\n", str);
   >}
   >```
   >
 
-## 10. `strerror`
+##. `strerror`
 
 ```c
 char * strerror ( int errnum );
