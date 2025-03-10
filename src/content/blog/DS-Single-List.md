@@ -3,6 +3,7 @@ title: "[数据结构] 掌握 单链表 只需要这篇文章~ 「超详细」"
 pubDate: "2022-04-20"
 description: "为了解决顺序表存在的一些问题, 又提出了一种新的数据结构: 链表. 本篇文章将详细介绍 链表 中 单链表 的 结构 增 删 查 改 插入 等操作"
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/List_cover.webp
+categories: ['tech']
 tags: ["数据结构", "链表"]
 ---
 

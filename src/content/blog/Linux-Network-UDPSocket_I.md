@@ -4,6 +4,7 @@ pubDate: "2023-06-25"
 description: '本篇文章正式开始Linux中的网络编程. 本文介绍了, 网络编程的一些概念, 以及简单的UDP套接字编程. 
 实现了最简单的UDP公共聊天室'
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/202307021623107.webp
+categories: ['tech']
 tags: ["Linux网络", "套接字", "UDP"]
 ---
 

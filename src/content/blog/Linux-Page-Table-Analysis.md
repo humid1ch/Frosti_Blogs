@@ -3,6 +3,7 @@ title: "[Linux] 页表深入分析: 理解页表、了解页表组成..."
 pubDate: "2023-04-14"
 description: "简单的说, 页表是进程地址空间和物理内存之间的相互映射"
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/202306251758696.webp
+categories: ['tech']
 tags: ["Linux系统", "进程"]
 ---
 

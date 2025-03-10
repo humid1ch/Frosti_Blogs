@@ -3,6 +3,7 @@ title: "初次接触ffmpeg, ffmpeg的安装和简单的使用"
 pubDate: "2025-01-15"
 description: ""
 # image: 
+categories: ['tech']
 tags: ["音视频开发", "C++相关", "ffmpeg"]
 ---
 

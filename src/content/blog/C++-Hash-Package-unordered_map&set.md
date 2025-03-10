@@ -3,6 +3,7 @@ title: "[C++-STL] 用哈希表封装unordered_map和unordered_set"
 pubDate: "2022-11-13"
 description: "STL的两个容器 unordered_map 和 unordered_set 底层是由哈希表实现的, 那么本篇文章的内容 就是将哈希表封装为 unordered_set 和 unordered_map"
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/202306251813360.webp
+categories: ['tech']
 tags: ["STL", "哈希表", "容器"]
 ---
 

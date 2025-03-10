@@ -1,13 +1,13 @@
 ---
-title: Using mdx in Frosti
-description: Using MDX in Frosti to enrich article content with more components
-pubDate: 07 12 2024
+title: '在 Frosti 中使用 MDX'
+description: '在 Frosti 中使用 MDX, 通过更多组件丰富文章内容'
+pubDate: '2024-07-12'
 image: /image/image2.jpg
-categories:
-  - tech
+categories: ['tech']
 tags:
   - Frosti
-  - User Manual
+  - Blog
+  - Project
 ---
 
 import Collapse from "../../components/mdx/Collapse.astro";
@@ -20,19 +20,18 @@ import Warning from "../../components/mdx/Warning.astro";
 import TimeLine from "../../components/mdx/TimeLine.astro";
 import LinkCard from "../../components/mdx/LinkCard.astro";
 
-## Preface
+## 序言
 
-This article describes how to use the components provided by Frosti in `mdx` to realize the functions that can't be realized by normal `md`.
+本文介绍了如何在 Frosti 中使用已有组件, 实现普通`Markdown`无法实现的功能
 
-## Main text
+## Getting started
 
-### Getting started
-
-First you need to create an `mdx` file, which is as simple as changing the extension to `.mdx`.
+首先您需要创建一个`mdx`文件, 也就是创建一个后缀为`.mdx`的文件
 
 ### Introducing
 
-The components provided by Frosti are placed in the `/mdx` folders. Write something under the document properties (frontmatter):
+Frosti 提供的组件放置在`/mdx`文件夹中
+使用时, 需要在文档属性中导入一些什么:
 
 ```mdx
 import Collapse from "../../components/mdx/Collapse.astro";
@@ -46,17 +45,17 @@ import TimeLine from "../../components/mdx/TimeLine.astro";
 import LinkCard from "../../components/mdx/LinkCard.astro";
 ```
 
-### Example
+### 实例
 
 #### Collapse
 
-<Collapse title="This is an example text.">
-  This is the hidden content!
+<Collapse title="这只是一个示例文本">
+  这是被隐藏的内容
 </Collapse>
 
 ```mdx
-<Collapse title="This is an example text.">
-  This is the hidden content!
+<Collapse title="这只是一个示例文本">
+  这是被隐藏的内容
 </Collapse>
 ```
 
@@ -70,42 +69,42 @@ import LinkCard from "../../components/mdx/LinkCard.astro";
 
 #### Error
 
-<Error>Maybe something went wrong?</Error>
+<Error> 可能存在一些错误? </Error>
 
 ```mdx
-<Error>Maybe something went wrong? </Error>
+<Error> 可能存在一些错误? </Error>
 ```
 
 #### Warning
 
-<Warning>Hey! Watch out for potholes! </Warning>
+<Warning> 小心! </Warning>
 
 ```mdx
-<Warning>Hey! Watch out for potholes! </Warning>
+<Warning> 小心! </Warning>
 ```
 
 #### Message
 
-<Info>It's just a message. </Info>
+<Info> 这只是一个消息 </Info>
 
 ```mdx
-<Info>It's just a message. </Info>
+<Info> 这只是一个消息 </Info>
 ```
 
 #### Success
 
-<Success>Congratulations on your successful deployment! </Success>
+<Success> 恭喜您成功部署! </Success>
 
 ```mdx
-<Success>Congratulations on your successful deployment! </Success>
+<Success> 恭喜您成功部署! </Success>
 ```
 
 #### Kbd
 
-<Kbd>Ctrl</Kbd> + <Kbd>C</Kbd> to copy the text.
+<Kbd>Ctrl</Kbd> + <Kbd>C</Kbd> 可以复制文本
 
 ```mdx
-<Kbd>Ctrl</Kbd> + <Kbd>C</Kbd> to copy the text.
+<Kbd>Ctrl</Kbd> + <Kbd>C</Kbd> 可以复制文本
 ```
 
 #### TimeLine
@@ -136,7 +135,7 @@ import LinkCard from "../../components/mdx/LinkCard.astro";
 
 <LinkCard
   title="Frosti"
-  desc="My blog project!"
+  desc="A blog project!"
   url="https://github.com/EveSunMaple/Frosti"
   img="/view.png"
 />
@@ -144,7 +143,7 @@ import LinkCard from "../../components/mdx/LinkCard.astro";
 ```mdx
 <LinkCard
   title="Frosti"
-  desc="My blog project!"
+  desc="A blog project!"
   url="https://github.com/EveSunMaple/Frosti"
   img="/view.png"
 />

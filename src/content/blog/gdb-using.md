@@ -3,6 +3,7 @@ title: "[Linux] GDB使用记录"
 pubDate: "2024-7-1"
 description: ""
 # image:
+categories: ['tech']
 tags: ["Linux使用问题", "GDB", "C++"]
 ---
 

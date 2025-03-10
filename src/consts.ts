@@ -14,7 +14,7 @@ export const USER_SITE = "https://frosti-blogs.vercel.app"; // At the same time,
 export const USER_AVATAR = "/profile.png";
 
 // Server and transition settings
-export const SERVER_URL = "https://demo.saroprock.com";
+export const SERVER_URL = "https://walinetalk-tau.vercel.app";
 
 // Theme settings
 export const DAISYUI_THEME = {
@@ -28,8 +28,20 @@ export const CODE_THEME = {
 
 // Menu items for navigation
 export const menuItems = [
-  { id: "home", text: "主页", href: "/", svg: "material-symbols:home-outline-rounded", target: "_self" }, // Home page
-  { id: "about", text: "关于", href: "/about", svg: "material-symbols:info-outline-rounded", target: "_self" }, // About page
+  { 
+    id: "home", 
+    text: "主页", 
+    href: "/", 
+    svg: "material-symbols:home-outline-rounded", 
+    target: "_self" 
+  }, // Home page
+  { 
+    id: "about", 
+    text: "关于", 
+    href: "/about", 
+    svg: "material-symbols:info-outline-rounded", 
+    target: "_self" 
+  }, // About page
   {
     id: "blog",
     text: "博客",
@@ -46,27 +58,27 @@ export const menuItems = [
       }, // All blog
       {
         id: "tech",
-        text: "技术",
+        text: "技术博客",
         href: "/blog/categories/tech",
         svg: "material-symbols:deployed-code-outline",
         target: "_self",
       }, // Technology category
       {
         id: "life",
-        text: "随笔",
+        text: "生活随笔",
         href: "/blog/categories/life",
         svg: "material-symbols:earthquake-rounded",
         target: "_self",
       }, // Life category
     ],
   }, // Blog page with sub-items
-  // {
-  //   id: "project",
-  //   text: "Project",
-  //   href: "/project",
-  //   svg: "material-symbols:code-blocks-outline",
-  //   target: "_self",
-  // }, // Projects page
+  {
+    id: "project",
+    text: "项目",
+    href: "/project",
+    svg: "material-symbols:code-blocks-outline",
+    target: "_self",
+  }, // Projects page
   {
     id: "friend",
     text: "友链",
@@ -74,13 +86,13 @@ export const menuItems = [
     svg: "material-symbols:supervisor-account-outline-rounded",
     target: "_self",
   }, // Friends page
-  {
-    id: "contact",
-    text: "联络",
-    href: "mailto:contact.evesunmaple@outlook.com", // Contact email
-    target: "_blank", // Open in a new tab
-    svg: "material-symbols:attach-email-outline-rounded",
-  },
+  // {
+  //   id: "contact",
+  //   text: "联系",
+  //   href: "mailto:contact.dxyt2002@gmail.com", // Contact email
+  //   target: "_blank", // Open in a new tab
+  //   svg: "material-symbols:attach-email-outline-rounded",
+  // },
 ];
 
 // Social media and contact icons
@@ -97,12 +109,12 @@ export const socialIcons = [
     title: "Github",
     svg: "ri:github-line",
   },
-  // {
-  //   href: "https://space.bilibili.com/438392347",
-  //   ariaLabel: "BiliBili",
-  //   title: "BiliBili",
-  //   svg: "ri:bilibili-line",
-  // },
+  {
+    href: "https://space.bilibili.com/38311203",
+    ariaLabel: "BiliBili",
+    title: "BiliBili",
+    svg: "ri:bilibili-line",
+  },
   {
     href: "/rss.xml",
     ariaLabel: "RSS Feed",

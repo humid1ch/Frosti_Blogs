@@ -3,6 +3,7 @@ title: "[TCP/IP] 传输层代表协议--UDP协议介绍:UDP协议格式、端口
 pubDate: "2024-01-08"
 description: "本篇文章, 简单介绍UDP协议的相关内容"
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/202401080145365.webp
+categories: ['tech']
 tags: ["Linux网络", "TCP-IP", "传输层", "协议", "UDP"]
 ---
 

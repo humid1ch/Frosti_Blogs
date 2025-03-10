@@ -3,6 +3,7 @@ title: "[C/CPP] memcpy()的一个使用问题"
 pubDate: "2024-11-21"
 description: "使用memcpy()将字符数组的前几个元素, 拷贝到一个整型变量中时, 发现了一个问题..."
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/202411212340590.webp
+categories: ['tech']
 tags: ["C语言", "C++", "内存管理"]
 ---
 

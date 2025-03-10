@@ -3,6 +3,7 @@ title: "[Leetcode] 力扣 热题100道--双指针3: 15. 三数之和(中等)"
 pubDate: "2024-07-29"
 description: "给你一个整数数组 nums, 判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k, 同时还满足 nums[i] + nums[j] + nums[k] == 0. 请你返回所有和为 0 且不重复的三元组"
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20240729155756933.webp
+categories: ['tech']
 tags: ["Leetcode", "算法题"]
 ---
 

@@ -16,14 +16,14 @@ const { hiddenPages, current, baseUrl } = Astro.props;
   >
     ...
   </div>
-  <ul class="menu dropdown-content bg-base-100 rounded-box z-[100] p-2 shadow-xl max-h-48 overflow-y-auto flex-nowrap [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+  <ul class="menu dropdown-content bg-base-100 rounded-box z-[100] p-2 shadow-xl">
     {
       hiddenPages.map((page) => (
         <li>
           <a
             href={page === 1 ? baseUrl : `${baseUrl}/${page}`}
             class:list={[
-              "menu-item bg-base-100 hover:bg-base-200 transition-colors duration-300 w-full text-center",
+              "menu-item bg-base-100 hover:bg-base-200 transition-colors duration-300",
               page === current && "btn-active",
             ]}
           >

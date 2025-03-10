@@ -3,6 +3,7 @@ title: "[TCP/IP] 网络层代表协议--IP协议介绍: IP协议 数据格式、
 pubDate: "2024-09-04"
 description: "网络层的 IP协议 可以让主机拥有, 在网络中寻找主机的能力"
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/202409092046432.webp
+categories: ['tech']
 tags: ["Linux网络", "TCP-IP", "网络层", "协议", "IP"]
 ---
 

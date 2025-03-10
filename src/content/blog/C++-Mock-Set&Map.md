@@ -3,6 +3,7 @@ title: "[C++-STL] set和map容器的模拟实现"
 pubDate: "2022-10-25"
 description: "STL容器中, set 和 map 虽然底层都是红黑树, 但是这两个容器的模板参数是不一样的, 这是一个非常需要解决的问题"
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/202306251814109.webp
+categories: ['tech']
 tags: ["STL", "树", "容器"]
 ---
 
