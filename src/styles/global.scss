@@ -209,6 +209,32 @@ h5 {
   @apply text-xl leading-relaxed pt-3;
 }
 
+h1 code {
+  padding-top: 0 !important;
+  @apply text-5xl leading-tight pt-7;
+}
+
+h2 code {
+  padding-top: 0 !important;
+  @apply text-4xl leading-snug pt-6;
+}
+
+h3 code {
+  padding-top: 0 !important;
+  @apply text-3xl leading-normal pt-5;
+}
+
+h4 code {
+  padding-top: 0 !important;
+  @apply text-2xl leading-relaxed pt-4;
+}
+
+h5 code {
+  padding-top: 0 !important;
+  @apply text-xl leading-relaxed pt-3;
+}
+
+
 strong,
 b {
   @apply font-bold my-2;
@@ -261,6 +287,12 @@ pre {
 blockquote {
   @apply alert px-6;
 }
+
+blockquote figure {
+  width: 100%;
+  max-width: 100%;
+} 
+
 
 pre > code {
   all: unset;

@@ -79,6 +79,51 @@ const { title, image } = Astro.props;
   </body>
 </html>
 
+<!-- 返回最顶部卡片, 上滚时显示, 下滚时隐藏 -->
+<script>
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+    const div = document.getElementById('back-button');
+ 
+    // 上滚显示，下滚隐藏
+    if (!div)
+      return;
+
+    if (currentY === 0) {
+      div.style.display = 'none';
+      div.style.pointerEvents = 'none';
+    }
+    else {
+      div.style.display = currentY < lastY ? '' : 'none';
+      div.style.pointerEvents = currentY < lastY ? 'auto' : 'none';
+    }
+    lastY = currentY;
+  });
+</script>
+
+<script>
+  // 监听元素变化
+  const observer = new MutationObserver(mutations => {
+    const backButton = document.getElementById('back-button');
+    const buttonBox = document.getElementById('button-box');
+
+    if (!backButton || !buttonBox)
+      return;
+  
+    if (backButton.style.display === 'none') {
+      buttonBox.classList.replace('lg:grid-cols-2', 'lg:grid-cols-1');
+    } else {
+      buttonBox.classList.replace('lg:grid-cols-1', 'lg:grid-cols-2');
+    }
+  });
+
+  observer.observe(document.getElementById('back-button'), {
+    attributes: true,
+    attributeFilter: ['style']
+  });
+</script>
+
 <!-- 保证Toc只在 url包含/blog/ 的页面渲染 -->
 <!-- 且保证tag只在 url不包含/blog/ 的页面渲染 -->
 <script type="module">
