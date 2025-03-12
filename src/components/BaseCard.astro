@@ -1,13 +1,13 @@
 ---
-import dayjs from "dayjs";
-import { Image } from "astro:assets";
-import License from "../components/License.astro";
-import CommentWaline from "./CommentWaline.astro";
-import CardVertical from "../layouts/CardVertical.astro";
 import { Icon } from "astro-icon/components";
-import { DATE_FORMAT } from "../consts";
-import type { CardInfo } from "../types";
+import { Image } from "astro:assets";
+import dayjs from "dayjs";
 import { t } from "i18next";
+import License from "../components/License.astro";
+import { DATE_FORMAT } from "../consts";
+import CardVertical from "../layouts/CardVertical.astro";
+import type { CardInfo } from "../types";
+import CommentWaline from "./CommentWaline.astro";
 
 const {
   title = "undefined",
@@ -22,6 +22,11 @@ const {
   comment = false,
   url = decodeURIComponent(Astro.url.toString()),
 } = Astro.props as CardInfo;
+
+let url_non = decodeURIComponent(Astro.url.toString())
+if (url_non.endsWith('/')) {
+  url_non.slice(0, -1);
+}
 
 const displayDate = pubDate ? dayjs(pubDate).format(DATE_FORMAT) : "";
 ---
@@ -70,7 +75,7 @@ const displayDate = pubDate ? dayjs(pubDate).format(DATE_FORMAT) : "";
             </div>
           </div>
 
-          <a href={url} class="block hover:-translate-y-0.5 transition-transform duration-300">
+          <a href={url_non} class="block hover:-translate-y-0.5 transition-transform duration-300">
             <h1
               id={title}
               class="pt-0 font-bold text-base-content bg-clip-text bg-gradient-to-r from-primary to-secondary transition-colors duration-300 hover:text-transparent"
