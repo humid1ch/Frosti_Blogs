@@ -118,10 +118,13 @@ const { title, image } = Astro.props;
     }
   });
 
-  observer.observe(document.getElementById('back-button'), {
-    attributes: true,
-    attributeFilter: ['style']
-  });
+  const backButton = document.getElementById('back-button')
+  if (backButton) {
+    observer.observe(backButton, {
+      attributes: true,
+      attributeFilter: ['style']
+    });
+  }
 </script>
 
 <!-- 保证Toc只在 url包含/blog/ 的页面渲染 -->
