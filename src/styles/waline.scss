@@ -26,6 +26,14 @@
   --waline-box-shadow: none;
 }
 
+@font-face {
+  font-family: 'Fira Code Regular';
+  src: url('/fonts/FiraCode-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 [data-waline] {
   font-size: var(--waline-font-size);
   text-align: start;
