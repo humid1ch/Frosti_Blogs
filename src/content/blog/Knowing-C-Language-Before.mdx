@@ -1,0 +1,94 @@
+---
+title: '认识C语言之前的准备: 环境搭建'
+description: '如果要学习C语言, 至少需要一个能够使用C语言的环境'
+pubDate: '2025-03-17'
+image: 'https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/20250318013906705.png'
+categories: ['tech']
+tags: ['C']
+---
+
+import Info from "../../components/mdx/Info.astro";
+
+import Warning from "../../components/mdx/Warning.astro";
+
+<Info>
+
+本篇文章的目的是 C语言基本环境的搭建, 不做任何**概念**、**原理**、**工具**的介绍
+
+博主会尽量给出一个 即使是从未接触过编程的小白 也能完成的方案
+
+但你至少需要了解Windows中一些工具的使用, 比如: 解压工具、文本编辑工具等
+
+</Info>
+
+<Info>
+
+搭建过程中所需要用到的所有工具, 都已打包好放在此处, 请下载使用
+
+[👉点这里]()
+
+</Info>
+
+<Warning>
+
+博主今后使用的一些工具, 也就是本篇文章搭建的环境, 可能具有一定的学习门槛, 但我个人认为这是有必要的
+
+如有建议, 敬请在评论提出👌
+
+</Warning>
+
+## 开启Hyper-V
+
+![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/20250318021949191.webp)
+
+![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20250318023445770.webp)
+
+![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20250318023658300.webp)
+
+![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20250318025611275.webp)
+
+![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20250318025646430.webp)
+
+点击重新启动之前, 最好保存你的所有其他任务
+
+等待重新启动之后, 完成`Hyper-V`的开启
+
+> 如果你的列表中没有`Hyper-V`的相关选项, 请参照下面的步骤执行
+>
+> 如果上面的步骤已经完成, 可以直接跳到[👉下一部分](https://www.humid1ch.cn/blog/knowing-c-language-before#heading-2)
+
+---
+
+如果`Windows`功能列表中, 没有`Hyper-V`相关选项, 可以这样操作:
+
+1. 打开文件扩展名:
+
+    ![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20250318030236858.webp)
+
+    ![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20250318030429219.webp)
+
+2. 新建文本文档:
+
+    ![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20250318030631422.webp)
+
+3. 文本文档输入以下内容:
+
+    ```
+    pushd "%~dp0"
+    dir /b %SystemRoot%\servicing\Packages\*Hyper-V*.mum >hyper-v.txt
+    for /f %%i in ('findstr /i . hyper-v.txt 2^>nul') do dism /online /norestart /add-package:"%SystemRoot%\servicing\Packages\%%i"
+    del hyper-v.txt
+    Dism /online /enable-feature /featurename:Microsoft-Hyper-V-All /LimitAccess /ALL
+    ```
+
+    ![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20250318030903137.webp)
+
+4. 文本文档重命名为`hyperv.bat`, 并右键->管理员身份启动:
+
+    ![](https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/image-20250318031158961.webp)
+
+5. 等待运行结束, 并根据提示输入`'Y'`重启系统
+
+6. 系统重启完成之后, 回到文章开头执行开启`Hyper-V`的相关操作: [👉指路](https://www.humid1ch.cn/blog/knowing-c-language-before#heading-1)
+
+## 配置

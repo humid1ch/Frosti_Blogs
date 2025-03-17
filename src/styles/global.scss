@@ -23,6 +23,12 @@ a {
   @apply rounded-xl;
 }
 
+.main-card p {
+  margin-top: 0.6rem !important;
+  margin-bottom: 0.6rem !important;
+  line-height: 1.414;
+}
+
 .main-card p,
 .main-card li,
 .main-card blockquote {
@@ -255,8 +261,11 @@ table tr {
 }
 
 code {
+  margin-left: 0.125rem;
+  margin-right: 0.125rem;
   color: oklch(var(--bc));
   font-family:
+    Fira Code Regular,
     ui-monospace,
     SFMono-Regular,
     Menlo,
@@ -269,10 +278,12 @@ code {
   @apply bg-base-300 border border-solid rounded-md px-1 py-0.5 text-base shadow;
   border-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
+  padding-top: 0rem !important;
 }
 
 pre {
   font-family:
+    Fira Code Regular,
     ui-monospace,
     SFMono-Regular,
     Menlo,
@@ -285,6 +296,7 @@ pre {
 }
 
 blockquote {
+  display: block !important;
   @apply alert px-6;
 }
 
@@ -330,6 +342,7 @@ thead th {
 }
 
 .highlight-tools {
+  padding: 0rem 0rem 0rem 1rem !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -355,6 +368,7 @@ thead th {
 
 .highlight .code-lang {
   font-family:
+    Fira Code Regular,
     ui-monospace,
     SFMono-Regular,
     Menlo,
