@@ -1,5 +1,5 @@
 :root {
-  --waline-font-size: 1rem;
+  --waline-font-size: 0.9rem;
   --waline-white: oklch(var(--b1));
   --waline-light-grey: #999;
   --waline-dark-grey: #666;
@@ -28,11 +28,10 @@
 
 @font-face {
   font-family: 'Fira Code Regular';
-  src: url('/fonts/FiraCode-Regular.woff2') format('woff2');
+  src: url('/fonts/FiraCode.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
-
 
 [data-waline] {
   font-size: var(--waline-font-size);

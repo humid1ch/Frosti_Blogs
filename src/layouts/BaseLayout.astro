@@ -51,7 +51,8 @@ const { title, image } = Astro.props;
     <Navbar title={SITE_TITLE} />
 
     <div class="max-w-6xl mx-auto">
-      <div class="relative grid gap-4 p-0 lg:p-4 md:grid-cols-5 lg:grid-cols-4 top-20 md:top-0 text-base lg:text-lg">
+      <!-- <div class="relative grid gap-4 p-0 lg:p-4 md:grid-cols-5 lg:grid-cols-4 top-20 md:top-0 text-base lg:text-lg"> -->
+      <div class="relative grid gap-4 p-0 lg:p-4 md:grid-cols-5 lg:grid-cols-4 top-20 md:top-0 text-base">
         {/* Sidebar */}
         <aside class="md:col-span-1 top-4 p-2 hidden md:block order-2 md:order-1 space-y-4">
           <Profile />
@@ -110,7 +111,7 @@ const { title, image } = Astro.props;
 
     if (!backButton || !buttonBox)
       return;
-  
+
     if (backButton.style.display === 'none') {
       buttonBox.classList.replace('lg:grid-cols-2', 'lg:grid-cols-1');
     } else {
