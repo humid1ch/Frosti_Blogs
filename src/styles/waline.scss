@@ -33,6 +33,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'HarmonyOS Sans';
+  src: url('/fonts/HarmonyOSSansSC.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 [data-waline] {
   font-size: var(--waline-font-size);
   text-align: start;
@@ -1096,7 +1103,7 @@
   background: none;
   color: #ccc;
   font-size: 1em;
-  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-family: "Fira Code Regular" "HarmonyOS Sans";
   text-align: left;
   white-space: pre;
   word-spacing: normal;
