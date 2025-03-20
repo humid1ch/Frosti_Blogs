@@ -267,7 +267,14 @@ code {
   color: oklch(var(--bc));
   font-family:
     Fira Code Regular,
-    HarmonyOS Sans;
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
   white-space: nowrap;
   @apply bg-base-300 border border-solid rounded-md px-1 py-0.5 text-base shadow;
   border-color: rgba(0, 0, 0, 0.2);
@@ -278,7 +285,14 @@ code {
 pre {
   font-family:
     Fira Code Regular,
-    HarmonyOS Sans;
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
   padding: 10px;
 }
 
@@ -356,7 +370,14 @@ thead th {
 .highlight .code-lang {
   font-family:
     Fira Code Regular,
-    HarmonyOS Sans;
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
   user-select: none;
 }
 
