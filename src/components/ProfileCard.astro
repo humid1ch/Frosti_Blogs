@@ -1,7 +1,7 @@
 ---
+import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import { USER_AVATAR, menuItems, socialIcons } from "../consts";
-import { Icon } from "astro-icon/components";
 import type { MenuItem } from "../types";
 ---
 
@@ -37,7 +37,7 @@ import type { MenuItem } from "../types";
                       tabindex="0"
                       class="menu-item text-base md:text-2xl lg:text-base font-bold p-2 hover:bg-base-200 rounded-lg transition-scale transition-color"
                       id={`header-${subItem.id}`}
-                      href={subItem.href}
+                      href={subItem.href ? subItem.href.toLowerCase() : subItem.href}
                       target={subItem.target || "_self"}
                       aria-label={subItem.text}
                     >
