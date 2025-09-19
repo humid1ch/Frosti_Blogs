@@ -14,6 +14,8 @@ import { CODE_THEME, USER_SITE } from "./src/config.ts";
 
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
+import cangjieGrammar from "./src/languages_hl/Cangjie.tmLanguage.json"; // 确保路径正确
+
 // https://astro.build/config
 export default defineConfig({
   site: USER_SITE,
@@ -40,6 +42,16 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       theme: CODE_THEME,
+      // 添加 langs 配置来注册 Cangjie 语言
+      langs: [
+        {
+          id: 'cangjie',
+          scopeName: 'source.cangjie',
+          grammar: cangjieGrammar,
+          aliases: ['cj', 'cangjie'],
+          extensions: ['.cj', '.cangjie']
+        }
+      ],
       transformers: [{
         preprocess(code, options) {
           this.meta = { lang: options.lang || "plaintext" };
@@ -220,5 +232,9 @@ export default defineConfig({
         },
       },
     },
+    // 确保 JSON 支持
+    json: {
+      stringify: false
+    }
   },
 });
