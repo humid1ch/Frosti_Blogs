@@ -30,9 +30,9 @@ import Kbd from "../../components/mdx/Kbd.astro";
 
 有条件当然可以直接[配置Canjie-SDK](https://cangjie-lang.cn/download/1.0.1)
 
-> 此样式内容, 表示文档原文内容
-
 </Info>
+
+> 此样式内容, 表示文档原文内容
 
 ## 标识符和关键字
 
@@ -171,7 +171,7 @@ let val2 = 30;
 
 且, 以`;`作为表达式或声明结束时, 同一行可以有多个表达式或声明
 
-```
+```cangjie
 let val1 = 20; let val2 = 30;
 ```
 
@@ -225,7 +225,7 @@ let val1 =
          return "55"
      }
      
-     main(): Int64 {
+     main() {
          let test: String = name
          ()
          // 试图将()与name 用换行符做为分隔符 调用, 这样是禁止的
@@ -240,7 +240,7 @@ let val1 =
  - 索引访问表达式中, `[`和它之前的`token`之间禁止使用换行符做分隔符; 
 
      ```cangjie
-     main(): Int64 {
+     main() {
          var arr: Array<Int64> = [1, 2, 3, 4]
          println(arr
          [0])
@@ -254,7 +254,7 @@ let val1 =
  - `constant pattern`中, `$`和它之后的标识符之间禁止使用换行符做分隔符; 
 
      ```cangjie
-     main(): Int64 {
+     main() {
          let name = "humid1ch"
          println("hello $
          {name}")
