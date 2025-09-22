@@ -19,13 +19,13 @@ const sites = [{ name: "Frosti Demo", url: "https://frosti.saroprock.com/" }];
       textOverlay="FRIENDS"
       infoIcon="lucide:link"
     >
-      <div class="space-y-10">
+    <div class="space-y-10">
         <!-- Friends Section -->
         <section>
-          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Icon name="lucide:users" class="w-6 h-6 text-primary" />
-            <span>Friends</span>
-          </h2>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <Icon name="lucide:users" class="w-6 h-6 text-primary" />
+                <span>Friends</span>
+            </h2>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <FriendCard
@@ -80,35 +80,35 @@ const sites = [{ name: "Frosti Demo", url: "https://frosti.saroprock.com/" }];
 
       </div>
     </MainCard>
-    <!-- <Card>
-      <div class="p-4 sm:p-6">
-        <div class="space-y-10">
-          <section>
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
-              <h2 class="text-2xl font-bold flex items-center gap-2">
-                <Icon name="lucide:layout-template" class="w-6 h-6 text-primary" />
-                <span>Sites Using Frosti</span>
-              </h2>
-              <a
-                href="https://github.com/EveSunMaple/Frosti/edit/main/src/pages/friend.astro"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn btn-sm btn-outline btn-primary gap-2"
-              >
-                <Icon name="lucide:plus-circle" class="w-4 h-4" />
-                Add Your Site
-              </a>
+        <!-- <Card>
+            <div class="p-4 sm:p-6">
+                <div class="space-y-10">
+                    <section>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-2">
+                            <h2 class="text-2xl font-bold flex items-center gap-2">
+                            <Icon name="lucide:layout-template" class="w-6 h-6 text-primary" />
+                            <span>Sites Using Frosti</span>
+                            </h2>
+                            <a
+                            href="https://github.com/EveSunMaple/Frosti/edit/main/src/pages/friend.astro"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-sm btn-outline btn-primary gap-2"
+                            >
+                                <Icon name="lucide:plus-circle" class="w-4 h-4" />
+                                Add Your Site
+                            </a>
+                        </div>
+                        <p class="text-base-content/70 mb-6">
+                            Here is a list of sites built with Frosti. Want to get your site listed? Click the "Add Your Site" button
+                            in the top right to edit this page by submitting a Pull Request!
+                        </p>
+                        <div class="flex flex-wrap items-center gap-3">
+                            {sites.map((site) => <Showcase name={site.name} url={site.url} />)}
+                        </div>
+                    </section>
+                </div>
             </div>
-            <p class="text-base-content/70 mb-6">
-              Here is a list of sites built with Frosti. Want to get your site listed? Click the "Add Your Site" button
-              in the top right to edit this page by submitting a Pull Request!
-            </p>
-            <div class="flex flex-wrap items-center gap-3">
-              {sites.map((site) => <Showcase name={site.name} url={site.url} />)}
-            </div>
-          </section>
-        </div>
-      </div>
-    </Card> -->
-  </CardGroup>
+        </Card> -->
+    </CardGroup>
 </BaseLayout>

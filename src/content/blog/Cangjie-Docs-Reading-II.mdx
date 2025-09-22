@@ -30,9 +30,15 @@ import Kbd from "../../components/mdx/Kbd.astro";
 
 有条件当然可以直接[配置Canjie-SDK](https://cangjie-lang.cn/download/1.0.1)
 
-> 此样式内容, 表示文档原文内容
-
 </Info>
+
+<Warning>
+
+博主在此之前, 基本就只接触过C/C++语言, 对大多现代语言都没有了解, 所以在阅读过程中遇到相似的概念, 难免会与C/C++中的相似概念作类比, 见谅
+
+</Warning>
+
+> 此样式内容, 表示文档原文内容
 
 ## 类型
 
@@ -63,7 +69,7 @@ int main() {
 
 ```cangjie
 // Cangjie
-main(): Int64 {
+main() {
     var intVal = 30
     intVal += 30.3
     println(intVal)
@@ -85,7 +91,7 @@ main(): Int64 {
 但是, 如果显式进行类型转换, 就可以:
 
 ```cangjie
-main(): Int64 {
+main() {
     var intVal = 30
     intVal += Int64(30.3)
     println(intVal)
@@ -208,9 +214,7 @@ main(): Int64 {
 下面这段代码, 就会出现问题:
 
 ```cangjie
-package First
-
-main(): Int64 {
+main() {
     var int32Val: Int32 = 30
     var int64Val: Int64 = 30
     var intVal = int32Val + int64Val
@@ -258,9 +262,7 @@ main(): Int64 {
 所以, 关系表达式中存在值为`NaN`的变量的话, 有特定的结果计算方式:
 
 ```cangjie
-package First
-
-main(): Int64 {
+main() {
     let val = 30.0
     if (val == Float64.NaN) {
         println("val == NaN")
@@ -324,12 +326,12 @@ main(): Int64 {
 >
 > ```cangjie
 > main() {
->     'A'=='A' 	// result: true
->     'A'!='A' 	// result: false
->     'A'<'a' 	// result: true
->     'A'<='A' 	// result: true
->     'A'>'a' 	// result: false
->     'A'>='A' 	// result: true
+>    	'A'=='A' 	// result: true
+>    	'A'!='A' 	// result: false
+>    	'A'<'a' 	// result: true
+>    	'A'<='A' 	// result: true
+>    	'A'>'a' 	// result: false
+>    	'A'>='A' 	// result: true
 >     
 >     return 0
 > }
@@ -340,4 +342,665 @@ C/C++语言中, 用`char`类型表示单个字符, `char`本质是整型, 所以
 而仓颉中, **明确`Rune`不可以进行非关系操作符的任何运算**
 
 #### `Bool`类型
+
+> `Bool` 类型字面量（Bool Literal）
+>
+> `Bool` 类型的字面量只有两个：`true` 和 `false`，分别表示“真”和“假”
+
+> `Bool` 类型支持的操作
+>
+> 仓颉编程语言不支持数值类型与 `Bool` 之间的类型转换，也禁止非 `Bool` 的值作为 `Bool` 值来使用，否则会报编译错误
+>
+> `Bool` 类型支持的操作有：赋值操作、部分复合赋值操作（`&&=`, `||=`）、部分关系操作（`==`, `!=`）和所有逻辑操作（`!`, `&&`, `||`）
+
+**仓颉语言中, 禁止整型和浮点型与布尔类型之间的转换, 也禁止其他非布尔值作为布尔值使用**
+
+在C/C++语言中, 整型和浮点型数据是可以直接作为布尔表达式表示真假的, 非0即为真, 仓颉显然禁止掉了这种使用
+
+经过测试, 仓颉的`Bool`类型甚至没有提供直接使用类型名强制类型转换的功能, 即 没有办法通过`Bool(value)`的方式将值强制转换到`Bool`类型
+
+仓颉布尔类型数据支持的操作:
+
+```cangjie
+main() {
+    let bool1: Bool = true
+    var bool2: Bool = false
+    bool2 = true    // assignment
+    bool2 &&= bool1 // bool2=true
+    bool2 ||= bool1 // bool2=true
+    true == false   // return false
+    true != false   // return true
+    !false          // logical NOT, return true
+    true && false   // logical AND, return false
+    false || false  // logical OR, return false
+    
+    return 0
+}
+```
+
+#### `Unit`类型
+
+> `Unit` 类型只有一个值：`()`
+
+仓颉的语言规约-类型文档中, 对`Unit`只有这一句描述
+
+而在开发指南中是这样描述的:
+
+> 对于那些只关心副作用而不关心值的表达式，它们的类型是 `Unit`
+>
+> 例如，`print` 函数、赋值表达式、复合赋值表达式、自增和自减表达式、循环表达式，它们的类型都是 `Unit`
+>
+> `Unit` 类型只有一个值，也是它的字面量：`()`。**除了赋值、判等和判不等外，`Unit` 类型不支持其他操作**
+
+思来想去, 感觉可以把`Unit`类型类比为C/C++中的`void`, 是一个有字面量, 且字面量只能为`()`的`void`
+
+因为仓颉语言是强类型语言, 所以这里`Unit`类型的赋值、判等和判不等操作, 应该是`Unit`类型之间的使用
+
+```cangjie
+main() {
+    let val = ()
+    if (val == ()) {
+        println(val)
+    }
+
+    if (val != ()) {
+        println(val)
+    }
+
+    return 0
+}
+```
+
+![](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250920121024589.webp)
+
+#### `Nothing`类型
+
+> `Nothing` 是一种特殊的类型，它不包含任何值，并且 `Nothing` 是所有类型的子类型
+>
+> `Nothing` 暗示着死代码，例如如果变量为 `Nothing` 类型，则其永远不会被使用，因此也不需要为其创建内存；
+>
+> 如果函数调用的某个参数为 `Nothing` 类型，则该参数后面的参数不会被求值，函数调用本身也不会被执行；
+>
+> 如果 块内 某条表达式是 `Nothing` 类型，则其后的所有表达式和声明均不会被执行到
+>
+> 仓颉编译器会对检测到的死代码进行编译告警
+
+`Nothing`, 在C/C++中 没有一个类型可以类比为`Nothing`
+
+但从描述来看: **如果 块内 某条表达式是 `Nothing` 类型，则其后的所有表达式和声明均不会被执行到**
+
+`return`语句、`continue`和`break`好像与 仓颉中`Nothing`类型的表达式的作用有些相似
+
+代码块中:
+
+1. `return`可以直接返回整个函数, 之后的表达式都不会执行
+2. `break`可以直接结束循环, 循环体之后的表达式也不会被执行
+3. `continue`可以直接跳过本趟循环, 直接进入下一趟循环
+
+#### `String`类型
+
+> 仓颉编程语言使用 `String` 表示字符串类型，用于表达文本数据
+>
+> 由一串 Unicode 字符组合而成
+
+> 字符串字面量可以分为三类：单行字符串字面量，多行字符串字面量，多行原始字符串字面量
+
+关于字符串字面量, [前一篇文章中的相关内容](https://www.humid1ch.cn/blog/cangjie-docs-reading-i#heading-8)已经阅读过了
+
+##### 插值字符串
+
+> **插值字符串** 是一种包含一个或多个**插值表达式**的字符串字面量（不适用于多行原始字符串字面量）
+>
+> 当插值字符串解析为结果字符串时，每个插值表达式所在位置会被对应表达式的结果替换
+>
+> 每个插值表达式必须用 `{}` 括号包起来，并加上 `$` 前缀, 大括号中**支持和 块 中一样的表达式声明序列**，但不能为空
+>
+> 多行字符串中的插值表达式支持换行
+
+插值字符串, 应该是C++开发者心心念念了很久的东西了, 但即使是C++最新的标准, 它还没有呈上来
+
+这应该是现代语言非常常用的一种字符串字面量
+
+```cangjie
+main() {
+    let obj = "apples"
+    let count = 10
+    let interps1 = "There are ${count * count} ${obj}."
+    println(interps1)
+
+    return 0
+}
+```
+
+`"There are ${count * count} ${obj}."`就是一种插值字符串, `${count * count}`和`${obj}`都是插值表达式
+
+![](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250920175419686.webp)
+
+> 如果字符串中的 `$` 符号后面没有 `{`，则当成普通 `$` 符号处理。 如果在 `$` 前添加了转义字符 `\`，那么无论 `$` 符号后面是不是 `{`，都不会被当成插值表达式处理
+>
+> 插值表达式也支持自定义类型，只要该类型满足 `ToString` interface 约束
+
+插值字符串中的插值表达式, 都会被转换为对应的字符串
+
+插值表达式的`{}`中应该支持, 任何完整的、类型存在接口`toString`的表达式
+
+#### `Tuple`类型
+
+> 仓颉编程语言中元组（`Tuple`）类型是一个由多种不同类型组合而成的不可变（`immutable`）类型，使用 `(Type1, Type2, ..., TypeN)` 表示，其中 `N` 代表元组的维度
+>
+>  关于元组类型，说明如下：
+>
+> 1. `Type1` 到 `TypeN` 可以是任意类型（要求 N 不小于 2，即`Tuple` 至少是二元的）
+>
+> 2. 对于元组的每一维度，例如第 K 维，可以存放任何 `TypeK` 子类型的实例
+>
+> 3. 当 `(Type1, Type2, ..., TypeN)` 中的 `Type1` 到 `TypeN` 均支持使用 `==` 进行值判等（使用 `!=` 进行值判不等）时，此 `Tuple` 类型才支持使用 `==` 进行值判等（使用 `!=` 进行值判不等）；
+>
+>     否则，此 `Tuple` 类型不支持 `==` 和 `!=`（如果使用 `==` 和 `!=`，编译报错）
+>
+>     两个同类型的 `Tuple` 实例相等，当且仅当相同位置（`index`）的元素全部相等（意味着它们的长度相等）
+
+元组是大多语言都拥有的一个概念
+
+仓颉的`Tuple`元组可以类比C++11标准提出提出`std::tuple`
+
+##### 元组字面量
+
+不过, 仓颉中并不存在`Tuple`这个关键字, 也意味着**仓颉的元组类型并不使用关键字**
+
+> 元组字面量使用格式 `(expr1, expr2, ... , exprN)` 表示，其中多个表达式之间使用逗号分隔，并且每个表达式可以拥有不同的类型
+
+仓颉中元组字面量就像这样: `(1, 2, 3, "one_two_three")`, 对应的类型就是`(Int64, Int64, Int64, String)`
+
+即, 类似`(type1, type2, ..., typeN)`这样的格式作为元组的类型
+
+##### 使用元组做解构
+
+> 元组也可以用来对另一个元组值进行解构：将一个元组中不同位置处的元素分别绑定到不同的变量
+>
+> ```cangjie
+> func multiValues(a: Int32, b: Int32): (Int32, Int32) { 
+>     return (a + b, a - b) // The type of the return value of the function multiValues is (Int32, Int32).
+> }
+> 
+> main() {
+>     var (x, y) = multiValues(8,24) // Define an anonymous tuple who has two elements, i.e., x and y.
+>     print("${x}") // output: 32
+>     print("${y}") // output: -16
+>     return 0
+> }
+> ```
+
+按照文档中的例子:
+
+函数`multiValues`会返回一个`(Int32, Int32)`类型的元组
+
+`main()`函数中, 执行`var (x, y) = multiValues(8, 24)`, 将返回的元组解构到两个变量中
+
+最终的结果, `x`被赋值为32, `y`被赋值为-16, 即为`multiValues(8, 24)`返回的元组`(8+24, 8-24)`的两个元素
+
+![](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250920213135269.webp)
+
+<Info>
+
+类似`var (x, y)`的方式, 是仓颉中的多变量声明的一种方式
+
+在上面的示例中, 用于元组的解构赋值
+
+如果只是要声明变量, 而不是解构元组, 就需要指明变量类型:
+
+```cangjie
+var (x, y): (Int64, Int64)
+```
+
+</Info>
+
+##### 元组的下标访问
+
+> 元组支持通过 `tupleName[index]` 的方式访问其中某个具体位置的元素（`index` 表示从 `0` 开始的下标，并且只能是一个 `Int64` 类型的字面量）
+
+元组中元素的访问, 可以通过下标访问, 范围是`[0, 1, ...]`
+
+重点是, **下标只能是`Int64`类型的字面量, 不能是任何变量**
+
+即:
+
+```cangjie
+let tuple = (1, 2)
+tuple[0]		// √
+
+let index = 0
+tuple[index]	// ×
+```
+
+##### 定义元组类型的变量
+
+> 在定义元组类型的变量时，可以省略类型标注，由编译器根据程序上下文推断出具体的类型
+>
+> ```cangjie
+> let tuplePIE = (3.14, "PIE")     // The type of tuplePIE is inferred to be (Float64, String).
+> var pointOne = (2.4, 3.5) 		// The type of pointOne is inferred to be (Float64, Float64).
+> var pointTwo = (2, 3, 4) 		// The type of pointTwo is inferred to be (Int64, Int64, Int64).
+> var pointThree = ((2, 3), 4) 	// The type of pointThree is inferred to be ((Int64, Int64), Int64).
+> ```
+
+除了省略类型让编译器自动推断外, 肯定要先了解不省略的定义方式:
+
+```cangjie
+let tuplePIE: (Float64, String) = (3.14, "PIE")
+var pointOne: (Float64, Float64) = (2.4, 3.5)
+var pointTwo: (Int64, Int64, Int64) = (2, 3, 4)
+var pointThree: ((Int64, Int64), Int64) = ((2, 3), 4)
+```
+
+因为元组的元素可以是任意类型的, 所以也可以元组套元组
+
+#### `Range`类型
+
+> 仓颉编程语言使用 `Range<T>` 表示 `Range` 类型，并要求 `T` 只能实例化为实现了 `Comparable` interface 和 `Countable` interface 的类型
+
+`Range`又是一个C/C++中没有的一个类型, `Python`中倒是有`range`但只限于整型
+
+仓颉中, `Range`是一个泛型类型, 但`T`必须要要实例化有两个接口: `Comparable`和`Countable`
+
+这两个接口: 
+
+1. `Comparable`, 该接口表示比较运算, 等于、不等于、小于、大于、小于等于、大于等于接口的集合体
+2. `Countable`, 该接口表示类型可数, 可数类型的每一个实例在逻辑上都位于一个数轴上，对应一个整数位置，并且可以通过从这个位置“移动”一定的步数来得到其他的该类型实例
+
+具体阅读到相关位置再做了解吧
+
+> `Range` 类型用于表示一个拥有固定步长的序列，并且是一个不可变（`immutable`）类型
+>
+> 每个 `Range<T>`类型的实例都会包含 `start`、`end` 和 `step` 值
+>
+> 其中，`start` 和 `end` 分别表示序列的起始值和终止值，`step` 表示序列中前后两个元素之间的差值
+>
+> `Range` 类型支持使用 `==` 进行判等（使用 `!=` 进行判不等），两个相同类型的 Range 实例相等: 当且仅当它们同时为“左闭右开”或“左闭右闭”，并且它们的 `start` 值、`end` 值和 `step` 值均对应相等
+
+`Range`序列中, 每个元素之间的间隔都是相等的
+
+类似: `[0, 2, 4, 6, 8]`或`[0, 1, 2, 3, 4]`
+
+而不是: `[0, 1, 2, 4, 5, 6]`或`[0, 2, 3, 4, 6, 8]`
+
+##### 创建`Range`实例
+
+> **存在两种 `Range` 操作符：`..` 和 `..=`，分别用于创建“左闭右开”和“左闭右闭”的 `Range` 实例。它们的使用方式分别为 `start..end:step` 和 `start..=end:step`（其中 `start`、`end` 和 `step` 均是表达式）**
+>
+> 关于这两种表达式，说明如下。
+>
+> 1. 要求 `start` 和 `end` 的类型相同，**`step` 的类型为 `Int64`**
+>
+> 2. 表达式 `start..end:step` 中，
+>
+>     当 `step > 0` 且 `start >= end`，或者 `step < 0` 且 `start <= end` 时，`start..end:step` 返回一个空 `Range` 实例（不包含任何元素的空序列）；
+>
+>     如果 `start..end:step` 的结果是非空 `Range` 实例，则 `Range` 实例中元素的个数等于`(end-start)/step` 向上取整（即大于等于 `(end-start)/step` 的最小整数）
+>
+> 3. 表达式 `start..=end:step` 中，当 `step > 0` 且 `start > end`，或者 `step < 0` 且 `start < end` 时，`start..=end:step` 返回一个空 `Range` 实例；如果 `start..=end:step` 的结果是非空 `Range` 实例，则 `Range` 实例中元素的个数等于`((end-start)/step)+1` 向下取整（即小于等于 `((end-start)/step)+1` 的最大整数）
+>
+>     ```cangjie
+>     let range1 = 0..10:1 	// Define an half-open range [0,10) (with step = 1) which contains 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9.
+>     let range2 = 0..=10:2 	// Define a closed range [0,10] (with step = 2) which contains 0, 2, 4, 6, 8 and 10.
+>     let range3 = 10..0:-2 	// Define an half-open range [10,0) (with step = -2) which contains 10, 8, 6, 4 and 2.
+>     let range4 = 10..=0:-1 	// Define a closed range [10,0] (with step = -1) which contains 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 and 0.
+>     let range5 = 10..0:1 	// Define an empty range.
+>     let range6 = 0..0:1 	// Define an empty range.
+>     let range7 = 0..=0:1    // Define a closed range [0,0] (with step = 1) which only contains 0.
+>     let range8 = 0..=10:-1 	// Define an empty range.
+>     ```
+>
+> 4. 表达式 `start..end:step` 和 `start..=end:step` 中，**`step` 的值不能等于 `0`**
+>
+>     ```cangjie
+>     let range9 = 0..10: 0 				// error: the value of the step should not be zero.
+>     let range10 = 0..=10: 0 			// error: the value of the step should not be zero.
+>     ```
+>
+> 5. 除了下节提到的 `Range<Int64>` 类型的实例用在下标操作符 `[]` 中时可以省略 `start` 或 `end` 外，其他场景下，**`start` 和 `end` 均是必选的**，只有 `step` 是可选的（默认 `step=1`）
+>
+>     ```cangjie
+>     let range11 = 1..10 		 // Define an half-open range [1, 10) with step = 1.
+>     let range12 = 1..=10 		 // Define a closed range [1, 10] with step = 1.	
+>     let range13 = ..10 		     // error: the start value is required.
+>     let range14 = 1.. 		     // error: the end value is required.
+>     let range15 = .. 		     // error: the start and end value are required.
+>     ```
+
+##### `Range`类型的使用
+
+> `Range` 类型的表达式主要用在 `for-in` 表达式中（参见 [循环表达式]），以及作为下标用于截取片段
+>
+> 需要注意的是：
+>
+> - 当 `Range<Int64>` 类型的实例用在下标操作符 `[]` 中时，`start` 和 `end` 均是可选的
+> - 它们的值由使用的上下文决定：在自定义类型上重载下标操作符 `[]` 且参数类型是 `Range<Int64>` 时，使用过程中省略 `start` 时 `start` 的值等于 `0`，省略 `end` 时 `end` 的值等于 `Int64` 的最大值
+
+"`Range` 类型的表达式主要用在 `for-in` 表达式中，以及作为下标用于截取片段"
+
+`for-in`表达式的部分具体阅读到地方在具体了解
+
+不过, **`Range`可以作为下标用于截取片段**
+
+那么就意味着, `Range`可以出现在`[]`操作符中
+
+结合文档的内容, 就会出现这几种合法用法:
+
+```cangjie
+obj[..end]
+obj[start..]
+obj[start..end]
+obj[start..end:1]
+```
+
+且经测试, 在仓颉标准库提供的`Array`和`ArrayList`等类型中, **`Range`作为下标用于截取片段时, `step`只能为`1`**
+
+且, 即 **如果不指定`end`会抛异常**
+
+##### 定义`Range`类型变量
+
+> 在定义 `Range<T>` 类型的变量时，可以显式添加类型标注，也可以省略类型标注（此时由编译器根据程序上下文推断）
+>
+> ```cangjie
+> let range16: Range<Int64> = 0..10 		// Define an half-open range [0,10) with step = 1
+> let range17: Range<Int64> = -10..10:2 	// Define an half-open range [-10,10) with step = 2
+> let range18 = 0..=10 		            // Define a closed range [0,10] with step = 1
+> let range19 = -10..=10:2 	            // Define a closed range [-10,10] with step = 2
+> ```
+
+#### `Function`类型
+
+> 函数类型（function type）表示一个具体函数的类型，它同样是 `immutable` 的
+>
+> 参数类型列表 `parameterTypes` 和返回类型 `type` 使用 `->` 连接
+>
+> 其中，参数类型列表的一对 `()` 是必选的，`()` 内可以包含 0 个或多个类型（多个类型使用 `,` 分隔）：
+>
+> ```cangjie
+> () -> Int32
+> () -> Unit
+> (Float32) -> Int32
+> (Int32, Int32, Float32) -> Int32
+> (Int32, Int32, Float32) -> (Int32, Int32)
+> (Int32, Int32, Float32) -> Unit
+> ```
+
+仓颉中明确说明了函数的类型是这样的格式: `(参数列表) -> 返回值类型`
+
+而仓颉中的函数定义则是:
+
+```cangjie
+func 函数名(参数列表): 返回值类型 {}
+```
+
+> 仓颉编程语言中，**函数是一等公民（first-class citizens），意味着函数可以作为其他函数的参数，可以作为其他函数的返回值，也可以直接赋值给变量**
+
+函数是一等公民, 可以**作为其他函数的参数**, 这时函数的具体类型就派上了用场
+
+可以作为其他函数的返回值, 也就可以实现生产、定制函数的功能, 以及闭包
+
+> 函数类型不支持使用 `==`（`!=`）进行判等（判不等）
+
+#### `enum`类型
+
+> `enum` 类型是一种 `immutable` 类型，用于将一组相关的值（称为 `constructor`）组织在一起
+>
+> 声明为 `enum` 类型的值，其在任何时刻只能取 `enum` 类型定义中的某个 `constructor`
+
+枚举类型, C/C++中也有枚举类型, 但是仓颉中的枚举是现代语言中常见的枚举
+
+##### 定义`enum`类型
+
+> 定义 `enum` 类型的语法为：
+>
+> ```
+> enumDefinition
+>     : enumModifier? 'enum' identifier typeParameters? ('<:' superInterfaces)? genericConstraints? '{' enumBody '}'
+>     ;
+>     
+> enumBody
+>     : '|'? caseBody ('|' caseBody)* (functionDefinition | operatorFunctionDefinition | propertyDefinition | macroExpression)*
+>     ;
+>     
+> caseBody
+>     : identifier ('(' type (',' type)* ')')?
+>     ;
+> ```
+>
+> 其中 `enumModifier` 是 `enum` 类型的修饰符（即 `public`），`enum` 是关键字，`identifier` 是 `enum` 类型的名字，`typeParameters` 和 `genericConstraints` 分别是类型变元列表和类型变元的约束
+>
+> `enumBody` 中可以定义若干 `caseBody`（即 `constructor`），每个 `constructor` 可以没有参数，也可以有一组不同类型的参数，多个 `constructor` 之间使用 `|` 分隔，第一个 `constructor` 之前可以存在一个可选的 `|`
+>
+> `caseBody` 后可以定义 `enum` 的其它成员，包含成员函数、操作符重载函数、成员属性
+
+C/C++中的枚举, 与现代语言中的枚举一般会存在很大的不同
+
+以仓颉中的枚举类型为例, 按照文档中的说明, 仓颉的枚举类型是可以携带参数的, 且枚举类型内部还可以实现成员函数、成员属性等
+
+```cangjie
+enum TimeUnit1 {
+    Year | Month | Day | Hour
+}
+
+enum TimeUnit2 { 
+    | Year(Float32)
+    | Month(Float32, Float32)
+    | Day(Float32, Float32, Float32)
+    | Hour(Float32, Float32, Float32, Float32) 
+}
+
+enum TimeUnit3<T1, T2> { 
+    | Year(T1)
+    | Month(T1, T2)
+    | Day(T1, T2, T2)
+    | Hour(T1, T2, T2, T2) 
+}
+```
+
+> 关于 `enum` 类型，需要注意的是：
+>
+> 1. **`enum` 类型只能定义在 `top-level`**, 即 顶层作用域
+>
+> 2. 不支持空括号无参的 `constructor` 定义，且**无参 `constructor` 的类型为被定义的 `enum` 类型本身**，不视作函数类型
+>
+>     **有参的 `constructor` 具有函数类型，但不能作为一等公民使用**：
+>
+>     ```
+>     enum E {
+>         | mkE // OK. The type of mkE is E but not () -> E.
+>         | mkE() // Syntax error.
+>     }
+>     
+>     enum E1 {
+>         | A
+>     }
+>     let a = A // ok, a: E1
+>     
+>     enum E2 {
+>         | B(Bool)
+>     }
+>     let b = B // error
+>     // 不能作为一等公民
+>     
+>     enum E3 {
+>         | C
+>         | C(Bool)
+>     }
+>     let c = C // ok, c: E3
+>     ```
+>
+> 3. 作为一种自定义类型，**`enum` 类型默认不支持使用 `==`（`!=`）进行判等（判不等）**
+>
+>     当然，可以通过重载 `==`（`!=`）操作符使得自定义的 `enum` 类型支持 `==`（`!=`）
+>
+> 4. 同一个 `enum` 中支持 `constructor` 的重载，但是**只有参数个数参与重载，参数类型不参与重载**，也就是说，允许同一个 `enum` 中定义多个同名 `constructor`，但是要求它们的参数个数不同（没有参数的 `constructor` 虽不为函数类型，也可以与其它 `constructor` 重载），例如：
+>
+>     ```cangjie
+>     enum TimeUnit4 { 
+>         | Year
+>         | Year(Int32) 		                     // ok
+>         | Year(Float32) 	                     // error: redeclaration of 'Year'
+>         | Month(Int32, Float32)                  // ok
+>         | Month(Int32, Int32) 	                 // error: redeclaration of 'Month'
+>         | Month(Int32) 			                 // ok
+>         | Day(Int32, Float32, Float32)           // ok
+>         | Day(Float32, Float32, Float32) 	     // error: redeclaration of 'Day'
+>         | Day(Float32, Float32) 			     // ok
+>         | Hour(Int32, Float32, Float32, Float32) // ok
+>         | Hour(Int32, Int32, Int32, Int32) 	     // error: redeclaration of 'Hour'
+>         | Hour(Int32, Int32, Int32) 		     // ok
+>     }
+>     ```
+>
+> 5. `enum` 类型支持递归和互递归定义，例如：
+>
+>     ```cangjie
+>     // 递归
+>     enum TimeUnit5 { 
+>         | Year(Int32)
+>         | Month(Int32, Float32)
+>         | Day(Int32, Float32, Float32)
+>         | Hour(Int32, Float32, Float32, Float32)
+>         | Twounit(TimeUnit5, TimeUnit5) 
+>     }
+>     
+>     // 互递归定义
+>     enum E1 {
+>         A | B(E2)
+>     }
+>     enum E2 {
+>         C(E1) | D(E1)
+>     }
+>     ```
+>
+> 6. `enum` 不可以被继承
+>
+> 7. `enum` 可以实现接口
+
+##### `enum`值的访问
+
+`enum`值有两种访问方式:
+
+> 第一种是通过 `enum` 名加上 `constructor` 名的访问方式
+>
+> 第二种是省略 `enum` 名的方式
+
+假设存在:
+
+```cangjie
+enum TimeUnit1 {
+    Year | Month | Day | Hour
+}
+
+enum TimeUnit2 { 
+    | Year(Float32)
+    | Month(Float32, Float32)
+    | Day(Float32, Float32, Float32)
+    | Hour(Float32, Float32, Float32, Float32) 
+}
+
+enum TimeUnit3<T1, T2> { 
+    | Year(T1)
+    | Month(T1, T2)
+    | Day(T1, T2, T2)
+    | Hour(T1, T2, T2, T2) 
+}
+```
+
+第一种方式就是: 通过`enum名.constructor(参数)`的方式访问
+
+```cangjie
+let time1 = TimeUnit1.Year
+let time2 = TimeUnit2.Month(1.0, 2.0)
+let time3 = TimeUnit3<Int64, Float64>.Day(1, 2.0, 3.0)
+```
+
+第二种方式, 则是省略`enum名`:
+
+```cangjie
+let time1 = Year
+let time2 = Month(1.0, 2.0)
+let time3 = Day<Int64, Float64>(1, 2.0, 3.0)
+```
+
+> 关于第二种使用方式需要满足以下规则:
+>
+> 当**不存在其它变量名、函数名、类型名、包名冲突**的时候，可以省略类型前缀使用
+>
+> 否则会优先选择变量名、函数名、类型名或包名
+
+##### `enum`类型的解构
+
+> **使用 `match` 表达式和 `enum pattern` 可以实现对 enum 的解构**
+>
+> ```cangjie
+> let time12 = TimeUnit1.Year
+> let howManyHours = match (time12) {
+>     case Year => 365 * 24 // matched
+>     case Month => 30 * 24
+>     case Day => 24
+>     case Hour => 1
+> }
+> 
+> let time13 = TimeUnit2.Month(1.0, 1.5)
+> let howManyHours = match (time13) {
+>     case Year(y) => y * 365.0 * 24.0
+>     case Month(y, m) => y * 365.0 * 24.0 + m * 30.0 * 24.0 // matched
+>     case Day(y, m, d) => y * 365.0 * 24.0 + m * 30.0 * 24.0 + d * 24.0
+>     case Hour(y, m, d, h) => y * 365.0 * 24.0 + m * 30.0 * 24.0 + d * 24.0 + h
+> }
+> ```
+
+`match`表达式的具体使用, 在本篇文档中没有提及, 之后进行阅读
+
+不过大概意思是, `match`可以匹配`enum`类型值, 同时可以将值携带的参数数据提取出来使用
+
+##### `enum`的其他成员
+
+> `enum` 中也可以定义成员函数、操作符函数和成员属性
+>
+> - 定义普通成员函数 参见[函数定义]
+> - 定义操作符函数的语法 参见[操作符重载]
+> - 定义成员属性的语法 参见[属性的定义]
+>
+> `enum` 中的 `constructor`、静态成员函数、实例成员函数之间不能重载
+>
+> 因此，`enum` 的 `constructor`、静态成员函数、实例成员函数、成员属性之间均不能重名
+
+虽然本篇文档中没有涉及成员函数、操作符函数和成员属性的定义语法
+
+但是有一个简单的例子:
+
+```cangjie
+enum Foo {
+    A | B | C
+    func f1() {
+        f2(this)
+    }
+    static func f2(v: Foo) {
+        match (v) {
+            case A => 0
+            case B => 1
+            case C => 2
+        }
+    }
+    prop item: Int64 {
+        get() {
+            f1()
+        }
+    }
+}
+
+main() {
+    let a = Foo.A
+    a.f1()
+    Foo.f2(a)
+    a.item
+}
+```
+
+大致可以看出, 成员函数可以通过`enum`值调用, 静态成员函数还可以通过`enum`类型直接调用
+
+成员属性, 可以通过值访问, 调用`get()`方法, 应该还有`set()`方法
 

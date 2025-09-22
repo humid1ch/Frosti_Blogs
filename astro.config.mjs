@@ -228,9 +228,8 @@ export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          api: "modern-compiler",
+            includePaths: ["./src/styles"],
         },
-      },
     },
     // 确保 JSON 支持
     json: {
