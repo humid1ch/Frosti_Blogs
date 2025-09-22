@@ -604,7 +604,8 @@ const { title, image, description = SITE_DESCRIPTION, headings = [], showTOC = f
                         target.tagName === "IMG" &&
                         !target.closest("aside") &&
                         target.id !== "viewerImage" &&
-                        !target.closest(".wl-reaction-img")
+                        !target.closest(".wl-reaction-img") &&
+                        !target.classList.contains("object-cover")
                     ) {
                         e.preventDefault();
                         this.open(target as HTMLImageElement);
