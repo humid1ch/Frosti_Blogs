@@ -15,13 +15,7 @@ import Footer from "@components/Footer.astro";
 import Navbar from "@components/Navbar.astro";
 import MobileTOC from "@components/widgets/MobileTOC.astro";
 
-const {
-  title,
-  image,
-  headings = [],
-  showTOC = false,
-  isIndexed = true,
-} = Astro.props;
+const { title, image, description = SITE_DESCRIPTION, headings = [], showTOC = false, isIndexed = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -35,11 +29,7 @@ const {
     <ClientRouter />
     <ElementCrossing />
     <PointerOnNavigation />
-    <Header
-      description={SITE_DESCRIPTION}
-      favicon={SITE_FAVICON}
-      image={image}
-    />
+    <Header title={title} description={description} favicon={SITE_FAVICON} image={image} />
     <title>{`${title} - ${SITE_TAB}`}</title>
 
     <script define:vars={{ SITE_THEME }} is:inline>
