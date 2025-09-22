@@ -12,7 +12,7 @@ import updateConfig from "./src/integration/updateConfig.ts";
 
 import { CODE_THEME, USER_SITE } from "./src/config.ts";
 
-import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
+import { remarkReadingTime } from "./src/plugins/remark-reading-time.ts";
 
 import cangjieGrammar from "./src/languages_hl/Cangjie.tmLanguage.json"; // 确保路径正确
 
@@ -228,8 +228,9 @@ export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
-            includePaths: ["./src/styles"],
+          api: "modern-compiler",
         },
+      },
     },
     // 确保 JSON 支持
     json: {
