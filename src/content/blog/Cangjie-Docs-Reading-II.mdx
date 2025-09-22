@@ -670,7 +670,7 @@ var pointThree: ((Int64, Int64), Int64) = ((2, 3), 4)
 
 ##### `Range`类型的使用
 
-> `Range` 类型的表达式主要用在 `for-in` 表达式中（参见 [循环表达式]），以及作为下标用于截取片段
+> `Range` 类型的表达式主要用在 `for-in` 表达式中，以及作为下标用于截取片段
 >
 > 需要注意的是：
 >
@@ -696,7 +696,11 @@ obj[start..end:1]
 
 且经测试, 在仓颉标准库提供的`Array`和`ArrayList`等类型中, **`Range`作为下标用于截取片段时, `step`只能为`1`**
 
-且, 即 **如果不指定`end`会抛异常**
+且, 即 **如果使用`..=`的形式且不指定`end`, 会抛异常**
+
+以及, **如果`start`或`end`被省略, `step`禁止被显式指定, 会出现语法错误**
+
+![](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250921191941539.webp)
 
 ##### 定义`Range`类型变量
 
@@ -1004,3 +1008,398 @@ main() {
 
 成员属性, 可以通过值访问, 调用`get()`方法, 应该还有`set()`方法
 
+#### `Option`类型
+
+> `Option type` 是一种泛型 `enum` 类型：
+>
+> ```cangjie
+> enum Option<T> { Some(T) | None }
+> ```
+>
+> `Some` 和 `None` 是两个 `constructor`，`Some(T)` 表示一种有值的状态，`None` 表示一种无值的状态
+>
+> 类型变元 `T` 被实例化为不同的类型，会得到不同的 `Option type`，例如：`Option<Int32>`、`Option<String>`等
+
+`Option`是仓颉标准提供的一个泛型`enum`类型
+
+"`Some` 和 `None` 是两个 `constructor`，`Some(T)` 表示一种有值的状态，`None` 表示一种无值的状态"
+
+也就是说, `Option`可以包装数据类型, 如果是`Some(数据)`就表示有值, 如果是`None`就表示无值
+
+可以举个简单的例子理解:
+
+假设有一个函数, 如果执行正确, 会返回一个字符串, 但是 如果执行错误就不返回字符串, 此时返回值的类型就可以设置为`Option<String>`:
+
+```cangjie
+func getStr(n: Int32): Option<String> {
+    if (n < 10) {
+        return "a String"
+    }
+
+    return None
+}
+
+main() {
+    let result1 = getStr(5)
+    let result2 = getStr(10)
+
+    match (result1) {
+        case Some(str) => println(str)
+        case None => println("get None")
+    }
+
+    match (result2) {
+        case Some(str) => println(str)
+        case None => println("get None")
+    }
+
+    return 0
+}
+```
+
+![](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250921144501148.webp)
+
+`Option`可以通过`match`进行匹配, 实现特定的处理
+
+且, `Option`的`match`, `None`是必须处理的, 这可以看作一种强制判空的处理
+
+`Option`的用法, 类似返回C/C++中的返回指针, 可能返回的是`nullptr`也可能是有效的指针, 所以获取返回值之后一般需要手动判空, 如果忘记判空, 可能会出现一定的问题
+
+而仓颉中, 如果要使用返回值, 就需要强制处理有值和空的情况, 更安全
+
+> `ption` 类型的另一种写法是在类型名前加 `?`，即对于任意类型 `Type`，`?Type` 等价于 `Option<Type>`
+>
+> 例如，`?Int32` 等价于 `Option<Int32>`，`?String` 等价于 `Option<String>` 等等。
+>
+> 关于 `Option` 类型，需要注意：
+>
+> 1. 虽然 `T` 和 `Option<T>` 是不同的类型，但是当明确知道某个位置需要的是 `Option<T>` 类型的值时，可以直接传一个 `T` 类型的值，编译器会将 `T` 类型的值封装成 `Option<T>` 类型的 `Some constructor`
+>
+>     例如，下面的定义是合法的。
+>
+>     ```cangjie
+>     let v1: ?Int64 = 100
+>     let v2: ??Int64 = 100
+>     ```
+>
+> 2. **对于两个不相等的类型 `T1` 和 `T2`，即使它们之间拥有子类型关系，`Option<T1>`和 `Option<T2>`之间也不会构成子类型关系**
+>
+>     `Option` 类型的使用遵循泛型 `enum` 类型的使用规则
+>
+>     例如，可以定义一系列不同 `Option` 类型的变量：
+>
+>     ```cangjie
+>     let opInt32_1 = Some(100)           // The type of 'opInt32_1' is 'Option<Int32>'
+>     let opInt32_2 = Option<Int32>.None  // The type of 'opInt32_2' is 'Option<Int32>'
+>     let opChar = Some('m')              // The type of 'opChar' is 'Option<Rune>'
+>     let opBool = Option<Bool>.None      // The type of 'opBool' is 'Option<Bool>'
+>                     
+>     enum TimeUnit1 {
+>         Year | Month | Day | Hour
+>     }
+>     let opEnum = Some(TimeUnit1.Year)   // The type of 'opEnum' is 'Option<TimeUnit1>'
+>     ```
+
+##### `Option`值的解构
+
+> 提供若干方式以方便对 Option 值的解构：模式匹配、`getOrThrow` 函数、`coalescing` 操作符（`??`）和问号操作符（`?`）
+
+> 1. `Option` 类型是一种 `enum` 类型，因此可以使用模式匹配表达式中的 `enum pattern`实现 `Option` 值的解构
+>
+>     ```cangjie
+>     let number1 = match (opInt32_1) {
+>         case Some(num) => num
+>         case None => 0
+>     }
+>     
+>     let number2 = match (opInt32_2) {
+>         case Some(num) => num 
+>         case None => 0
+>     }
+>     
+>     let enumValue = match (opEnum) {
+>         case Some(tu) => match (tu) {
+>                               case Year => "Year"   // matched
+>                               case Month => "Month"
+>                               case Day => "Day"
+>                               case Hour => "Hour"
+>                           }
+>         case None => "None"
+>     }
+>     ```
+>
+> 2. 对于 `Option<T>` 类型的表达式 `e`，通过调用函数 `getOrThrow()` 或 `getOrThrow(exception: ()->Exception)` 实现对 `e` 的解构：
+>
+>     如果 `e` 的值等于 `Option<T>.Some(v)`，则 `e.getOrThrow()` （或 `e.getOrThrow(lambdaArg)`）的值等于 `v` 的值；
+>
+>     如果 `e` 的值等于 `Option<T>.None`，则 `e.getOrThrow()` 在运行时抛出 `NoneValueException` 异常（`e.getOrThrow(lambdaArg)` 在运行时抛出 `lambdaArg` 中指定的异常）
+>
+>     ```cangjie
+>     let number1 = opInt32_1.getOrThrow()                 // number1 = 100
+>     let number2 = opInt32_2.getOrThrow()                 // throw NoneValueException
+>     let number3 = opInt32_2.getOrThrow{ MyException("Get None value") } // throw MyException
+>     ```
+>
+> 3. 对于 `Option<T>` 类型的表达式 `e1` 和 `T` 类型的表达式 `e2`，表达式 `e1 ?? e2` 的类型为 `T`
+>
+>     当 `e1` 的值等于 `Option<T>.Some(v)` 时，`e1 ?? e2` 的值等于 `v` 的值；
+>
+>     当 `e1` 的值等于 `Option<T>.None` 时，`e1 ?? e2` 的值等于 `e2` 的值
+>
+>     ```cangjie
+>     let number1 = opInt32_1 ?? 0  // number1 = 100
+>     let number2 = opInt32_2 ?? 0  // number2 = 0
+>     ```
+>
+> 4. 问号操作符（ `?` ）是一元后缀操作符
+>
+>     `?` 需和后缀操作符 `.`，`()`, `{}` 或 `[]` 一起使用，以实现 `Option<T>` 对这些后缀操作符的支持
+>
+>     对于一个 `Option` 类型的表达式 `e`，`e?.b` 表示当 `e` 为 Some 时得到 `Option<T>.Some(b)`，否则得到 `Option<T>.None`（T 为 b 的类型），其它操作符同理
+>
+>     ```cangjie]
+>     class C {
+>         var item = 100
+>     }
+>     let c = C()
+>     let c1 = Some(c)
+>     let c2 = Option<C>.None
+>     let r1 = c1?.item   // r1 = Option<Int64>.Some(100)
+>     let r2 = c2?.item   // r2 = Option<Int64>.None
+>     ```
+
+`Option`在`match`中的解构, 就是匹配有值和无值两种情况, 并进行处理
+
+同时`Option`类型的表达式内置函数`getOrThrow()`, 如果有值则获取值, 如果无值, 则抛出异常
+
+而, `Option<T>`类型的表达式, 还可以通过`e1 ?? e2`表达式, 如果有值则获取值, 如果无值 则获取`e2`这个默认值, `e2`的类型为`T`
+
+然后就是`?`操作符, `Option<T>`类型表达式后可用`?`操作符再后接访问`T`类型内元素的操作符: `.`、`[]`、`()`等, 获取`Some(T)`或`None`
+
+### 可变类型
+
+#### `Array`类型
+
+> 仓颉编程语言使用泛型类型 `Array<T>` 表示 `Array` 类型，`Array` 类型用于存储一系列相同类型（或者拥有公共父类）的元素
+>
+> 关于 `Array<T>`，说明如下：
+>
+> 1. `Array<T>` 中的元素是有序的，并且**支持通过索引（从 `0` 开始）访问其中的元素**
+>
+> 2. **`Array` 类型的长度是固定的，即一旦建立一个 `Array` 实例，其长度是不允许改变的**
+>
+> 3. **`Array` 是引用类型，定义为引用类型的变量，变量名中存储的是指向数据值的引用，因此在进行赋值或函数传参等操作时， `Array` 拷贝的是引用**
+>
+> 4. 类型变元 `T` 被实例化成不同的类型，会得到不同的 `Array` 类型，例如，`Array<Int32>` 和 `Array<Float64>` 分别表示 `Int32` 类型的 `Array` 和 `Float64` 类型的 `Array`
+>
+> 5. 当 `Array<T>` 中的 `Type` 类型支持使用 `==` 进行值判等（使用 `!=` 进行值判不等）时，`Array<T>` 类型支持使用 `==` 进行值判等（使用 `!=` 进行值判不等）；
+>
+>     否则，`Array<T>` 类型不支持`==` 和 `!=`（如果使用 `==` 和 `!=`，编译报错）
+>
+>     两个同类型的 `Array<T>` 实例值相等，当且仅当相同位置（`index`）的元素全部相等（意味着它们的长度相等）
+>
+> 6. 多维 `Array` 定义为 `Array` 的 `Array` ，使用 `Array<Array<...>>` 表示
+>
+>     例如，`Array<Array<Int32>>` 表示 `Int32` 类型的二维 `Array`
+>
+> 7. 当 `ElementType` 拥有子类型时，`Array<ElementType>` 中可以存放任何 `ElementType` 子类型的实例，例如 `Array<Object>` 中可以存放任何 `Object子类` 的实例
+
+**仓颉中的`Array`, 有序(不是升序降序, 而是顺序), 可以通过索引随机访问, 创建之后长度固定且无法改变, 可创建多维**
+
+`Array`即为仓颉中的数组类型, **且`Array`类型是引用类型**, 支持整个数组的判等和判不等操作, 前提是数组内元素类型要支持
+
+##### 创建`Array`实例
+
+> 存在 2 种创建 `Array` 实例的方式：
+>
+> 构造函数
+>
+> ```cangjie
+> // Array<T>()
+> let emptyArr1 = Array<Int64>()  // create an empty array whose type is Array<Int64>
+> let emptyArr2 = Array<String>() // create an empty array whose type is Array<String>
+> 
+> // Array<T>(size: Int64, initElement: (Int64)->T)
+> let array3 = Array<Int64>(3) { i => i * 2 } // 'array3' has 3 elememts: 0, 2, 4
+> let array4 = Array<String>(2) { i => "$i" } // 'array4' has 2 elememts: "0", "1" 
+> ```
+>
+> Array 字面量
+>
+> `Array` 字面量使用格式 `[element1, element2, ... , elementN]` 表示，其中多个 `element` 之间使用逗号分隔，每个 `element` 可以是一个 `expressionElement` （普通表达式）
+>
+> `Array` 字面量每个元素都是一个表达式：
+>
+> ```cangjie
+> let emptyArray: Array<Int64> = []    // empty Array<Int64>
+> let array0 = [1, 2, 3, 3, 2, 1]      // array0 = [1, 2, 3, 3, 2, 1]
+> let array1 = [1 + 3, 2 + 3, 3 + 3]   // array1 = [4, 5, 6]
+> ```
+>
+> - 在上下文没有明确的类型要求时，若所有 `element` 的最小公共父类型是 `T`，`Array` 字面量的类型是 `Array<T>`
+> - 在上下文有明确的类型要求时，此时要求所有 `element` 的类型都是上下文所要求的 `element` 类型的子类型
+
+仓颉`Array`类型的构造函数, 除了创建空数组之外, 比较重要的是**指定`size`以及初始化元素的函数**
+
+仓颉的构造函数`Array<T>(size: Int64, initElement: (Int64)->T)`
+
+第二个参数, 是用来初始化元素的, 参数是`Int64`类型, 返回值是`T`类型
+
+实际的初始化操作, 就是调用函数传入索引, 返回目标索引获取的`T`类型数据作为`Array`中目标索引的初始值
+
+仓颉中的数组字面量格式为: `[elem1, elem2, ...]`, 也可以用来创建`Array`实例
+
+##### 访问`Array`中的元素
+
+> 对于 `Array` 类型的实例 `arr`，支持以下方式访问 `arr` 中的元素：
+>
+> **访问某个位置处的元素**：通过 `arr[index1]...[indexN]`的方式访问具体位置处的元素（其中 `index1,...,indexN` 是索引值的表达式，它们的类型均为 `Int64`），例如：
+>
+> ```cangjie
+> let array5 = [0, 1]
+> let element0 = array5[0]      // element0 = 0
+> array5[1] = 10                // change the value of the second element of 'array5' through index
+> 
+> let array6 = [[0.1, 0.2], [0.3, 0.4]]
+> let element01 = array6[0][1]  // element01 = 0.2
+> array6[1][1] = 4.0            // change the value of the last element of 'array6' through index
+> ```
+>
+> **迭代访问**：通过 `for-in` 表达式迭代访问 `arr` 中的元素。例如：
+>
+> ```cangjie
+> func access() {
+>     let array8 = [1, 8, 0, 1, 0]
+>     for (num in array8) {
+>         print("${num}")   // output: 18010
+>     }
+> }
+> ```
+
+仓颉中`Array`元素的访问也比较简单: `[]`下标索引 和 `for-in`迭代
+
+##### 访问`Array`的大小
+
+> 支持通过 `arr.size` 的方式返回 `arr` 中元素的个数
+
+```cangjie
+let array9 = [0, 1, 2, 3, 4, 5]
+let array10 = [[0, 1, 2], [3, 4, 5]]
+let size1 = array9.size  // size1 = 6
+let size2 = array10.size // size2 = 2
+```
+
+##### `Array`的切片
+
+数组的切片, 就是截取数组中的某一段连续的序列
+
+> **当 `Range<Int64>` 类型的值用作 `Array` 下标时，用于截取 `Array` 的一个片段**（称之为 `slicing`）
+>
+> 需要注意的是：
+>
+> - **`step` 必须是 1，否则运行时会抛出异常**
+>
+> - `slicing` 返回的类型仍然是相同的 `Array` 类型，并且**是原 `Array` 的引用**
+>
+>     **对切片中元素的修改会影响到原数组**
+>
+> - 当使用 `start..end` 作为 `Array` 下标时，如果省略 `start`，则将 `start` 的值设置为 `0`，如果省略 `end`，则将 `end` 的值设置为 `Array` 的长度值
+>
+> - 当使用 `start..=end` 作为 `Array` 下标时，如果 `start` 被省略，则将 `start` 的值设置为 `0`
+>
+>     **`start..=end` 形式的 `end` 不能省略**
+>
+> - 如果下标是一个空 `range` 值，那么返回的是一个空的 `Array` 
+
+```cangjie
+let array7 = [0, 1, 2, 3, 4, 5]
+
+func slicingTest() {
+    array7[0..5]      // [0, 1, 2, 3, 4]
+    array7[0..5:1]    // [0, 1, 2, 3, 4]
+    array7[0..5:2]    // step 不为 1, 运行时异常
+    array7[5..0:-1]   // step 不为 1, 运行时异常
+    array7[5..0:-2]   // step 不为 1, 运行时异常
+    array7[0..=5]     // [0, 1, 2, 3, 4, 5]
+    array7[0..=5:1]   // [0, 1, 2, 3, 4, 5]
+    array7[0..=5:2]   // step 不为 1, 运行时异常
+    array7[5..=0:-1]  // step 不为 1, 运行时异常
+    array7[5..=0:-2]  // step 不为 1, 运行时异常
+    array7[..4]       // [0, 1, 2, 3]
+    array7[2..]       // [2, 3, 4, 5]
+    array7[..]        // [0, 1, 2, 3, 4, 5]
+    array7[..4:2]     // 语法错误: start 或 end 不存在, 禁止使用:step
+    array7[2..:-2]    // 语法错误: start 或 end 不存在, 禁止使用:step
+    array7[..:-1]     // 语法错误: start 或 end 不存在, 禁止使用:step
+
+    array7[..=4]      // [0, 1, 2, 3, 4]
+    array7[..=4:2]    // 语法错误: start 或 end 不存在, 禁止使用:step
+
+    array7[0..5:-1]   // step 不为 1, 运行时异常
+    array7[5..=0]     // [] 
+    array7[..0]       // [] 
+    array7[..=-1]     // []
+    let temp: Array<Int64> = array7[..]
+    temp[0] = 6 // temp == array7 == [6, 1, 2, 3, 4, 5]
+}
+```
+
+> 当使用 `slicing` 进行赋值时，支持两种不同的用法：
+>
+> - 如果 `=` 右侧表达式的类型是数组的元素类型，会将这个表达式的值作为元素覆盖切片范围的元素
+> - 如果 `=` 右侧表达式的类型与数组的类型相同，会将这个数组拷贝覆盖当前切片范围，这时要求右侧表达式的 `size` 必须与切片范围相同，否则运行时会抛出异常
+
+```cangjie
+let arr = [1, 2, 3, 4, 5]
+arr[..] = 0
+// arr = [0, 0, 0, 0, 0]
+
+arr[0..2] = 1
+// arr = [1, 1, 0, 0, 0]
+
+arr[0..2] = [2, 2]
+// arr = [2, 2, 0, 0, 0]
+
+arr[0..2] = [3, 3, 3] 	// size不匹配, 运行时抛异常
+arr[0..2] = [4] 		// size不匹配, 运行时抛异常
+
+let arr2 = [1, 2, 3, 4, 5]
+arr[0..2] = arr2[0..2] // ok
+// arr = [1, 2, 0, 0, 0]
+
+arr[0..2] = arr2 // runtime exception
+arr[..] = arr2
+```
+
+如果使用 `slicing` 对原数组进行赋值, 总结就两条:
+
+1. 如果`=`右边是 数组内元素类型的值, 就将`slicing`切片中 所有元素赋值为目标值
+2. 如果`=`右边是 同数组类型的数组字面量, 那么**这个数组字面量必须要与`slicing`的`size`匹配才能拷贝覆盖式赋值**, 否则会抛异常
+
+#### `VArray`类型
+
+仓颉中已经有了`Array`数组类型, 但`Array`是引用类型的数组
+
+> **仓颉编程语言使用泛型类型 `VArray<T, $N>` 表示 `VArray` 类型**，`VArray` 类型用于存储一系列相同类型（或者拥有公共父类型）的元素
+>
+> 关于 `VArray<T, $N>`，说明如下：
+>
+> 1. `VArray<T, $N>` 中的元素是有序的，并且支持通过索引（从 `0` 开始）访问其中的元素
+>
+>     如果提供的索引大于或等于其长度，在编译期间能够推导出下标的则编译报错，否则在运行时抛出异常
+>
+> 2. `VArray<T, $N>` 类型的长度是类型的一部分
+>
+>     其中 `N` 表示 `VArray` 的长度，它必须是一个整数字面量，通过固定语法 `$` 加数字进行标注
+>
+>     当提供的整数字面量为负数时，编译期间进行报错
+>
+> 3. **`VArray` 是值类型，定义为值类型的变量，变量名中存储的是数据值本身，因此在进行赋值或函数传参等操作时，`VArray` 类型拷贝的是值**
+>
+> 4. **当类型变元 `T` 被实例化成不同的类型，或 `$N` 标注长度不相等时，会得到不同的 `VArray` 类型**
+>
+>     例`VArray<Int32, $5>` 和 `VArray<Float64, $5>` 是不同类型的 `VArray`
+>
+>     `VArray<Int32, $2>`和 `VArray<Int32, $3>` 也是不同类型的 `VArray`
+>
+> 5. `VArray` 的泛型变元 `T` 是 `VArray` 类型时，表示一个多维的 `VArray` 类型
