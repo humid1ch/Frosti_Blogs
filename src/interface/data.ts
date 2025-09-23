@@ -110,7 +110,7 @@ export interface Heading {
 
 // ===== MDX Components =====
 export interface AlertBaseProps {
-  type: "info" | "success" | "warning" | "error";
+  type: "info" | "success" | "warning" | "error" | "question";
   icon: string;
 }
 

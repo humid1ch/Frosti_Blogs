@@ -15,6 +15,7 @@ export default {
     "alert-success",
     "alert-warning",
     "alert-error",
+    "alert-question"
   ],
   plugins: [daisyUI, typography, addDynamicIconSelectors()],
   daisyui: {
