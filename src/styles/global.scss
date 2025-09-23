@@ -3,36 +3,52 @@
 @tailwind components;
 @tailwind utilities;
 
-// @font-face {
-//   font-family: 'FiraCode Nerd Mono';
-//   src: url('/public/font/FiraCodeNerdMono.woff2') format('woff2');
-//   font-weight: 400; // normal
-//   font-style: normal;
-//   font-display: swap; // 可选，控制字体加载时的显示行为
-// }
-
-// @font-face {
-//   font-family: 'FiraCode Nerd Mono Thin';
-//   src: url('/public/font/FiraCodeNerdMono.woff2') format('woff2');
-//   font-weight: 100; // normal
-//   font-style: normal;
-//   font-display: swap; // 可选，控制字体加载时的显示行为
-// }
-
 @font-face {
-  font-family: 'Maple Normal Medium';
-  src: url('/public/font/MapleMonoNormal-Medium.ttf.woff2') format('woff2');
-  font-weight: 100; // normal
-  font-style: normal;
-  font-display: swap; // 可选，控制字体加载时的显示行为
+    font-family: 'FiraCode Nerd Nono';
+    src: url('/public/font/FiraCodeNerdMono.woff2') format('woff2');
+    font-weight: 400; // normal
+    font-style: normal;
+    // font-display: swap; // 可选，控制字体加载时的显示行为
 }
 
 @font-face {
-  font-family: 'Maple Normal Regular';
-  src: url('/public/font/MapleMonoNormal-Regular.ttf.woff2') format('woff2');
-  font-weight: 100; // normal
-  font-style: normal;
-  font-display: swap; // 可选，控制字体加载时的显示行为
+    font-family: 'FiraCode Nerd Mono Thin';
+    src: url('/public/font/FiraCodeNerdMono.woff2') format('woff2');
+    font-weight: 400; // normal
+    font-style: normal;
+    // font-display: swap; // 可选，控制字体加载时的显示行为
+}
+
+@font-face {
+    font-family: 'HarmonyOS Sans SC Medium';
+    src: url('/public/font/HarmonyOS_Sans_SC_Medium.woff2') format('woff2');
+    font-weight: 400; // normal
+    font-style: normal;
+    // font-display: swap; // 可选，控制字体加载时的显示行为
+}
+
+@font-face {
+    font-family: 'HarmonyOS Sans SC Regular';
+    src: url('/public/font/HarmonyOS_Sans_SC_Regular.woff2') format('woff2');
+    font-weight: 400; // normal
+    font-style: normal;
+    // font-display: swap; // 可选，控制字体加载时的显示行为
+}
+
+@font-face {
+    font-family: 'Maple Mono Normal Medium';
+    src: url('/public/font/MapleMonoNormal-Medium.ttf.woff2') format('woff2');
+    font-weight: 400; // normal
+    font-style: normal;
+    // font-display: swap; // 可选，控制字体加载时的显示行为
+}
+
+@font-face {
+    font-family: 'Maple Mono Normal Regular';
+    src: url('/public/font/MapleMonoNormal-Regular.ttf.woff2') format('woff2');
+    font-weight: 400; // normal
+    font-style: normal;
+    font-display: swap; // 可选，控制字体加载时的显示行为
 }
 
 /* Color scheme configuration to prevent Chrome's auto dark theme */
@@ -47,10 +63,10 @@
 
 /* Global styles with nesting support */
 html {
-  font-family: 'Maple Normal Medium';
-  @apply scroll-smooth;
+    font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Medium';
+    @apply scroll-smooth;
 
-  font-size: 15.5px !important;
+  font-size: 16px !important;
 }
 kbd {
   @apply kbd;
@@ -75,6 +91,7 @@ h4 {
 
 h5 {
   font-size: 1.1em !important;
+  font-weight: bold;
 }
 
 main hr {
@@ -94,11 +111,12 @@ main table {
   width: 40%;
   margin: 1em auto;
 //   font-family: Arial, sans-serif;
-  font-family: 'Maple Normal Medium';
+  font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
   font-size: 16px;
   text-align: center;
   border: 1px solid #ccc;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  
 }
 
 main thead {
@@ -130,6 +148,7 @@ main ol ol {
 main li {
   margin-top: 0.3em !important;
   margin-bottom: 0.3em !important;
+  padding-left: 0em !important;
 }
 
 main li * {
@@ -138,12 +157,14 @@ main li * {
 }
 
 main li code {
-//   font-family: 'FiraCode Nerd Mono';
-  font-family: 'Maple Normal Medium';
+//   font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
+  font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
   border-radius: 0.5rem !important;
   padding: 1px 4px !important;
-  font-size: 0.95em !important;
+  font-size: 0.98em !important;
   font-weight: 400 !important;
+  margin-left: 2px !important;
+  margin-right: 2px !important;
 }
 
 main pre {
@@ -152,13 +173,15 @@ main pre {
 
 main p code,
 main tr code {
-//   font-family: 'FiraCode Nerd Mono';
-  font-family: 'Maple Normal Medium';
+//   font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
+  font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
   border-radius: 0.5rem !important;
   background-color: rgba(0,0,0,0.16);
   padding: 1px 4px !important;
-  font-size: 0.95em !important;
+  font-size: 0.98em !important;
   font-weight: 400 !important;
+  margin-left: 2px !important;
+  margin-right: 2px !important;
 }
 
 main code {
@@ -186,8 +209,8 @@ main strong code {
 }
 
 main code span {
-//   font-family: 'FiraCode Nerd Mono';
-  font-family: 'Maple Normal Medium';
+//   font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
+  font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
   font-size: 0.95em !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
@@ -944,4 +967,15 @@ main pre code {
 	padding-bottom: 1rem !important;
 	padding-left: 0 !important;
 	padding-right: 0 !important;
+}
+
+.frosti-code-toolbar {
+	padding-top: 0.5rem !important;
+	padding-bottom: 0.5rem !important;
+}
+
+blockquote p code {
+    padding-right: 6px !important;
+    margin-left: 4px !important;
+    margin-right: 2px !important;
 }
