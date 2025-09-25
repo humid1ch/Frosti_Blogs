@@ -1,0 +1,244 @@
+---
+title: "仓颉文档阅读-语言规约IV: 表达式(II)"
+pubDate: "2025-09-25"
+description: "一直对仓颉挺感兴趣的, 但是一直没有去读一下文档, 慢慢看一看, 了解一下"
+image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250918180424875.webp'
+categories: 
+    - Blogs
+tags:
+    - 开发语言
+    - 仓颉
+---
+
+import Info from "../../components/mdx/Info.astro";
+
+import Warning from "../../components/mdx/Warning.astro";
+
+import Question from "../../components/mdx/Question.astro";
+
+<Info>
+
+阅读文档版本:
+
+语言规约 [Cangjie-0.53.18-Spec](https://cangjie-lang.cn/docs?url=/0.53.18/Spec/source_zh_cn/Chapter_01_Lexical_Structure(zh).html)
+
+具体开发指南 [Cangjie-LTS-1.0.1](https://cangjie-lang.cn/docs?url=/1.0.1/index.html)
+
+在阅读 了解仓颉的语言规约时, 难免会涉及到一些仓颉的示例代码, 但 我们对仓颉并不熟悉, 所以可以用[仓颉在线体验](https://cangjie-lang.cn/playground)快速验证
+
+有条件当然可以直接[配置Canjie-SDK](https://cangjie-lang.cn/download/1.0.1)
+
+</Info>
+
+<Warning>
+
+博主在此之前, 基本就只接触过C/C++语言, 对大多现代语言都没有了解, 所以在阅读过程中遇到相似的概念, 难免会与C/C++中的相似概念作类比, 见谅
+
+</Warning>
+
+> 此样式内容, 表示文档原文内容
+
+## 表达式
+
+> 表达式通常由一个或多个操作数（`operand`）构成，多个操作数之间由操作符（`operator`）连接，每个表达式都有一个类型，计算表达式值的过程称为对表达式的求值（`evaluation`）
+>
+> 在仓颉编程语言中，表达式几乎无处不在，有表示各种计算的表达式（如算术表达式、逻辑表达式等），也有表示分支和循环的表达式（如 `if` 表达式、循环表达式等）
+>
+> 对于包含多个操作符的表达式，必须明确每个操作符的优先级、结合性以及操作数的求值顺序
+>
+> 优先级和结合性规定了操作数与操作符的结合方式，操作数的求值顺序规定了二元和三元操作符的操作数求值顺序，它们都会对表达式的值产生影响
+>
+> **注：本章中对于各操作符的操作数类型的规定，均建立在操作符没有被重载的前提下**
+
+### 循环表达式
+
+> 仓颉编程语言支持三种循环表达式：`for-in `表达式、`while` 表达式和 `do-while` 表达式
+>
+> 循环表达式的语法定义为：
+>
+> ```
+> loopExpression
+>   : forInExpression
+>   | whileExpression
+>   | doWhileExpression
+>   ;
+> ```
+
+#### `for-in`表达式
+
+> 一个完整的 **`for-in` 表达式** 具有如下形式：
+>
+> ```
+> for (p in e where c) {
+>     s
+> }
+> ```
+>
+> 其中 `pattern guard` `where c` 是非必须的，因此更简易的 **`for-in` 表达式** 具有如下形式：
+>
+> ```
+> for (p in e) {
+>     s
+> }
+> ```
+>
+> **`for-in` 表达式** 的语法定义为：
+>
+> ```
+> forInExpression
+>     : 'for' '(' patternsMaybeIrrefutable 'in' expression patternGuard? ')' block
+>     ;
+>     
+> patternsMaybeIrrefutable
+>     : wildcardPattern
+>     | varBindingPattern
+>     | tuplePattern
+>     | enumPattern
+>     ;
+> 
+> patternGuard
+>     : 'where' expression
+>     ;
+> ```
+>
+> 上述语法定义中，关键字 `for` 之后只能是那些一定或可能为 *irrefutable* 的 pattern（见 [模式的分类](https://www.humid1ch.cn//blog/cangjie-docs-reading-vi#heading-14)）
+>
+> 在语义检查阶段，会检查 `for` 之后的 pattern 是否真的是 *irrefutable*，如果不是 *irrefutable* pattern，则编译报错
+>
+> 另外，如果 `for` 之后的 pattern 中存在 binding pattern，相当于新声明了一个（或多个） `let` 变量，每个变量的作用域从它第一次出现的位置到循环体结束
+
+`for(pattern in expression patternGuard)`
+
+中要求 pattern 必须 一定或可能 *irrefutable*, 也就是不能总是 *refutable*
+
+这意味着, `for-in`表达式, 允许像模式匹配那样, 匹配遍历`expression`中的元素
+
+但, 必须要能够匹配`expression`中的所有元素?
+
+就像这样?
+
+```cangjie
+for ((i, j) in [(1, 2), (3, 4)]) {
+    println("Sum = ${i + j}")
+}
+```
+
+从语法定义来看, 还可以通配符模式、绑定模式、枚举模式进行匹配
+
+但都要满足 *irrefutable*
+
+且, 如果存在 绑定模式, 相当于声明了新的变量, 也就可能触发遮盖:
+
+```cangjie
+let x = 20;
+for (x in [1, 2, 3, 4, 5, 6, 7]) {
+	println(x)
+}
+// for 中的 x 是绑定模式, 相当于新声明一个变量, 触发遮盖
+```
+
+> `for-in` 会先对 `expression` 求值，再调用其 `iterator()` 函数，获取一个类型为 `Iterator<T>` 的值
+>
+> 程序通过调用 `Iterator<T>` 的 `next()` 函数开始执行循环，我们可以使用 `pattern` 匹配迭代的元素，如果匹配成功（如果存在 `patternGuard`，也必须同时满足 `patternGuard` 的条件），则执行循环体 `block`，然后在开始处重新调用 `next()` 继续循环，当 `next()` 返回 `None` 时循环终止
+>
+> `Iterable<T>` 和 `Iterator<T>` 可在标准库中查阅
+>
+> ```cangjie
+> main(): Int64 {
+>     let intArray: Array<Int32> = [0, 1, 2, 3, 4]
+>     for (item in intArray) {
+>         print(item)          // output: 01234
+>     }
+> 
+>     let intRange = 0..5
+>     for (number in intRange where number > 2) {
+>         print(number)        // output: 34
+>     }
+> 
+>     return 0
+> }
+> ```
+
+`for (pattern in expression patternGuard)`
+
+pattern 匹配的是`expreesion`的迭代器元素, 循环体执行完, 自动调用迭代器的`next()`函数, 获取迭代下一个值
+
+#### `while`表达式
+
+> **`while` 表达式**的语法定义为：
+>
+> ```
+> whileExpression
+>     : 'while' '(' ('let' deconstructPattern '<-')? expression ')' block
+>     ;
+> ```
+>
+> 其中 `while` 是关键字，`while` 之后是一个小括号，小括号内可以是一个表达式或者一个 `let` 声明的解构匹配，接着是一个块
+>
+> 一个基础的 `while` 表达式举例：
+>
+> ```cangjie
+> main(): Int64 {
+>     var hundred = 0
+>     while (hundred < 100) { // until hundred = 100
+>         hundred++
+>     }
+>     
+>     return 0
+> }
+> ```
+>
+> `while` 表达式首先对 `while` 之后的表达式进行求值（要求表达式的类型为 `Bool`），如果表达式的值等于 `true`，则执行它之后的块，接着重新计算表达式的值并判断是否重新执行一次循环；如果表达式的值等于 `false`，则终止循环
+
+如果`while()`的括号内是普通`Bool`类型表达式, 那么就与C/C++中的`while`表达式一样
+
+如果表达式值为`true`, 那么就去执行循环体
+
+不过, 仓颉中的`while`还有一种`let`解构匹配的模式
+
+> 对于包含 `let` 的 `while` 表达式，我们称之为 `while-let` 表达式
+>
+> 我们可以用 `while-let` 表达式来做一些简单的解构操作
+>
+> 一个基础的 `while-let` 表达式举例：
+>
+> ```cangjie
+> main(): Int64 {
+>     var x: Option<Int64> = Option<Int64>.Some(100)
+>     // while-let expression
+>     while (let Some(v) <- x) { 
+>         print("x has value")
+>         x = ...
+>     }
+>     
+>     return 0 
+> }
+> ```
+>
+> `while-let` 表达式首先对 `<-` 之后的表达式进行求值（表达式的类型为可以是任意类型），如果表达式的值能匹配 `let` 之后的 pattern，则执行它之后的块，接着重新计算表达式的值然后再次匹配并判断是否重新执行一次循环；如果匹配失败，则终止当前的 `while` 循环。
+>
+> `let` 之后的 pattern 支持常量模式、通配符模式、绑定模式、`Tuple` 模式、`enum` 模式
+
+`while-let`与之前的`if-let`是类似的(见[条件表达式](https://www.humid1ch.cn/blog/cangjie-docs-reading-vi#heading-4))
+
+#### `do-while`表达式
+
+> **do-while 表达式**的语法定义为：
+>
+> ```
+> doWhileExpression
+>     : 'do' block 'while' '(' expression ')' 
+>     ;
+> ```
+>
+> 与 `while` 表达式不同的是：`while` 表达式在第一次循环迭代时，如果表达式`expression` 的值为 `false`，则循环体不会被执行；然而对于 `do-while` 表达式，第一次循环迭代时，先执行循环体 `block`，然后再根据表达式 `expression` 的值决定是否再次执行循环体，也就是说 `do-while` 表达式中的循环体会至少执行一次。例如：
+>
+> ```cangjie
+> main(): Int64 {
+>     var hundred = 0
+>     do {
+>         hundred++
+>     } while (hundred < 100)
+>     return 0
+> }
+> ```
