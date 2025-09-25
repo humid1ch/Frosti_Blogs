@@ -156,7 +156,7 @@ main li * {
   margin-bottom: 0.3em !important;
 }
 
-main li code {
+main li code:not(pre code) {
 //   font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
   font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
   border-radius: 0.5rem !important;
@@ -165,6 +165,10 @@ main li code {
   font-weight: 400 !important;
   margin-left: 2px !important;
   margin-right: 2px !important;
+}
+main li .frosti-code-toolbar {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 main pre {
