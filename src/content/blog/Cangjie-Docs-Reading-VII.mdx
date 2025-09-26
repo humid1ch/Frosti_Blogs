@@ -227,18 +227,532 @@ pattern 匹配的是`expreesion`的迭代器元素, 循环体执行完, 自动�
 >
 > ```
 > doWhileExpression
->     : 'do' block 'while' '(' expression ')' 
->     ;
+>  : 'do' block 'while' '(' expression ')' 
+>  ;
 > ```
 >
-> 与 `while` 表达式不同的是：`while` 表达式在第一次循环迭代时，如果表达式`expression` 的值为 `false`，则循环体不会被执行；然而对于 `do-while` 表达式，第一次循环迭代时，先执行循环体 `block`，然后再根据表达式 `expression` 的值决定是否再次执行循环体，也就是说 `do-while` 表达式中的循环体会至少执行一次。例如：
+> 与 `while` 表达式不同的是：
+>
+> `while` 表达式在第一次循环迭代时，如果表达式`expression` 的值为 `false`，则循环体不会被执行；
+>
+> 然而对于 `do-while` 表达式，第一次循环迭代时，先执行循环体 `block`，然后再根据表达式 `expression` 的值决定是否再次执行循环体，也就是说 `do-while` 表达式中的循环体会至少执行一次
+>
+> 例如：
 >
 > ```cangjie
 > main(): Int64 {
->     var hundred = 0
+>  var hundred = 0
+>  do {
+>      hundred++
+>  } while (hundred < 100)
+>  return 0
+> }
+> ```
+
+#### 循环表达式总结
+
+> `for-in`、`while` 和 `do-while` 这三种循环表达式的表达能力是等价的
+>
+> 通常，在知道循环的次数或遍历一个序列中的所有元素时使用 `for-in` 表达式；
+>
+> 在不知道循环的次数，但知道循环终止条件时使用 `while` 或 `do-while` 表达式
+>
+> **三种循环表达式的类型均为 `Unit`**
+>
+> 由于 `break`、`continue` 表达式必须有包围着它们的循环体，所以对于三种循环表达式，其循环条件中出现的 `break` 或 `continue` 均会绑定到其最近的外层循环；
+>
+> 如外层不存在循环，则报错
+>
+> 例如:
+>
+> ```cangjie
+> while (true) {
+>     println("outer") // printed once
 >     do {
->         hundred++
->     } while (hundred < 100)
+>         println("inner") // printed once
+>     } while (break)  // stop the execution of the outer loop
+>     println("unreached") // not printed
+> }
+> ```
+
+### `try`表达式
+
+> 根据是否涉及资源的自动管理，将 `try` 表达式分为两类：不涉及资源自动管理的普通 try 表达式，以及会进行资源自动管理的 `try-with-resources` 表达式
+>
+> `try` 表达式的语法为：
+>
+> ```
+> tryExpression
+>     : 'try' block 'finally' block
+>     | 'try' block ('catch' '(' catchPattern ')' block)+ ('finally' block)?
+>     | 'try' '(' resourceSpecifications ')' block ('catch' '(' catchPattern ')' block)* ('finally' block)?
+>     ;
+> ```
+>
+> 普通 `try` 表达式 的主要目的是错误处理，详见[异常]章节
+>
+> `try-with-resources` 表达式的主要目的是自动释放非内存资源，详见[异常]章节
+
+没了解过其他现代语言, 只了解C++中的异常
+
+所以对于普通`try`有一定的了解, 仓颉中的`try`在异常时具体再看
+
+### 控制转移表达式
+
+> 控制转移表达式会改变程序的执行顺序
+>
+> **控制转移表达式的类型是 `Nothing` 类型**，该类型是任何类型的子类型
+>
+> 仓颉编程语言提供如下控制转移表达式：
+>
+> - `break`
+> - `continue`
+> - `return`
+> - `throw`
+>
+> 控制转移表达式可以像其他表达式一样，作为子表达式成为复杂表达式的一部分，但是有可能会导致产生不可达代码（不可达部分会编译告警）：
+>
+> ```cangjie
+> main(): Int64 {
+>     return return 1 // warning: the left return expression is unreachable
+> }
+> ```
+
+仓颉中明确表示, `break` `continue` `return` `throw` 表达式类型是`Nothing`
+
+> 控制转移表达式中:
+>
+> `break` 和 `continue` 必须有包围着它们的循环体，且该循环体无法穿越函数边界；
+>
+> `return` 必须有包围着它的函数体，且该函数体无法穿越；
+>
+> 对 `throw` 不作要求
+>
+> “包围着的循环体”无法穿越“函数边界”
+>
+> 在下面的例子中，`break` 出现在函数 `f` 中，外层的 `while` 循环体不被视作包围着它的循环体；
+>
+> `continue` 出现在 `lambda` 表达式 中，外层的 `while` 循环体不被视作包围着它的循环体
+>
+> ```cangjie
+> while (true) {
+>     func f() {
+>         break 		// Error: break 必须直接在循环内使用
+>     }
+>     let g = { =>
+>         continue 	// Error: continue 必须直接在循环内使用
+>     }
+> }
+> ```
+>
+> 控制转义表达式的语法为：
+>
+> ```cangjie
+> jumpExpression
+>   : 'break'
+>   | 'continue'
+>   | 'return' expression?
+>   | 'throw'  expression
+>   ;
+> ```
+
+目前看来, 仓颉的`break`与C/C++不同, 仓颉的`break`只能直接用在循环体内
+
+#### `break`表达式
+
+> **`break`表达式只能出现在循环表达式的循环体中**，并将程序的执行权交给被终止循环表达式之后的表达式
+>
+> 例如, 下面的代码通过在`while`循环体内使用`break`表达式，实现在区间`[1, 49]`内计算`4`和`6`的最小公倍数
+>
+> ```cangjie
+> 
+> main(): Int64 {
+>     var index: Int32 = 0
+>     while (index < 50) {
+>         index = index + 1
+>         if ((index % 4 == 0) && (index % 6 == 0)) {
+>             print("${index} is divisible by both 4 and 6") // output: 12
+>             break
+>         }
+>     }
 >     return 0
 > }
 > ```
+>
+> 需要注意的是，当`break`出现在嵌套的循环表达式中时，只能终止直接包围它的循环表达式，外层的循环并不会受影响
+>
+> 例如, 下面的程序将输出 5 次`12 is divisible by both 4 and 6`，且每次同时会输出`i`的值：
+>
+> ```cangjie
+> main(): Int64 {
+>     var index: Int64 = 0
+>     for (i in 0..5) {
+>         index = i
+>         while (index < 20) {
+>             index = index + 1
+>             if ((index % 4 == 0) && (index % 6 == 0)) {
+>                 print("${index} is divisible by both 4 and 6")
+>                 break
+>             }    
+>         }
+>         print("${i}th test")
+>     }
+>     return 0
+> }
+> ```
+
+仓颉的`break`用法基本与C/C++中`break`在循环体中的用法是一致的
+
+只能跳出所在层的循环, 对更外层循环无用
+
+#### `continue`表达式
+
+> `continue`表达式只能出现在循环表达式的循环体中，用于提前结束离它最近循环表达式的当前迭代，然后开始新一轮的循环（并不会终止循环表达式）
+>
+> 例如, 下面的代码输出区间`[1,49]`内所有可以同时被`4`和`6`整除的数（`12`、`24`、`36`、`48`），对于其他不满足要求的数，同样会显式地输出
+>
+> ```cangjie
+> main(): Int64 {
+>     var index: Int32 = 0
+>     while (index < 50) {
+>         index = index + 1
+>         if ((index % 4 == 0) && (index % 6 == 0)) {
+>             print("${index} is divisible by both 4 and 6")
+>             continue
+>         }
+>         print("${index} is not what we want")
+>     }
+>     return 0
+> }
+> ```
+
+`continue`的用法, 也基本与C/C++一致
+
+#### `return`表达式
+
+> `return`表达式只能出现在函数体中，它可以在任意位置终止函数的执行并返回，实现控制流从被调用函数到调用函数的转移
+>
+> `return`表达式有两种形式：`return`和`return expr`（`expr`是一个表达式）
+>
+> - 若为`return expr`的形式，我们将`expr`的值作为函数的返回值，所以要求`expr`的类型与函数定义中的返回类型保持一致
+>
+>     ```cangjie
+>     
+>     // return expression
+>     func larger(a: Int32, b: Int32): Int32 {
+>         if (a >= b) {
+>             return a
+>         } else {
+>             return b
+>         }
+>     }
+>     ```
+>
+> - 若为`return`的形式，我们将其视为`return ()`的语法糖，所以要求函数的返回类型也为`Unit`
+>
+>     ```cangjie
+>     // return expression
+>     func equal(a: Int32, b: Int32): Unit {
+>         if (a == b) { 
+>             print("a is equal to b")
+>             return
+>         } else {
+>             print("a is not equal to b")
+>         }     
+>     }
+>     ```
+>
+> 需要说明的是，`return`表达式作为一个整体，其类型并不由后面跟随的表达式决定（`return` 后面跟随的表达式为 `()`），而是`Nothing`类型
+
+`return`的用法, 也基本与C/C++保持一致
+
+但, 仓颉中`return`拥有具体类型: `Nothing`. 且恒为`Nothing`
+
+`return`是`return ()`的语法糖, 就像C/C++中, 如果函数返回值类型为`void`, 可以不使用`return`, 也可以执行`return;`
+
+#### `throw`表达式
+
+> `throw`表达式用于抛出异常，在调用包含`throw`表达式的代码块时，如果`throw`表达式被执行到，就会抛出相应的异常，并由事先定义好的异常处理逻辑进行捕获和处理，从而改变程序的执行流程
+>
+> 下面的例子中，当除数为 0 时，抛出算术异常：
+>
+> ```cangjie
+> func div(a: Int32, b: Int32): Int32 {
+>     if (b != 0) {
+>         return a / b
+>     } else {
+>         throw ArithmeticException()
+>     }     
+> }
+> ```
+>
+> 关于`return`和`throw`表达式，本节只做了最简单的使用举例，有关它们的详细介绍，请分别参见函数和异常章节
+
+如果没有了解过任何编程语言, 要深入理解还是要参阅具体的文档
+
+### 数值类型转化表达式
+
+> 数值类型转换表达式用于实现数值类型间的转换，它的值是类型转换后的值，它的类型是转换到的目标类型（但原表达式的类型不受目标类型影响），详细的转换规则可参见 [类型转换](https://www.humid1ch.cn/blog/cangjie-docs-reading-iv#heading-1)
+>
+> 数值类型转换表达式的语法定义为：
+>
+> ```
+> numericTypeConvExpr
+>     : numericTypes '(' expression ')'
+>     ;
+>     
+> numericTypes
+>     : 'Int8'
+>     | 'Int16'
+>     | 'Int32'
+>     | 'Int64'
+>     | 'UInt8'
+>     | 'UInt16'
+>     | 'UInt32'
+>     | 'UInt64'
+>     | 'Float16'
+>     | 'Float32'
+>     | 'Float64'
+>     ;
+> ```
+
+仓颉的数值类型转换表达式, 其实就是C/C++中的最普通的强制类型转换
+
+只不过, 仓颉只允许数值类型(整型、浮点型)之间进行强制类型转换
+
+### `this`和`super`表达式
+
+> `this` 和 `super` 表达式分别使用 `this` 和 `super` 表示
+>
+> `this` 可以出现在所有实例成员函数和构造函数中，表示当前实例
+>
+> `super`只能出现在 `class` 类型定义中，表示当前定义的类型的直接父类的实例（详见[类]）
+>
+> 禁止使用单独的 `super` 表达式
+>
+> `this` 和 `super` 表达式的语法定义为：
+>
+> ```
+> thisSuperExpression
+>     : 'this'
+>     | 'super'
+>     ;
+> ```
+
+仓颉的`this`我能理解等价于C++类中的`this`指针, 表示当前实例
+
+`super`我也理解是存在继承关系的类中, 表示直接父类实例
+
+但我不理解什么叫禁止单独使用`super`表达式?
+
+不就是应该像使用`this`一样, 直接通过`super`访问父类的成员吗? 意思是必须通过`super`访问、调用成员? 不能直接访问`super`本身?
+
+### `spawn`表达式
+
+> spawn 表达式用于创建并启动一个 `thread`，详见[并发]章节
+
+看来是仓颉中, 创建线程的方式
+
+### `synchronized`表达式
+
+> synchronized 表达式用于同步机制中，详见[并发]章节
+
+仓颉用于线程同步机制的方式
+
+### 括号表达式
+
+> 括号表达式是指使用圆括号括起来的表达式
+>
+> 圆括号括起来的子表达式被视作一个单独的计算单元被优先计算
+>
+> 括号表达式的语法定义为：
+>
+> ```
+> parenthesizedExpression
+>     : '(' expression ')'
+>     ;
+> ```
+>
+> 括号表达式举例：
+>
+> ```cangjie
+> 1 + 2 * 3 - 4    // The result is 3.
+> (1 + 2) * 3 - 4  // The result is 5.
+> ```
+
+就是数学中可以将表达式作为整体运算的括号
+
+### 后缀表达式
+
+> 后缀表达式 **由表达式加上后缀操作符构成**
+>
+> 根据后缀操作符的不同，分为：成员访问表达式、函数调用表达式、索引表达式
+>
+> 在成员访问表达式、函数调用表达式、索引表达式中的后缀操作符的前面，可以使用可选的 `?` 操作符，以实现 `Option` 类型对这些后缀操作符的支持
+>
+> 关于 `?` 操作符，详见下文介绍
+>
+> 后缀表达式的语法定义为：
+>
+> ```
+> postfixExpression
+>     : atomicExpression
+>     | type '.' identifier
+>     | postfixExpression '.' identifier typeArguments?
+>     | postfixExpression callSuffix
+>     | postfixExpression indexAccess
+>     | postfixExpression '.' identifier callSuffix? trailingLambdaExpression
+>     | identifier callSuffix? trailingLambdaExpression
+>     | postfixExpression ('?' questSeperatedItems)+
+>     ;
+> ```
+
+从文本介绍来看, 后缀表达式应该类似于: `obj.mem` `func1()` `arr[0]`等
+
+但, 语法定义中描述了许多内容
+
+还有`?`操作符, 不过后面有介绍
+
+#### 成员访问表达式
+
+> 成员访问表达式的语法定义为上述后缀表达式语法的第 3 条：
+>
+> ```
+> postfixExpression '.' identifier typeArguments?
+> ```
+>
+> 成员访问表达式可以用于访问 `class`、`interface`、`struct` 等的成员
+
+果然, 成员访问表达式 即为 类、接口、结构体访问成员的表达式
+
+> 成员访问表达式的形式为`T.a `
+>
+> `T `可以表示为特定的实例或类型名，我们将其称为成员访问表达式的主体
+>
+> `a` 表示成员的名字
+>
+> - 如果`T`是类的实例化对象，通过这种方式可以访问类或接口中的非静态成员
+> - 如果`T`是 `struct` 的实例，允许通过实例名访问 `struct` 内的非静态成员
+> - 如果`T`是类名、接口名或 `struct` 名，允许直接通过类型名访问其静态成员
+>
+> 需要注意的是：类、接口和 `struct` 的静态成员的访问主体只能是类型名
+>
+> - `T`是`this`：在类或接口的作用域内，可以通过`this`关键字访问非静态成员
+> - `T`是`super`：在类或接口作用域内，可以通过`super`关键字访问当前类对象直接父类的非静态成员
+
+C/C++中因为存在值和指针, 所以有两种访问成员的方式`.`和`->`
+
+不过, 仓颉中统一通过`.`访问成员
+
+要注意: **仓颉中静态成员, 只能通过类型名访问, 不能通过具体实例访问**
+
+`this`和`super`只能在类或接口内部通过`.`访问非静态成员
+
+> 对于成员访问表达式 `e.a`，如果 `e` 是类型名：
+>
+> - 当 `a` 是 `e` 的**可变**静态成员变量时，`e.a` 是**可变**的，其他情况下 `e.a` 是**不可变**的
+>
+> 如果 `e` 是表达式（假设 `e` 的类型是 `T`）：
+>
+> - 当 `T` 是引用类型时，如果 `a` 是 `T` 的**可变**成员变量，则 `e.a` 是**可变**的，否则 `e.a` 是**不可变**的；
+> - 当 `T` 是值类型时，如果 `e` **可变**且 `a` 是 `T` 的**可变**成员变量，则 `e.a` 是**可变**的，否则 `e.a` 是**不可变**的
+
+**仓颉通过类型只能访问静态成员, 通过实例只能访问非静态成员**
+
+仓颉中的不可变成员, 无论什么时候都不可变
+
+仓颉中的可变成员, 引用类型都可变, 值类型只有实例时可变时, 成员才可变
+
+#### 函数调用表达式
+
+> 函数调用表达式的语法定义为上述后缀表达式语法的第 4 条，其中 `callSuffix` 和 `valueArgument` 的语法定义为：
+>
+> ```
+> callSuffix
+>     : '(' (valueArgument (',' valueArgument)*)? ')'
+>     ;
+>     
+> valueArgument
+>     : identifier ':' expression
+>     | expression
+>     | refTransferExpression
+>     ;
+> 
+> refTransferExpression
+>     : 'inout' (expression '.')? identifier
+>     ;
+> ```
+>
+> 函数调用表达式用于调用函数，函数详见第 5 章
+>
+> 对于函数调用表达式 `f(x)`，假设`f`的类型是`T`
+>
+> 如果`T`是函数类型，则调用名为`f`的函数，否则，如果`T`重载了函数调用操作符`()` ，则`f(x)`会调用其`()`操作符重载函数（参见 [可以被重载的操作符]）
+
+函数调用的后缀是`()`, 可加参数可不加参数
+
+加参数可以指定形参进行传参: `func1(param1: 1, param2: 2)`, 不过只适用于函数定义时的命名参数, 且命名参数只能命名传参
+
+非命名参数就只能非命名传参
+
+`refTransferExpression`意思是引用传参? 应该与C++中的引用传参一样, 可以通过形参直接访问实参(具体还要阅读到函数章节再了解)
+
+#### 索引访问表达式
+
+> 索引访问表达式的语法定义为上述后缀表达式语法的第 5 条，其中 `indexAccess` 的语法定义为：
+>
+> ```
+> indexAccess
+>     : '[' (expression | rangeElement) ']'
+>     ;
+> 
+> rangeElement
+>     :  '..'
+>     | ('..=' | '..' ) expression
+>     | expression '..'
+>     ;
+> ```
+>
+> 索引访问表达式用于那些支持索引访问的类型（包括 `Array` 类型和 `Tuple` 类型）通过下标来访问其具体位置的元素，详见第 2 章中关于[`Array`类型](https://www.humid1ch.cn/blog/cangjie-docs-reading-iii#heading-3)和[`Tuple`类型](https://www.humid1ch.cn/blog/cangjie-docs-reading-ii#heading-13)的介绍
+>
+> 对于索引访问表达式 `e[a]`（假设 `e` 的类型是 `T`）:
+>
+> - 当 `T` 是元组类型时，`e[a]` 是**不可变**的；
+> - 当 `T` 不是元组类型时，如果 `T` 重载了 set 形式的操作符 `[]`（参见 [可以被重载的操作符]），则 `e[a]` 是**可变**的，否则 `e[a]` 是**不可变**的
+>
+> 对于索引访问表达式 `e1[e2]`，仓颉语言总是先求值 `e1` 至 `v1`，再将 `e2` 求值至 `v2`，最后根据下标 `v2` 选取对应的值或调用相应的重载了的 `[]` 操作符
+
+记得在阅读`Tuple`类型介绍时, 文档中提到使用`[]`访问元组的元素, `[]`里只能是`Int64`类型字面量, 应该不能是`Range`
+
+#### 问号操作符
+
+> 问号操作符 `?` 为一元后缀操作符，它必须和上文介绍的后缀操作符 `.`，`()`，`{}` 或 `[]` 一起使用（出现在后缀操作符之前），实现 `Option` 类型对这些后缀操作符的支持，例如：`a?.b`，`a?(b)`，`a?[b]`等等
+>
+> 其中`()`是函数调用，当函数调用最后一个实参是 `lambda` 时，可以使用尾闭包语法 `a?{b}`
+>
+> 将包含 `?.`、`?()`、`?{}` 或 `?[]` 的表达式称为 optional chaining 表达式
+>
+> optional chaining 表达式的语法定义为上述后缀表达式语法的最后一条，其中 `questSeperatedItems` 的语法定义为：
+>
+> ```
+> questSeperatedItems
+>     : questSeperatedItem+
+>     ;
+> 
+> questSeperatedItem
+>     : itemAfterQuest (callSuffix | callSuffix? trailingLambdaExpression | indexAccess)?
+>     ;
+> 
+> itemAfterQuest
+>     : '.' identifier typeArguments?
+>     | callSuffix
+>     | indexAccess
+>     | trailingLambdaExpression
+>     ;
+> ```
+>
+> 关于 optional chaining 表达式，规定：
+>
+> 1. 对于表达式 `e`，将 `e` 中的所有 `?` 删除，并且将紧邻 `?` 之前的表达式的类型由 `Option<T>` 替换为 `T` 之后，得到表达式 `e1`。如果 `e1` 的类型是 Option 类型，则在 `e` 之后使用 `.`、`()`、`{}` 或 `[]` 时，需要在 `e` 和这些操作符之间加上 `?`；否则，不应该加 `?`；
+> 2. Optional chaining 表达式的类型是 `Option<T>`（即无论其中有几个 `?`，类型都只有一层 Option），类型 `T` 为 optional chaining 中最后一个表达式（变量或函数名、函数调用表达式、下标访问表达式）的类型；
+> 3. 一旦 optional chaining 中的某个 Option 类型的表达式的值为 `None`，则整个 optional chaining 表达式的值为 `None`；如果 optional chaining 中每个 Option 类型的表达式的值都等于某个 `Some` 值，则整个表达式的值为 `Some(v)`（`v` 的类型是最后一个表达式的类型）。
