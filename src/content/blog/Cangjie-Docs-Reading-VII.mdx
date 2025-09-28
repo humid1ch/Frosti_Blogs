@@ -1,6 +1,6 @@
 ---
 title: "仓颉文档阅读-语言规约IV: 表达式(II)"
-pubDate: "2025-09-25"
+pubDate: "2025-09-26"
 description: "一直对仓颉挺感兴趣的, 但是一直没有去读一下文档, 慢慢看一看, 了解一下"
 image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250918180424875.webp'
 categories: 
@@ -736,23 +736,82 @@ C/C++中因为存在值和指针, 所以有两种访问成员的方式`.`和`->`
 >
 > ```
 > questSeperatedItems
->     : questSeperatedItem+
->     ;
+>  : questSeperatedItem+
+>  ;
 > 
 > questSeperatedItem
->     : itemAfterQuest (callSuffix | callSuffix? trailingLambdaExpression | indexAccess)?
->     ;
+>  : itemAfterQuest (callSuffix | callSuffix? trailingLambdaExpression | indexAccess)?
+>  ;
 > 
 > itemAfterQuest
->     : '.' identifier typeArguments?
->     | callSuffix
->     | indexAccess
->     | trailingLambdaExpression
->     ;
+>  : '.' identifier typeArguments?
+>  | callSuffix
+>  | indexAccess
+>  | trailingLambdaExpression
+>  ;
 > ```
 >
 > 关于 optional chaining 表达式，规定：
 >
-> 1. 对于表达式 `e`，将 `e` 中的所有 `?` 删除，并且将紧邻 `?` 之前的表达式的类型由 `Option<T>` 替换为 `T` 之后，得到表达式 `e1`。如果 `e1` 的类型是 Option 类型，则在 `e` 之后使用 `.`、`()`、`{}` 或 `[]` 时，需要在 `e` 和这些操作符之间加上 `?`；否则，不应该加 `?`；
-> 2. Optional chaining 表达式的类型是 `Option<T>`（即无论其中有几个 `?`，类型都只有一层 Option），类型 `T` 为 optional chaining 中最后一个表达式（变量或函数名、函数调用表达式、下标访问表达式）的类型；
-> 3. 一旦 optional chaining 中的某个 Option 类型的表达式的值为 `None`，则整个 optional chaining 表达式的值为 `None`；如果 optional chaining 中每个 Option 类型的表达式的值都等于某个 `Some` 值，则整个表达式的值为 `Some(v)`（`v` 的类型是最后一个表达式的类型）。
+> 1. 对于表达式 `e`，将 `e` 中的所有 `?` 删除，并且将紧邻 `?` 之前的表达式的类型由 `Option<T>` 替换为 `T` 之后，得到表达式 `e1`
+>
+>     如果 `e1` 的类型是 `Option` 类型，则在 `e` 之后使用 `.`、`()`、`{}` 或 `[]` 时，需要在 `e` 和这些操作符之间加上 `?`；否则，不应该加 `?`；
+>
+> 2. Optional chaining 表达式的类型是 `Option<T>`（即无论其中有几个 `?`，类型都只有一层 `Option`），类型 `T` 为 optional chaining 中最后一个表达式（变量或函数名、函数调用表达式、下标访问表达式）的类型；
+>
+> 3. 一旦 optional chaining 中的某个 `Option` 类型的表达式的值为 `None`，则整个 optional chaining 表达式的值为 `None`
+>
+>     如果 optional chaining 中每个 `Option` 类型的表达式的值都等于某个 `Some` 值，则整个表达式的值为 `Some(v)`（`v` 的类型是最后一个表达式的类型）
+
+解释一下这部分文档内容
+
+`?`问号操作符实际是作用于`Option`类型的
+
+即, 如果存在一个变量`e`的类型是`Option<T>`类型的, 就可以使用`e?.`、`e?()`、`e?{}`、`e?[]`来尝试访问成员、调用函数、调用`lambda`、通过索引访问数据
+
+`?`之后的操作符, 是根据`Option<T>`中 这个实际的`T`决定的, `T`是类、结构体、`interface`就用`.`, 是函数就用`()`, 是`lambda`就可以用尾闭包`{}`, 是数组、元组等就可以用`[]`
+
+`?`操作符, 通过`Option`类型, 来安全判断`None`的情况, 你的`Option<T>`数据如果是`None`, 使用`?`就会取值`None`, 并终止之后的操作, 整个表达式值就是`None`. 这对应文档中, 规则3上半部分:
+
+> 一旦 optional chaining 中的某个 Option 类型的表达式的值为 `None`，则整个 optional chaining 表达式的值为 `None`
+
+比如:
+
+```cangjie
+class Test {
+    let value = 20
+}
+
+func getTest(number: Int64) : Option<Test> {
+    if (number == 20) {
+        return Test()
+    }
+
+    return None
+}
+
+main(): Int64 {
+    let res = getTest(20)
+    println(res?.value)
+    // println(res.value)
+
+    return 0
+}
+
+```
+
+如果尝试不用`?`访问成员, 是会报错的, 因为`res`是`Option`类型的, 可能是`None`, 直接访问成员是不安全的
+
+这段代码的执行结果为:
+
+![](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250928173045720.webp)
+
+这个结果也对应文档中的规则3的下半部分:
+
+> 如果 optional chaining 中每个 Option 类型的表达式的值都等于某个 `Some` 值，则整个表达式的值为 `Some(v)`（`v` 的类型是最后一个表达式的类型）
+
+**即, 如果一个完整的 Optional chaining, 链中不存在`None`, 那么最终结果就是`Some(value)`, `value`是最终结果的实际类型的数据**
+
+如果你要再通过这个最终结果访问其他数据, 即使它是`Some(value)`是`Option<T>`类型的, 后面要不要使用`?`操作符, 要看`value`的实际类型是否也是`Option`的, 如果是才需要用, 如果不是就不需要用. 这是规则1的内容
+
+还有就是, 无论Optional chaining有多长, 最终的结果也就只有一层`Option`, 即 `a?.b?.c?[2]?()` 也就只有一层`Option`, 不是`None`就是`Some(value)`
