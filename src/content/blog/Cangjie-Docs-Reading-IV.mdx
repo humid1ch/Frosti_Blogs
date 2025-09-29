@@ -2,7 +2,7 @@
 title: "仓颉文档阅读-语言规约II: 类型(III)"
 pubDate: "2025-09-23"
 description: "一直对仓颉挺感兴趣的, 但是一直没有去读一下文档, 慢慢看一看, 了解一下"
-image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250918180424875.webp'
+image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250929154944807.webp'
 categories: 
     - Blogs
 tags:
@@ -114,7 +114,7 @@ import Warning from "../../components/mdx/Warning.astro";
 >    	;
 > ```
 
-> 如果根据数值类型所占`bit`数来定义数值类型间的“大小关系”(所占`bit`数越多, 类型越“大”, 所占`bit`数越少, 类型越“小”), 则仓颉编程语言支持以下类型转换: 
+> 如果根据数值类型所占`bit`数来定义数值类型间的"大小关系"(所占`bit`数越多, 类型越"大", 所占`bit`数越少, 类型越"小"), 则仓颉编程语言支持以下类型转换: 
 >
 > a)**有符号整数类型之间的双向转换**: 小转大时数值结果不变, **大转小时 若超出小类型的表示范围, 则根据上下文中的属性宏确定溢出处理策略(默认使用抛出异常的策略)**, 不同溢出策略详见[算术表达式]
 >
@@ -359,17 +359,17 @@ type 别名(<泛型类型参数>)= 实际类型(可以是泛型)
 
 > 4. 定义泛型别名时, 不允许为别名和原类型中的类型参数添加泛型约束, 在用到泛型别名时, 可以按需为其添加泛型约束
 >
->     另外, 原类型中已有的泛型约束会“传递”至别名
+>     另外, 原类型中已有的泛型约束会"传递"至别名
 >
 >     ```cangjie
 >     type Class1<V> where V <: MyTrait = GenericClassA<Int64, V> 	// error: generic constraints are not allowed here
 >     type Class2<V> = GenericClassB<Int64, V> where V <: MyTrait 	// error: generic constraints are not allowed here
->                 
+>                     
 >     type Class3<V> = GenericClassC<Int64, V>
 >     func foo<V> (p: Class3<V>)where V <: MyTrait {             	// add generic constraints when 'Class3<V>' is used
 >         functionBody
 >     }
->                 
+>                     
 >     class ClassWithLongName<T> where T<:MyTrait {
 >         classBody
 >     }
@@ -403,9 +403,9 @@ type 别名(<泛型类型参数>)= 实际类型(可以是泛型)
 >     let numOne: Int32 = 10
 >     let numTwo: Int = 20
 >     let numThree = numOne + numTwo
->         
+>             
 >     func add(left: Int, right: Int32): Int { left + right }
->         
+>             
 >     func add(left: Int32, right: Int32): Int32 { left + right } 	// error: invalid redeclaration of 'add : (Int32, Int32)->Int32'
 >     ```
 
@@ -423,18 +423,18 @@ type 别名(<泛型类型参数>)= 实际类型(可以是泛型)
 >     // a.cj
 >     package A
 >     public class ClassWithLongNameA {
->             
+>                 
 >     }
 >     class ClassWithLongNameB {
->             
+>                 
 >     }
->          
+>              
 >     public type classA = ClassWithLongNameA			// ok
 >     type classAInter = ClassWithLongNameA			// ok 
->         
+>             
 >     /* error: classB can not be declared with modifier 'public', as 'ClassWithLongNameB' is internal */
 >     public type classB = ClassWithLongNameB 		
->         
+>             
 >     // b.cj
 >     package B
 >     import A.*

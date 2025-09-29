@@ -109,10 +109,10 @@ main p {
 main table {
   border-collapse: collapse;
   width: 40%;
-  margin: 1em auto;
+  margin: 1em auto !important;
 //   font-family: Arial, sans-serif;
   font-family: 'Maple Mono Normal Medium', 'HarmonyOS Sans SC Regular';
-  font-size: 16px;
+  font-size: 16px !important;
   text-align: center;
   border: 1px solid #ccc;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
@@ -135,6 +135,8 @@ main td {
 
 main ol {
   margin-left: 1.25em !important;
+  margin-bottom: 0em !important;
+  margin-top: 0em !important;
 }
 
 main ul ul,
@@ -978,8 +980,24 @@ main pre code {
 	padding-bottom: 0.5rem !important;
 }
 
+blockquote {
+    font-size: 0.96em !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
 blockquote p code {
     padding-right: 6px !important;
     margin-left: 4px !important;
     margin-right: 2px !important;
 }
+
+// .prose blockquote ol li p:first-of-type::before,
+// .prose blockquote ul li p:first-of-type::before {
+//     content: none !important;
+// }
+
+// .prose blockquote ol li p:last-of-type::after,
+// .prose blockquote ul li p:last-of-type::after {
+//     content: none !important;
+// }

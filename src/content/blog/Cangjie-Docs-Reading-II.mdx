@@ -2,7 +2,7 @@
 title: "仓颉文档阅读-语言规约II: 类型(I)"
 pubDate: "2025-09-18"
 description: "一直对仓颉挺感兴趣的, 但是一直没有去读一下文档, 慢慢看一看, 了解一下"
-image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250918180424875.webp'
+image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250929154944807.webp'
 categories: 
     - Blogs
 tags:
@@ -177,7 +177,7 @@ main() {
 
 > 浮点类型量中有几个特殊的值需要注意: 正无穷(`POSITIVE_INFINITY`), 负无穷(`NEGATIVE_INFINITY`), Not a Number(`NaN`), 正`0`(`+0.0`), 负`0`(`-0.0`)
 >
-> 其中, 无穷表示操作结果超出了表示范围, 例如将两个很大的浮点数相乘, 或将一个非零浮点数除以浮点零时, 其结果都是无穷, 无穷的符号由操作数的符号决定, 符合“正负得负, 负负得正”的规律
+> 其中, 无穷表示操作结果超出了表示范围, 例如将两个很大的浮点数相乘, 或将一个非零浮点数除以浮点零时, 其结果都是无穷, 无穷的符号由操作数的符号决定, 符合"正负得负, 负负得正"的规律
 >
 > `NaN`表示既不是实数也不是无穷的情况, 例如计算正无穷乘以`0`的结果就是`NaN`
 
@@ -315,7 +315,7 @@ main() {
 > | `\t`             | Horizontal tab                                               |
 > | `\v`             | Vertical tab                                                 |
 > | `\’`             | single quotation mark`’`                                     |
-> | `\”`             | double quotation marks`”`                                    |
+> | `\"`             | double quotation marks`"`                                    |
 > | `\u{X}`          | Any Unicode code point, where`X`is a 1-8 digit hexadecimal number |
 
 > `Rune`类型仅支持关系操作符(根据`Unicode code point`编码进行比较)
@@ -341,7 +341,7 @@ C/C++语言中, 用`char`类型表示单个字符, `char`本质是整型, 所以
 
 > `Bool`类型字面量(Bool Literal)
 >
-> `Bool`类型的字面量只有两个:`true`和`false`, 分别表示“真”和“假”
+> `Bool`类型的字面量只有两个:`true`和`false`, 分别表示"真"和"假"
 
 > `Bool`类型支持的操作
 >
@@ -606,7 +606,7 @@ var pointThree: ((Int64, Int64), Int64) = ((2, 3), 4)
 这两个接口: 
 
 1. `Comparable`, 该接口表示比较运算, 等于、不等于、小于、大于、小于等于、大于等于接口的集合体
-2. `Countable`, 该接口表示类型可数, 可数类型的每一个实例在逻辑上都位于一个数轴上, 对应一个整数位置, 并且可以通过从这个位置“移动”一定的步数来得到其他的该类型实例
+2. `Countable`, 该接口表示类型可数, 可数类型的每一个实例在逻辑上都位于一个数轴上, 对应一个整数位置, 并且可以通过从这个位置"移动"一定的步数来得到其他的该类型实例
 
 具体阅读到相关位置再做了解吧
 
@@ -616,7 +616,7 @@ var pointThree: ((Int64, Int64), Int64) = ((2, 3), 4)
 >
 > 其中, `start`和`end`分别表示序列的起始值和终止值, `step`表示序列中前后两个元素之间的差值
 >
-> `Range`类型支持使用`==`进行判等(使用`!=`进行判不等), 两个相同类型的 Range 实例相等: 当且仅当它们同时为“左闭右开”或“左闭右闭”, 并且它们的`start`值、`end`值和`step`值均对应相等
+> `Range`类型支持使用`==`进行判等(使用`!=`进行判不等), 两个相同类型的 Range 实例相等: 当且仅当它们同时为"左闭右开"或"左闭右闭", 并且它们的`start`值、`end`值和`step`值均对应相等
 
 `Range`序列中, 每个元素之间的间隔都是相等的
 
@@ -626,7 +626,7 @@ var pointThree: ((Int64, Int64), Int64) = ((2, 3), 4)
 
 ##### 创建`Range`实例
 
-> **存在两种`Range`操作符:`..`和`..=`, 分别用于创建“左闭右开”和“左闭右闭”的`Range`实例**
+> **存在两种`Range`操作符:`..`和`..=`, 分别用于创建"左闭右开"和"左闭右闭"的`Range`实例**
 >
 > **它们的使用方式分别为`start..end:step`和`start..=end:step`(其中`start`、`end`和`step`均是表达式)**
 >
@@ -1095,7 +1095,7 @@ main() {
 >     let opInt32_2 = Option<Int32>.None  // The type of 'opInt32_2' is 'Option<Int32>'
 >     let opChar = Some('m')              // The type of 'opChar' is 'Option<Rune>'
 >     let opBool = Option<Bool>.None      // The type of 'opBool' is 'Option<Bool>'
->                                 
+>                                     
 >     enum TimeUnit1 {
 >         Year | Month | Day | Hour
 >     }

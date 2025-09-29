@@ -2,7 +2,7 @@
 title: "仓颉文档阅读-语言规约III: 名字、作用域、变量、修饰符"
 pubDate: "2025-09-24"
 description: "一直对仓颉挺感兴趣的, 但是一直没有去读一下文档, 慢慢看一看, 了解一下"
-image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250918180424875.webp'
+image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250929154944807.webp'
 categories: 
     - Blogs
 tags:
@@ -358,7 +358,7 @@ C/C++无论是函数、类型和变量, 都需要"先声明"再使用, 这里的
 >     let v = C() // will use ver 2
 >     ```
 >
-> 2. 若作用域级别高的名字`x`为一个变量, 则直接发生遮盖(对于成员变量的遮盖规则, 请参见 “类和接口” 章节)
+> 2. 若作用域级别高的名字`x`为一个变量, 则直接发生遮盖(对于成员变量的遮盖规则, 请参见 "类和接口" 章节)
 >
 >     ```cangjie
 >     let x = 1
@@ -415,11 +415,11 @@ C/C++无论是函数、类型和变量, 都需要"先声明"再使用, 这里的
 >
 >     ```cangjie
 >     func foo() { 1 }
->             
+>                 
 >     func test() {
 >         func foo() { 2 } // shadows
 >         func foo(x: Int64) { 3 } // overloads
->             
+>                 
 >         println(foo()) // will print 2
 >     }
 >     ```
@@ -703,11 +703,11 @@ C/C++中可没有关于静态初始化器的内容
 >     let x = 2
 >     let y = z       // OK, b.cj 不直接或间接依赖于此文件
 >     let a = x       // OK.
->     
+>         
 >     let c = A()
 >     let d = c.f()
 >     /* c.f 是一个开放函数, 编译器无法静态确定该函数是否符合全局变量的初始化规则, 可能会报告错误 */
->     
+>         
 >     open class A {
 >         // static var x = A.z     // Error, A.z 在初始化之前被使用
 >         // static var y = B.f     // Error, B.f 在初始化之前被使用
@@ -716,22 +716,22 @@ C/C++中可没有关于静态初始化器的内容
 >             return 77
 >         }
 >     }
->     
+>         
 >     class B {
 >         static var e = A.z    // OK.
 >         static var f = x      // OK.     
 >     }
->     
+>         
 >     // b.cj      
 >     let z = 10      
 >     // let y = 10   // Error, y 已经在 a.cj 中定义了
->     
+>         
 >     // main.cj
 >     main(): Int64 {
 >         print("${x}")
 >         print("${y}")
 >         print("${z}")
->         
+>             
 >         return 1
 >     }
 >     ```

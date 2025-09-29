@@ -1,8 +1,8 @@
 ---
 title: "仓颉文档阅读-语言规约IV: 表达式(III)"
-pubDate: "2025-09-29"
+pubDate: "2025-09-29 09:42:13"
 description: "一直对仓颉挺感兴趣的, 但是一直没有去读一下文档, 慢慢看一看, 了解一下"
-image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250918180424875.webp'
+image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250929154944807.webp'
 categories: 
     - Blogs
 tags:
@@ -624,7 +624,7 @@ import Question from "../../components/mdx/Question.astro";
 >     ;
 > ```
 >
-> 区间操作符有两种: `..`和`..=`, 分别用于创建“左闭右开”和“左闭右闭”的`Range`实例
+> 区间操作符有两种: `..`和`..=`, 分别用于创建"左闭右开"和"左闭右闭"的`Range`实例
 >
 > 关于它们的介绍, 请参见 [Range 类型](https://www.humid1ch.cn/blog/cangjie-docs-reading-ii#heading-18)
 
@@ -710,7 +710,7 @@ import Question from "../../components/mdx/Question.astro";
 >
 > 2. 表达式`e1 ?? e2`具有类型`T`
 >
-> 3. 当`e1`的值等于`Option<T>.Some(v)`时, `e1 ?? e2`的值等于`v`的值(此时, 不会再去对`e2`求值, 即满足“短路求值”)
+> 3. 当`e1`的值等于`Option<T>.Some(v)`时, `e1 ?? e2`的值等于`v`的值(此时, 不会再去对`e2`求值, 即满足"短路求值")
 >
 >     当`e1`的值等于`Option<T>.None`时, `e1 ?? e2`的值等于`e2`的值
 >
