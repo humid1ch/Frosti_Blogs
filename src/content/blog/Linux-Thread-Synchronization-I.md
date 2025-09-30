@@ -275,8 +275,8 @@ int main() {
             pthread_cond_broadcast(&cond);
         }
         else {
-            quit = true;						// 修改条件为满足
-            pthread_cond_broadcast(&cond); 		// 然后唤醒线程, 再让线程判断条件是否满足
+            quit = true;                        // 修改条件为满足
+            pthread_cond_broadcast(&cond);         // 然后唤醒线程, 再让线程判断条件是否满足
             break;
         }
         

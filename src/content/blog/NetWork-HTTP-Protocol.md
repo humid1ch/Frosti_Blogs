@@ -733,7 +733,7 @@ std::string readFile(const std::string& recource) {
     if (!in.is_open())
         return "404";
     
-	// 以二进制方式打开文件, 就需要按字节读取存储
+    // 以二进制方式打开文件, 就需要按字节读取存储
     std::vector<char> buffer(std::istreambuf_iterator<char>(in), {});
     in.close();
 

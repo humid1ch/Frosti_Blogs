@@ -90,7 +90,7 @@ struct reverseIterator
     // 以 rbegin() 获取的反向迭代器为例, 获取的是最后一个元素的下一位, 即不在容器的数据范围内, 如果直接对当前位置的正向迭代器解引用, 会发生错误, 前一位才数据容器的数据范围
     Ref operator*()
     {
-        Iterator tmp(_it); 		// 因为返回的是正向迭代器的前一位, 所以不能拷贝构造, 只能根据 传成员变量调用构造函数构造 Iterator
+        Iterator tmp(_it);         // 因为返回的是正向迭代器的前一位, 所以不能拷贝构造, 只能根据 传成员变量调用构造函数构造 Iterator
         return *(--tmp);
     }
     // -> 操作符重载
@@ -98,28 +98,28 @@ struct reverseIterator
     // 返回的也是 当前位置正向迭代器的迁移位置解引用的取地址
     Ptr operator->()
     {
-        return &(operator*()); 		// 复用 *重载
+        return &(operator*());         // 复用 *重载
     }
     // 前置++重载
     // 前置 ++\-- 都直接改变原值所以不需要拷贝, 且返回的都是修改后的迭代器
     // 后置 ++\-- 返回修改前的迭代器, 所以需要保存修改前的迭代器
     Self& operator++()
     {
-        --_it; 			// 反向迭代器 ++其实是 --
+        --_it;             // 反向迭代器 ++其实是 --
 
         return *this;
     }
     // 后置++
     Self operator++(int)
     {
-        Self tmp = *this; 		// 保存修改前的迭代器
+        Self tmp = *this;         // 保存修改前的迭代器
         --_it;
-        return tmp;  			// 返回临时变量所以 传值返回
+        return tmp;              // 返回临时变量所以 传值返回
     }
     // 前置--
     Self& operator--()
     {
-        ++_it; 			// 反向迭代器 --其实是 ++
+        ++_it;             // 反向迭代器 --其实是 ++
         return *this;
     }
     // 后置--

@@ -52,8 +52,8 @@ tags:
     
     typedef struct SeqList
     {
-    	SLDataType a[N];    // SLDataType 表示数据类型, 已经被typedef 为 int
-    	int Size;    //数组内存放数据数量
+        SLDataType a[N];    // SLDataType 表示数据类型, 已经被typedef 为 int
+        int Size;    //数组内存放数据数量
     }SeqList;
     
     // 如果需要改变顺序表的容量就需要改动 N 的值
@@ -80,9 +80,9 @@ tags:
    
    typedef struct SeqList
    {
-   	SLDataType* arr;    // 指向动态开辟的数组
-   	int Size;    //数组内存放数据数量
-   	int Capacity;    //顺序表容量
+       SLDataType* arr;    // 指向动态开辟的数组
+       int Size;    //数组内存放数据数量
+       int Capacity;    //顺序表容量
    }SeqList;
    // 此结构的顺序表 创建后, 使用前, 需要初始化
    ```
@@ -92,7 +92,7 @@ tags:
 静态顺序表 `只适用于确定知道需要存多少数据的场景`
 所以现实中基本都是使用动态顺序表, 根据需要动态的分配空间大小
 
-	以下也都是以动态顺序表为基础
+    以下也都是以动态顺序表为基础
 一个动态顺序表一般拥有这些接口: 
 1. 初始化    `seqListInit`
 2. 容量检查    `checkCapacity`
@@ -113,9 +113,9 @@ typedef int SLDataType;
 
 typedef struct SeqList
 {
-	SLDataType* arr;    // 指向动态开辟的数组
-	int Size;    //数组内存放数据数量
-	int Capacity;    //顺序表容量
+    SLDataType* arr;    // 指向动态开辟的数组
+    int Size;    //数组内存放数据数量
+    int Capacity;    //顺序表容量
 }SeqList;
 // 此结构的顺序表 创建后, 使用前, 需要初始化
 ```
@@ -138,10 +138,10 @@ void seqListInit(SeqList* psl);
 // 顺序表初始化
 void seqListInit(SeqList* psl)
 {
-	assert(psl);
+    assert(psl);
 
-	psl->arr = NULL;
-	psl->Size = psl->Capacity = 0;
+    psl->arr = NULL;
+    psl->Size = psl->Capacity = 0;
 }
 ```
 
@@ -173,24 +173,24 @@ void seqListPushBack(SeqList* psl, SLDataType x);
 ```cpp
 void checkCapacity(SeqList* psl)
 {
-	assert(psl);
+    assert(psl);
 
-	if(psl->Size == psl->Capacity)
-	{// 如果存入的数据数量 与 顺序表的容量相等, 就代表顺序表已满
-		int newCapacity = psl->Capacity == 0 ? 2 : 2 * psl->Capacity;    
-		//如果当前容量等于0,代表新顺序表,新容量给 2
-		//如果当前容量不等于0,代表非新顺序表, 新容量给原来容量的两倍
-		SLDataType* tmp = (SLDataType*)realloc(psl->arr, sizeof(SLDataType)* newCapacity);
-		// 先用tmp 指向 realloc 扩容出新空间, 以防止扩容失败导致元数据丢失
-		if(tmp == NULL)
-		{// tmp 为空 表示扩容失败, 退出程序
-			printf("realloc fail!\n");
-			exit(-1);
-		}
-		// tmp 不为空, 再将tmp 赋于 psl->arr;
-		psl->arr = tmp;  //psl->arr 指向扩容后的地址
-		psl->Capacity = newCapacity;   // 容量改为扩容后的容量
-	}
+    if(psl->Size == psl->Capacity)
+    {// 如果存入的数据数量 与 顺序表的容量相等, 就代表顺序表已满
+        int newCapacity = psl->Capacity == 0 ? 2 : 2 * psl->Capacity;    
+        //如果当前容量等于0,代表新顺序表,新容量给 2
+        //如果当前容量不等于0,代表非新顺序表, 新容量给原来容量的两倍
+        SLDataType* tmp = (SLDataType*)realloc(psl->arr, sizeof(SLDataType)* newCapacity);
+        // 先用tmp 指向 realloc 扩容出新空间, 以防止扩容失败导致元数据丢失
+        if(tmp == NULL)
+        {// tmp 为空 表示扩容失败, 退出程序
+            printf("realloc fail!\n");
+            exit(-1);
+        }
+        // tmp 不为空, 再将tmp 赋于 psl->arr;
+        psl->arr = tmp;  //psl->arr 指向扩容后的地址
+        psl->Capacity = newCapacity;   // 容量改为扩容后的容量
+    }
 }
 ```
 
@@ -206,12 +206,12 @@ void checkCapacity(SeqList* psl)
 // 尾插
 void seqListPushBack(SeqList* psl, SLDataType x)
 {
-	assert(psl);    //断言保证传入的结构体的地址不为空
+    assert(psl);    //断言保证传入的结构体的地址不为空
 
-	checkCapacity(psl);    //容量检查函数检查容量
+    checkCapacity(psl);    //容量检查函数检查容量
 
-	psl->arr[psl->Size] = x;    // 将 x 尾插
-	psl->Size++;    // 存储数据量加1 , Size也要加1
+    psl->arr[psl->Size] = x;    // 将 x 尾插
+    psl->Size++;    // 存储数据量加1 , Size也要加1
 }
 ```
 
@@ -236,13 +236,13 @@ void seqListPrint(SeqList* psl);
 // 顺序表打印
 void seqListPrint(SeqList* psl)
 {
-	assert(psl);
+    assert(psl);
 
-	for (int i = 0; i < psl->Size; i++)
-	{
-		printf("%d ", psl->arr[i]);
-	}
-	printf("\n");
+    for (int i = 0; i < psl->Size; i++)
+    {
+        printf("%d ", psl->arr[i]);
+    }
+    printf("\n");
 }
 ```
 
@@ -287,9 +287,9 @@ void seqListPopBack(SeqList* psl);
 // 顺序表尾删
 void seqListPopBack(SeqList* psl)
 {
-	assert(psl);
+    assert(psl);
 
-	psl->Size--;
+    psl->Size--;
 }
 ```
 ![](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154522887.webp)
@@ -312,12 +312,12 @@ void seqListPopBack(SeqList* psl)
 // 顺序表尾删
 void seqListPopBack(SeqList* psl)
 {
-	assert(psl);
-	
-	if (psl->Size > 0)
-	{// 当Size 大于零 再进行自减
-		psl->Size--;
-	}
+    assert(psl);
+    
+    if (psl->Size > 0)
+    {// 当Size 大于零 再进行自减
+        psl->Size--;
+    }
 }
 ```
 这样就不会发生使 `Size` 减到负 的问题: 
@@ -346,31 +346,31 @@ void seqListPushFront(SeqList* psl, SLDataType x);
 // 头插
 void seqListPushFront(SeqList* psl, SLDataType x)
 {
-	assert(psl);    //断言保证传入的结构体的地址不为空
+    assert(psl);    //断言保证传入的结构体的地址不为空
 
-	checkCapacity(psl);    //插入前 首先检查容量
+    checkCapacity(psl);    //插入前 首先检查容量
 
-	// 方法一: 
-	int end = psl->Size;
-	while (end)
-	{
-		psl->arr[end] = psl->arr[end - 1];
-		end--;
-	}
+    // 方法一: 
+    int end = psl->Size;
+    while (end)
+    {
+        psl->arr[end] = psl->arr[end - 1];
+        end--;
+    }
 
-	// 方法二: 
-	/*int end = psl->Size - 1;
-	while (end >= 0)
-	{
-		psl->arr[end + 1] = psl->arr[end];
-		end--;
-	}*/
+    // 方法二: 
+    /*int end = psl->Size - 1;
+    while (end >= 0)
+    {
+        psl->arr[end + 1] = psl->arr[end];
+        end--;
+    }*/
 
-	// 这两个方法其实一样的, 只是对 末尾元素的位置控制方式不同
-	
+    // 这两个方法其实一样的, 只是对 末尾元素的位置控制方式不同
+    
 
-	psl->arr[0] = x;    // 将 x 尾插
-	psl->Size++;    // 存储数据量加1 , Size 加1
+    psl->arr[0] = x;    // 将 x 尾插
+    psl->Size++;    // 存储数据量加1 , Size 加1
 }
 ```
 
@@ -400,19 +400,19 @@ void seqListPopFront(SeqList* psl);
 // 顺序表头删
 void seqListPopFront(SeqList* psl)
 {
-	assert(psl);
+    assert(psl);
 
-	if (psl->Size > 0)
-	{
-		int begin = 1;
-		while (begin < psl->Size)
-		{
-			psl->arr[begin] = psl->arr[begin - 1];
-			begin++;
-		}
+    if (psl->Size > 0)
+    {
+        int begin = 1;
+        while (begin < psl->Size)
+        {
+            psl->arr[begin] = psl->arr[begin - 1];
+            begin++;
+        }
 
-		psl->Size--;
-	}
+        psl->Size--;
+    }
 }
 ```
 
@@ -435,15 +435,15 @@ int seqListFind(SeqList* psl, SLDataType x);
 // 顺序表查找
 int seqListFind(SeqList* psl, SLDataType x)
 {
-	assert(psl);
+    assert(psl);
 
-	for (int i = 0; i < psl->Size; i++)
-	{
-		if (x == psl->arr[i])
-			return i;
-	}
+    for (int i = 0; i < psl->Size; i++)
+    {
+        if (x == psl->arr[i])
+            return i;
+    }
 
-	return -1;
+    return -1;
 }
 ```
 
@@ -467,19 +467,19 @@ void seqListInsert(SeqList* psl, size_t pos, SLDataType x);
 // 指定位置插入
 void seqListInsert(SeqList* psl, size_t pos, SLDataType x)
 {
-	assert(psl);
-	
-	SeqListCheckCapacity(psl);    // 检查容量
-	
-	size_t end = psl->Size;
-	while(end > pos)
-	{
-		psl->arr[end] = psl->arr[end - 1];
-		end--;
-	}
-	
-	psl->arr[pos] = x;
-	psl->Size++;
+    assert(psl);
+    
+    SeqListCheckCapacity(psl);    // 检查容量
+    
+    size_t end = psl->Size;
+    while(end > pos)
+    {
+        psl->arr[end] = psl->arr[end - 1];
+        end--;
+    }
+    
+    psl->arr[pos] = x;
+    psl->Size++;
 }
 ```
 验证一下: 
@@ -511,25 +511,25 @@ void seqListInsert(SeqList* psl, size_t pos, SLDataType x)
 // 指定位置插入
 void seqListInsert(SeqList* psl, size_t pos, SLDataType x)
 {
-	assert(psl);
-	
-	checkCapacity(psl);    // 检查容量
-	
-	if(pos > psl->Size)
-	{// 尾插的位置是 Size, 如果大于Size, 就代表pos过大
-		printf("Insert fail. Pos > Size! Pos = %d \n", pos);
-		return;
-	}
-	
-	size_t end = psl->Size;
-	while(end > pos)
-	{
-		psl->arr[end] = psl->arr[end - 1];
-		end--;
-	}
-	
-	psl->arr[pos] = x;
-	psl->Size++;
+    assert(psl);
+    
+    checkCapacity(psl);    // 检查容量
+    
+    if(pos > psl->Size)
+    {// 尾插的位置是 Size, 如果大于Size, 就代表pos过大
+        printf("Insert fail. Pos > Size! Pos = %d \n", pos);
+        return;
+    }
+    
+    size_t end = psl->Size;
+    while(end > pos)
+    {
+        psl->arr[end] = psl->arr[end - 1];
+        end--;
+    }
+    
+    psl->arr[pos] = x;
+    psl->Size++;
 }
 ```
 现在再执行一遍代码: 
@@ -548,15 +548,15 @@ void seqListInsert(SeqList* psl, size_t pos, SLDataType x)
 // 尾插
 void seqListPushBack(SeqList* psl, SLDataType x)
 {
-	assert(psl);    //断言保证传入的结构体的地址不为空
-	/*
-	checkCapacity(psl);    //容量检查函数检查容量
+    assert(psl);    //断言保证传入的结构体的地址不为空
+    /*
+    checkCapacity(psl);    //容量检查函数检查容量
 
-	psl->arr[psl->Size] = x;    // 将 x 尾插
-	psl->Size++;    // 存储数据量加1 , Size也要加1
-	*/
-	
-	seqListInsert(psl, psl->Size, x);    //在 Size 位置插入数据, 就是尾插
+    psl->arr[psl->Size] = x;    // 将 x 尾插
+    psl->Size++;    // 存储数据量加1 , Size也要加1
+    */
+    
+    seqListInsert(psl, psl->Size, x);    //在 Size 位置插入数据, 就是尾插
 }
 ```
 
@@ -564,34 +564,34 @@ void seqListPushBack(SeqList* psl, SLDataType x)
 // 头插
 void seqListPushFront(SeqList* psl, SLDataType x)
 {
-	assert(psl);    //断言保证传入的结构体的地址不为空
-	
-	/*
-	checkCapacity(psl);    //插入前 首先检查容量
+    assert(psl);    //断言保证传入的结构体的地址不为空
+    
+    /*
+    checkCapacity(psl);    //插入前 首先检查容量
 
-	// 方法一: 
-	int end = psl->Size;
-	while (end)
-	{
-		psl->arr[end] = psl->arr[end - 1];
-		end--;
-	}
+    // 方法一: 
+    int end = psl->Size;
+    while (end)
+    {
+        psl->arr[end] = psl->arr[end - 1];
+        end--;
+    }
 
-	// 方法二: 
-	int end = psl->Size - 1;
-	while (end >= 0)
-	{
-		psl->arr[end + 1] = psl->arr[end];
-		end--;
-	}
+    // 方法二: 
+    int end = psl->Size - 1;
+    while (end >= 0)
+    {
+        psl->arr[end + 1] = psl->arr[end];
+        end--;
+    }
 
-	// 这两个方法其实一样的, 只是对 末尾元素的位置控制方式不同
-	
+    // 这两个方法其实一样的, 只是对 末尾元素的位置控制方式不同
+    
 
-	psl->arr[0] = x;    // 将 x 尾插
-	psl->Size++;    // 存储数据量加1 , Size 加1
-	*/
-	seqListInsert(psl, 0, x);   // 在 0 位置插入数据, 就是头插
+    psl->arr[0] = x;    // 将 x 尾插
+    psl->Size++;    // 存储数据量加1 , Size 加1
+    */
+    seqListInsert(psl, 0, x);   // 在 0 位置插入数据, 就是头插
 }
 ```
 
@@ -617,22 +617,22 @@ void seqListErase(SeqList* psl, size_t pos);
 // 指定位置删除
 void seqListErase(SeqList* psl, size_t pos)
 {
-	assert(psl);
+    assert(psl);
 
-	if(pos >= psl->Size)
-	{// 这里 pos 必须小于 Size 才能删除
-		printf("Erase fail. Pos >= Size! Pos = %d \n", pos);
-		return;
-	}
-	
-	size_t begin = pos + 1;
-	while(begin < psl->Size)
-	{
-		psl->arr[begin - 1] = psl->arr[begin];
-		begin++;
-	}
-	
-	psl->Size--;
+    if(pos >= psl->Size)
+    {// 这里 pos 必须小于 Size 才能删除
+        printf("Erase fail. Pos >= Size! Pos = %d \n", pos);
+        return;
+    }
+    
+    size_t begin = pos + 1;
+    while(begin < psl->Size)
+    {
+        psl->arr[begin - 1] = psl->arr[begin];
+        begin++;
+    }
+    
+    psl->Size--;
 }
 ```
 验证一下: 
@@ -652,15 +652,15 @@ void seqListErase(SeqList* psl, size_t pos)
 // 顺序表尾删
 void seqListPopBack(SeqList* psl)
 {
-	assert(psl);
-	
-	/*
-	if (psl->Size > 0)
-	{// 当Size 大于零 再进行自减
-		psl->Size--;
-	}
-	*/
-	seqListErase(psl, psl->Size - 1);    // Size - 1 即为末尾元素位置
+    assert(psl);
+    
+    /*
+    if (psl->Size > 0)
+    {// 当Size 大于零 再进行自减
+        psl->Size--;
+    }
+    */
+    seqListErase(psl, psl->Size - 1);    // Size - 1 即为末尾元素位置
 }
 ```
 
@@ -668,22 +668,22 @@ void seqListPopBack(SeqList* psl)
 // 顺序表头删
 void seqListPopFront(SeqList* psl)
 {
-	assert(psl);
-	
-	/*
-	if (psl->Size > 0)
-	{
-		int begin = 1;
-		while (begin < psl->Size)
-		{
-			psl->arr[begin] = psl->arr[begin - 1];
-			begin++;
-		}
-		
-		psl->Size--;
-	}
-	*/
-	seqListErase(psl, 0);    // 0 位置即为首元素
+    assert(psl);
+    
+    /*
+    if (psl->Size > 0)
+    {
+        int begin = 1;
+        while (begin < psl->Size)
+        {
+            psl->arr[begin] = psl->arr[begin - 1];
+            begin++;
+        }
+        
+        psl->Size--;
+    }
+    */
+    seqListErase(psl, 0);    // 0 位置即为首元素
 }
 ```
 

@@ -78,13 +78,13 @@ Linux操作系统中, 由于进程地址空间的存在, 进程具有独立性
 
 1. 首先介绍一下 第二个参数: 
 
-	`size_t size`, 此参数传入的是 `需要开辟多大的共享内存`, 单位是 `byte字节`
-	
-	系统会按照`4KB`为单位开辟空间, 因为系统`I/O`的单位大小就是 `4KB`
-	
-	也就是说, `size`参数传入`1`、`1024`、`2048`、`4096`时, 系统都会开辟 `4KB`. 当传入`4097`时, 系统就开会开辟 `8KB`
-	
-	不过, **虽然系统会按照 4KB为单位开辟空间, 但实际上能够使用的大小还是 size字节**
+    `size_t size`, 此参数传入的是 `需要开辟多大的共享内存`, 单位是 `byte字节`
+    
+    系统会按照`4KB`为单位开辟空间, 因为系统`I/O`的单位大小就是 `4KB`
+    
+    也就是说, `size`参数传入`1`、`1024`、`2048`、`4096`时, 系统都会开辟 `4KB`. 当传入`4097`时, 系统就开会开辟 `8KB`
+    
+    不过, **虽然系统会按照 4KB为单位开辟空间, 但实际上能够使用的大小还是 size字节**
 
 2. 其次是, 第三个参数: 
 
@@ -102,33 +102,33 @@ Linux操作系统中, 由于进程地址空间的存在, 进程具有独立性
 
 3. 最后介绍, 第一个参数:
 
-	`key_t key`, 此参数其实是传入一个整数
-	
-	因为`key_t`其实就是整型: 
-	
-	![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180320668.webp)
-	
-	传入的`key`值, 其实是 **创建的共享内存段, 在操作系统层面的的 唯一标识符**
-	
-	共享内存是Linux系统的一种进程通信的手段, 而 **操作系统中 共享内存段 是有许多的**, 为了管理这些共享内存段, 操作系统一定会描述共享内存段的各种属性
-	
-	在Linux操作系统中, 共享内存会被描述为一个结构体, 就像描述进程的`task_struct`、描述文件的`file`等
-	
-	描述共享内存的结构体内会维护一个 **`key`值, 用于表示共享内存在系统层面的唯一标识符**, 一般由用户传入
-	
-	也就是`shmget()`系统调用的第一个参数 `key_t key`. 
-	
-	`key`值需要表示共享内存的唯一标识符, 所以 每块共享内存的`key`值都需要不同, 也就是说 `key`值虽然是用户传入的, 但是 `key`值的获取也是需要一定的方法的
-	
-	Linux系统也 **为`key`值的获取提供了一个系统调用: `ftok()`**
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180322962.webp)
-	
-	`pathname`是一个文件的路径, `proj_id`则是随意的`8bit`的数值
-	
-	`ftok()`执行成功会返回一个 key值, 这个 **`key`值是由传入文件的`inode`值 和 传入的`proj_id`值通过一定的算法计算出来的**
-	
-	文件的`inode`在系统中是唯一的, 所以不同的文件计算出的`key`值, 也会不同
+    `key_t key`, 此参数其实是传入一个整数
+    
+    因为`key_t`其实就是整型: 
+    
+    ![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180320668.webp)
+    
+    传入的`key`值, 其实是 **创建的共享内存段, 在操作系统层面的的 唯一标识符**
+    
+    共享内存是Linux系统的一种进程通信的手段, 而 **操作系统中 共享内存段 是有许多的**, 为了管理这些共享内存段, 操作系统一定会描述共享内存段的各种属性
+    
+    在Linux操作系统中, 共享内存会被描述为一个结构体, 就像描述进程的`task_struct`、描述文件的`file`等
+    
+    描述共享内存的结构体内会维护一个 **`key`值, 用于表示共享内存在系统层面的唯一标识符**, 一般由用户传入
+    
+    也就是`shmget()`系统调用的第一个参数 `key_t key`. 
+    
+    `key`值需要表示共享内存的唯一标识符, 所以 每块共享内存的`key`值都需要不同, 也就是说 `key`值虽然是用户传入的, 但是 `key`值的获取也是需要一定的方法的
+    
+    Linux系统也 **为`key`值的获取提供了一个系统调用: `ftok()`**
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180322962.webp)
+    
+    `pathname`是一个文件的路径, `proj_id`则是随意的`8bit`的数值
+    
+    `ftok()`执行成功会返回一个 key值, 这个 **`key`值是由传入文件的`inode`值 和 传入的`proj_id`值通过一定的算法计算出来的**
+    
+    文件的`inode`在系统中是唯一的, 所以不同的文件计算出的`key`值, 也会不同
 
 分析完`shmget()`的参数, 要完整的了解`shmget()`的作用, 还需要了解其返回值
 
@@ -334,15 +334,15 @@ int main() {
 
   2. 如果 第三个参数没有传入`SHM_RND`, 则连接的地址会 **自动向下调整为最近的`SHMLBA`的整数倍**
 
-  	`shmaddr - (shmaddr % SHMLBA)`
-  	
-  	`SHMLBA`是共享内存最小对齐边界, 由操作系统设定
+      `shmaddr - (shmaddr % SHMLBA)`
+      
+      `SHMLBA`是共享内存最小对齐边界, 由操作系统设定
 
 3. `int shmflg`, 此参数需要传入操作系统提供的宏. 一般会使用两个宏
 
-	`SHM_RND`, 此宏是为了与第二个参数结合使用
-	
-	`SHM_RDONLY`, 使用此宏 表示连接 只读共享内存
+    `SHM_RND`, 此宏是为了与第二个参数结合使用
+    
+    `SHM_RDONLY`, 使用此宏 表示连接 只读共享内存
 
 `shmat()`连接共享内存成功之后, 会返回一个地址, 此地址与`malloc`和`new`的用法相同
 
@@ -475,13 +475,13 @@ int main() {
 all:ipcShmClient ipcShmServer
 
 ipcShmClient:ipcShmClient.cpp
-	g++ $^ -o $@
+    g++ $^ -o $@
 ipcShmServer:ipcShmServer.cpp
-	g++ $^ -o $@
+    g++ $^ -o $@
 
 .PHONY:clean
 clean:
-	rm -f ipcShmClient ipcShmServer
+    rm -f ipcShmClient ipcShmServer
 ```
 
 `make`生成可执行程序, 再执行可执行程序的结果是: 
@@ -897,13 +897,13 @@ int main() {
 all:ipcShmClient ipcShmServer
 
 ipcShmClient:ipcShmClient.cpp
-	g++ $^ -o $@
+    g++ $^ -o $@
 ipcShmServer:ipcShmServer.cpp
-	g++ $^ -o $@
+    g++ $^ -o $@
 
 .PHONY:clean
 clean:
-	rm -f ipcShmClient ipcShmServer .fifo
+    rm -f ipcShmClient ipcShmServer .fifo
 ```
 
 make之后, 生成的可执行程序的执行结果是: 
@@ -920,15 +920,15 @@ make之后, 生成的可执行程序的执行结果是:
 
 1. 服务端
 
-	![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180434099.webp)
-	
-	![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180435463.webp)
+    ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180434099.webp)
+    
+    ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180435463.webp)
 
 2. 客户端
 
-	![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180437235.webp)
-	
-	![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180439127.webp)
+    ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180437235.webp)
+    
+    ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180439127.webp)
 
 只有这两部分不同, 就可以通过管道实现使用共享内存的简单的访问控制
 

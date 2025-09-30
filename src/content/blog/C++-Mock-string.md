@@ -28,9 +28,9 @@ string类 实质上其实就是一个提供了许多功能接口的字符串
 ```cpp
 class string {
 private:
-    char* _str;				// 字符串
-    size_t _size;			// 字符串实际长度
-    size_t _capacity;		 // 字符串指针表示的字符串的容量
+    char* _str;                // 字符串
+    size_t _size;            // 字符串实际长度
+    size_t _capacity;         // 字符串指针表示的字符串的容量
 };
 ```
 
@@ -156,9 +156,9 @@ public:
     }
     
 private:
-    char* _str;				// 字符串
-    size_t _size;			// 字符串实际长度
-    size_t _capacity;		 // 字符串指针表示的字符串的容量
+    char* _str;                // 字符串
+    size_t _size;            // 字符串实际长度
+    size_t _capacity;         // 字符串指针表示的字符串的容量
 };
 ```
 
@@ -175,8 +175,8 @@ private:
 所以 赋值重载函数相关代码可以为: 
 
 ```cpp
-string& operator=(const string& s) {			// string&返回值 可以实现连续赋值
-    if (this != &s) {					// 对比 s 与 自己的地址, 禁止自我赋值
+string& operator=(const string& s) {            // string&返回值 可以实现连续赋值
+    if (this != &s) {                    // 对比 s 与 自己的地址, 禁止自我赋值
         char* tmps = new char[s._capacity + 1];
         strcpy(tmps, s._str);
         delete[] _str;
@@ -185,7 +185,7 @@ string& operator=(const string& s) {			// string&返回值 可以实现连续赋
         _capacity = s._capacity;
     }
     
-    return *this;			// 返回当前对象的地址
+    return *this;            // 返回当前对象的地址
 }
 ```
 
@@ -201,9 +201,9 @@ string& operator=(const string& s) {			// string&返回值 可以实现连续赋
 
 ```cpp
 string& operator=(const string& s) {
-    if (this != &s) {					// 依旧禁止自我赋值
-        string tmpStr(s._str);				// 使用s的内容 实例化对象
-        swap(tmpStr);					   // 交换临时对象与本对象的内容
+    if (this != &s) {                    // 依旧禁止自我赋值
+        string tmpStr(s._str);                // 使用s的内容 实例化对象
+        swap(tmpStr);                       // 交换临时对象与本对象的内容
     }
     
     return *this;
@@ -230,8 +230,8 @@ string& operator=(string s) {
 class string {
 public:
     // 赋值重载 传统写法
-    string& operator=(const string& s) {			// string&返回值 可以实现连续赋值
-        if (this != &s) {					// 对比 s 与 自己的地址, 禁止自我赋值
+    string& operator=(const string& s) {            // string&返回值 可以实现连续赋值
+        if (this != &s) {                    // 对比 s 与 自己的地址, 禁止自我赋值
             char* tmps = new char[s._capacity + 1];
             strcpy(tmps, s._str);
             delete[] _str;
@@ -240,13 +240,13 @@ public:
             _capacity = s._capacity;
         }
     
-        return *this;			// 返回当前对象的地址
+        return *this;            // 返回当前对象的地址
     }
     // 现代写法1: 
     string& operator=(const string& s) {
-        if (this != &s) {					// 依旧禁止自我赋值
-            string tmpStr(s._str);				// 使用s的内容 实例化对象
-            swap(tmpStr);					   // 交换临时对象与本对象的内容
+        if (this != &s) {                    // 依旧禁止自我赋值
+            string tmpStr(s._str);                // 使用s的内容 实例化对象
+            swap(tmpStr);                       // 交换临时对象与本对象的内容
         }
     
         return *this;
@@ -259,9 +259,9 @@ public:
     }
     
 private:
-    char* _str;				// 字符串
-    size_t _size;			// 字符串实际长度
-    size_t _capacity;		 // 字符串指针表示的字符串的容量
+    char* _str;                // 字符串
+    size_t _size;            // 字符串实际长度
+    size_t _capacity;         // 字符串指针表示的字符串的容量
 };
 ```
 
@@ -274,15 +274,15 @@ private:
 ```cpp
 class string {
 public:
-    typedef char* iterator;						// 迭代器
-    typedef const char* const_iterator;			  // const迭代器
+    typedef char* iterator;                        // 迭代器
+    typedef const char* const_iterator;              // const迭代器
     
     iterator begin() {
-        return _str;						   // begin返回字符串首位置迭代器
+        return _str;                           // begin返回字符串首位置迭代器
     }
     
     iterator end() {
-        return _str + _size;					// end 返回字符串末位置(字符串的最后一个有效字符的下一个位置)迭代器
+        return _str + _size;                    // end 返回字符串末位置(字符串的最后一个有效字符的下一个位置)迭代器
     }
     
     const_iterator begin() const {
@@ -294,9 +294,9 @@ public:
     }
     
 private:
-    char* _str;				// 字符串
-    size_t _size;			// 字符串实际长度
-    size_t _capacity;		 // 字符串指针表示的字符串的容量
+    char* _str;                // 字符串
+    size_t _size;            // 字符串实际长度
+    size_t _capacity;         // 字符串指针表示的字符串的容量
 };
 ```
 
@@ -324,14 +324,14 @@ string类中有两个非常重要的接口函数, 就是: reserve 和 resize
 >
 > ```cpp
 > void reserve(size_t n) {
-> 	if(n > _capacity) {				// n 比原空间大才执行操作
-> 		char* tmps = new char[n + 1];
-> 		strcpy(tmps, _str);
-> 		delete[] _str;				// 释放原字符串所在的堆空间
+>     if(n > _capacity) {                // n 比原空间大才执行操作
+>         char* tmps = new char[n + 1];
+>         strcpy(tmps, _str);
+>         delete[] _str;                // 释放原字符串所在的堆空间
 >         
-> 		_str = tmps;
-> 		_capacity = n;				// 更改 string对象的_capacity 为n
-> 	}
+>         _str = tmps;
+>         _capacity = n;                // 更改 string对象的_capacity 为n
+>     }
 > }
 > ```
 
@@ -344,24 +344,24 @@ string类中有两个非常重要的接口函数, 就是: reserve 和 resize
 > 则 resize相关代码可以为: 
 >
 > ```cpp
-> void resize(size_t n, char ch = '\0') {				// 第二个参数是指定字符
-> 	if (n < _size) {
-> 		// 截断字符串
-> 		_size = n;
-> 		_str[n] = '\0';
-> 	}
-> 	else {
-> 		if (n > _capacity) {
-> 			// 需要扩容
-> 			reserve(n);
-> 		}
+> void resize(size_t n, char ch = '\0') {                // 第二个参数是指定字符
+>     if (n < _size) {
+>         // 截断字符串
+>         _size = n;
+>         _str[n] = '\0';
+>     }
+>     else {
+>         if (n > _capacity) {
+>             // 需要扩容
+>             reserve(n);
+>         }
 >         
-> 		for (size_t i = _size; i < n; i++) {
-> 			_str[i] = ch;					// 填充字符操作
-> 		}
-> 		_size = n;
-> 		_str[n] = '\0';
-> 	}		
+>         for (size_t i = _size; i < n; i++) {
+>             _str[i] = ch;                    // 填充字符操作
+>         }
+>         _size = n;
+>         _str[n] = '\0';
+>     }        
 > }
 > ```
 
@@ -373,13 +373,13 @@ string类中有两个非常重要的接口函数, 就是: reserve 和 resize
 >
 > ```cpp
 > void push_back(char ch) {
->    	if (_size == _capacity) {
->    		reserve(_capacity == 0 ? 4 : _capacity*2);				// 两倍扩容
->    	}
+>        if (_size == _capacity) {
+>            reserve(_capacity == 0 ? 4 : _capacity*2);                // 两倍扩容
+>        }
 >     
->     	_str[_size] = ch;							// 在 size位置插入新字符
->     	_size++;
->     	_str[_size] = '\0';							// 结尾放 '\0'
+>         _str[_size] = ch;                            // 在 size位置插入新字符
+>         _size++;
+>         _str[_size] = '\0';                            // 结尾放 '\0'
 > }
 > ```
 
@@ -396,7 +396,7 @@ string类中有两个非常重要的接口函数, 就是: reserve 和 resize
 >         reserve(_capacity == 0 ? len : _capacity + len);
 >     }
 >     
->     strcpy(_str + _size, str);				// 从字符串末尾处拷贝 str
+>     strcpy(_str + _size, str);                // 从字符串末尾处拷贝 str
 >     _size += len;
 > }
 > ```
@@ -415,27 +415,27 @@ string类中有两个非常重要的接口函数, 就是: reserve 和 resize
 >
 > ```cpp
 > string& insert(size_t pos, char ch) {
-> 	assert(pos <= _size);		// pos位置 需要合法
+>     assert(pos <= _size);        // pos位置 需要合法
 > 
-> 	if (_size == _capacity) {
-> 		reserve(_capacity == 0 ? 4 : _capacity * 2);
-> 	}
+>     if (_size == _capacity) {
+>         reserve(_capacity == 0 ? 4 : _capacity * 2);
+>     }
 > 
-> 	size_t end = _size + 1;
-> 	// 1. end位置在 _size+1, 挪动数据的步骤就是将 end-1 位置的数据一个一个挪至end
-> 	// 2. 如果 end位置在 _size, 则挪动数据的步骤是将 end位置的数据 挪至 end+1
-> 	// (两种方法 从 '\0' 开始挪动)
-> 	// 表面看 两种方法好像都一样, 但是 如果end的初始位置是_size, 需要额外处理 pos位置为0的情况
-> 	// 因为 当pos位置为零时, 方案二 end的结束位置应该在 -1, 但是 end是 size_t 类型的数据, 所以end永远不会为-1, 即会死循环
-> 	// 而 方案一 不会有这种情况, 方案一 如果 pos为0, 循环结束时 end == pos, 会退出循环
-> 	while (end > pos) {
-> 		_str[end] = _str[end - 1];
-> 		end--;
-> 	}
-> 	_str[pos] = ch;
-> 	_size++;
+>     size_t end = _size + 1;
+>     // 1. end位置在 _size+1, 挪动数据的步骤就是将 end-1 位置的数据一个一个挪至end
+>     // 2. 如果 end位置在 _size, 则挪动数据的步骤是将 end位置的数据 挪至 end+1
+>     // (两种方法 从 '\0' 开始挪动)
+>     // 表面看 两种方法好像都一样, 但是 如果end的初始位置是_size, 需要额外处理 pos位置为0的情况
+>     // 因为 当pos位置为零时, 方案二 end的结束位置应该在 -1, 但是 end是 size_t 类型的数据, 所以end永远不会为-1, 即会死循环
+>     // 而 方案一 不会有这种情况, 方案一 如果 pos为0, 循环结束时 end == pos, 会退出循环
+>     while (end > pos) {
+>         _str[end] = _str[end - 1];
+>         end--;
+>     }
+>     _str[pos] = ch;
+>     _size++;
 > 
-> 	return *this;
+>     return *this;
 > }
 > ```
 > 
@@ -443,22 +443,22 @@ string类中有两个非常重要的接口函数, 就是: reserve 和 resize
 > 
 >```cpp
 > string& insert(size_t pos, const char* str) {
->	assert(pos <= _size);
+>    assert(pos <= _size);
 > 
-> 	size_t len = strlen(str);
-> 	if (_size + len > _capacity) {
-> 		reserve(_capacity == 0 ? len : _capacity + len);
-> 	}
+>     size_t len = strlen(str);
+>     if (_size + len > _capacity) {
+>         reserve(_capacity == 0 ? len : _capacity + len);
+>     }
 > 
-> 	size_t end = _size + len;
-> 	while (end > pos + len - 1)	{	// 可以画图判断一下end结束位置 
-> 		_str[end] = _str[end - len];
-> 		end--;
-> 	}
-> 	strncpy(_str + pos, str, len);		// 使用strncpy 可以防止字符串的'\0' 也被拷贝进去
-> 	_size += len;
+>     size_t end = _size + len;
+>     while (end > pos + len - 1)    {    // 可以画图判断一下end结束位置 
+>         _str[end] = _str[end - len];
+>         end--;
+>     }
+>     strncpy(_str + pos, str, len);        // 使用strncpy 可以防止字符串的'\0' 也被拷贝进去
+>     _size += len;
 > 
-> 	return *this;
+>     return *this;
 > }
 > ```
 > 
@@ -466,11 +466,11 @@ string类中有两个非常重要的接口函数, 就是: reserve 和 resize
 > 
 > ```cpp
 > string& insert(size_t pos, const string& s) {
-> 	assert(pos <= _size);
+>     assert(pos <= _size);
 >
-> 	insert(pos, s._str);				// 直接调用 插入字符串
+>     insert(pos, s._str);                // 直接调用 插入字符串
 >
-> 	return *this;
+>     return *this;
 > }
 > ```
 
@@ -484,16 +484,16 @@ string类中有两个非常重要的接口函数, 就是: reserve 和 resize
 >
 > ```cpp
 > string& operator+=(const string& s) {
-> 	insert(_size, s);		// += 对象复用 insert
-> 	return *this;
+>     insert(_size, s);        // += 对象复用 insert
+>     return *this;
 > }
 > string& operator+=(const char* str) {
-> 	append(str);			// += 字符串复用 append
-> 	return *this;
+>     append(str);            // += 字符串复用 append
+>     return *this;
 > }
 > string& operator+=(char ch) {
-> 	push_back(ch);		// += 字符 复用 push_back
-> 	return *this;
+>     push_back(ch);        // += 字符 复用 push_back
+>     return *this;
 > }
 > ```
 
@@ -505,24 +505,24 @@ string 类提供的 erase操作, 有 删除 指定两位置之间的字符
 
 ```cpp
 string& earse(size_t pos, size_t len = npos) {
-	assert(pos < _size);
-			
-	// 当从pos位置向后删除的长度大于 字符串长度时, 不用考虑挪动数据 直接修改 _size 和 结尾符 '\0'
-	if (len == npos || pos + len >= _size) {
-		_str[pos] = '\0';
-		_size = pos;
-	}
-	else {
-		size_t begin = pos + len;
-		// 挪动数据
-		while (begin <= _size) {
-			_str[begin - len] = _str[begin];
-			begin++;
-		}
-		_size -= len;
-	}
+    assert(pos < _size);
+            
+    // 当从pos位置向后删除的长度大于 字符串长度时, 不用考虑挪动数据 直接修改 _size 和 结尾符 '\0'
+    if (len == npos || pos + len >= _size) {
+        _str[pos] = '\0';
+        _size = pos;
+    }
+    else {
+        size_t begin = pos + len;
+        // 挪动数据
+        while (begin <= _size) {
+            _str[begin - len] = _str[begin];
+            begin++;
+        }
+        _size -= len;
+    }
 
-	return *this;
+    return *this;
 }
 ```
 
@@ -536,14 +536,14 @@ string提供的 `find` 有四个重载类型
 >
 > ```cpp
 > size_t find(char ch, size_t pos = 0) {
-> 	assert(pos < _size);
+>     assert(pos < _size);
 > 
-> 	for (; pos < _size; pos++) {
-> 		if (_str[pos] = ch)
-> 			return pos;
-> 	}
+>     for (; pos < _size; pos++) {
+>         if (_str[pos] = ch)
+>             return pos;
+>     }
 > 
-> 	return npos;
+>     return npos;
 > }
 > ```
 > 
@@ -555,16 +555,16 @@ string提供的 `find` 有四个重载类型
 >
 > ```cpp
 > size_t find(const char* str, size_t pos = 0) {
-> 	assert(pos < _size);
+>     assert(pos < _size);
 > 
-> 	//直接用strstr()找字符串的地址, 找到就返回字符串首字符的地址, 找不到就返回空指针
-> 	// 找到的话  找到的str的地址 - 原字符串的地址 就是字符串首字符的在string中的位置
-> 	const char* ps = strstr(_str + pos, str);
-> 	if (ps != nullptr) {
-> 		return ps - _str;
-> 	}
+>     //直接用strstr()找字符串的地址, 找到就返回字符串首字符的地址, 找不到就返回空指针
+>     // 找到的话  找到的str的地址 - 原字符串的地址 就是字符串首字符的在string中的位置
+>     const char* ps = strstr(_str + pos, str);
+>     if (ps != nullptr) {
+>         return ps - _str;
+>     }
 > 
-> 	return npos;
+>     return npos;
 > }
 > ```
 > 
@@ -581,22 +581,22 @@ string提供的 `find` 有四个重载类型
 ```cpp
 // 实现 > 和 == 都用strcmp来对字符串作比较
 bool operator>(const string& s1, const string& s2) {
-	return strcmp(s1.c_str(), s2.c_str()) > 0;
+    return strcmp(s1.c_str(), s2.c_str()) > 0;
 }
 bool operator==(const string& s1, const string& s2) {
-	return strcmp(s1.c_str(), s2.c_str()) == 0;
+    return strcmp(s1.c_str(), s2.c_str()) == 0;
 }
 bool operator>=(const string& s1, const string& s2) {
-	return s1 > s2 || s1 == s2;
+    return s1 > s2 || s1 == s2;
 }
 bool operator<(const string& s1, const string& s2) {
-	return !(s1 >= s2);
+    return !(s1 >= s2);
 }
 bool operator<=(const string& s1, const string& s2) {
-	return s1 < s2 || s1 == s2;
+    return s1 < s2 || s1 == s2;
 }
 bool operator!=(const string& s1, const string& s2) {
-	return !(s1 == s2);
+    return !(s1 == s2);
 }
 ```
 
@@ -618,15 +618,15 @@ bool operator!=(const string& s1, const string& s2) {
 
 ```cpp
 ostream& operator<<(ostream& out, const string& s) {
-	// 其实就是string类的字符串遍历
-	// 三种方法使用哪种方法都行
-	// 下面使用 范围for 比较简单 (使用之前需要实现 迭代器)
-	for (auto ch : s)
-	{
-		out << ch;
-	}
+    // 其实就是string类的字符串遍历
+    // 三种方法使用哪种方法都行
+    // 下面使用 范围for 比较简单 (使用之前需要实现 迭代器)
+    for (auto ch : s)
+    {
+        out << ch;
+    }
 
-	return out;
+    return out;
 }
 ```
 
@@ -648,13 +648,13 @@ ostream& operator<<(ostream& out, const string& s) {
 
 1. `先清除 string 类中的内容`
 
-	> C++库中 string 有 clear()函数 是清楚字符串内容的, 这里需要自己实现
+    > C++库中 string 有 clear()函数 是清楚字符串内容的, 这里需要自己实现
 
 2. 定义一个char变量 来`循环接收输入的字符 并 += 至s字符串中`(字符串已用`clear()`清除, 所以用+=)
 
-	> 注意, 接收输入的字符不能用 `cin>>` 接收, 因为 `cin 也不能接收' ' 和 '\n', 所以会导致无法判断结尾`
-	>
-	> 这里接收字符 会用到输入流类的一个成员函数 `get() 这个函数接收 单个字符没有限制`
+    > 注意, 接收输入的字符不能用 `cin>>` 接收, 因为 `cin 也不能接收' ' 和 '\n', 所以会导致无法判断结尾`
+    >
+    > 这里接收字符 会用到输入流类的一个成员函数 `get() 这个函数接收 单个字符没有限制`
 
 3. 因为 ch的内容要用来判断循环结束, 所以ch第一次接收无法在循环内接收, 所以需要在循环外第一次接收字符
 
@@ -662,19 +662,19 @@ ostream& operator<<(ostream& out, const string& s) {
 
 ```cpp
 void clear() {
-	resize(0);
+    resize(0);
 }
 
 istream& operator>>(istream& in, string& s) {
-	char ch;
-	s.clear();
-	ch = in.get();
-	while (ch != ' ' && ch != '\n') {
-		s += ch;
-		ch = in.get();
-	}
-	
-	return in;
+    char ch;
+    s.clear();
+    ch = in.get();
+    while (ch != ' ' && ch != '\n') {
+        s += ch;
+        ch = in.get();
+    }
+    
+    return in;
 }
 ```
 
@@ -690,25 +690,25 @@ istream& operator>>(istream& in, string& s) {
 
 ```cpp
 istream& operator>>(istream& in, string& s) {
-	char ch;
-	s.clear();		// 清理string原字符串
-	ch = in.get();
-	char tmp[128] = { '\0' };		//字符数组内容初始化为 '\0', 大小适合就可以
-	size_t i = 0;				   // 用来访问字符数组下标赋值, 以及记录字符数组中字符个数
-	while (ch != ' ' && ch != '\n') {
-		tmp[i++] = ch;
-		if (i == 127) {	
-			// 字符数组大小为 128, 看作字符串的话, 可容纳有效字符数就是 127, 因为最后一位'\0'作为结束标志 
-			// 字符数组一满, 就将字符数组中的内容 += 至string对象, 然后清空字符数组
-			s += tmp;
-			memset(tmp, '\0', 128);	// 使用 memset 将字符数组所有空间设置为 '\0' 以防下次 += 会出错
-			i = 0;
-		}
-		ch = in.get();
-	}
-	s += tmp;		// 循环结束, 再将字符数组中还有的内容 += 至string对象
+    char ch;
+    s.clear();        // 清理string原字符串
+    ch = in.get();
+    char tmp[128] = { '\0' };        //字符数组内容初始化为 '\0', 大小适合就可以
+    size_t i = 0;                   // 用来访问字符数组下标赋值, 以及记录字符数组中字符个数
+    while (ch != ' ' && ch != '\n') {
+        tmp[i++] = ch;
+        if (i == 127) {    
+            // 字符数组大小为 128, 看作字符串的话, 可容纳有效字符数就是 127, 因为最后一位'\0'作为结束标志 
+            // 字符数组一满, 就将字符数组中的内容 += 至string对象, 然后清空字符数组
+            s += tmp;
+            memset(tmp, '\0', 128);    // 使用 memset 将字符数组所有空间设置为 '\0' 以防下次 += 会出错
+            i = 0;
+        }
+        ch = in.get();
+    }
+    s += tmp;        // 循环结束, 再将字符数组中还有的内容 += 至string对象
 
-	return in;
+    return in;
 }
 ```
 
@@ -727,9 +727,9 @@ istream& operator>>(istream& in, string& s) {
 
 ```cpp
 char& operator[](size_t pos) {
-	assert(pos < _size);		// 下标要合法
+    assert(pos < _size);        // 下标要合法
 
-	return _str[pos];
+    return _str[pos];
 }
 ```
 
@@ -737,9 +737,9 @@ char& operator[](size_t pos) {
 
 ```cpp
 const char& operator[](size_t pos) const {
-	assert(pos < _size);		// 下标要合法
+    assert(pos < _size);        // 下标要合法
 
-	return _str[pos];
+    return _str[pos];
 }
 ```
 
@@ -750,27 +750,27 @@ const char& operator[](size_t pos) const {
 ```cpp
 // 析构函数
 ~string() {
-	if (_str) {	// 得先保证 _str 不是空指针
-		delete[] _str;
-		_str = nullptr;
-		_size = _capacity = 0;
-	}
+    if (_str) {    // 得先保证 _str 不是空指针
+        delete[] _str;
+        _str = nullptr;
+        _size = _capacity = 0;
+    }
 }
 
 // size() 返回string有效字符大小
-size_t size() const {		// 不修改原对象的尽量加上 const 
-	return _size;
+size_t size() const {        // 不修改原对象的尽量加上 const 
+    return _size;
 }
 
 // capacity() 返回 string 有效字符容量
 size_t capacity() const {
-	return _capacity;
+    return _capacity;
 }
 
 // c_str 返回对象中字符串的 C类指针形式
 // 按照库中的类型 const修饰
 const char* c_str() const {
-	return _str;
+    return _str;
 }
 ```
 
@@ -778,300 +778,300 @@ const char* c_str() const {
 
 ```cpp
 class string {
-	friend istream& operator>>(istream& in, string& s);
-	friend istream& operator<<(istream& in, string& s);
+    friend istream& operator>>(istream& in, string& s);
+    friend istream& operator<<(istream& in, string& s);
 public:
-	// 默认构造函数
-	string(const char* str = "") 
-		: _size(strlen(str))
-		, _capacity(_size)
-	{
-		_str = new char[_capacity + 1];
-		strcpy(_str, str);
-	}
-	// 拷贝构造函数
-	// 传统
-	/*string(const string& s)
-		: _size(s._size)
-		, _capacity(s._capacity)
-	{
-		_str = new char[_capacity + 1];
-		strcpy(_str, s._str);
-	}*/
+    // 默认构造函数
+    string(const char* str = "") 
+        : _size(strlen(str))
+        , _capacity(_size)
+    {
+        _str = new char[_capacity + 1];
+        strcpy(_str, str);
+    }
+    // 拷贝构造函数
+    // 传统
+    /*string(const string& s)
+        : _size(s._size)
+        , _capacity(s._capacity)
+    {
+        _str = new char[_capacity + 1];
+        strcpy(_str, s._str);
+    }*/
     
-	// 现代
-	void swap(string& s) {
-		std::swap(_str, s._str);
-		std::swap(_size, s._size);
-		std::swap(_capacity, s._capacity);
-	}
-	string(const string& s) {
-		string tmp(s._str);
-		swap(tmp);
-	}
+    // 现代
+    void swap(string& s) {
+        std::swap(_str, s._str);
+        std::swap(_size, s._size);
+        std::swap(_capacity, s._capacity);
+    }
+    string(const string& s) {
+        string tmp(s._str);
+        swap(tmp);
+    }
     
     // 赋值重载 传统写法
-    /*string& operator=(const string& s) {			// string&返回值 可以实现连续赋值
-		if (this != &s) {					// 对比 s 与 自己的地址, 禁止自我赋值
-			char* tmps = new char[s._capacity + 1];
-			strcpy(tmps, s._str);
-			delete[] _str;
-			_str = tmps;
-			_size = s._size;
-			_capacity = s._capacity;
-		}
+    /*string& operator=(const string& s) {            // string&返回值 可以实现连续赋值
+        if (this != &s) {                    // 对比 s 与 自己的地址, 禁止自我赋值
+            char* tmps = new char[s._capacity + 1];
+            strcpy(tmps, s._str);
+            delete[] _str;
+            _str = tmps;
+            _size = s._size;
+            _capacity = s._capacity;
+        }
     
-		return *this;			// 返回当前对象的地址
-	}
-	// 现代写法1: 
-	string& operator=(const string& s) {
-		if (this != &s) {					// 依旧禁止自我赋值
-			string tmpStr(s._str);				// 使用s的内容 实例化对象
-			swap(tmpStr);					   // 交换临时对象与本对象的内容
-		}
+        return *this;            // 返回当前对象的地址
+    }
+    // 现代写法1: 
+    string& operator=(const string& s) {
+        if (this != &s) {                    // 依旧禁止自我赋值
+            string tmpStr(s._str);                // 使用s的内容 实例化对象
+            swap(tmpStr);                       // 交换临时对象与本对象的内容
+        }
     
-		return *this;
-	}*/
+        return *this;
+    }*/
     
-	// 现代写法2: 
-	string& operator=(string s) {
-		swap(s);
+    // 现代写法2: 
+    string& operator=(string s) {
+        swap(s);
 
-		return *this;
-	}
+        return *this;
+    }
     
-	typedef char* iterator;						// 迭代器
-	typedef const char* const_iterator;			  // const迭代器
+    typedef char* iterator;                        // 迭代器
+    typedef const char* const_iterator;              // const迭代器
     
-	iterator begin() {
-		return _str;						   // begin返回字符串首位置迭代器
-	}
+    iterator begin() {
+        return _str;                           // begin返回字符串首位置迭代器
+    }
     
-	iterator end() {
-		return _str + _size;					// end 返回字符串末位置(字符串的最后一个有效字符的下一个位置)迭代器
-	}
+    iterator end() {
+        return _str + _size;                    // end 返回字符串末位置(字符串的最后一个有效字符的下一个位置)迭代器
+    }
     
-	const_iterator begin() const {
-		return _str;
-	}
+    const_iterator begin() const {
+        return _str;
+    }
     
-	const_iterator end() const {
-		return _str;
-	}
+    const_iterator end() const {
+        return _str;
+    }
     
-	void reserve(size_t n) {
-		if(n > _capacity) {				// n 比原空间大才执行操作
-			char* tmps = new char[n + 1];
-			strcpy(tmps, _str);
-			delete[] _str;				// 释放原字符串所在的堆空间
+    void reserve(size_t n) {
+        if(n > _capacity) {                // n 比原空间大才执行操作
+            char* tmps = new char[n + 1];
+            strcpy(tmps, _str);
+            delete[] _str;                // 释放原字符串所在的堆空间
 
-			_str = tmps;
-			_capacity = n;				// 更改 string对象的_capacity 为n
-		}
-	}
+            _str = tmps;
+            _capacity = n;                // 更改 string对象的_capacity 为n
+        }
+    }
 
-	void resize(size_t n, char ch = '\0') {				// 第二个参数是指定字符
-		if (n < _size) {
-			// 截断字符串
-			_size = n;
-			_str[n] = '\0';
-		}
-		else {
-			if (n > _capacity) {
-				// 需要扩容
-				reserve(n);
-			}	
+    void resize(size_t n, char ch = '\0') {                // 第二个参数是指定字符
+        if (n < _size) {
+            // 截断字符串
+            _size = n;
+            _str[n] = '\0';
+        }
+        else {
+            if (n > _capacity) {
+                // 需要扩容
+                reserve(n);
+            }    
 
-			for (size_t i = _size; i < n; i++) {
-				_str[i] = ch;					// 填充字符操作
-			}
-			_size = n;
-			_str[n] = '\0';
-		}		
-	}
+            for (size_t i = _size; i < n; i++) {
+                _str[i] = ch;                    // 填充字符操作
+            }
+            _size = n;
+            _str[n] = '\0';
+        }        
+    }
     
      // 尾插字符
-	void push_back(char ch) {
-		if (_size == _capacity) {
-			reserve(_capacity == 0 ? 4 : _capacity*2);				// 两倍扩容
-		}
-	
-		_str[_size] = ch;							// 在 size位置插入新字符
- 		_size++;
- 		_str[_size] = '\0';							// 结尾放 '\0'
-	}
+    void push_back(char ch) {
+        if (_size == _capacity) {
+            reserve(_capacity == 0 ? 4 : _capacity*2);                // 两倍扩容
+        }
+    
+        _str[_size] = ch;                            // 在 size位置插入新字符
+         _size++;
+         _str[_size] = '\0';                            // 结尾放 '\0'
+    }
     
      // 尾插 字符串
-	void append(const char* str) {
-		size_t len = strlen(str);
-		if (_size + len > _capacity) {
-			reserve(_capacity == 0 ? len : _capacity + len);
-		}
+    void append(const char* str) {
+        size_t len = strlen(str);
+        if (_size + len > _capacity) {
+            reserve(_capacity == 0 ? len : _capacity + len);
+        }
 
-		strcpy(_str + _size, str);				// 从字符串末尾处拷贝 str
-		_size += len;
-	}
+        strcpy(_str + _size, str);                // 从字符串末尾处拷贝 str
+        _size += len;
+    }
     
      // 插入字符
-	string& insert(size_t pos, char ch) {
-		assert(pos <= _size);		// pos位置 需要合法
+    string& insert(size_t pos, char ch) {
+        assert(pos <= _size);        // pos位置 需要合法
 
-		if (_size == _capacity) {
-			reserve(_capacity == 0 ? 4 : _capacity * 2);
-		}
+        if (_size == _capacity) {
+            reserve(_capacity == 0 ? 4 : _capacity * 2);
+        }
 
-		size_t end = _size + 1;
-		// 1. end位置在 _size+1, 挪动数据的步骤就是将 end-1 位置的数据一个一个挪至end
-		// 2. 如果 end位置在 _size, 则挪动数据的步骤是将 end位置的数据 挪至 end+1
-		// (两种方法 从 '\0' 开始挪动)
-		// 表面看 两种方法好像都一样, 但是 如果end的初始位置是_size, 需要额外处理 pos位置为0的情况
-		// 因为 当pos位置为零时, 方案二 end的结束位置应该在 -1, 但是 end是 size_t 类型的数据, 所以end永远不会为-1, 即会死循环
-		// 而 方案一 不会有这种情况, 方案一 如果 pos为0, 循环结束时 end == pos, 会退出循环
-		while (end > pos) {
-			_str[end] = _str[end - 1];
-			end--;
-		}
-		_str[pos] = ch;
-		_size++;
+        size_t end = _size + 1;
+        // 1. end位置在 _size+1, 挪动数据的步骤就是将 end-1 位置的数据一个一个挪至end
+        // 2. 如果 end位置在 _size, 则挪动数据的步骤是将 end位置的数据 挪至 end+1
+        // (两种方法 从 '\0' 开始挪动)
+        // 表面看 两种方法好像都一样, 但是 如果end的初始位置是_size, 需要额外处理 pos位置为0的情况
+        // 因为 当pos位置为零时, 方案二 end的结束位置应该在 -1, 但是 end是 size_t 类型的数据, 所以end永远不会为-1, 即会死循环
+        // 而 方案一 不会有这种情况, 方案一 如果 pos为0, 循环结束时 end == pos, 会退出循环
+        while (end > pos) {
+            _str[end] = _str[end - 1];
+            end--;
+        }
+        _str[pos] = ch;
+        _size++;
 
-		return *this;
-	}
-	// 插入字符串
-	string& insert(size_t pos, const char* str) {
-		assert(pos <= _size);
+        return *this;
+    }
+    // 插入字符串
+    string& insert(size_t pos, const char* str) {
+        assert(pos <= _size);
 
-		size_t len = strlen(str);
-		if (_size + len > _capacity) {
-			reserve(_capacity == 0 ? len : _capacity + len);
-		}
+        size_t len = strlen(str);
+        if (_size + len > _capacity) {
+            reserve(_capacity == 0 ? len : _capacity + len);
+        }
 
-		size_t end = _size + len;
-		while (end > pos + len - 1)	{	// 可以画图判断一下end结束位置 
-			_str[end] = _str[end - len];
-			end--;
-		}
-		strncpy(_str + pos, str, len);		// 使用strncpy 可以防止字符串的'\0' 也被拷贝进去
-		_size += len;
+        size_t end = _size + len;
+        while (end > pos + len - 1)    {    // 可以画图判断一下end结束位置 
+            _str[end] = _str[end - len];
+            end--;
+        }
+        strncpy(_str + pos, str, len);        // 使用strncpy 可以防止字符串的'\0' 也被拷贝进去
+        _size += len;
 
-		return *this;
-	}
+        return *this;
+    }
      // 插入对象
-	string& insert(size_t pos, const string& s) {
-		assert(pos <= _size);
+    string& insert(size_t pos, const string& s) {
+        assert(pos <= _size);
 
-		insert(pos, s._str);				// 直接调用 插入字符串
+        insert(pos, s._str);                // 直接调用 插入字符串
 
-		return *this;
-	}
+        return *this;
+    }
 
      // += 重载
-	string& operator+=(const string& s) {
-		insert(_size, s);		// += 对象复用 insert
-		return *this;
-	}
-	string& operator+=(const char* str) {
-		append(str);			// += 字符串复用 append
-		return *this;
-	}
-	string& operator+=(char ch) {
-		push_back(ch);		// += 字符 复用 push_back
-		return *this;
-	}
+    string& operator+=(const string& s) {
+        insert(_size, s);        // += 对象复用 insert
+        return *this;
+    }
+    string& operator+=(const char* str) {
+        append(str);            // += 字符串复用 append
+        return *this;
+    }
+    string& operator+=(char ch) {
+        push_back(ch);        // += 字符 复用 push_back
+        return *this;
+    }
     
      // 删除字符
-	string& earse(size_t pos, size_t len = npos) {
-		assert(pos < _size);
-			
-		// 当从pos位置向后删除的长度大于 字符串长度时, 不用考虑挪动数据 直接修改 _size 和 结尾符 '\0'
-		if (len == npos || pos + len >= _size) {
-			_str[pos] = '\0';
-			_size = pos;
-		}
-		else {
-			size_t begin = pos + len;
-			// 挪动数据
-			while (begin <= _size) {
-				_str[begin - len] = _str[begin];
-				begin++;
-			}
-			_size -= len;
-		}
-	
-		return *this;
-	}
+    string& earse(size_t pos, size_t len = npos) {
+        assert(pos < _size);
+            
+        // 当从pos位置向后删除的长度大于 字符串长度时, 不用考虑挪动数据 直接修改 _size 和 结尾符 '\0'
+        if (len == npos || pos + len >= _size) {
+            _str[pos] = '\0';
+            _size = pos;
+        }
+        else {
+            size_t begin = pos + len;
+            // 挪动数据
+            while (begin <= _size) {
+                _str[begin - len] = _str[begin];
+                begin++;
+            }
+            _size -= len;
+        }
+    
+        return *this;
+    }
     
      // 查找字符
-	size_t find(char ch, size_t pos = 0) {
-		assert(pos < _size);
-	
-		for (; pos < _size; pos++) {
-			if (_str[pos] = ch)
-				return pos;
-		}
+    size_t find(char ch, size_t pos = 0) {
+        assert(pos < _size);
+    
+        for (; pos < _size; pos++) {
+            if (_str[pos] = ch)
+                return pos;
+        }
 
-		return npos;
-	}
+        return npos;
+    }
      //查找字符串
-	size_t find(const char* str, size_t pos = 0) {
-		assert(pos < _size);
-	
-		//直接用strstr()找字符串的地址, 找到就返回字符串首字符的地址, 找不到就返回空指针
-		// 找到的话  找到的str的地址 - 原字符串的地址 就是字符串首字符的在string中的位置
-		const char* ps = strstr(_str + pos, str);
-		if (ps != nullptr) {
-			return ps - _str;
-		}
-	
-		return npos;
-	}
+    size_t find(const char* str, size_t pos = 0) {
+        assert(pos < _size);
+    
+        //直接用strstr()找字符串的地址, 找到就返回字符串首字符的地址, 找不到就返回空指针
+        // 找到的话  找到的str的地址 - 原字符串的地址 就是字符串首字符的在string中的位置
+        const char* ps = strstr(_str + pos, str);
+        if (ps != nullptr) {
+            return ps - _str;
+        }
+    
+        return npos;
+    }
     
      // 清除对象内容
-	void clear() {
-		resize(0);
-	}
+    void clear() {
+        resize(0);
+    }
     
-	// [] 重载
-	char& operator[](size_t pos) {
-		assert(pos < _size);		// 下标要合法	
+    // [] 重载
+    char& operator[](size_t pos) {
+        assert(pos < _size);        // 下标要合法    
 
-		return _str[pos];
-	}
-	
-	const char& operator[](size_t pos) const {
-		assert(pos < _size);		// 下标要合法
-	
-		return _str[pos];
-	}
-
-	// size() 返回string有效字符大小
-	size_t size() const {		// 不修改原对象的尽量加上 const 
-		return _size;
-	}
-
-	// capacity() 返回 string 有效字符容量
-	size_t capacity() const {
-		return _capacity;
-	}
-
-	// c_str 返回对象中字符串的 C类指针形式
-	// 按照库中的类型 const修饰
-	const char* c_str() const {
-		return _str;
-	}
+        return _str[pos];
+    }
     
-	// 析构函数
-	~string() {
-		if (_str) {	// 得先保证 _str 不是空指针
-			delete[] _str;
-			_str = nullptr;
-			_size = _capacity = 0;
-		}
-	}
+    const char& operator[](size_t pos) const {
+        assert(pos < _size);        // 下标要合法
+    
+        return _str[pos];
+    }
+
+    // size() 返回string有效字符大小
+    size_t size() const {        // 不修改原对象的尽量加上 const 
+        return _size;
+    }
+
+    // capacity() 返回 string 有效字符容量
+    size_t capacity() const {
+        return _capacity;
+    }
+
+    // c_str 返回对象中字符串的 C类指针形式
+    // 按照库中的类型 const修饰
+    const char* c_str() const {
+        return _str;
+    }
+    
+    // 析构函数
+    ~string() {
+        if (_str) {    // 得先保证 _str 不是空指针
+            delete[] _str;
+            _str = nullptr;
+            _size = _capacity = 0;
+        }
+    }
     
 private:
-	char* _str;				// 字符串
-	size_t _size;			// 字符串实际长度
-	size_t _capacity;		 // 字符串指针表示的字符串的容量
+    char* _str;                // 字符串
+    size_t _size;            // 字符串实际长度
+    size_t _capacity;         // 字符串指针表示的字符串的容量
     
     const static size_t npos;
 };
@@ -1080,69 +1080,69 @@ const size_t string::npos = -1;
 
 // 实现 > 和 == 都用strcmp来对字符串作比较
 bool operator>(const string& s1, const string& s2) {
-	return strcmp(s1.c_str(), s2.c_str()) > 0;
+    return strcmp(s1.c_str(), s2.c_str()) > 0;
 }
 bool operator==(const string& s1, const string& s2) {
-	return strcmp(s1.c_str(), s2.c_str()) == 0;
+    return strcmp(s1.c_str(), s2.c_str()) == 0;
 }
 bool operator>=(const string& s1, const string& s2) {
-	return s1 > s2 || s1 == s2;
+    return s1 > s2 || s1 == s2;
 }
 bool operator<(const string& s1, const string& s2) {
-	return !(s1 >= s2);
+    return !(s1 >= s2);
 }
 bool operator<=(const string& s1, const string& s2) {
-	return s1 < s2 || s1 == s2;
+    return s1 < s2 || s1 == s2;
 }
 bool operator!=(const string& s1, const string& s2) {
-	return !(s1 == s2);
+    return !(s1 == s2);
 }
 
 ostream& operator<<(ostream& out, const string& s) {
-	// 其实就是string类的字符串遍历
-	// 三种方法使用哪种方法都行
-	// 下面使用 范围for 比较简单 (使用之前需要实现 迭代器)
-	for (auto ch : s)
-	{
-		out << ch;
-	}
+    // 其实就是string类的字符串遍历
+    // 三种方法使用哪种方法都行
+    // 下面使用 范围for 比较简单 (使用之前需要实现 迭代器)
+    for (auto ch : s)
+    {
+        out << ch;
+    }
 
-	return out;
+    return out;
 }
 
 // 流提取
 /*istream& operator>>(istream& in, string& s) {
-	char ch;
-	s.clear();
-	ch = in.get();
-	while (ch != ' ' && ch != '\n') {
-		s += ch;
-		ch = in.get();
-	}
-	
-	return in;
+    char ch;
+    s.clear();
+    ch = in.get();
+    while (ch != ' ' && ch != '\n') {
+        s += ch;
+        ch = in.get();
+    }
+    
+    return in;
 }*/
 // 流提取优化
 istream& operator>>(istream& in, string& s) {
-	char ch;
-	s.clear();		// 清理string原字符串
-	ch = in.get();
-	char tmp[128] = { '\0' };		//字符数组内容初始化为 '\0', 大小适合就可以
-	size_t i = 0;				   // 用来访问字符数组下标赋值, 以及记录字符数组中字符个数
-	while (ch != ' ' && ch != '\n') {
-		tmp[i++] = ch;
-		if (i == 127) {	
-			// 字符数组大小为 128, 看作字符串的话, 可容纳有效字符数就是 127, 因为最后一位'\0'作为结束标志 
-			// 字符数组一满, 就将字符数组中的内容 += 至string对象, 然后清空字符数组
-			s += tmp;
-			memset(tmp, '\0', 128);	// 使用 memset 将字符数组所有空间设置为 '\0' 以防下次 += 会出错
-			i = 0;
-		}
-		ch = in.get();
-	}
-	s += tmp;		// 循环结束, 再将字符数组中还有的内容 += 至string对象
+    char ch;
+    s.clear();        // 清理string原字符串
+    ch = in.get();
+    char tmp[128] = { '\0' };        //字符数组内容初始化为 '\0', 大小适合就可以
+    size_t i = 0;                   // 用来访问字符数组下标赋值, 以及记录字符数组中字符个数
+    while (ch != ' ' && ch != '\n') {
+        tmp[i++] = ch;
+        if (i == 127) {    
+            // 字符数组大小为 128, 看作字符串的话, 可容纳有效字符数就是 127, 因为最后一位'\0'作为结束标志 
+            // 字符数组一满, 就将字符数组中的内容 += 至string对象, 然后清空字符数组
+            s += tmp;
+            memset(tmp, '\0', 128);    // 使用 memset 将字符数组所有空间设置为 '\0' 以防下次 += 会出错
+            i = 0;
+        }
+        ch = in.get();
+    }
+    s += tmp;        // 循环结束, 再将字符数组中还有的内容 += 至string对象
 
-	return in;
+    return in;
 }
 ```
 

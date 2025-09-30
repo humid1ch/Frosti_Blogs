@@ -346,7 +346,7 @@ public:
     SmartPtr(const SmartPtr<T>& sp)
         : _ptr(sp._ptr) {}
     
-	// 赋值重载
+    // 赋值重载
     SmartPtr<T>& operator=(const SmartPtr<T>& sp){
         // 防止自我赋值
         if(this != &sp) {
@@ -354,7 +354,7 @@ public:
             if(_ptr)
                 delete _ptr;
             
-	        _ptr = sp._ptr;
+            _ptr = sp._ptr;
         }
     }
 
@@ -664,7 +664,7 @@ namespace July {
         }
 
         // 释放资源函数
-		// 当前对象的引用计数为1(再--为0)时, 才真正进行资源释放操作
+        // 当前对象的引用计数为1(再--为0)时, 才真正进行资源释放操作
         void release() {
             if (--(*_pCount) == 0 && _ptr) {
                 cout << "delete" << _ptr << endl;

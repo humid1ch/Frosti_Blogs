@@ -51,25 +51,25 @@ int global_Var;
 int init_global_Var = 1;
 
 int main() {
-	static int static_Var = 1;
-	char* stack_data1 = (char*)malloc(100);
-	char* stack_data2 = (char*)malloc(100);
-	char* stack_data3 = (char*)malloc(100);
-	char* stack_data4 = (char*)malloc(100);
-	printf("main              addr:: %p\n", main);
-	printf("global_Var        addr:: %p\n", &global_Var);
-	printf("init_global_Var   addr:: %p\n", &init_global_Var);
-	printf("static_Var        addr:: %p\n", &static_Var);
-	printf("stack_data1       addr:: %p\n", &stack_data1);	
-	printf("stack_data2       addr:: %p\n", &stack_data2);	
-	printf("stack_data3       addr:: %p\n", &stack_data3);	
-	printf("stack_data4       addr:: %p\n", &stack_data4);
-	printf("heap_data1        addr:: %p\n", stack_data1);
-	printf("heap_data2        addr:: %p\n", stack_data2);
-	printf("heap_data3        addr:: %p\n", stack_data3);
-	printf("heap_data4        addr:: %p\n", stack_data4);
+    static int static_Var = 1;
+    char* stack_data1 = (char*)malloc(100);
+    char* stack_data2 = (char*)malloc(100);
+    char* stack_data3 = (char*)malloc(100);
+    char* stack_data4 = (char*)malloc(100);
+    printf("main              addr:: %p\n", main);
+    printf("global_Var        addr:: %p\n", &global_Var);
+    printf("init_global_Var   addr:: %p\n", &init_global_Var);
+    printf("static_Var        addr:: %p\n", &static_Var);
+    printf("stack_data1       addr:: %p\n", &stack_data1);    
+    printf("stack_data2       addr:: %p\n", &stack_data2);    
+    printf("stack_data3       addr:: %p\n", &stack_data3);    
+    printf("stack_data4       addr:: %p\n", &stack_data4);
+    printf("heap_data1        addr:: %p\n", stack_data1);
+    printf("heap_data2        addr:: %p\n", stack_data2);
+    printf("heap_data3        addr:: %p\n", stack_data3);
+    printf("heap_data4        addr:: %p\n", stack_data4);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -131,31 +131,31 @@ int main() {
 int global_Var = 100;
 
 int main() {
-	pid_t id = fork();
-	if(id == 0) {
-		int cnt = 5;
-		while(1) {
-			if(cnt > 0) {
-				prinf("我是子进程, global_Var= %d, addr=%p, 还有 %ds 修改global_Var\n", global_Var, &global_Var, cnt);
-				cnt--;
-				if(cnt == 0) {
-					global_Var = 200;
-					printf("我是子进程, 我已修改global_Var\n");
-				}
-			}
-			else
-				printf("我是子进程, global_Var= %d, addr=%p\n", global_Var, &global_Var);
-			sleep(1);
-		}
-	}
-	else {
-		while(1) {
-			printf("我是父进程, global_Var= %d, addr=%p\n\n", global_Var, &global_Var);
-			sleep(2);	
-		}
+    pid_t id = fork();
+    if(id == 0) {
+        int cnt = 5;
+        while(1) {
+            if(cnt > 0) {
+                prinf("我是子进程, global_Var= %d, addr=%p, 还有 %ds 修改global_Var\n", global_Var, &global_Var, cnt);
+                cnt--;
+                if(cnt == 0) {
+                    global_Var = 200;
+                    printf("我是子进程, 我已修改global_Var\n");
+                }
+            }
+            else
+                printf("我是子进程, global_Var= %d, addr=%p\n", global_Var, &global_Var);
+            sleep(1);
+        }
+    }
+    else {
+        while(1) {
+            printf("我是父进程, global_Var= %d, addr=%p\n\n", global_Var, &global_Var);
+            sleep(2);    
+        }
      }
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -225,15 +225,15 @@ Linux中, 调用fork()系统调用创建的子进程的代码是继承自其父�
 
 1. 程序在没有运行、没有被加载到内存中的时候, 程序内部是否存在地址？
 
-	一定是存在的. 程序是源文件被编译器编译链接而生成的, 编译的过程暂且不讲. 而链接, 其实就是将程序内各种数据、函数的地址与库中的地址链接起来, 才能成为可执行程序的. 所以 程序中原本就是存在地址的.
+    一定是存在的. 程序是源文件被编译器编译链接而生成的, 编译的过程暂且不讲. 而链接, 其实就是将程序内各种数据、函数的地址与库中的地址链接起来, 才能成为可执行程序的. 所以 程序中原本就是存在地址的.
 
 2. 程序在没有运行、没有被加载到内存中的时候, 程序内部是否存在类似进程地址空间里设置的区域？
 
-	程序内, 其实也是存在区域的. 在Linux系统中, 可以很简单的观察到: 
-	
-	![|huge](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722162640159.webp)
-	
-	> readelf 指令可以用来查看文件的某些信息
+    程序内, 其实也是存在区域的. 在Linux系统中, 可以很简单的观察到: 
+    
+    ![|huge](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722162640159.webp)
+    
+    > readelf 指令可以用来查看文件的某些信息
 
 
 那么程序内部的这些地址、区域有什么作用呢？

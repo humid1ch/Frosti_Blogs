@@ -171,11 +171,11 @@ private:
     }
 
 private:
-    size_t _threadNum;        	// 线程池内线程数量
-    bool _isStart;            	// 判断线程池是否已经开启
-    std::queue<T> _taskQueue;	// 任务队列
-    pthread_mutex_t _mutex;		// 锁 给临界资源使用 即任务队列 保证线程调度互斥
-    pthread_cond_t _cond; 		// 条件变量 保证线程调度同步
+    size_t _threadNum;            // 线程池内线程数量
+    bool _isStart;                // 判断线程池是否已经开启
+    std::queue<T> _taskQueue;    // 任务队列
+    pthread_mutex_t _mutex;        // 锁 给临界资源使用 即任务队列 保证线程调度互斥
+    pthread_cond_t _cond;         // 条件变量 保证线程调度同步
 };
 ```
 

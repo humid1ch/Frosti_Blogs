@@ -93,26 +93,26 @@ int ferror( FILE *stream );
 >
 >int main()
 >{
->	int c; // 注意: int, 非char, 要求处理EOF
->	FILE* pf = fopen("test.txt", "r");
->	if(pf == NULL)
+>    int c; // 注意: int, 非char, 要求处理EOF
+>    FILE* pf = fopen("test.txt", "r");
+>    if(pf == NULL)
 >    {
->		perror("File opening failed");
->		return 0;
->	}
->	//fgetc 当读取失败的时候或者遇到文件结束的时候, 都会返回EOF
->	while ( (c = fgetc(pf)) != EOF) // 标准C I/O读取文件循环
->	{
->		putchar(c);
->	}
+>        perror("File opening failed");
+>        return 0;
+>    }
+>    //fgetc 当读取失败的时候或者遇到文件结束的时候, 都会返回EOF
+>    while ( (c = fgetc(pf)) != EOF) // 标准C I/O读取文件循环
+>    {
+>        putchar(c);
+>    }
 >    
 >    //判断是什么原因结束的
->	if (ferror(pf))
->		puts("I/O error when reading");
->	else if (feof(pf))
->		puts("End of file reached successfully");
+>    if (ferror(pf))
+>        puts("I/O error when reading");
+>    else if (feof(pf))
+>        puts("End of file reached successfully");
 >    
->	fclose(pf);
+>    fclose(pf);
 >    pf = NULL;
 >    
 >    return 0;
@@ -126,49 +126,49 @@ int ferror( FILE *stream );
 >
 >int main()
 >{
->	double a[5] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
->	FILE *pf = fopen("test.bin", "wb"); // 必须用二进制模式
->    	if(pf == NULL)
->    	{
->		perror("File opening failed");
->		return 0;
->	}
->	fwrite(a, sizeof (*a), SIZE, pf); // 写 double 的数组
->	fclose(pf);
->    	pf = NULL;
+>    double a[5] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
+>    FILE *pf = fopen("test.bin", "wb"); // 必须用二进制模式
+>        if(pf == NULL)
+>        {
+>        perror("File opening failed");
+>        return 0;
+>    }
+>    fwrite(a, sizeof (*a), SIZE, pf); // 写 double 的数组
+>    fclose(pf);
+>        pf = NULL;
 >    
->	double b[5];
->	pf = fopen("test.bin","rb");
->	size_t ret_code = fread(b, sizeof (*b), 5, pf); // 读 double 的数组
->    	if(pf == NULL)
->    	{
->		perror("File opening failed");
->		return 0;
->	}
->	if(ret_code == 5)
->    	{
->		puts("Array read successfully, contents: ");
->		for(int n = 0; n < SIZE; ++n)
->         	printf("%f ", b[n]);
->		putchar('\n');
->	}
->    	else
->    	{ // error handling
->		if (feof(pf))
->        		{//判断是否正常结束
->        			printf("Error reading test.bin: unexpected end of file\n");   
->        		}
->		else if (ferror(pf))
->        		{//判断是否遇到错误结束
->			perror("Error reading test.bin");
->		}
->	}
+>    double b[5];
+>    pf = fopen("test.bin","rb");
+>    size_t ret_code = fread(b, sizeof (*b), 5, pf); // 读 double 的数组
+>        if(pf == NULL)
+>        {
+>        perror("File opening failed");
+>        return 0;
+>    }
+>    if(ret_code == 5)
+>        {
+>        puts("Array read successfully, contents: ");
+>        for(int n = 0; n < SIZE; ++n)
+>             printf("%f ", b[n]);
+>        putchar('\n');
+>    }
+>        else
+>        { // error handling
+>        if (feof(pf))
+>                {//判断是否正常结束
+>                    printf("Error reading test.bin: unexpected end of file\n");   
+>                }
+>        else if (ferror(pf))
+>                {//判断是否遇到错误结束
+>            perror("Error reading test.bin");
+>        }
+>    }
 >    
->	fclose(pf);
->    	pf = NULL;
+>    fclose(pf);
+>        pf = NULL;
 >    
->    	return 0;
->}	
+>        return 0;
+>}    
 >```
 >
 >可以修改一下, 使两个函数 都生效以下~

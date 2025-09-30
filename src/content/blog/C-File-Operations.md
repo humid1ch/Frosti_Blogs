@@ -68,7 +68,7 @@ tags:
 我们使用`FILE`类型定义的结构体指针变量, 就是一个文件指针变量
 
 ```cpp
-FILE* pf;	//pf 文件指针变量
+FILE* pf;    //pf 文件指针变量
 ```
 
 定义`pf`是一个指向`FILE`类型数据的指针变量, 可以指向某个文件的文件信息区, 通过文件信息区中存放的信息可以进一步访问该文件
@@ -149,16 +149,16 @@ int fclose(FILE* stream);
 > 
 > int main () {
 >  //打开文件
-> 	FILE * pf = fopen ("test.txt","w");
-> 	if (pf != NULL) {
-> 	//文件操作
->   	//…………
->    	//关闭文件
-> 		fclose (pf);
->  		pf = NULL;
->    	}
+>     FILE * pf = fopen ("test.txt","w");
+>     if (pf != NULL) {
+>     //文件操作
+>       //…………
+>        //关闭文件
+>         fclose (pf);
+>          pf = NULL;
+>        }
 >     
-> 	return 0;
+>     return 0;
 > }
 > ```
 >
@@ -194,23 +194,23 @@ int fclose(FILE* stream);
 #include <stdio.h>
 
 int main() {
-	FILE* pf = fopen("test.txt", "w");
-	if (pf == NULL) {
-		printf("打开文件失败\n");
+    FILE* pf = fopen("test.txt", "w");
+    if (pf == NULL) {
+        printf("打开文件失败\n");
         
-		return 0;
-	}
+        return 0;
+    }
     
-	fputc('c', pf);
+    fputc('c', pf);
     fputc('s', pf);
     fputc('b', pf);
     fputc('i', pf);
     fputc('t', pf);
 
-	fclose(pf);
-	pf = NULL;
+    fclose(pf);
+    pf = NULL;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -260,22 +260,22 @@ int main() {
 #include <stdio.h>
 
 int main() {
-	FILE* pf = fopen("test.txt", "w");
-	if (pf == NULL) {
-		printf("打开文件失败\n");
+    FILE* pf = fopen("test.txt", "w");
+    if (pf == NULL) {
+        printf("打开文件失败\n");
         
-		return 0;
-	}
+        return 0;
+    }
     
-	fputc('a', stdout);
+    fputc('a', stdout);
     fputc('b', stdout);
     fputc('c', stdout);
     fputc('d', stdout);
 
-	fclose(pf);
-	pf = NULL;
+    fclose(pf);
+    pf = NULL;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -292,29 +292,29 @@ int main() {
 
 int main() {
     //以只读方式打开文件, 需要先创建文件
-	FILE* pf = fopen("test2.txt", "r");
-	if (pf == NULL) {
-		printf("打开文件失败\n");
-		return 0;
-	}
-	int ch;
+    FILE* pf = fopen("test2.txt", "r");
+    if (pf == NULL) {
+        printf("打开文件失败\n");
+        return 0;
+    }
+    int ch;
     //将 fgetc 的返回值存入 ch, 再将 ch 内容输出
-	ch = fgetc(pf);
-	printf("%c\n", ch);
+    ch = fgetc(pf);
+    printf("%c\n", ch);
 
-	ch = fgetc(pf);
-	printf("%c\n", ch);
+    ch = fgetc(pf);
+    printf("%c\n", ch);
 
-	ch = fgetc(pf);
-	printf("%c\n", ch);
+    ch = fgetc(pf);
+    printf("%c\n", ch);
 
-	ch = fgetc(pf);
-	printf("%c\n", ch);
+    ch = fgetc(pf);
+    printf("%c\n", ch);
 
-	fclose(pf);
-	pf = NULL;
+    fclose(pf);
+    pf = NULL;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -360,19 +360,19 @@ int main() {
 #include <stdio.h>
 
 int main() {
-	FILE* pf = fopen("test.txt", "w");
-	if (pf == NULL) {
-		printf("打开文件失败\n");
+    FILE* pf = fopen("test.txt", "w");
+    if (pf == NULL) {
+        printf("打开文件失败\n");
 
-		return 0;
-	}
-	fputs("Hello Bit\n", pf);
-	fputs("Great\n", pf);
+        return 0;
+    }
+    fputs("Hello Bit\n", pf);
+    fputs("Great\n", pf);
 
-	fclose(pf);
-	pf = NULL;
+    fclose(pf);
+    pf = NULL;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -401,24 +401,24 @@ char* fgets(char* string, int n, FILE* stream);
 
 int main() {
     // 程序运行前需要创建好 test2.txt, 并输入相应的内容
-	FILE* pf = fopen("test2.txt", "r");
-	if (pf == NULL) {
-		printf("打开文件失败\n");
+    FILE* pf = fopen("test2.txt", "r");
+    if (pf == NULL) {
+        printf("打开文件失败\n");
         
-		return 0;
-	}
+        return 0;
+    }
     
-	char ch[100] = { 0 };
-	fgets(ch, 3, pf);
-	printf("%s", ch);
+    char ch[100] = { 0 };
+    fgets(ch, 3, pf);
+    printf("%s", ch);
 
-	fgets(ch, 3, pf);
-	printf("%s", ch);
+    fgets(ch, 3, pf);
+    printf("%s", ch);
 
-	fclose(pf);
-	pf = NULL;
+    fclose(pf);
+    pf = NULL;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -454,9 +454,9 @@ int main() {
 #include <stdio.h>
 
 struct student {
-	char name[20];
-	int age;
-	char sex[10];
+    char name[20];
+    int age;
+    char sex[10];
 };
 
 int main() {
@@ -548,27 +548,27 @@ size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream );
 #include <stdio.h>
 
 struct Stu {
-	char name[20];
-	int age;
-	char sex[10];
+    char name[20];
+    int age;
+    char sex[10];
 };
 
 int main() {
-	struct Stu stu[3] = { {"CSDN", 15, "Not"}, {"July", 19, "Male"}, {"Three", 20, "Male"} };
+    struct Stu stu[3] = { {"CSDN", 15, "Not"}, {"July", 19, "Male"}, {"Three", 20, "Male"} };
     
-	FILE* pf = fopen("data.txt", "wb");		//以二进制输出形式打开文件（写入文件的形式）
-	if (pf == NULL) {
-		printf("打开文件失败\n");
+    FILE* pf = fopen("data.txt", "wb");        //以二进制输出形式打开文件（写入文件的形式）
+    if (pf == NULL) {
+        printf("打开文件失败\n");
         
-		return 0;
-	}
+        return 0;
+    }
     
-	fwrite(&stu, sizeof(struct Stu), 3, pf);
+    fwrite(&stu, sizeof(struct Stu), 3, pf);
 
-	fclose(pf);
-	pf = NULL;
+    fclose(pf);
+    pf = NULL;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -601,33 +601,33 @@ size_t fread(void* buffer, size_t size, size_t count, FILE* stream);
 #include <stdio.h>
 
 struct Stu {
-	char name[20];
-	int age;
-	char sex[10];
+    char name[20];
+    int age;
+    char sex[10];
 };
 
 int main() {
-	struct Stu stu[3] = {0};
+    struct Stu stu[3] = {0};
     
-	FILE* pf = fopen("data.txt", "rb");		//以二进制输入形式打开文件（读取文件的形式）
-	// 打开的文件就是 上边的示例文件
-	if (pf == NULL)
-	{
-		printf("打开文件失败\n");
+    FILE* pf = fopen("data.txt", "rb");        //以二进制输入形式打开文件（读取文件的形式）
+    // 打开的文件就是 上边的示例文件
+    if (pf == NULL)
+    {
+        printf("打开文件失败\n");
         
-		return 0;
-	}
+        return 0;
+    }
     
-	fread(&stu, sizeof(struct Stu), 3, pf);
+    fread(&stu, sizeof(struct Stu), 3, pf);
 
-	printf("%s %d %s\n", stu[0].name, stu[0].age, stu[0].sex);
-	printf("%s %d %s\n", stu[1].name, stu[1].age, stu[1].sex);
-	printf("%s %d %s\n", stu[2].name, stu[2].age, stu[2].sex);
+    printf("%s %d %s\n", stu[0].name, stu[0].age, stu[0].sex);
+    printf("%s %d %s\n", stu[1].name, stu[1].age, stu[1].sex);
+    printf("%s %d %s\n", stu[2].name, stu[2].age, stu[2].sex);
 
-	fclose(pf);
-	pf = NULL;
+    fclose(pf);
+    pf = NULL;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -703,23 +703,23 @@ int fseek(FILE *stream, long offset, int origin);
 >#include <errno.h>
 >
 >int main() {
->	FILE* pf = fopen("D:\\TEST.txt", "r");
->	if (pf == NULL) {
->		printf("fopen::%s", strerror(errno));
->		return 0;
->	}
+>    FILE* pf = fopen("D:\\TEST.txt", "r");
+>    if (pf == NULL) {
+>        printf("fopen::%s", strerror(errno));
+>        return 0;
+>    }
 >    
->	int ch = 0;
->	for (int i = 0; i < 10; i++) {
+>    int ch = 0;
+>    for (int i = 0; i < 10; i++) {
 >        // 进行 10 次循环 
->		ch = fgetc(pf);
->		printf("%c\n", ch);
->	}
+>        ch = fgetc(pf);
+>        printf("%c\n", ch);
+>    }
 >
->	fclose(pf);
->	pf = NULL;
+>    fclose(pf);
+>    pf = NULL;
 >
->	return 0;
+>    return 0;
 >}
 >```
 >
@@ -752,9 +752,9 @@ int fseek(FILE *stream, long offset, int origin);
 >        printf("%c\n", ch);
 >    }
 >
->    fseek(pf, 10, SEEK_CUR);	//使文件指针, 从当前位置向后偏移 10 个字符
->    //fseek(pf, 15, SEEK_SET);	//使文件指针, 从文件内容的首位, 向后偏移 15 个字符
->    //fseek(pf, -5, SEEK_END);	//使文件指针, 从文件内容的末字符之后, 向后偏移 -5 个字符（向前偏移 5 个字符）
+>    fseek(pf, 10, SEEK_CUR);    //使文件指针, 从当前位置向后偏移 10 个字符
+>    //fseek(pf, 15, SEEK_SET);    //使文件指针, 从文件内容的首位, 向后偏移 15 个字符
+>    //fseek(pf, -5, SEEK_END);    //使文件指针, 从文件内容的末字符之后, 向后偏移 -5 个字符（向前偏移 5 个字符）
 >
 >    ch = fgetc(pf);
 >    printf("ch = %c\n", ch);
@@ -810,26 +810,26 @@ long ftell(FILE *stream);
 > #include <errno.h>
 > 
 > int main() {
-> 	FILE* pf = fopen("D:\\TEST.txt", "r");
-> 	if (pf == NULL) {
-> 		printf("fopen::%s", strerror(errno));
-> 		return 0;
-> 	}
+>     FILE* pf = fopen("D:\\TEST.txt", "r");
+>     if (pf == NULL) {
+>         printf("fopen::%s", strerror(errno));
+>         return 0;
+>     }
 >     
-> 	int ch = 0;
-> 	ch = fgetc(pf);
-> 	printf("%c\n", ch);
+>     int ch = 0;
+>     ch = fgetc(pf);
+>     printf("%c\n", ch);
 > 
-> 	ch = fgetc(pf);
-> 	printf("%c\n", ch);
+>     ch = fgetc(pf);
+>     printf("%c\n", ch);
 > 
-> 	long ret = ftell(pf);
-> 	printf("%ld\n", ret);
+>     long ret = ftell(pf);
+>     printf("%ld\n", ret);
 > 
-> 	fclose(pf);
-> 	pf = NULL;
+>     fclose(pf);
+>     pf = NULL;
 > 
-> 	return 0;
+>     return 0;
 > }
 > ```
 > 
@@ -855,32 +855,32 @@ void rewind(FILE *stream);
 > #include <errno.h>
 > 
 > int main() {
-> 	FILE* pf = fopen("D:\\TEST.txt", "r");
-> 	if (pf == NULL) {
-> 		printf("fopen::%s", strerror(errno));
+>     FILE* pf = fopen("D:\\TEST.txt", "r");
+>     if (pf == NULL) {
+>         printf("fopen::%s", strerror(errno));
 >         
-> 		return 0;
-> 	}
+>         return 0;
+>     }
 >     
-> 	int ch = 0;
+>     int ch = 0;
 > 
-> 	ch = fgetc(pf);
-> 	printf("%c\n", ch);
+>     ch = fgetc(pf);
+>     printf("%c\n", ch);
 > 
-> 	ch = fgetc(pf);
-> 	printf("%c\n", ch);
+>     ch = fgetc(pf);
+>     printf("%c\n", ch);
 > 
-> 	long ret = ftell(pf);
-> 	printf("%ld\n", ret);
+>     long ret = ftell(pf);
+>     printf("%ld\n", ret);
 > 
-> 	rewind(pf);
-> 	ret = ftell(pf);
-> 	printf("%ld\n", ret);
+>     rewind(pf);
+>     ret = ftell(pf);
+>     printf("%ld\n", ret);
 > 
-> 	fclose(pf);
-> 	pf = NULL;
+>     fclose(pf);
+>     pf = NULL;
 > 
-> 	return 0;
+>     return 0;
 > }
 > ```
 >

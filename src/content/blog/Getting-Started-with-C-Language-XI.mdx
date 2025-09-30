@@ -310,17 +310,17 @@ int main() {
     
     int main() {
         int val1 = 20;
-    	int val2 = 30;
+        int val2 = 30;
     
-    	int* pVal = &val1;
+        int* pVal = &val1;
         // 此时, pVal指向val1的地址
         printf("pVal: %p, *pVal: %d\n", pVal, *pVal);
         
-        pVal = &val2;	// 给pVal赋值, 而不是给*pVal赋值
+        pVal = &val2;    // 给pVal赋值, 而不是给*pVal赋值
         // 此时, pVal指向val2的地址
         printf("pVal: %p, *pVal: %d\n", pVal, *pVal);
             
-    	return 0;
+        return 0;
     }
     ```
 
@@ -341,8 +341,8 @@ int main() {
         int val2;
         
         int* pVal;
-        pVal = &val1;	// 给 pVal 本身赋值
-        pVal = &val2;	// 给 pVal 本身赋值
+        pVal = &val1;    // 给 pVal 本身赋值
+        pVal = &val2;    // 给 pVal 本身赋值
         ```
 
         ![](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250905154833934.webp)
@@ -354,7 +354,7 @@ int main() {
         ```c
         int val1 = 20;
         int* pVal = &val1;
-        *pVal = 30;			// 先 * 解引用, 访问到指向的地址, 再给此地址的内存空间赋值
+        *pVal = 30;            // 先 * 解引用, 访问到指向的地址, 再给此地址的内存空间赋值
         ```
 
         ![](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250905160709034.webp)

@@ -89,14 +89,14 @@ public:
         //             left = midIndex + 1;
         //         }
         //         else {
-        //      	   ret.push_back(i + 1);
-        //      	   ret.push_back(midIndex + 1);
-        //      	   break;
+        //             ret.push_back(i + 1);
+        //             ret.push_back(midIndex + 1);
+        //             break;
         //         }
         //      
         //         midIndex = (left + right) / 2;
         //     }
-        //    if (!ret.empty())		// 结果数组中已存在数据, 表示已找到
+        //    if (!ret.empty())        // 结果数组中已存在数据, 表示已找到
         //       break;
         // }
         //
@@ -225,7 +225,7 @@ public:
         sort(nums.begin(), nums.end());
 
         for (int firstIndex = 0; firstIndex < numsSize - 2; firstIndex++) {
-           	// firstIndex == 0时, 不跳过本次循环直接进入secondIndex的查找
+               // firstIndex == 0时, 不跳过本次循环直接进入secondIndex的查找
             if (firstIndex > 0 && nums[firstIndex] == nums[firstIndex - 1])
                 continue;
             

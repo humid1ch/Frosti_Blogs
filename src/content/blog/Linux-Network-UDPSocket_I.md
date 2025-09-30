@@ -461,36 +461,36 @@ const char* log_level[] = { "DEBUG", "NOTICE", "WARINING", "FATAL" };
 
 // 通过可变参数实现, 传入日志等级, 日志内容格式, 日志内容相关参数
 void logMessage(int level, const char* format, ...) {
-	// 确保日志等级正确
-	assert(level >= DEBUG);
-	assert(level <= FATAL);
+    // 确保日志等级正确
+    assert(level >= DEBUG);
+    assert(level <= FATAL);
 
-	// 获取当前用户名
-	char* name = getenv("USER");
+    // 获取当前用户名
+    char* name = getenv("USER");
 
-	// 简单的定义log缓冲区
-	char logInfo[1024];
+    // 简单的定义log缓冲区
+    char logInfo[1024];
 
-	// 定义一个指向可变参数列表的指针
-	va_list ap;
-	// 将 ap 指向可变参数列表中的第一个参数, 即 format 之后的第一个参数
-	va_start(ap, format);
+    // 定义一个指向可变参数列表的指针
+    va_list ap;
+    // 将 ap 指向可变参数列表中的第一个参数, 即 format 之后的第一个参数
+    va_start(ap, format);
 
-	// 此函数 会通过 ap 遍历可变参数列表, 然后根据 format 字符串指定的格式,
-	// 将ap当前指向的参数以字符串的形式 写入到logInfo缓冲区中
-	vsnprintf(logInfo, sizeof(logInfo) - 1, format, ap);
+    // 此函数 会通过 ap 遍历可变参数列表, 然后根据 format 字符串指定的格式,
+    // 将ap当前指向的参数以字符串的形式 写入到logInfo缓冲区中
+    vsnprintf(logInfo, sizeof(logInfo) - 1, format, ap);
 
-	// ap 使用完之后, 再将 ap置空
-	va_end(ap); // ap = NULL
+    // ap 使用完之后, 再将 ap置空
+    va_end(ap); // ap = NULL
 
-	// 通过判断日志等级, 来选择是标准输出流还是标准错误流
-	FILE* out = (level == FATAL) ? stderr : stdout;
+    // 通过判断日志等级, 来选择是标准输出流还是标准错误流
+    FILE* out = (level == FATAL) ? stderr : stdout;
 
-	// 获取本地时间
-	time_t tm = time(nullptr);
-	struct tm* localTm = localtime(&tm);
+    // 获取本地时间
+    time_t tm = time(nullptr);
+    struct tm* localTm = localtime(&tm);
 
-	fprintf(out, "%s | %s | %s | %s\n", 
+    fprintf(out, "%s | %s | %s | %s\n", 
             log_level[level], 
             asctime(localTm), 
             name == nullptr ? "unknow" : name,
@@ -582,148 +582,148 @@ using std::string;
 // 封装UDP服务
 class udpServer {
 public:
-	// 构造函数, 需要传入 port 和 ip
-	// ip可以缺省, 因为ip可以默认为空, 后面解释理由
-	udpServer(uint16_t port, string ip = "")
-		: _port(port)
-		, _ip(ip) {}
-	// 析构函数
-	~udpServer() {}
+    // 构造函数, 需要传入 port 和 ip
+    // ip可以缺省, 因为ip可以默认为空, 后面解释理由
+    udpServer(uint16_t port, string ip = "")
+        : _port(port)
+        , _ip(ip) {}
+    // 析构函数
+    ~udpServer() {}
 
-	// 服务器初始化函数
-	// 具体功能就是 创建套接字 绑定主机网络信息
-	void init() {
-		// 1. 创建套接字, 并获取套接字文件描述符
-		_sockFd = socket(AF_INET, SOCK_DGRAM, 0);
-		// AF_INET 表示ipv4网络通信, SOCK_DGRAM 表示数据报格式报文, 0 表示默认协议
+    // 服务器初始化函数
+    // 具体功能就是 创建套接字 绑定主机网络信息
+    void init() {
+        // 1. 创建套接字, 并获取套接字文件描述符
+        _sockFd = socket(AF_INET, SOCK_DGRAM, 0);
+        // AF_INET 表示ipv4网络通信, SOCK_DGRAM 表示数据报格式报文, 0 表示默认协议
 
-		if (_sockFd < 0) {
-			// 套接字文件描述符创建失败
-			logMessage(FATAL, "socket() faild:: %s : %d", strerror(errno), _sockFd);
-			exit(1);
-		}
+        if (_sockFd < 0) {
+            // 套接字文件描述符创建失败
+            logMessage(FATAL, "socket() faild:: %s : %d", strerror(errno), _sockFd);
+            exit(1);
+        }
 
-		logMessage(DEBUG, "socket create success: %d", _sockFd);
+        logMessage(DEBUG, "socket create success: %d", _sockFd);
 
-		// 套接字创建成功
-		// 2. 绑定网络信息
-		//		bind(int __fd, const struct sockaddr *__addr, socklen_t __len);
+        // 套接字创建成功
+        // 2. 绑定网络信息
+        //        bind(int __fd, const struct sockaddr *__addr, socklen_t __len);
 
-		//  2.1 将网络信息 填充到 struct sockaddr_in 结构体中
-		//		此结构体中 填充的内容是 需要在网络中存在的内容
-		//		比如, 协议 IP 端口号等, 只有这些东西 在网络上存在, 其他主机才能与服务器通信
-		struct sockaddr_in local;
-		bzero(&local, sizeof(local)); // 将结构体内容全部置空
+        //  2.1 将网络信息 填充到 struct sockaddr_in 结构体中
+        //        此结构体中 填充的内容是 需要在网络中存在的内容
+        //        比如, 协议 IP 端口号等, 只有这些东西 在网络上存在, 其他主机才能与服务器通信
+        struct sockaddr_in local;
+        bzero(&local, sizeof(local)); // 将结构体内容全部置空
 
-		//      填充网络信息
-		//      1. 地址类型, 选择协议 通信方式
-		local.sin_family = AF_INET;
-		//      2. 端口号
-		//	       端口号是需要向网络中发送的, 所以 需要从本地字节序 转换成网络字节序
-		local.sin_port = htons(_port);
-		//      3. IP
-		//         IP 不能直接填充到结构体中, 因为类中的 _ip 是字符串,  而网络中的IP
-		//         通常用4字节的二进制表示, 结构体中同样是此类型 in_addr_t =
-		//         uint32_t 所以 还需要将 点分十进制字符串型的_ip 转换为 uint32_t 才能填充到结构体中
-		local.sin_addr.s_addr = _ip.empty() ? htonl(INADDR_ANY) : inet_addr(_ip.c_str());
-		//  这里使用了三目运算符 ? : 用来判断 传入的 ip 是否为空
-		//	如果传入的IP为空, 则将 INADDR_ANY 这个 IP 填充到结构体中
-        //	否则就将_ip字符串 转换为 in_addr_t 类型, 然后填充到结构体中
-        //	INADDR_ANY, 其实是 强转为 in_addr_t 类型的 0
-		//	1. 网络服务器 使用 INADDR_ANY 作为IP, 绑定到主机中, 表示监听本机上所有的IP 网络接口	   
+        //      填充网络信息
+        //      1. 地址类型, 选择协议 通信方式
+        local.sin_family = AF_INET;
+        //      2. 端口号
+        //           端口号是需要向网络中发送的, 所以 需要从本地字节序 转换成网络字节序
+        local.sin_port = htons(_port);
+        //      3. IP
+        //         IP 不能直接填充到结构体中, 因为类中的 _ip 是字符串,  而网络中的IP
+        //         通常用4字节的二进制表示, 结构体中同样是此类型 in_addr_t =
+        //         uint32_t 所以 还需要将 点分十进制字符串型的_ip 转换为 uint32_t 才能填充到结构体中
+        local.sin_addr.s_addr = _ip.empty() ? htonl(INADDR_ANY) : inet_addr(_ip.c_str());
+        //  这里使用了三目运算符 ? : 用来判断 传入的 ip 是否为空
+        //    如果传入的IP为空, 则将 INADDR_ANY 这个 IP 填充到结构体中
+        //    否则就将_ip字符串 转换为 in_addr_t 类型, 然后填充到结构体中
+        //    INADDR_ANY, 其实是 强转为 in_addr_t 类型的 0
+        //    1. 网络服务器 使用 INADDR_ANY 作为IP, 绑定到主机中, 表示监听本机上所有的IP 网络接口       
         //      一台服务器主机可能有许多的IP, 使用 INADDR_ANY 意思就是说, 其他主机可以通过服务器主机上的任意IP:指定port 找到服务器进程实现通信
-		//	2. 当绑定指定的IP时, 就表示 其他主机只能通过服务器主机上的指定IP:指定port 找到服务器进程实现通信. 
-        //	    如果使用其他本机上的IP:指定port, 服务器是不会响应的
-        //	    因为服务器进程 只接收通过指定 IP 发送给服务器进程的信息
-		//  IP也是要向网络中发送的, 所以要将 IP转换成网络字节序. inet_addr()
-		//  则会自动将ip转换为网络字节序
+        //    2. 当绑定指定的IP时, 就表示 其他主机只能通过服务器主机上的指定IP:指定port 找到服务器进程实现通信. 
+        //        如果使用其他本机上的IP:指定port, 服务器是不会响应的
+        //        因为服务器进程 只接收通过指定 IP 发送给服务器进程的信息
+        //  IP也是要向网络中发送的, 所以要将 IP转换成网络字节序. inet_addr()
+        //  则会自动将ip转换为网络字节序
 
-		// 填充完网络信息, 就要将网络信息 绑定到操作系统内核中, 进而将网络信息
-		// 发送到网络上
-		if (bind(_sockFd, (const struct sockaddr*)&local, sizeof(local)) == -1) {
-			// 绑定失败
-			logMessage(FATAL, "bind() faild:: %s : %d", strerror(errno), _sockFd);
-			exit(2);
-		}
-		// 绑定成功
-		logMessage(DEBUG, "socket bind success : %d", _sockFd);
-	}
+        // 填充完网络信息, 就要将网络信息 绑定到操作系统内核中, 进而将网络信息
+        // 发送到网络上
+        if (bind(_sockFd, (const struct sockaddr*)&local, sizeof(local)) == -1) {
+            // 绑定失败
+            logMessage(FATAL, "bind() faild:: %s : %d", strerror(errno), _sockFd);
+            exit(2);
+        }
+        // 绑定成功
+        logMessage(DEBUG, "socket bind success : %d", _sockFd);
+    }
 
-	// 服务器运行函数
-	// 具体功能 实际上是 循环地监听、接收发送到服务器上的信息
-	void start() {
-		// 很多服务器本质上是一个死循环
-		char inBuffer[1024]; // 用来存储发送过来的信息
-		while (true) {
-			struct sockaddr_in peer;		  // 输出型参数, 用来接收对方主机网络信息
-			socklen_t peerLen = sizeof(peer); // 输入输出型参数
+    // 服务器运行函数
+    // 具体功能 实际上是 循环地监听、接收发送到服务器上的信息
+    void start() {
+        // 很多服务器本质上是一个死循环
+        char inBuffer[1024]; // 用来存储发送过来的信息
+        while (true) {
+            struct sockaddr_in peer;          // 输出型参数, 用来接收对方主机网络信息
+            socklen_t peerLen = sizeof(peer); // 输入输出型参数
 
-			// 接收发送到服务器上的信息, 以及发送端的网络信息
-			// recvfrom(int __fd, 
+            // 接收发送到服务器上的信息, 以及发送端的网络信息
+            // recvfrom(int __fd, 
             //          void *__restrict __buf,
             //          size_t __n,
             //          int __flags,
-			//          struct sockaddr *__restrict __addr,
+            //          struct sockaddr *__restrict __addr,
             //          socklen_t *__restrict __addr_len);
-			// 后两个参数 即为接收发送端网络信息的输出型参数
-			// 返回值 是 接收到发送过来的信息的字节数, 即放在 inBuffer里的字节数
-			// 接收失败则返回 -1
-			ssize_t s = recvfrom(_sockFd, inBuffer, sizeof(inBuffer) - 1, 0, (struct sockaddr*)&peer, &peerLen);
+            // 后两个参数 即为接收发送端网络信息的输出型参数
+            // 返回值 是 接收到发送过来的信息的字节数, 即放在 inBuffer里的字节数
+            // 接收失败则返回 -1
+            ssize_t s = recvfrom(_sockFd, inBuffer, sizeof(inBuffer) - 1, 0, (struct sockaddr*)&peer, &peerLen);
 
-			if (s > 0) {
-				// 当字符串结尾
-				inBuffer[s] = 0;
-			}
-			else if (s == -1) {
-				logMessage(WARINING, "recvfrom() error:: %s : %d", strerror(errno), _sockFd);
-				continue;
-			}
+            if (s > 0) {
+                // 当字符串结尾
+                inBuffer[s] = 0;
+            }
+            else if (s == -1) {
+                logMessage(WARINING, "recvfrom() error:: %s : %d", strerror(errno), _sockFd);
+                continue;
+            }
 
-			// 读取成功, 除了读取到对方的数据, 你还要读取到对方的网络地址[ip:port]
-			string peerIp = inet_ntoa(peer.sin_addr); // 拿到了对方的IP
-			uint32_t peerPort = ntohs(peer.sin_port); // 拿到了对方的port
+            // 读取成功, 除了读取到对方的数据, 你还要读取到对方的网络地址[ip:port]
+            string peerIp = inet_ntoa(peer.sin_addr); // 拿到了对方的IP
+            uint32_t peerPort = ntohs(peer.sin_port); // 拿到了对方的port
 
-			// 打印出来对方给服务器发送过来的消息
-			logMessage(NOTICE, "[%s:%d]# %s", peerIp.c_str(), peerPort, inBuffer);
-		}
-	}
+            // 打印出来对方给服务器发送过来的消息
+            logMessage(NOTICE, "[%s:%d]# %s", peerIp.c_str(), peerPort, inBuffer);
+        }
+    }
 
 private:
-	// 服务器 端口号
-	uint16_t _port;
-	// 服务器 IP, 程序运行时, 一般传入的是 点分十进制表示的ip的字符串
-	string _ip;
-	// 服务器 套接字文件描述符
-	int _sockFd;
+    // 服务器 端口号
+    uint16_t _port;
+    // 服务器 IP, 程序运行时, 一般传入的是 点分十进制表示的ip的字符串
+    string _ip;
+    // 服务器 套接字文件描述符
+    int _sockFd;
 };
 
 static void Usage(const string porc) {
-	cout << "Usage:\n\t" << porc << " port [ip]" << endl;
+    cout << "Usage:\n\t" << porc << " port [ip]" << endl;
 }
 
 // main 函数需要获取命令函参数, 以实现获取端口号和ip
 int main(int argc, char* argv[]) {
-	// 如果 使用方法错误
-	if (argc != 2 && argc != 3) {
-		Usage(argv[0]);
-		exit(3);
-	}
+    // 如果 使用方法错误
+    if (argc != 2 && argc != 3) {
+        Usage(argv[0]);
+        exit(3);
+    }
 
-	// 获取 端口号 和 IP
-	uint16_t port = atoi(argv[1]);
-	string ip;
-	if (argc == 3) {
-		ip = argv[2];
-	}
+    // 获取 端口号 和 IP
+    uint16_t port = atoi(argv[1]);
+    string ip;
+    if (argc == 3) {
+        ip = argv[2];
+    }
 
-	// 使用端口号和IP 实例化udpServer对象
-	udpServer uSvr(port, ip);
+    // 使用端口号和IP 实例化udpServer对象
+    udpServer uSvr(port, ip);
 
-	// 初始化, 并启动服务器
-	uSvr.init();
-	uSvr.start();
+    // 初始化, 并启动服务器
+    uSvr.init();
+    uSvr.start();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -790,26 +790,26 @@ using std::getline;
 using std::string;
 
 static void Usage(const string porc) {
-	cout << "Usage::\n\t" << porc << " server_IP server_Port" << endl;
+    cout << "Usage::\n\t" << porc << " server_IP server_Port" << endl;
 }
 
 int main(int argc, char* argv[]) {
-	if (argc != 3) {
-		Usage(argv[0]);
-		exit(1);
-	}
+    if (argc != 3) {
+        Usage(argv[0]);
+        exit(1);
+    }
 
-	// 先获取server_IP 和 server_Port
-	string server_IP = argv[1];
-	uint16_t server_Port = atoi(argv[2]);
+    // 先获取server_IP 和 server_Port
+    string server_IP = argv[1];
+    uint16_t server_Port = atoi(argv[2]);
 
-	// 创建客户端套接字
-	int sockFd = socket(AF_INET, SOCK_DGRAM, 0);
-	if (sockFd < 0) {
-		logMessage(FATAL, "socket() faild:: %s : %d", strerror(errno), sockFd);
-		exit(2);
-	}
-	logMessage(DEBUG, "socket create success: %d", sockFd);
+    // 创建客户端套接字
+    int sockFd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sockFd < 0) {
+        logMessage(FATAL, "socket() faild:: %s : %d", strerror(errno), sockFd);
+        exit(2);
+    }
+    logMessage(DEBUG, "socket create success: %d", sockFd);
 
     /*!
      * udpServer 到这里就 填充网络信息 并绑定到操作系统内核中了
@@ -826,27 +826,27 @@ int main(int argc, char* argv[]) {
 
     // 填充服务器的网络信息
     // 从命令行接收到的服务器IP和端口号, 是需要填充在 sockaddr_in 结构体中的, 因为 向服务器网络进程发送信息需要使用
-	struct sockaddr_in server;
-	bzero(&server, sizeof(server));
-	server.sin_family = AF_INET;
-	server.sin_port = htons(server_Port);
-	server.sin_addr.s_addr = inet_addr(server_IP.c_str());
+    struct sockaddr_in server;
+    bzero(&server, sizeof(server));
+    server.sin_family = AF_INET;
+    server.sin_port = htons(server_Port);
+    server.sin_addr.s_addr = inet_addr(server_IP.c_str());
 
-	// 通信
-	string inBuffer;
-	while (true) {
-		cout << "Please Enter >> ";
-		getline(cin, inBuffer);
+    // 通信
+    string inBuffer;
+    while (true) {
+        cout << "Please Enter >> ";
+        getline(cin, inBuffer);
 
-		// 向 server 发送消息
-		sendto(sockFd, inBuffer.c_str(), inBuffer.size(), 0, (const struct sockaddr*)&server, sizeof(server));
-		// 在首次向 server 发送消息的时候, 操作系统会自动将Client网络进程信息
-		// 绑定到操作系统内核
-	}
+        // 向 server 发送消息
+        sendto(sockFd, inBuffer.c_str(), inBuffer.size(), 0, (const struct sockaddr*)&server, sizeof(server));
+        // 在首次向 server 发送消息的时候, 操作系统会自动将Client网络进程信息
+        // 绑定到操作系统内核
+    }
 
-	close(sockFd);
+    close(sockFd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -934,18 +934,18 @@ void logMessage(int level, const char* format, ...) {
     // 通过判断日志等级, 来选择是标准输出流还是标准错误流
     FILE* out = (level == FATAL) ? stderr : stdout;
 
-	// 获取本地时间
-	time_t tm = time(nullptr);
-	struct tm* localTm = localtime(&tm);
-	char* localTmStr = asctime(localTm);
-	char* nC = strstr(localTmStr, "\n");
-	if(nC) {
-		*nC = '\0';
-	}
+    // 获取本地时间
+    time_t tm = time(nullptr);
+    struct tm* localTm = localtime(&tm);
+    char* localTmStr = asctime(localTm);
+    char* nC = strstr(localTmStr, "\n");
+    if(nC) {
+        *nC = '\0';
+    }
     
     fprintf( out, "%s | %s | %s | %s\n", 
             log_level[level],
-			localTmStr,
+            localTmStr,
             name == nullptr ? "unknow" : name, 
             logInfo );
 }
@@ -978,143 +978,143 @@ using std::unordered_map;
 // 封装UDP服务
 class udpServer {
 public:
-	// 构造函数, 需要传入 port 和 ip
-	udpServer(uint16_t port, string ip = "")
-		: _port(port)
-		, _ip(ip)
-		, _sockFd(-1) {}
-	~udpServer() {}
+    // 构造函数, 需要传入 port 和 ip
+    udpServer(uint16_t port, string ip = "")
+        : _port(port)
+        , _ip(ip)
+        , _sockFd(-1) {}
+    ~udpServer() {}
 
-	// 服务器初始化函数
-	// 具体功能就是 创建套接字 绑定主机网络信息
-	void init() {
-		// 1. 首先就是创建套接字, 并获取套接字文件描述符
-		_sockFd = socket(AF_INET, SOCK_DGRAM, 0);
+    // 服务器初始化函数
+    // 具体功能就是 创建套接字 绑定主机网络信息
+    void init() {
+        // 1. 首先就是创建套接字, 并获取套接字文件描述符
+        _sockFd = socket(AF_INET, SOCK_DGRAM, 0);
 
-		if (_sockFd < 0) {
-			// 套接字文件描述符创建失败
-			logMessage(FATAL, "socket() faild:: %s : %d", strerror(errno), _sockFd);
-			exit(1);
-		}
+        if (_sockFd < 0) {
+            // 套接字文件描述符创建失败
+            logMessage(FATAL, "socket() faild:: %s : %d", strerror(errno), _sockFd);
+            exit(1);
+        }
 
-		logMessage(DEBUG, "socket create success: %d", _sockFd);
+        logMessage(DEBUG, "socket create success: %d", _sockFd);
 
-		struct sockaddr_in local;
-		bzero(&local, sizeof(local)); // 将结构体内容全部置空
-		local.sin_family = AF_INET;
-		local.sin_port = htons(_port);
-		local.sin_addr.s_addr = _ip.empty() ? htonl(INADDR_ANY) : inet_addr(_ip.c_str());
+        struct sockaddr_in local;
+        bzero(&local, sizeof(local)); // 将结构体内容全部置空
+        local.sin_family = AF_INET;
+        local.sin_port = htons(_port);
+        local.sin_addr.s_addr = _ip.empty() ? htonl(INADDR_ANY) : inet_addr(_ip.c_str());
 
-		// 填充完网络信息, 就要将网络信息 绑定到操作系统内核中, 进而将网络信息
-		// 发送到网络上
-		if (bind(_sockFd, (const struct sockaddr*)&local, sizeof(local)) == -1) {
-			logMessage(FATAL, "bind() faild:: %s : %d", strerror(errno), _sockFd);
-			exit(2);
-		}
+        // 填充完网络信息, 就要将网络信息 绑定到操作系统内核中, 进而将网络信息
+        // 发送到网络上
+        if (bind(_sockFd, (const struct sockaddr*)&local, sizeof(local)) == -1) {
+            logMessage(FATAL, "bind() faild:: %s : %d", strerror(errno), _sockFd);
+            exit(2);
+        }
 
-		logMessage(DEBUG, "socket bind success : %d", _sockFd);
-	}
+        logMessage(DEBUG, "socket bind success : %d", _sockFd);
+    }
 
-	// 服务器运行函数
-	// 具体功能 实际上是 循环地监听、接收发送到服务器上的信息
-	void start() {
-		// 很多服务器本质上是一个死循环
-		char inBuffer[1024]; // 用来存储发送过来的信息
-		while (1) {
-			struct sockaddr_in peer;		  // 输出型参数, 用来接收对方主机网络信息
-			socklen_t peerLen = sizeof(peer); // 输入输出型参数
+    // 服务器运行函数
+    // 具体功能 实际上是 循环地监听、接收发送到服务器上的信息
+    void start() {
+        // 很多服务器本质上是一个死循环
+        char inBuffer[1024]; // 用来存储发送过来的信息
+        while (1) {
+            struct sockaddr_in peer;          // 输出型参数, 用来接收对方主机网络信息
+            socklen_t peerLen = sizeof(peer); // 输入输出型参数
 
-			ssize_t s = recvfrom(_sockFd, inBuffer, sizeof(inBuffer) - 1, 0, (struct sockaddr*)&peer, &peerLen);
+            ssize_t s = recvfrom(_sockFd, inBuffer, sizeof(inBuffer) - 1, 0, (struct sockaddr*)&peer, &peerLen);
 
-			if (s > 0) {
-				// 当字符串结尾
-				inBuffer[s] = 0;
-			}
-			else if (s == -1) {
-				logMessage(WARINING, "recvfrom() error:: %s : %d", strerror(errno), _sockFd);
-				continue;
-			}
+            if (s > 0) {
+                // 当字符串结尾
+                inBuffer[s] = 0;
+            }
+            else if (s == -1) {
+                logMessage(WARINING, "recvfrom() error:: %s : %d", strerror(errno), _sockFd);
+                continue;
+            }
 
-			// 读取成功, 除了读取到对方的数据, 你还要读取到对方的网络地址[ip:port]
-			string peerIp = inet_ntoa(peer.sin_addr); // 拿到了对方的IP
-			uint32_t peerPort = ntohs(peer.sin_port); // 拿到了对方的port
+            // 读取成功, 除了读取到对方的数据, 你还要读取到对方的网络地址[ip:port]
+            string peerIp = inet_ntoa(peer.sin_addr); // 拿到了对方的IP
+            uint32_t peerPort = ntohs(peer.sin_port); // 拿到了对方的port
 
-			// 检查用户是否在服务器中, 不在则添加用户
-			checkOnlineUser(peerIp, peerPort, peer);
+            // 检查用户是否在服务器中, 不在则添加用户
+            checkOnlineUser(peerIp, peerPort, peer);
 
-			// 打印出来对方给服务器发送过来的消息
-			logMessage(NOTICE, "[%s:%d]%s", peerIp.c_str(), peerPort, inBuffer);
+            // 打印出来对方给服务器发送过来的消息
+            logMessage(NOTICE, "[%s:%d]%s", peerIp.c_str(), peerPort, inBuffer);
 
-			// 然后将消息转发到所有用户的客户端上, 实现多人聊天
-			string infoUser(inBuffer);
-			messageRoute(peerIp, peerPort, infoUser);
-		}
-	}
+            // 然后将消息转发到所有用户的客户端上, 实现多人聊天
+            string infoUser(inBuffer);
+            messageRoute(peerIp, peerPort, infoUser);
+        }
+    }
 
-	void checkOnlineUser(string& ip, uint32_t port, struct sockaddr_in& peer) {
-		string key = ip;
-		key += ":";
-		key += std::to_string(port);
-		auto itUser = _users.find(key);
+    void checkOnlineUser(string& ip, uint32_t port, struct sockaddr_in& peer) {
+        string key = ip;
+        key += ":";
+        key += std::to_string(port);
+        auto itUser = _users.find(key);
 
-		// 判断用户是否已经存在, 不存在则添加
-		if (itUser == _users.end()) {
-			_users.insert({ key, peer });
-		}
-	}
+        // 判断用户是否已经存在, 不存在则添加
+        if (itUser == _users.end()) {
+            _users.insert({ key, peer });
+        }
+    }
 
-	void messageRoute(string& ip, uint32_t port, string info) {
-		string message = "[";
-		message += ip;
-		message += ":";
-		message += std::to_string(port);
-		message += "]";
-		message += info;
+    void messageRoute(string& ip, uint32_t port, string info) {
+        string message = "[";
+        message += ip;
+        message += ":";
+        message += std::to_string(port);
+        message += "]";
+        message += info;
 
-		// 遍历 服务器用户列表, 将message 发送给每一个在服务器内的用户网络进程
-		for (auto& user : _users) {
-			sendto(_sockFd, message.c_str(), message.size(), 0, (struct sockaddr*)&(user.second), sizeof(user.second));
-		}
-	}
+        // 遍历 服务器用户列表, 将message 发送给每一个在服务器内的用户网络进程
+        for (auto& user : _users) {
+            sendto(_sockFd, message.c_str(), message.size(), 0, (struct sockaddr*)&(user.second), sizeof(user.second));
+        }
+    }
 
 private:
-	// 服务器 端口号
-	uint16_t _port;
-	// 服务器 IP, 程序运行时, 一般传入的是 点分十进制表示的ip的字符串
-	string _ip;
-	// 服务器 套接字文件描述符
-	int _sockFd;
-	// 服务器用户   key: ip:port, T:主机网络进程信息
-	unordered_map<string, struct sockaddr_in> _users;
+    // 服务器 端口号
+    uint16_t _port;
+    // 服务器 IP, 程序运行时, 一般传入的是 点分十进制表示的ip的字符串
+    string _ip;
+    // 服务器 套接字文件描述符
+    int _sockFd;
+    // 服务器用户   key: ip:port, T:主机网络进程信息
+    unordered_map<string, struct sockaddr_in> _users;
 };
 
 static void Usage(const string porc) {
-	cout << "Usage:\n\t" << porc << " port [ip]" << endl;
+    cout << "Usage:\n\t" << porc << " port [ip]" << endl;
 }
 
 // main 函数需要获取命令函参数, 以实现获取端口号和ip
 int main(int argc, char* argv[]) {
-	// 如果 使用方法错误
-	if (argc != 2 && argc != 3) {
-		Usage(argv[0]);
-		exit(3);
-	}
+    // 如果 使用方法错误
+    if (argc != 2 && argc != 3) {
+        Usage(argv[0]);
+        exit(3);
+    }
 
-	// 获取 端口号 和 IP
-	uint16_t port = atoi(argv[1]);
-	string ip;
-	if (argc == 3) {
-		ip = argv[2];
-	}
+    // 获取 端口号 和 IP
+    uint16_t port = atoi(argv[1]);
+    string ip;
+    if (argc == 3) {
+        ip = argv[2];
+    }
 
-	// 使用端口号和IP 实例化udpServer对象
-	udpServer uSvr(port, ip);
+    // 使用端口号和IP 实例化udpServer对象
+    udpServer uSvr(port, ip);
 
-	// 初始化, 并启动服务器
-	uSvr.init();
-	uSvr.start();
+    // 初始化, 并启动服务器
+    uSvr.init();
+    uSvr.start();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -1143,76 +1143,76 @@ using std::string;
 
 // 多线程 接收来自服务器的消息
 void* recverAndPrint(void* args) {
-	while (true) {
-		int sockFd = *(int*)args;
+    while (true) {
+        int sockFd = *(int*)args;
 
-		char buffer[1024];
+        char buffer[1024];
 
-		// recvfrom 需要两个输出型参数, 来接收来自服务器的网络进程信息
-		// 所以需要两个临时变量
-		struct sockaddr_in temp;
-		socklen_t len = sizeof(temp);
+        // recvfrom 需要两个输出型参数, 来接收来自服务器的网络进程信息
+        // 所以需要两个临时变量
+        struct sockaddr_in temp;
+        socklen_t len = sizeof(temp);
 
-		ssize_t s = recvfrom(sockFd, buffer, sizeof(buffer), 0, (struct sockaddr*)&temp, &len);
-		if (s > 0) {
-			buffer[s] = 0;
-			cout << buffer << endl;
-		}
-	}
+        ssize_t s = recvfrom(sockFd, buffer, sizeof(buffer), 0, (struct sockaddr*)&temp, &len);
+        if (s > 0) {
+            buffer[s] = 0;
+            cout << buffer << endl;
+        }
+    }
 }
 
 static void Usage(const string porc) {
-	std::cerr << "Usage::\n\t" << porc << " server_IP server_Port nick_Name" << endl;
+    std::cerr << "Usage::\n\t" << porc << " server_IP server_Port nick_Name" << endl;
 }
 
 int main(int argc, char* argv[]) {
-	if (argc != 4) {
-		Usage(argv[0]);
-		exit(1);
-	}
+    if (argc != 4) {
+        Usage(argv[0]);
+        exit(1);
+    }
 
-	// 先获取server_IP 和 server_Port 以及用户的昵称
-	string server_IP = argv[1];
-	uint16_t server_Port = atoi(argv[2]);
-	string nick_Name = argv[3];
+    // 先获取server_IP 和 server_Port 以及用户的昵称
+    string server_IP = argv[1];
+    uint16_t server_Port = atoi(argv[2]);
+    string nick_Name = argv[3];
 
-	// 创建客户端套接字
-	int sockFd = socket(AF_INET, SOCK_DGRAM, 0);
-	if (sockFd < 0) {
-		logMessage(FATAL, "socket() faild:: %s : %d", strerror(errno), sockFd);
-		exit(2);
-	}
-	logMessage(DEBUG, "socket create success: %d", sockFd);
+    // 创建客户端套接字
+    int sockFd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sockFd < 0) {
+        logMessage(FATAL, "socket() faild:: %s : %d", strerror(errno), sockFd);
+        exit(2);
+    }
+    logMessage(DEBUG, "socket create success: %d", sockFd);
 
-	struct sockaddr_in server;
-	bzero(&server, sizeof(server));
-	server.sin_family = AF_INET;
-	server.sin_port = htons(server_Port);
-	server.sin_addr.s_addr = inet_addr(server_IP.c_str());
+    struct sockaddr_in server;
+    bzero(&server, sizeof(server));
+    server.sin_family = AF_INET;
+    server.sin_port = htons(server_Port);
+    server.sin_addr.s_addr = inet_addr(server_IP.c_str());
 
-	pthread_t t;
-	pthread_create(&t, nullptr, recverAndPrint, &sockFd);
+    pthread_t t;
+    pthread_create(&t, nullptr, recverAndPrint, &sockFd);
 
-	// 通信
-	while (true) {
-		// 这里改为 使用 cerr, 是为了不将此语句, 重定向到命名管道
-		std::cerr << "Please Enter >> ";
-		string inBuffer;
-		inBuffer += "[";
-		inBuffer += nick_Name;
-		inBuffer += "]# ";
-		string tempS;
-		getline(cin, tempS);
-		inBuffer += tempS;
+    // 通信
+    while (true) {
+        // 这里改为 使用 cerr, 是为了不将此语句, 重定向到命名管道
+        std::cerr << "Please Enter >> ";
+        string inBuffer;
+        inBuffer += "[";
+        inBuffer += nick_Name;
+        inBuffer += "]# ";
+        string tempS;
+        getline(cin, tempS);
+        inBuffer += tempS;
 
-		// 向 server 发送消息
-		sendto(sockFd, inBuffer.c_str(), inBuffer.size(), 0, (const struct sockaddr*)&server, sizeof(server));
-		// 绑定到操作系统内核
-	}
+        // 向 server 发送消息
+        sendto(sockFd, inBuffer.c_str(), inBuffer.size(), 0, (const struct sockaddr*)&server, sizeof(server));
+        // 绑定到操作系统内核
+    }
 
-	close(sockFd);
+    close(sockFd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -1223,13 +1223,13 @@ int main(int argc, char* argv[]) {
 all:udpServer udpClient
 
 udpServer: udpServer.cc
-	g++ -o $@ $^
+    g++ -o $@ $^
 udpClient: udpClient.cc
-	g++ -o $@ $^ -lpthread
+    g++ -o $@ $^ -lpthread
 
 .PHONY:clean
 clean:
-	rm -rf udpServer udpClient
+    rm -rf udpServer udpClient
 ```
 
 上面的代码实现了:

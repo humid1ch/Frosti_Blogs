@@ -33,19 +33,19 @@ Linux中, 使用系统接口打开文件时, 系统会为打开的文件在此�
 #include <unistd.h>
 
 int main() {
-	umask(0);
-	close(0);		// 什么都不干, 先关闭fd=0的文件
-	
-	int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);		//以清空只写方式打开文件, 若文件不存在则创建文件
-	if(fd < 0) {
-		perror("open");
-	}
+    umask(0);
+    close(0);        // 什么都不干, 先关闭fd=0的文件
+    
+    int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);        //以清空只写方式打开文件, 若文件不存在则创建文件
+    if(fd < 0) {
+        perror("open");
+    }
 
-	printf("打开文件的fd为: %d\n", fd);
+    printf("打开文件的fd为: %d\n", fd);
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -79,18 +79,18 @@ int main() {
 > #include <unistd.h>
 > 
 > int main() {
-> 	umask(0);
-> 	close(0);
-> 	
-> 	int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);		//以清空只写方式打开文件, 若文件不存在则创建文件
-> 	if(fd < 0) {
-> 		perror("open");
-> 	}
-> 	fprintf(stdout, "打开文件成功, fd: %d\n", fd);
+>     umask(0);
+>     close(0);
+>     
+>     int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);        //以清空只写方式打开文件, 若文件不存在则创建文件
+>     if(fd < 0) {
+>         perror("open");
+>     }
+>     fprintf(stdout, "打开文件成功, fd: %d\n", fd);
 > 
-> 	close(fd);
+>     close(fd);
 > 
-> 	return 0;
+>     return 0;
 > }
 > ```
 >
@@ -106,19 +106,19 @@ int main() {
 #include <unistd.h>
 
 int main() {
-	umask(0);
-	close(1);		// 什么都不干, 先关闭fd=1的文件
-	
-	int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);		//以清空只写方式打开文件, 若文件不存在则创建文件
-	if(fd < 0) {
-		perror("open");
-	}
-	fprintf(stdout, "打开文件成功, fd: %d\n", fd);
-	fflush(stdout); 		// 刷新文件缓冲区操作
+    umask(0);
+    close(1);        // 什么都不干, 先关闭fd=1的文件
+    
+    int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);        //以清空只写方式打开文件, 若文件不存在则创建文件
+    if(fd < 0) {
+        perror("open");
+    }
+    fprintf(stdout, "打开文件成功, fd: %d\n", fd);
+    fflush(stdout);         // 刷新文件缓冲区操作
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -197,20 +197,20 @@ dup2()是系统为重定向提供的接口, 也就是说 `dup2()会将一个fd�
 #include <string.h>
 
 int main() {
-	umask(0);
-	
-	int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);		//以清空只写方式打开文件, 若文件不存在则创建文件
-	if(fd < 0) {
-		perror("open");
-	}
+    umask(0);
+    
+    int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);        //以清空只写方式打开文件, 若文件不存在则创建文件
+    if(fd < 0) {
+        perror("open");
+    }
 
-	dup2(fd, 1);		// 将标准输出重定向到只写打开文件, 实现输出重定向
-	const char *buffer = "Hello world, hello July\n";
-	write(stdout->_fileno, buffer, strlen(buffer));
+    dup2(fd, 1);        // 将标准输出重定向到只写打开文件, 实现输出重定向
+    const char *buffer = "Hello world, hello July\n";
+    write(stdout->_fileno, buffer, strlen(buffer));
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -227,20 +227,20 @@ int main() {
 #include <string.h>
 
 int main() {
-	umask(0);
-	
-	int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_APPEND, 0666);		//以清空只写方式打开文件, 若文件不存在则创建文件
-	if(fd < 0) {
-		perror("open");
-	}
+    umask(0);
+    
+    int fd = open("new_log.txt", O_WRONLY | O_CREAT | O_APPEND, 0666);        //以清空只写方式打开文件, 若文件不存在则创建文件
+    if(fd < 0) {
+        perror("open");
+    }
 
-	dup2(fd, 1);		// 将标准输出重定向到只写打开文件, 实现输出重定向
-	const char *buffer = "Hello world, hello July\n";
-	write(stdout->_fileno, buffer, strlen(buffer));
+    dup2(fd, 1);        // 将标准输出重定向到只写打开文件, 实现输出重定向
+    const char *buffer = "Hello world, hello July\n";
+    write(stdout->_fileno, buffer, strlen(buffer));
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -261,21 +261,21 @@ int main() {
 #include <string.h>
 
 int main() {
-	int fd = open("new_log.txt", O_RDONLY);		//以只读方式打开文件, 只读打开一般都是已存在的文件
-	if(fd < 0) {
-		perror("open");
-	}
+    int fd = open("new_log.txt", O_RDONLY);        //以只读方式打开文件, 只读打开一般都是已存在的文件
+    if(fd < 0) {
+        perror("open");
+    }
 
-	dup2(fd, 0);	// 将标准输入重定向到只读方式打开的文件, 实现输入重定向
-	char buffer[128];
-	// 从stdin中获取数据到buffer中
-	while(fgets(buffer, sizeof(buffer), stdin) != NULL) {
-		printf("%s", buffer);
-	}
+    dup2(fd, 0);    // 将标准输入重定向到只读方式打开的文件, 实现输入重定向
+    char buffer[128];
+    // 从stdin中获取数据到buffer中
+    while(fgets(buffer, sizeof(buffer), stdin) != NULL) {
+        printf("%s", buffer);
+    }
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -304,12 +304,12 @@ int main() {
 #include <string.h> 
 
 int main() {
-	printf("Hello world");
-	write(stdout->_fileno, "I am a process", strlen("I am a process"));
+    printf("Hello world");
+    write(stdout->_fileno, "I am a process", strlen("I am a process"));
 
-	sleep(3);
+    sleep(3);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -329,27 +329,27 @@ int main() {
 
 1. 我们知道, 进程在等待硬件资源时是会进入`阻塞状态`的
 
-	处于阻塞状态的进程, 无法执行其他代码, 只能等到阻塞结束
-	
-	而进程向屏幕输出信息时, 其实也是需要屏幕资源的
-	
-	如果此时屏幕资源已经被占用满了, 并且没有文件缓冲区的存在, 输出语句执行就会进入阻塞状态等待屏幕资源
-	
-	而如果有文件缓冲区的存在, 即使屏幕资源已经被占满了, 输出语句执行之后, 会将需要输出的信息存入文件缓冲区中, 然后进程继续执行其他代码. 等到合适的时候, 再刷新文件缓冲区 将需要打印的信息打印到屏幕上
-	
-	这样看, 其实`文件缓冲区的存在, 在一定程度上节省了进程使用缓冲区(此缓冲区非文件缓冲区)的时间`
+    处于阻塞状态的进程, 无法执行其他代码, 只能等到阻塞结束
+    
+    而进程向屏幕输出信息时, 其实也是需要屏幕资源的
+    
+    如果此时屏幕资源已经被占用满了, 并且没有文件缓冲区的存在, 输出语句执行就会进入阻塞状态等待屏幕资源
+    
+    而如果有文件缓冲区的存在, 即使屏幕资源已经被占满了, 输出语句执行之后, 会将需要输出的信息存入文件缓冲区中, 然后进程继续执行其他代码. 等到合适的时候, 再刷新文件缓冲区 将需要打印的信息打印到屏幕上
+    
+    这样看, 其实`文件缓冲区的存在, 在一定程度上节省了进程使用缓冲区(此缓冲区非文件缓冲区)的时间`
 
 2. 如果没有文件缓冲区的存在, 我们打印信息就会立马在屏幕上打印出来.
 
-	这样看起来似乎不错, 但其实会加重操作系统的负担.
-	
-	如果没有限制的、死循环地向屏幕上打印信息, 那么数据就会在操作系统与硬件之间疯狂地I/O操作. 
-	
-	这样显然会加重操作系统的负担.
-	
-	而有了文件缓冲区地存在, 在不满足刷新文件缓冲区地条件时, 我们需要打印的信息就会先存放在文件缓冲区中, 暂时不与硬件发生I/O操作. 直到达成刷新文件缓冲区的条件时, 再将文件缓冲区内的所有数据刷新到屏幕上.
-	
-	这样, `文件缓冲区的存在, 其实可以集中处理数据刷新, 有效的减少操作系统与硬件之间的I/O次数, 进而提高整机的效率`
+    这样看起来似乎不错, 但其实会加重操作系统的负担.
+    
+    如果没有限制的、死循环地向屏幕上打印信息, 那么数据就会在操作系统与硬件之间疯狂地I/O操作. 
+    
+    这样显然会加重操作系统的负担.
+    
+    而有了文件缓冲区地存在, 在不满足刷新文件缓冲区地条件时, 我们需要打印的信息就会先存放在文件缓冲区中, 暂时不与硬件发生I/O操作. 直到达成刷新文件缓冲区的条件时, 再将文件缓冲区内的所有数据刷新到屏幕上.
+    
+    这样, `文件缓冲区的存在, 其实可以集中处理数据刷新, 有效的减少操作系统与硬件之间的I/O次数, 进而提高整机的效率`
 
 ## 文件缓冲区在什么地方
 
@@ -366,12 +366,12 @@ int main() {
 #include <string.h> 
 
 int main() {
-	printf("Hello world");
-	write(stdout->_fileno, "I am a process", strlen("I am a process"));
+    printf("Hello world");
+    write(stdout->_fileno, "I am a process", strlen("I am a process"));
 
-	sleep(3);
+    sleep(3);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -442,16 +442,16 @@ C语言中存在着文件缓冲区, 并且在合适的时候需要清空缓冲�
 #include <string.h> 
 
 int main() {
-	printf("Hello July");
-	fprintf(stdout, "Hello July");
-	fputs("Hello July", stdout);
-	// 如果没有关闭stdout, 这三个语句会在进程结束时正常在屏幕上输出
+    printf("Hello July");
+    fprintf(stdout, "Hello July");
+    fputs("Hello July", stdout);
+    // 如果没有关闭stdout, 这三个语句会在进程结束时正常在屏幕上输出
 
-	// 进程退出会自动刷新缓冲区
-	// 我们在这里将 stdout 关闭
-	close(stdout->_fileno);
+    // 进程退出会自动刷新缓冲区
+    // 我们在这里将 stdout 关闭
+    close(stdout->_fileno);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -501,32 +501,32 @@ include <stdio.h>
 #include <string.h> 
 
 int main() {
-	const char* str1 = "Hello printf\n";
-	const char* str2 = "Hello fprintf\n";
-	const char* str3 = "Hello fputs\n";
-	const char* str4 = "Hello write\n";
+    const char* str1 = "Hello printf\n";
+    const char* str2 = "Hello fprintf\n";
+    const char* str3 = "Hello fputs\n";
+    const char* str4 = "Hello write\n";
 
-	// C库函数
-	printf("%s", str1);
-	fprintf(stdout, str2);
-	fputs(str3, stdout);
+    // C库函数
+    printf("%s", str1);
+    fprintf(stdout, str2);
+    fputs(str3, stdout);
 
-	// 系统接口
-	write(stdout->_fileno, str4, strlen(str4));
+    // 系统接口
+    write(stdout->_fileno, str4, strlen(str4));
 
-	fork();
-	
-	return 0;
+    fork();
+    
+    return 0;
 }
 ```
 
 1. 正常编译运行: 
 
-	![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180211680.webp)
+    ![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180211680.webp)
 
 2. 输出重定向到文件中
 
-	![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180212987.webp)
+    ![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722180212987.webp)
 
 你会发现, `直接运行屏幕上输出了4句话, 但是如果是输出重定向到文件中, 文件中会被写入7句话`
 
@@ -559,13 +559,13 @@ int main() {
 首先, C库维护文件使用的是FILE结构体, 我们也可以设置一个myFILE结构体, 不过不需要太多的成员: 
 
 ```cpp
-#define SIZE 1024 			// 缓冲区大小
+#define SIZE 1024             // 缓冲区大小
 
 typedef struct _myFILE {
-	int _fileno;			// 首先需要存储文件的fd
-	char _buffer[SIZE];		 // 设置一个1024字节的缓冲区
-	int _end;				// 用来记录缓冲区目前长度, 即结尾
-	int _flags;				// 用来选择缓冲区刷新策略
+    int _fileno;            // 首先需要存储文件的fd
+    char _buffer[SIZE];         // 设置一个1024字节的缓冲区
+    int _end;                // 用来记录缓冲区目前长度, 即结尾
+    int _flags;                // 用来选择缓冲区刷新策略
 }myFILE;
 ```
 
@@ -580,46 +580,46 @@ typedef struct _myFILE {
 #define FULL_FLUSH 0x2
 
 myFILE* my_open(const char* filename, const char* method) {
-	// 两个参数, 一个文件名, 一个打开模式
-	 
-	assert(filename);
-	assert(method);
-	
-	int flag = O_RDONLY;	//打开文件方式 默认只读
+    // 两个参数, 一个文件名, 一个打开模式
+     
+    assert(filename);
+    assert(method);
+    
+    int flag = O_RDONLY;    //打开文件方式 默认只读
 
-	if(strcmp(method, "r") == 0) {}		// 只读传参, 不对flag做修改
-	else if(strcmp(method, "r+") == 0) {
-		flag = O_RDWR;		// 读写, 文件不存在打开失败
-	}
-	else if(strcmp(method, "w") == 0) {
-		flag = O_WRONLY | O_CREAT | O_TRUNC;		// 清空只写, 文件不存在创建文件
-	}
-	else if(strcmp(method, "w+") == 0) {
-		flag = O_RDWR | O_CREAT | O_TRUNC;
-	}
-	else if(strcmp(method, "a") == 0) {
-		flag = O_WRONLY | O_CREAT | O_APPEND;		// 追加只写, 文件不存在创建文件
-	}
-	else if(strcmp(method, "a+") == 0) {
-		flag = O_RDWR | O_CREAT | O_APPEND;
-	}
+    if(strcmp(method, "r") == 0) {}        // 只读传参, 不对flag做修改
+    else if(strcmp(method, "r+") == 0) {
+        flag = O_RDWR;        // 读写, 文件不存在打开失败
+    }
+    else if(strcmp(method, "w") == 0) {
+        flag = O_WRONLY | O_CREAT | O_TRUNC;        // 清空只写, 文件不存在创建文件
+    }
+    else if(strcmp(method, "w+") == 0) {
+        flag = O_RDWR | O_CREAT | O_TRUNC;
+    }
+    else if(strcmp(method, "a") == 0) {
+        flag = O_WRONLY | O_CREAT | O_APPEND;        // 追加只写, 文件不存在创建文件
+    }
+    else if(strcmp(method, "a+") == 0) {
+        flag = O_RDWR | O_CREAT | O_APPEND;
+    }
 
-	int fileno = open(filename, flag, 0666);		// 封装系统接口打开文件
-	if(fileno < 0) {
-		return NULL;	// 打开文件失败
-	}
+    int fileno = open(filename, flag, 0666);        // 封装系统接口打开文件
+    if(fileno < 0) {
+        return NULL;    // 打开文件失败
+    }
 
-	// 打开文件成功, 则为myFILE开辟空间
-	myFILE* fp = (myFILE*)malloc(sizeof(myFILE));	// 有开辟失败的可能
-	if(fp == NULL) {
-		return fp;
-	}
-	memset(fp, 0, sizeof(myFILE));		// 将开辟的空间全部置0
-	fp->_fileno = fileno;				// 更新 myFILE里的_fileno
-	fp->_flags |= LINE_FLUSH;			// 默认行刷新
-	fp->_end = 0;						// 默认缓冲区为空
+    // 打开文件成功, 则为myFILE开辟空间
+    myFILE* fp = (myFILE*)malloc(sizeof(myFILE));    // 有开辟失败的可能
+    if(fp == NULL) {
+        return fp;
+    }
+    memset(fp, 0, sizeof(myFILE));        // 将开辟的空间全部置0
+    fp->_fileno = fileno;                // 更新 myFILE里的_fileno
+    fp->_flags |= LINE_FLUSH;            // 默认行刷新
+    fp->_end = 0;                        // 默认缓冲区为空
 
-	return fp;
+    return fp;
 }
 ```
 
@@ -629,12 +629,12 @@ myFILE* my_open(const char* filename, const char* method) {
 
 ```cpp
 int main() {
-	myFILE* pf = my_open("newlog.txt", "w+");
+    myFILE* pf = my_open("newlog.txt", "w+");
 
-	printf("打卡文件的fd: %d\n", pf->_fileno);
-	printf("打卡文件缓冲区占用: %d\n", pf->_end);
+    printf("打卡文件的fd: %d\n", pf->_fileno);
+    printf("打卡文件缓冲区占用: %d\n", pf->_end);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -644,22 +644,22 @@ int main() {
 
 ```cpp
 void my_fflush(myFILE* fp) {
-	assert(fp);
+    assert(fp);
 
-	if(fp->_end > 0) {		// _end记录的是 缓冲区内数据的长度
-		write(fp->_fileno, fp->_buffer, fp->_end);		// 向fd中写入缓冲区数据
-		// 这里不在判断是否写入成功
-		fp->_end = 0;
-		syncfs(fp->_fileno);		// 我们只向内核中写入了数据, 数据可能存储到了操作系统中 文件系统的缓冲区中, 需要刷新一下文件系统的缓冲区
-								 // 与文件缓冲区不同
-	}
+    if(fp->_end > 0) {        // _end记录的是 缓冲区内数据的长度
+        write(fp->_fileno, fp->_buffer, fp->_end);        // 向fd中写入缓冲区数据
+        // 这里不在判断是否写入成功
+        fp->_end = 0;
+        syncfs(fp->_fileno);        // 我们只向内核中写入了数据, 数据可能存储到了操作系统中 文件系统的缓冲区中, 需要刷新一下文件系统的缓冲区
+                                 // 与文件缓冲区不同
+    }
 }
 
-void my_fclose(myFILE* fp) {		// 暂时忽略返回值
-	// 再关闭文件之前, 需要先刷新缓冲区, 所以可以先写一个刷新缓冲区的函数
-	my_fflush(fp);
-	close(fp->_fileno);			// 封装系统接口close()关闭文件
-	free(fp);				   // 记得free掉 malloc出来的空间
+void my_fclose(myFILE* fp) {        // 暂时忽略返回值
+    // 再关闭文件之前, 需要先刷新缓冲区, 所以可以先写一个刷新缓冲区的函数
+    my_fflush(fp);
+    close(fp->_fileno);            // 封装系统接口close()关闭文件
+    free(fp);                   // 记得free掉 malloc出来的空间
 }
 ```
 
@@ -681,29 +681,29 @@ my_fwrite()的实现, 重点在刷新缓冲区的策略上.
 
 ```cpp
 void my_fwrite(myFILE* fp, const char* start, int len) {
-	assert(fp);
-	assert(start);
-	assert(len > 0);
+    assert(fp);
+    assert(start);
+    assert(len > 0);
 
-	strncpy(fp->_buffer + fp->_end, start, len);		// 将start 追加到_buffer原内容之后
-	fp->_end += len;					// 更新一下 _end;
+    strncpy(fp->_buffer + fp->_end, start, len);        // 将start 追加到_buffer原内容之后
+    fp->_end += len;                    // 更新一下 _end;
 
-	// 刷新缓冲区
-	if(fp->_flags & NONE_FLUSH) {
-		// 无缓冲
-		my_fflush(fp);
-	}
-	else if(fp->_flags & LINE_FLUSH) {
-		// 行刷新
-		if(fp->_end > 0 && fp->_buffer[fp->_end-1] == '\n') {	// 需要访问_end-1位置, 所以要先判断_end > 0 
-			my_fflush(fp);
-		}
-	}
-	else if(fp->_flags & FULL_FLUSH) {
-		if(fp->_end == SIZE) {				// SIZE是缓冲区的大小
-			my_fflush(fp); 
-		}
-	}
+    // 刷新缓冲区
+    if(fp->_flags & NONE_FLUSH) {
+        // 无缓冲
+        my_fflush(fp);
+    }
+    else if(fp->_flags & LINE_FLUSH) {
+        // 行刷新
+        if(fp->_end > 0 && fp->_buffer[fp->_end-1] == '\n') {    // 需要访问_end-1位置, 所以要先判断_end > 0 
+            my_fflush(fp);
+        }
+    }
+    else if(fp->_flags & FULL_FLUSH) {
+        if(fp->_end == SIZE) {                // SIZE是缓冲区的大小
+            my_fflush(fp); 
+        }
+    }
 }
 ```
 
@@ -711,17 +711,17 @@ void my_fwrite(myFILE* fp, const char* start, int len) {
 
 ```cpp
 int main() {
-	myFILE* pf = my_open("newlog.txt", "a+");
+    myFILE* pf = my_open("newlog.txt", "a+");
 
-	const char* buf1 = "Hello world, hello July";
-	const char* buf2 = "Hello world, hello July\n";
+    const char* buf1 = "Hello world, hello July";
+    const char* buf2 = "Hello world, hello July\n";
 
-	my_fwrite(pf, buf2, strlen(buf2));
-	my_fwrite(pf, buf1, strlen(buf1));
+    my_fwrite(pf, buf2, strlen(buf2));
+    my_fwrite(pf, buf1, strlen(buf1));
      
-//   my_fflush(pf);			// 可以看一下词语执行与否的差别
+//   my_fflush(pf);            // 可以看一下词语执行与否的差别
     
-	return 0;
+    return 0;
 }
 ```
 
@@ -765,23 +765,23 @@ Linux内存文件中, 这两个被打开的文件`一般都是显示器`. 也就
 #include <cerrno>
 
 int main() {
-	// stdout
-	printf("hello printf fd=1\n");
-	fprintf(stdout, "hello fprintf fd=1\n");
-	fputs("hello printf fd=1\n", stdout);
+    // stdout
+    printf("hello printf fd=1\n");
+    fprintf(stdout, "hello fprintf fd=1\n");
+    fputs("hello printf fd=1\n", stdout);
 
-	// stderr
-	fprintf(stderr, "hello fprintf fd=2\n");
-	fputs("hello fputs fd=2\n", stderr);
-	perror("hello perror fd=2");
+    // stderr
+    fprintf(stderr, "hello fprintf fd=2\n");
+    fputs("hello fputs fd=2\n", stderr);
+    perror("hello perror fd=2");
 
-	// cout
-	std::cout << "hello cout fd=1" << std::endl;
+    // cout
+    std::cout << "hello cout fd=1" << std::endl;
 
-	// cerr
-	std::cerr << "hello cerr fd=2" << std::endl;
+    // cerr
+    std::cerr << "hello cerr fd=2" << std::endl;
 
-	return 0;
+    return 0;
 }
 ```
 

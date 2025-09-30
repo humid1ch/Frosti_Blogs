@@ -102,12 +102,12 @@ using std::cout;
 using std::end;
 
 int main() {
-	while() {
-		cout << "I am a Process" << endl;
-		sleep(1);
-	}
-	
-	return 0;
+    while() {
+        cout << "I am a Process" << endl;
+        sleep(1);
+    }
+    
+    return 0;
 }
 ```
 
@@ -153,7 +153,7 @@ Linux系统中, 存在一个实时维护进程的路径, 即 /proc路径。此�
 
 2. `cwd`, 此文件则表示了 `此进程当前所运行的路径`, 简称为 `当前路径` (此当前路径与目录的当前路径不同)
 
-	即, `当前路径`其实是指此进程所运行的路径, 而不是可执行程序的路径 
+    即, `当前路径`其实是指此进程所运行的路径, 而不是可执行程序的路径 
 
 当我不结束此进程的运行, 并将 a.out 文件移动到其他位置时, 再查看proc目录下表示此进程的目录下的cwd和exe文件时: 
 
@@ -328,11 +328,11 @@ using std::cout;
 using std::endl;
 
 int main() {
-	pid_t id = fork();	//直接接收fork()的返回值
-	
-	cout << "Hello, id = " << id << endl;
+    pid_t id = fork();    //直接接收fork()的返回值
+    
+    cout << "Hello, id = " << id << endl;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -395,11 +395,11 @@ using std::cout;
 using std::endl;
 
 int main() {
-	pid_t id = fork();	//直接接收fork()的返回值
-	
-	cout << "Hello, id = " << id << endl;
+    pid_t id = fork();    //直接接收fork()的返回值
+    
+    cout << "Hello, id = " << id << endl;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -412,11 +412,11 @@ using std::cout;
 using std::endl;
 
 int main() {
-	pid_t id = 0;
-	
-	cout << "Hello, id = " << id << endl;
+    pid_t id = 0;
+    
+    cout << "Hello, id = " << id << endl;
 
-	return 0;
+    return 0;
 }
 ```
 

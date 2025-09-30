@@ -84,7 +84,7 @@ int main() {
 
     `throw`是一个关键词, 用来抛出异常, 可以抛出 **任意类型**. 上述例子中:
 
-    `if(b == 0);`		`throw "Division by zero condition!";`
+    `if(b == 0);`        `throw "Division by zero condition!";`
 
     就是在发生除零错误时, 抛出异常`"Division by zero condition!"`
 
@@ -255,10 +255,10 @@ int main() {
         try {
             cout << Division(len, time) << endl;
         } 
-        catch (const int errI) { 		// 捕获const整型异常
+        catch (const int errI) {         // 捕获const整型异常
             cout << "Func 捕获了 const int 异常: " << errI << endl;
         } 
-        catch (const char errC) {		// 捕获const字符异常
+        catch (const char errC) {        // 捕获const字符异常
             cout << "Func 捕获了 const char 异常: " << errC << endl;
         } 
     }
@@ -268,7 +268,7 @@ int main() {
             try {
                 Func();
             }
-            catch (const char* errmsg) {	// 捕获const字符串异常
+            catch (const char* errmsg) {    // 捕获const字符串异常
                 cout << "main 捕获了 const char* 异常: " << errmsg << endl;
             }
             catch (...) {
@@ -501,7 +501,7 @@ int main() {
 void Func1() {
     // new一块空间
     int* arr = new int[20480];
-	
+    
     try {
         throw "Throw an exception directly!";
     }
@@ -781,7 +781,7 @@ int main() {
     while (true) {
         // 此代码中 唯一一个不能跨平台的函数sleep(), 这里用的是 Linux环境
         // Windows 平台 需要将其换为 Sleep(1000);
-  		// 并将 头文件 unistd.h 换为 Windows.h
+          // 并将 头文件 unistd.h 换为 Windows.h
         sleep(1);
         try {
             HttpServer();
@@ -915,12 +915,12 @@ int main() {
     while (true) {
         // 此代码中 唯一一个不能跨平台的函数sleep(), 这里用的是 Linux环境
         // Windows 平台 需要将其换为 Sleep(1000);
-  		// 并将 头文件 unistd.h 换为 Windows.h
+          // 并将 头文件 unistd.h 换为 Windows.h
         sleep(1);
         try {
             for(int i = 1; i <= 10; i++) {
                 try {
-            		SeedMsg("你好啊?");
+                    SeedMsg("你好啊?");
                     // 能走到这里 一定发送成功
                     // 直接break跳出 for循环
                     break;

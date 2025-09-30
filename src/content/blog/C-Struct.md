@@ -34,13 +34,13 @@ struct User {
 
 ```cpp
 struct {
-	char Name[20];
+    char Name[20];
     char Sex[10];
     int age;
 }User1;
 
 struct {
-	char Name[20];
+    char Name[20];
     char Sex[10];
     int age;
 }*p;
@@ -98,9 +98,9 @@ int main() {
     struct Contact C2 = { }; // 结构体变量所有位初始化为0, 与{0}同作用
     struct Contact C3 = { .Tele = "2xxxxxxxxxx" };//结构体变量的定义 部分初始化
     
-	struct User U1 = { "July3", "Male", 19, { "CSDN", "1xxxxxxxxxx" } };	//嵌套结构体的结构体变量的定义和初始化
+    struct User U1 = { "July3", "Male", 19, { "CSDN", "1xxxxxxxxxx" } };    //嵌套结构体的结构体变量的定义和初始化
     
-	return 0;
+    return 0;
 }
 ```
 
@@ -296,7 +296,7 @@ struct S2 {
 
 ```cpp
 struct S3 {
-	double n;
+    double n;
     char c1;
     int i;
 };
@@ -339,7 +339,7 @@ struct S3 {
 
 ```cpp
 struct S3 {
-	double n;
+    double n;
     char c1;
     int i;
 };
@@ -520,7 +520,7 @@ struct S2 {
 > ![|tiny](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250711175011471.webp)
 >
 > ```cpp
-> #pragma pack(1)		//设置默认对齐数为1
+> #pragma pack(1)        //设置默认对齐数为1
 > #include <stdio.h>
 > 
 > struct S1 {

@@ -115,60 +115,60 @@ tags:
 
 namespace ns_index {
 
-	// 用于正排索引中 存储文档内容
-	typedef struct docInfo {
-		std::string _title;	  // 文档标题
-		std::string _content; // 文档去标签之后的内容
-		std::string _url;	  // 文档对应官网url
-		std::size_t _docId;	  // 文档id
-	} docInfo_t;
+    // 用于正排索引中 存储文档内容
+    typedef struct docInfo {
+        std::string _title;      // 文档标题
+        std::string _content; // 文档去标签之后的内容
+        std::string _url;      // 文档对应官网url
+        std::size_t _docId;      // 文档id
+    } docInfo_t;
 
-	// 用于倒排索引中 记录关键字对应的文档id和权重
-	typedef struct invertedElem {
-		std::size_t _docId;	   // 文档id
-		std::string _keyword;	   // 关键字
-		std::uint64_t _weight; // 搜索此关键字, 此文档id 所占权重
+    // 用于倒排索引中 记录关键字对应的文档id和权重
+    typedef struct invertedElem {
+        std::size_t _docId;       // 文档id
+        std::string _keyword;       // 关键字
+        std::uint64_t _weight; // 搜索此关键字, 此文档id 所占权重
 
-		invertedElem() // 权重初始化为0
-			: _weight(0) {}
-	} invertedElem_t;
+        invertedElem() // 权重初始化为0
+            : _weight(0) {}
+    } invertedElem_t;
 
-	// 倒排拉链
-	typedef std::vector<invertedElem_t> invertedList_t;
+    // 倒排拉链
+    typedef std::vector<invertedElem_t> invertedList_t;
 
-	class index {
-	private:
-		// 正排索引使用vector, 下标天然是 文档id
-		std::vector<docInfo_t> forwardIndex;
-		// 倒排索引 使用 哈希表, 因为倒排索引 一定是 一个key 对应一组 invertedElem拉链
-		std::unordered_map<std::string, invertedList_t> invertedIndex;
+    class index {
+    private:
+        // 正排索引使用vector, 下标天然是 文档id
+        std::vector<docInfo_t> forwardIndex;
+        // 倒排索引 使用 哈希表, 因为倒排索引 一定是 一个key 对应一组 invertedElem拉链
+        std::unordered_map<std::string, invertedList_t> invertedIndex;
 
-	public:
-		// 通过关键字 检索倒排索引, 获取对应的 倒排拉链
-		invertedList_t* getInvertedList(const std::string& keyword) {
+    public:
+        // 通过关键字 检索倒排索引, 获取对应的 倒排拉链
+        invertedList_t* getInvertedList(const std::string& keyword) {
             return nullptr;
-		}
+        }
 
-		// 通过倒排拉链中 每个倒排元素中存储的 文档id, 检索正排索引, 获取对应文档内容
-		docInfo_t* getForwardIndex(std::size_t docId) {
+        // 通过倒排拉链中 每个倒排元素中存储的 文档id, 检索正排索引, 获取对应文档内容
+        docInfo_t* getForwardIndex(std::size_t docId) {
             return nullptr;
-		}
-		
-		// 建立索引 input 为 ./data/output/raw
-		bool buildIndex(const std::string& input) {
-			return true;
-		}
+        }
+        
+        // 建立索引 input 为 ./data/output/raw
+        bool buildIndex(const std::string& input) {
+            return true;
+        }
 
-	private:
-		// 对一个文档建立正排索引, 获取文档结构体
-		docInfo_t* buildForwardIndex(const std::string& file) {
+    private:
+        // 对一个文档建立正排索引, 获取文档结构体
+        docInfo_t* buildForwardIndex(const std::string& file) {
             return nullptr;
-		}
-		// 对一个文档建立倒排索引
-		bool buildInvertedIndex(const docInfo_t& doc) {
-			return true;
-		}
-	};
+        }
+        // 对一个文档建立倒排索引
+        bool buildInvertedIndex(const docInfo_t& doc) {
+            return true;
+        }
+    };
 } 
 ```
 
@@ -312,20 +312,20 @@ docInfo_t* buildForwardIndex(const std::string& file) {
 
 ```cpp
 namespace ns_util {
-	class stringUtil {
-	public:
-		static bool split(const std::string& file, std::vector<std::string>* fileResult, const std::string& sep) {
-			// 使用 boost库中的split接口, 可以将 string 以指定的分割符分割, 并存储到vector<string>输出型参数中
-			boost::split(*fileResult, file, boost::is_any_of(sep), boost::algorithm::token_compress_on);
-			// boost::algorithm::token_compress_on 表示压缩连续的分割符
+    class stringUtil {
+    public:
+        static bool split(const std::string& file, std::vector<std::string>* fileResult, const std::string& sep) {
+            // 使用 boost库中的split接口, 可以将 string 以指定的分割符分割, 并存储到vector<string>输出型参数中
+            boost::split(*fileResult, file, boost::is_any_of(sep), boost::algorithm::token_compress_on);
+            // boost::algorithm::token_compress_on 表示压缩连续的分割符
 
-			if (fileResult->empty()) {
-				return false;
-			}
+            if (fileResult->empty()) {
+                return false;
+            }
 
-			return true;
-		}
-	};
+            return true;
+        }
+    };
 }
 ```
 
@@ -520,7 +520,7 @@ bool buildInvertedIndex(const docInfo_t& doc) {
     ns_util::jiebaUtil::cutString(doc._title, &titleKeywords);
     // 标题词频统计 与 转换 记录
     for (auto keyword : titleKeywords) {
-        boost::to_lower(keyword);		  // 关键字转小写
+        boost::to_lower(keyword);          // 关键字转小写
         keywordsMap[keyword]._titleCnt++; // 记录关键字 并统计标题中词频
         // unordered_map 的 [], 是用来通过keyword值 访问value的. 
         // 如果keyword值已经存在, 则返回对应的value, 如果keyword值不存在, 则会插入keyword并创建对应的value
@@ -531,7 +531,7 @@ bool buildInvertedIndex(const docInfo_t& doc) {
     ns_util::jiebaUtil::cutString(doc._content, &contentKeywords);
     // 内容词频统计 与 转换 记录
     for (auto keyword : contentKeywords) {
-        boost::to_lower(keyword);			// 关键字转小写
+        boost::to_lower(keyword);            // 关键字转小写
         keywordsMap[keyword]._contentCnt++; // 记录关键字 并统计内容中词频
     }
 
@@ -543,7 +543,7 @@ bool buildInvertedIndex(const docInfo_t& doc) {
     // 就可以遍历 keywordsMap 获取关键字信息, 构建 invertedElem 并添加到 invertedIndex中 关键词的倒排拉链 invertedList中了
     for (auto& keywordInfo : keywordsMap) {
         invertedElem_t item;
-        item._docId = doc._docId;		   // 本文档id
+        item._docId = doc._docId;           // 本文档id
         item._keyword = keywordInfo.first; // 关键字
         item._weight = keywordInfo.second._titleCnt * titleWeight + keywordInfo.second._contentCnt * contentWeight;
 
@@ -580,23 +580,23 @@ bool buildInvertedIndex(const docInfo_t& doc) {
 
 ```cpp
 namespace ns_util{
-	const char* const DICT_PATH = "./cppjiebaDict/jieba.dict.utf8";
-	const char* const HMM_PATH = "./cppjiebaDict/hmm_model.utf8";
-	const char* const USER_DICT_PATH = "./cppjiebaDict/user.dict.utf8";
-	const char* const IDF_PATH = "./cppjiebaDict/idf.utf8";
-	const char* const STOP_WORD_PATH = "./cppjiebaDict/stop_words.utf8";
+    const char* const DICT_PATH = "./cppjiebaDict/jieba.dict.utf8";
+    const char* const HMM_PATH = "./cppjiebaDict/hmm_model.utf8";
+    const char* const USER_DICT_PATH = "./cppjiebaDict/user.dict.utf8";
+    const char* const IDF_PATH = "./cppjiebaDict/idf.utf8";
+    const char* const STOP_WORD_PATH = "./cppjiebaDict/stop_words.utf8";
 
-	class jiebaUtil {
-	private:
-		static cppjieba::Jieba jieba;
+    class jiebaUtil {
+    private:
+        static cppjieba::Jieba jieba;
 
-	public:
-		static void cutString(const std::string& src, std::vector<std::string>* out) {
-			// 以用于搜索的方式 分词
-			jieba.CutForSearch(src, *out);
-		}
-	};
-	cppjieba::Jieba jiebaUtil::jieba(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH, STOP_WORD_PATH);
+    public:
+        static void cutString(const std::string& src, std::vector<std::string>* out) {
+            // 以用于搜索的方式 分词
+            jieba.CutForSearch(src, *out);
+        }
+    };
+    cppjieba::Jieba jiebaUtil::jieba(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH, STOP_WORD_PATH);
 }
 ```
 
@@ -621,38 +621,38 @@ namespace ns_util{
 #include "cppjieba/Jieba.hpp"
 
 namespace ns_util {
-	class stringUtil {
-	public:
-		static bool split(const std::string& file, std::vector<std::string>* fileResult, const std::string& sep) {
-			// 使用 boost库中的split接口, 可以将 string 以指定的分割符分割, 并存储到vector<string>输出型参数中
-			boost::split(*fileResult, file, boost::is_any_of(sep), boost::algorithm::token_compress_on);
-			// boost::algorithm::token_compress_on 表示压缩连续的分割符
+    class stringUtil {
+    public:
+        static bool split(const std::string& file, std::vector<std::string>* fileResult, const std::string& sep) {
+            // 使用 boost库中的split接口, 可以将 string 以指定的分割符分割, 并存储到vector<string>输出型参数中
+            boost::split(*fileResult, file, boost::is_any_of(sep), boost::algorithm::token_compress_on);
+            // boost::algorithm::token_compress_on 表示压缩连续的分割符
 
-			if (fileResult->empty()) {
-				return false;
-			}
+            if (fileResult->empty()) {
+                return false;
+            }
 
-			return true;
-		}
-	};
+            return true;
+        }
+    };
 
-	const char* const DICT_PATH = "./cppjiebaDict/jieba.dict.utf8";
-	const char* const HMM_PATH = "./cppjiebaDict/hmm_model.utf8";
-	const char* const USER_DICT_PATH = "./cppjiebaDict/user.dict.utf8";
-	const char* const IDF_PATH = "./cppjiebaDict/idf.utf8";
-	const char* const STOP_WORD_PATH = "./cppjiebaDict/stop_words.utf8";
+    const char* const DICT_PATH = "./cppjiebaDict/jieba.dict.utf8";
+    const char* const HMM_PATH = "./cppjiebaDict/hmm_model.utf8";
+    const char* const USER_DICT_PATH = "./cppjiebaDict/user.dict.utf8";
+    const char* const IDF_PATH = "./cppjiebaDict/idf.utf8";
+    const char* const STOP_WORD_PATH = "./cppjiebaDict/stop_words.utf8";
 
-	class jiebaUtil {
-	private:
-		static cppjieba::Jieba jieba;
+    class jiebaUtil {
+    private:
+        static cppjieba::Jieba jieba;
 
-	public:
-		static void cutString(const std::string& src, std::vector<std::string>* out) {
-			// 以用于搜索的方式 分词
-			jieba.CutForSearch(src, *out);
-		}
-	};
-	cppjieba::Jieba jiebaUtil::jieba(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH, STOP_WORD_PATH);
+    public:
+        static void cutString(const std::string& src, std::vector<std::string>* out) {
+            // 以用于搜索的方式 分词
+            jieba.CutForSearch(src, *out);
+        }
+    };
+    cppjieba::Jieba jiebaUtil::jieba(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH, STOP_WORD_PATH);
 } // namespace ns_util
 ```
 
@@ -670,181 +670,181 @@ namespace ns_util {
 #include "util.hpp"
 
 namespace ns_index {
-	// 用于正排索引中 存储文档内容
-	typedef struct docInfo {
-		std::string _title;	  // 文档标题
-		std::string _content; // 文档去标签之后的内容
-		std::string _url;	  // 文档对应官网url
-		std::size_t _docId;	  // 文档id
-	} docInfo_t;
+    // 用于正排索引中 存储文档内容
+    typedef struct docInfo {
+        std::string _title;      // 文档标题
+        std::string _content; // 文档去标签之后的内容
+        std::string _url;      // 文档对应官网url
+        std::size_t _docId;      // 文档id
+    } docInfo_t;
 
-	// 用于倒排索引中 记录关键字对应的文档id和权重
-	typedef struct invertedElem {
-		std::size_t _docId;	   // 文档id
-		std::string _keyword;  // 关键字
-		std::uint64_t _weight; // 搜索此关键字, 此文档id 所占权重
+    // 用于倒排索引中 记录关键字对应的文档id和权重
+    typedef struct invertedElem {
+        std::size_t _docId;       // 文档id
+        std::string _keyword;  // 关键字
+        std::uint64_t _weight; // 搜索此关键字, 此文档id 所占权重
 
-		invertedElem() // 权重初始化为0
-			: _weight(0) {}
-	} invertedElem_t;
+        invertedElem() // 权重初始化为0
+            : _weight(0) {}
+    } invertedElem_t;
 
-	// 关键字的词频
-	typedef struct keywordCnt {
-		std::size_t _titleCnt;	 // 关键字在标题中出现的次数
-		std::size_t _contentCnt; // 关键字在内容中出现的次数
+    // 关键字的词频
+    typedef struct keywordCnt {
+        std::size_t _titleCnt;     // 关键字在标题中出现的次数
+        std::size_t _contentCnt; // 关键字在内容中出现的次数
 
-		keywordCnt()
-			: _titleCnt(0)
-			, _contentCnt(0) {}
-	} keywordCnt_t;
+        keywordCnt()
+            : _titleCnt(0)
+            , _contentCnt(0) {}
+    } keywordCnt_t;
 
-	// 倒排拉链
-	typedef std::vector<invertedElem_t> invertedList_t;
+    // 倒排拉链
+    typedef std::vector<invertedElem_t> invertedList_t;
 
-	class index {
-	private:
-		// 正排索引使用vector, 下标天然是 文档id
-		std::vector<docInfo_t> forwardIndex;
-		// 倒排索引 使用 哈希表, 因为倒排索引 一定是 一个keyword 对应一组 invertedElem拉链
-		std::unordered_map<std::string, invertedList_t> invertedIndex;
+    class index {
+    private:
+        // 正排索引使用vector, 下标天然是 文档id
+        std::vector<docInfo_t> forwardIndex;
+        // 倒排索引 使用 哈希表, 因为倒排索引 一定是 一个keyword 对应一组 invertedElem拉链
+        std::unordered_map<std::string, invertedList_t> invertedIndex;
 
-	public:
-		// 通过关键字 检索倒排索引, 获取对应的 倒排拉链
-		invertedList_t* getInvertedList(const std::string& keyword) {
-			// 先找 关键字 所在迭代器
-			auto iter = invertedIndex.find(keyword);
-			if (iter == invertedIndex.end()) {
-				std::cerr << keyword << " have no invertedList!" << std::endl;
-				return nullptr;
-			}
+    public:
+        // 通过关键字 检索倒排索引, 获取对应的 倒排拉链
+        invertedList_t* getInvertedList(const std::string& keyword) {
+            // 先找 关键字 所在迭代器
+            auto iter = invertedIndex.find(keyword);
+            if (iter == invertedIndex.end()) {
+                std::cerr << keyword << " have no invertedList!" << std::endl;
+                return nullptr;
+            }
 
-			// 找到之后
-			return &(iter->second);
-		}
+            // 找到之后
+            return &(iter->second);
+        }
 
-		// 通过倒排拉链中 每个倒排元素中存储的 文档id, 检索正排索引, 获取对应文档内容
-		docInfo_t* getForwardIndex(std::size_t docId) {
-			if (docId >= forwardIndex.size()) {
-				std::cerr << "docId out range, error!" << std::endl;
-				return nullptr;
-			}
+        // 通过倒排拉链中 每个倒排元素中存储的 文档id, 检索正排索引, 获取对应文档内容
+        docInfo_t* getForwardIndex(std::size_t docId) {
+            if (docId >= forwardIndex.size()) {
+                std::cerr << "docId out range, error!" << std::endl;
+                return nullptr;
+            }
 
-			return &forwardIndex[docId];
-		}
+            return &forwardIndex[docId];
+        }
 
-		// 根据parser模块处理过的 所有文档的信息
-		// 提取文档信息, 建立 正排索引和倒排索引
-		// input 为 ./data/output/raw
-		bool buildIndex(const std::string& input) {
-			// 先以读取方式打开文件
-			std::ifstream in(input, std::ios::in);
-			if (!in.is_open()) {
-				std::cerr << "Failed to open " << input << std::endl;
-				return false;
-			}
+        // 根据parser模块处理过的 所有文档的信息
+        // 提取文档信息, 建立 正排索引和倒排索引
+        // input 为 ./data/output/raw
+        bool buildIndex(const std::string& input) {
+            // 先以读取方式打开文件
+            std::ifstream in(input, std::ios::in);
+            if (!in.is_open()) {
+                std::cerr << "Failed to open " << input << std::endl;
+                return false;
+            }
 
-			std::string line;
-			while (std::getline(in, line)) {
-				// 按照parser模块的处理, getline 一次读取到的数据, 就是一个文档的: title\3content\3url\n
-				docInfo_t* doc = buildForwardIndex(line); // 将一个文档的数据 建立到索引中
-				if (nullptr == doc) {
-					std::cerr << "Failed to buildForwardIndex for " << line << std::endl;
-					continue;
-				}
+            std::string line;
+            while (std::getline(in, line)) {
+                // 按照parser模块的处理, getline 一次读取到的数据, 就是一个文档的: title\3content\3url\n
+                docInfo_t* doc = buildForwardIndex(line); // 将一个文档的数据 建立到索引中
+                if (nullptr == doc) {
+                    std::cerr << "Failed to buildForwardIndex for " << line << std::endl;
+                    continue;
+                }
 
-				// 文档建立正排索引成功, 接着就通过 doc 建立倒排索引
-				if (!buildInvertedIndex(*doc)) {
-					std::cerr << "Failed to buildInvertedIndex for " << line << std::endl;
-					continue;
-				}
-			}
+                // 文档建立正排索引成功, 接着就通过 doc 建立倒排索引
+                if (!buildInvertedIndex(*doc)) {
+                    std::cerr << "Failed to buildInvertedIndex for " << line << std::endl;
+                    continue;
+                }
+            }
 
-			return true;
-		}
+            return true;
+        }
 
-	private:
-		// 对一个文档建立正排索引
-		docInfo_t* buildForwardIndex(const std::string& file) {
-			// 一个文档的 正排索引的建立, 是将 title\3content\3url (file) 中title content url 提取出来
-			// 构成一个 docInfo_t doc
-			// 然后将 doc 存储到正排索引vector中
-			std::vector<std::string> fileResult;
-			const std::string sep("\3");
-			// stringUtil::split() 字符串通用工具接口, 分割字符串
-			ns_util::stringUtil::split(file, &fileResult, sep);
+    private:
+        // 对一个文档建立正排索引
+        docInfo_t* buildForwardIndex(const std::string& file) {
+            // 一个文档的 正排索引的建立, 是将 title\3content\3url (file) 中title content url 提取出来
+            // 构成一个 docInfo_t doc
+            // 然后将 doc 存储到正排索引vector中
+            std::vector<std::string> fileResult;
+            const std::string sep("\3");
+            // stringUtil::split() 字符串通用工具接口, 分割字符串
+            ns_util::stringUtil::split(file, &fileResult, sep);
 
-			docInfo_t doc;
-			doc._title = fileResult[0];
-			doc._content = fileResult[1];
-			doc._url = fileResult[2];
+            docInfo_t doc;
+            doc._title = fileResult[0];
+            doc._content = fileResult[1];
+            doc._url = fileResult[2];
 
-			// 因为doc是需要存储到 forwardIndex中的, 存储之前 forwardIndex的size 就是存储之后 doc所在的位置
-			doc._docId = forwardIndex.size();
+            // 因为doc是需要存储到 forwardIndex中的, 存储之前 forwardIndex的size 就是存储之后 doc所在的位置
+            doc._docId = forwardIndex.size();
 
-			forwardIndex.push_back(std::move(doc));
+            forwardIndex.push_back(std::move(doc));
 
-			return &forwardIndex.back();
-		}
+            return &forwardIndex.back();
+        }
 
-		// 对一个文档建立倒排索引
-		// 倒排索引是用来通过关键词定位文档的.
-		// 倒排索引的结构是 std::unordered_map<std::string, invertedList_t> invertedIndex;
-		// keyword值就是关键字, value值则是关键字所映射到的文档的倒排拉链
-		// 对一个文档建立倒排索引的原理是:
-		//  1. 首先对文档的标题 和 内容进行分词, 并记录分词
-		//  2. 分别统计整理标题分析的词频 和 内容分词的词频
-		//     统计词频是为了可以大概表示关键字在文档中的 相关性.
-		//     在本项目中, 可以简单的认为关键词在文档中出现的频率, 代表了此文档内容与关键词的相关性. 当然这是非常肤浅的联系, 一般来说相关性的判断都是非常复杂的. 因为涉及到词义 语义等相关分析.
-		//     每个关键字 在标题中出现的频率 和 在内容中出现的频率, 可以记录在一个结构体中. 此结构体就表示关键字的词频
-		//  3. 使用 unordered_map<std::string, wordCnt_t> 记录关键字与其词频
-		//  4. 通过遍历记录关键字与词频的 unordered_map, 构建 invertedElem: _docId, _keyword, _weight
-		//  5. 构建了关键字的invertedElem 之后, 再将关键词的invertedElem 添加到在 invertedIndex中 关键词的倒排拉链 invertedList中
-		// 注意, 搜索引擎一般不区分大小写, 所以可以将分词出来的所有的关键字, 在倒排索引中均以小写的形式映射. 在搜索时 同样将搜索请求分词出的关键字小写化, 在进行检索. 就可以实现搜索不区分大小写.
+        // 对一个文档建立倒排索引
+        // 倒排索引是用来通过关键词定位文档的.
+        // 倒排索引的结构是 std::unordered_map<std::string, invertedList_t> invertedIndex;
+        // keyword值就是关键字, value值则是关键字所映射到的文档的倒排拉链
+        // 对一个文档建立倒排索引的原理是:
+        //  1. 首先对文档的标题 和 内容进行分词, 并记录分词
+        //  2. 分别统计整理标题分析的词频 和 内容分词的词频
+        //     统计词频是为了可以大概表示关键字在文档中的 相关性.
+        //     在本项目中, 可以简单的认为关键词在文档中出现的频率, 代表了此文档内容与关键词的相关性. 当然这是非常肤浅的联系, 一般来说相关性的判断都是非常复杂的. 因为涉及到词义 语义等相关分析.
+        //     每个关键字 在标题中出现的频率 和 在内容中出现的频率, 可以记录在一个结构体中. 此结构体就表示关键字的词频
+        //  3. 使用 unordered_map<std::string, wordCnt_t> 记录关键字与其词频
+        //  4. 通过遍历记录关键字与词频的 unordered_map, 构建 invertedElem: _docId, _keyword, _weight
+        //  5. 构建了关键字的invertedElem 之后, 再将关键词的invertedElem 添加到在 invertedIndex中 关键词的倒排拉链 invertedList中
+        // 注意, 搜索引擎一般不区分大小写, 所以可以将分词出来的所有的关键字, 在倒排索引中均以小写的形式映射. 在搜索时 同样将搜索请求分词出的关键字小写化, 在进行检索. 就可以实现搜索不区分大小写.
 
-		// 关于分词 使用 cppjieba 中文分词库
-		bool buildInvertedIndex(const docInfo_t& doc) {
-			// 用来映射关键字 和 关键字的词频
-			std::unordered_map<std::string, keywordCnt_t> keywordsMap;
+        // 关于分词 使用 cppjieba 中文分词库
+        bool buildInvertedIndex(const docInfo_t& doc) {
+            // 用来映射关键字 和 关键字的词频
+            std::unordered_map<std::string, keywordCnt_t> keywordsMap;
 
-			// 标题分词
-			std::vector<std::string> titleKeywords;
-			ns_util::jiebaUtil::cutString(doc._title, &titleKeywords);
-			// 标题词频统计 与 转换 记录
-			for (auto keyword : titleKeywords) {
-				boost::to_lower(keyword);		  // 关键字转小写
-				keywordsMap[keyword]._titleCnt++; // 记录关键字 并统计标题中词频
-												  // unordered_map 的 [], 是用来通过keyword值 访问value的. 如果keyword值已经存在, 则返回对应的value, 如果keyword值不存在, 则会插入keyword并创建对应的value
-			}
+            // 标题分词
+            std::vector<std::string> titleKeywords;
+            ns_util::jiebaUtil::cutString(doc._title, &titleKeywords);
+            // 标题词频统计 与 转换 记录
+            for (auto keyword : titleKeywords) {
+                boost::to_lower(keyword);          // 关键字转小写
+                keywordsMap[keyword]._titleCnt++; // 记录关键字 并统计标题中词频
+                                                  // unordered_map 的 [], 是用来通过keyword值 访问value的. 如果keyword值已经存在, 则返回对应的value, 如果keyword值不存在, 则会插入keyword并创建对应的value
+            }
 
-			// 内容分词
-			std::vector<std::string> contentKeywords;
-			ns_util::jiebaUtil::cutString(doc._content, &contentKeywords);
-			// 内容词频统计 与 转换 记录
-			for (auto keyword : contentKeywords) {
-				boost::to_lower(keyword);			// 关键字转小写
-				keywordsMap[keyword]._contentCnt++; // 记录关键字 并统计内容中词频
-			}
+            // 内容分词
+            std::vector<std::string> contentKeywords;
+            ns_util::jiebaUtil::cutString(doc._content, &contentKeywords);
+            // 内容词频统计 与 转换 记录
+            for (auto keyword : contentKeywords) {
+                boost::to_lower(keyword);            // 关键字转小写
+                keywordsMap[keyword]._contentCnt++; // 记录关键字 并统计内容中词频
+            }
 
-			// 这两个const 变量是用来计算 关键字在文档中的权重的.
-			// 并且, 关键字出现在标题中  文档与关键字的相关性大概率是要高的, 所以 可以把titleWeight 设置的大一些
-			const int titleWeight = 20;
-			const int contentWeight = 1;
-			// 分词并统计词频之后, keywordsMap 中已经存储的当前文档的所有关键字, 以及对应的在标题 和 内容中 出现的频率
-			// 就可以遍历 keywordsMap 获取关键字信息, 构建 invertedElem 并添加到 invertedIndex中 关键词的倒排拉链 invertedList中了
-			for (auto& keywordInfo : keywordsMap) {
-				invertedElem_t item;
-				item._docId = doc._docId;		   // 本文档id
-				item._keyword = keywordInfo.first; // 关键字
-				item._weight = keywordInfo.second._titleCnt * titleWeight + keywordInfo.second._contentCnt * contentWeight;
+            // 这两个const 变量是用来计算 关键字在文档中的权重的.
+            // 并且, 关键字出现在标题中  文档与关键字的相关性大概率是要高的, 所以 可以把titleWeight 设置的大一些
+            const int titleWeight = 20;
+            const int contentWeight = 1;
+            // 分词并统计词频之后, keywordsMap 中已经存储的当前文档的所有关键字, 以及对应的在标题 和 内容中 出现的频率
+            // 就可以遍历 keywordsMap 获取关键字信息, 构建 invertedElem 并添加到 invertedIndex中 关键词的倒排拉链 invertedList中了
+            for (auto& keywordInfo : keywordsMap) {
+                invertedElem_t item;
+                item._docId = doc._docId;           // 本文档id
+                item._keyword = keywordInfo.first; // 关键字
+                item._weight = keywordInfo.second._titleCnt * titleWeight + keywordInfo.second._contentCnt * contentWeight;
 
-				// 上面构建好了 invertedElem, 下面就要将 invertedElem 添加到对应关键字的 倒排拉链中, 构建倒排索引
-				invertedList_t& list = invertedIndex[keywordInfo.first]; // 获取关键字对应的倒排拉链
-				list.push_back(std::move(item));
-			}
+                // 上面构建好了 invertedElem, 下面就要将 invertedElem 添加到对应关键字的 倒排拉链中, 构建倒排索引
+                invertedList_t& list = invertedIndex[keywordInfo.first]; // 获取关键字对应的倒排拉链
+                list.push_back(std::move(item));
+            }
 
-			return true;
-		}
-	};
+            return true;
+        }
+    };
 } // namespace ns_index
 ```
 

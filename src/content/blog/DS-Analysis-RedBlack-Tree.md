@@ -106,23 +106,23 @@ struct RBTreeNode {
     RBTreeNode(const T1& data = T1()) 
         : _pLeft(nullptr), _pRight(nullptr), _pParent(nullptr)
         , _data(data)
-        , _color(RED) 	// 新节点默认为红节点 
+        , _color(RED)     // 新节点默认为红节点 
     {}
     
-    RBTreeNode<T1>* _pLeft;			// 节点左孩子
-    RBTreeNode<T1>* _pRight;		// 节点右孩子
-    RBTreeNode<T1>* _pParent;		// 节点父亲节点
+    RBTreeNode<T1>* _pLeft;            // 节点左孩子
+    RBTreeNode<T1>* _pRight;        // 节点右孩子
+    RBTreeNode<T1>* _pParent;        // 节点父亲节点
     
-    T1 _data;					     // 节点数据
-    Color _color;					// 节点颜色
+    T1 _data;                         // 节点数据
+    Color _color;                    // 节点颜色
 };
 ```
 
 > 问题: 为什么 红黑树的新节点默认设置为 `红`节点?
 >
-> ​	因为 插入的新节点是 `红`节点时, 对 `红`黑树结构的影响 更小
+> ​    因为 插入的新节点是 `红`节点时, 对 `红`黑树结构的影响 更小
 >
-> ​	举个例子: 
+> ​    举个例子: 
 >   1. 插入的新节点是 `红`节点: 
 >
 >      a. 可能新节点的父亲节点是黑节点, 则插入新节点不会破坏红黑树结构, 红黑树就不需要调整
@@ -144,7 +144,7 @@ struct RBTreeNode {
 ```cpp
 template<class T1>
 class RBTree {
-    typedef RBTreeNode<T1> Node;			// 对节点类型进行typedef
+    typedef RBTreeNode<T1> Node;            // 对节点类型进行typedef
     
 private:
     Node* _root = nullptr;
@@ -163,7 +163,7 @@ private:
 ```cpp
 bool insert(const T1& data) {
     if (_root == nullptr) {
-       	// 树为空时, 插入新节点
+           // 树为空时, 插入新节点
         _root = new Node<data>;
         _root->_pParent = nullptr;
         
@@ -243,9 +243,9 @@ bool insert(const T1& data) {
 > >
 > > > 问题: 为什么 g 节点需要改为 `红`色？
 > > >
-> > > ​	因为当 p 和 u 节点改为黑色之后, 经过这两个节点的路径上的黑色节点数目会 +1, 会导致与其他路径上的黑色节点数目不同, 进而导致红黑树结构被破坏
+> > > ​    因为当 p 和 u 节点改为黑色之后, 经过这两个节点的路径上的黑色节点数目会 +1, 会导致与其他路径上的黑色节点数目不同, 进而导致红黑树结构被破坏
 > > >
-> > > ​	所以 需要将 p 和 u 节点的颜色由 黑色改为`红`色, 进而调整路径上黑色节点的数目
+> > > ​    所以 需要将 p 和 u 节点的颜色由 黑色改为`红`色, 进而调整路径上黑色节点的数目
 > >
 > > 不过, 修改 g 节点为 `红`色之后, 可能会出现 g节点和g 父亲节点同为`红`节点的情况, 即: 
 > >
@@ -263,22 +263,22 @@ bool insert(const T1& data) {
 > > // 上面插入新节点时 已经记录了 cur 和 parent节点
 > > while (parent && parent->_color == RED) {
 > >     // 父亲节点存在, 且父亲节点也为红色时
-> >     Node* grandFa = parent->_pParent; 			// 记录祖先节点
+> >     Node* grandFa = parent->_pParent;             // 记录祖先节点
 > >     if (parent == grandFa->_pLeft) {
 > >         // 父亲节点是祖先节点的左孩子
-> >         Node* uncle = grandFa->_pRight;			// 记录叔叔节点
+> >         Node* uncle = grandFa->_pRight;            // 记录叔叔节点
 > >         if (uncle && uncle->_color == RED) {
 > >             // 叔叔节点存在 且是红节点
-> >             parent->_color = uncle->_color = BLACK;			// 父亲节点 和 叔叔节点改为黑色
-> >             grandFa->_color = RED;						 // 祖父节点 改为红色
+> >             parent->_color = uncle->_color = BLACK;            // 父亲节点 和 叔叔节点改为黑色
+> >             grandFa->_color = RED;                         // 祖父节点 改为红色
 > > 
-> >             cur = grandFa;								// 更新 grandFa节点为新的cur节点
-> >             parent = cur->_pParent;						  // 更新 新的parent节点
+> >             cur = grandFa;                                // 更新 grandFa节点为新的cur节点
+> >             parent = cur->_pParent;                          // 更新 新的parent节点
 > >         }
 > >     }
 > >     else {
 > >         // 父亲节点是祖先节点的右孩子
-> >         Node* uncle = grandFa->_pLeft;			// 记录叔叔节点
+> >         Node* uncle = grandFa->_pLeft;            // 记录叔叔节点
 > >         if (uncle && uncle->_color == RED) {
 > >             parent->_color = uncle->_color = BLACK;
 > >             grandFa->_color = RED;

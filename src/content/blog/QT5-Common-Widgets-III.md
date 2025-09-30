@@ -83,9 +83,9 @@ Widget::~Widget() {
 > ```cpp
 > enum TextFormat {
 >     PlainText,  // 纯文本
->     RichText,	// 富文本
->     AutoText,	// 自动推导
->     MarkdownText	// Markdown文本
+>     RichText,    // 富文本
+>     AutoText,    // 自动推导
+>     MarkdownText    // Markdown文本
 > };
 > ```
 

@@ -97,7 +97,7 @@ scanf("%d, %d, %s", &age, &height, name);
 int main() {
     int age = 0;
     int height = 0;
-    char name[32] = {0};	// 初始化能容纳 32 个char类型数据的连续空间
+    char name[32] = {0};    // 初始化能容纳 32 个char类型数据的连续空间
     
     printf("请按格式输入年龄、身高和名字(年龄, 身高, 名字):> ");
     scanf("%d, %d, %s", &age, &height, name);
@@ -275,7 +275,7 @@ int main() {
     #include <stdio.h>
     
     int main() {
-        char inputs[256] = {0};	// 开辟一个能容纳 256 个char类型数据的连续空间, 即 存储输入数据的缓冲区
+        char inputs[256] = {0};    // 开辟一个能容纳 256 个char类型数据的连续空间, 即 存储输入数据的缓冲区
         printf("请输入字符串:> ");
         gets(inputs);
         printf("你输入的内容是: %s", inputs);

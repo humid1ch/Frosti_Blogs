@@ -29,7 +29,7 @@ tags:
 
 3. 在描述硬件属性的结构体中, 一般都会存在一个用于给进程分配资源所存在的队列, 当`进程需要某种资源时, 如需要在显示器上显示内容`, 那就需要显卡资源, 此时操作系统就会`将此进程的PCB移动到系统描述的显卡结构体的等待队列`中。
 
-	也就是说, **`在操作系统这里, CPU、磁盘、显卡等硬件都存在一个描述其属性的数据结构, 且此数据结构中都存在一个给进程分配资源的队列, 当进程需要某种硬件资源时, 操作系统就会将进程PCB从某队列中移出转移到另一种进程所需资源的队列中`**
+    也就是说, **`在操作系统这里, CPU、磁盘、显卡等硬件都存在一个描述其属性的数据结构, 且此数据结构中都存在一个给进程分配资源的队列, 当进程需要某种硬件资源时, 操作系统就会将进程PCB从某队列中移出转移到另一种进程所需资源的队列中`**
 
 4. 硬件分配资源的队列, 此队列遵循队列的先进先出的规则, `进程在此队列中可以看作是在排队, 只有排到的进程才能被硬件赋予资源`
 
@@ -124,11 +124,11 @@ using std::cout;
 using std::endl;
 
 int main() {
-	while(1) {
-		cout << "I am a proess, pid = " << getpid() << endl;
-	}
+    while(1) {
+        cout << "I am a proess, pid = " << getpid() << endl;
+    }
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -236,17 +236,17 @@ using std::cout;
 using std::endl;
 
 int main() {
-	pid_t id = fork();
-	
-	if(id == 0) {
-		cout << "我是子进程, 我的pid是" << getpid() << ", 我运行结束了" << endl;
-	}
-	else {
-		cout << "我是父进程, 我的pid是" << getpid() << ", 我运行没有结束" << endl;
-		while(1) {}
-	}
-	
-	return 0;
+    pid_t id = fork();
+    
+    if(id == 0) {
+        cout << "我是子进程, 我的pid是" << getpid() << ", 我运行结束了" << endl;
+    }
+    else {
+        cout << "我是父进程, 我的pid是" << getpid() << ", 我运行没有结束" << endl;
+        while(1) {}
+    }
+    
+    return 0;
 }
 ```
 
@@ -279,11 +279,11 @@ using std::cout;
 using std::endl;
 
 int main() {
-	while(1) {
-		cout << "I am a Process, PID = " << getpid() << endl;
-	}
-	
-	return 0;
+    while(1) {
+        cout << "I am a Process, PID = " << getpid() << endl;
+    }
+    
+    return 0;
 }
 ```
 

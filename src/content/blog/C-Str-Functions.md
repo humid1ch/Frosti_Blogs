@@ -20,11 +20,11 @@ size_t strlen(const char* str );
 
 作用: 
 
-​	求字符串中`'\0'`前的字符串的长度
+​    求字符串中`'\0'`前的字符串的长度
 
 要求: 
 
-​	字符串必须以`'\0'` 结束
+​    字符串必须以`'\0'` 结束
 
 ```cpp
 /* 可创建临时变量 */
@@ -33,26 +33,26 @@ int my_strlen(const char* str) {
     int count = 0;
     
     while(*str++)
-  		count++;
+          count++;
     
     return count;
 }
 
 /* 不可创建临时变量 (递归)*/
 int my_strlen(const char* str) {
-	if(!(*str))
-		return 0;
-	else
-		return 1+my_strlen(str+1);
+    if(!(*str))
+        return 0;
+    else
+        return 1+my_strlen(str+1);
 }
 
 /* 指针相减 */
 int my_strlen(char* str) {
-	char *pstr = str;
-	while(*pstr)
-		pstr++;
+    char *pstr = str;
+    while(*pstr)
+        pstr++;
     
-	return pstr-str;
+    return pstr-str;
 }
 ```
 
@@ -65,12 +65,12 @@ int my_strlen(char* str) {
 > #include <string.h>
 > 
 > int main() {
-> 	if(strlen("asd") - strlen("asdasd") > 0)
+>     if(strlen("asd") - strlen("asdasd") > 0)
 >       printf(">\n");
 >   else
 >       printf("<=\n");
 > 
-> 	return 0;
+>     return 0;
 > }
 > ```
 >
@@ -88,11 +88,11 @@ char* strcpy(char* dest, const char* src);
 
 作用: 
 
-​	将`src`字符串中的内容, 包括`'\0'`, 拷贝至`dest`字符串中
+​    将`src`字符串中的内容, 包括`'\0'`, 拷贝至`dest`字符串中
 
 要求: 
 
-​	`src`中必须存在 `'\0'`, `dest`空间必须足够大且可修改, 即不被 `const` 修饰
+​    `src`中必须存在 `'\0'`, `dest`空间必须足够大且可修改, 即不被 `const` 修饰
 
 ```cpp
 char* my_strcpy(char* dest, const char* src) {
@@ -114,11 +114,11 @@ char* strcat(char* dest, const char* src);
 
 作用: 
 
-​	将 字符串`src`的内容, 追加到字符串`dest`后
+​    将 字符串`src`的内容, 追加到字符串`dest`后
 
 要求: 
 
-​	字符串`src`必须以`'\0'`结束；`dest`指向空间足够大且可修改
+​    字符串`src`必须以`'\0'`结束；`dest`指向空间足够大且可修改
 
 ```cpp
 char* my_strcat(char* dest, const char* src) {
@@ -133,7 +133,7 @@ char* my_strcat(char* dest, const char* src) {
 
     while(*dest++ = *src++)
         ;
-  	
+      
     return ret;
 }
 ```
@@ -146,13 +146,13 @@ int strcmp(const char* str1, const char* str2);
 
 作用: 
 
-​	比较两个字符串, 对应位置上字符的大小
+​    比较两个字符串, 对应位置上字符的大小
 
-> `str1 > str2`:	返回一个正数
+> `str1 > str2`:    返回一个正数
 >
-> `str1 < str2`:	返回一个负数
+> `str1 < str2`:    返回一个负数
 >
-> `str1 == str2`:	返回零
+> `str1 == str2`:    返回零
 
 ```cpp
 int my_strcmp(const char* str1, const char* str2) {
@@ -179,9 +179,9 @@ char* strncat(char* dest, const char* src, size_t num);
 
 作用: 
 
-​	将 字符串`src`中的前`num`个字符, 拷贝到 字符串`dest`中
+​    将 字符串`src`中的前`num`个字符, 拷贝到 字符串`dest`中
 
-​	如果`num`大于 字符串`src`的长度, 多出的部分均存入`'\0'`
+​    如果`num`大于 字符串`src`的长度, 多出的部分均存入`'\0'`
 
 ```cpp
 char* my_strncpy(char* dest, const char* src, size_t num) {
@@ -212,9 +212,9 @@ char* strncat(char* dest, const char* src, size_t num);
 
 作用: 
 
-​	将 字符串`src`中的前`num`个字符, 追加到 字符串`dest`后(从第一个`'\0'`开始算), 并在末尾放入`'\0'`
+​    将 字符串`src`中的前`num`个字符, 追加到 字符串`dest`后(从第一个`'\0'`开始算), 并在末尾放入`'\0'`
 
-​	如果`num`大于 字符串`src`的长度, 则只追加已有的`src`字符串及末尾的`'\0'`
+​    如果`num`大于 字符串`src`的长度, 则只追加已有的`src`字符串及末尾的`'\0'`
 
 
 ```cpp
@@ -249,7 +249,7 @@ int strncmp(const char* str1, const char* str2, size_t num);
 
 作用:
 
-​	比较 字符串`str2`和`str1`对应的前`num`个字符的大小
+​    比较 字符串`str2`和`str1`对应的前`num`个字符的大小
 
 ```cpp
 int my_strncmp(const char* str1, const char* str2, size_t num) {
@@ -276,7 +276,7 @@ char* strstr(const char* string, const char* substr);
 
 作用: 
 
-​	在 字符串`string`中, 查找第一个`substr`字符串；若`substr`指向长度为零的字符串(即, `substr`为空), 则返回原字符串, 没找到返回空指针, 找到了返回找到的字符串的首字符地址
+​    在 字符串`string`中, 查找第一个`substr`字符串；若`substr`指向长度为零的字符串(即, `substr`为空), 则返回原字符串, 没找到返回空指针, 找到了返回找到的字符串的首字符地址
 
 
 模拟实现 `strstr()`
@@ -288,13 +288,13 @@ char* my_strstr(const char* str, const char* substr) {
     if(*substr == '\0')
         return str;
     
-    char* flag = (char*)str;	// 记录本次查找的起始地址
+    char* flag = (char*)str;    // 记录本次查找的起始地址
     char* str1;
-    char* str2;					// 记录 查找的字符串
+    char* str2;                    // 记录 查找的字符串
     
     while(*flag) {
-        str1 = flag;			// 因本次查找中 起始位置需要一直知道, 所以将 flag 存入另一个指针变量
-        str2 = (char*)substr;	// 每次循环从 查找字符串的首字符开始查找
+        str1 = flag;            // 因本次查找中 起始位置需要一直知道, 所以将 flag 存入另一个指针变量
+        str2 = (char*)substr;    // 每次循环从 查找字符串的首字符开始查找
         while(*st1 && *str2 && (*str1 == str2)) {
             // 此循环做对比, str1与str2指向的字符都不为'\0', 且相等时, 继续查找下一个字符, str2指向的字符为'\0'时, 查找成功
             str1++;
@@ -305,7 +305,7 @@ char* my_strstr(const char* str, const char* substr) {
             return flag;
         
         flag++;
-	}
+    }
     
     return NULL;
 }
@@ -319,7 +319,7 @@ char* strtok(char * str, const char * sep);
 
 作用: 
     
-​	将字符串分割成一个个片段(自己设定分隔符)
+​    将字符串分割成一个个片段(自己设定分隔符)
 
 - `sep`参数是个字符串, 定义了用作分隔符的字符集合第一个参数指定一个字符串, 它包含了0个或者多个由`sep`字符串中一个或者多个分隔符分割的标记
 
@@ -364,7 +364,7 @@ char* strerror(int errnum);
 
 作用: 
 
-​	返回错误码, 所对应的错误信息
+​    返回错误码, 所对应的错误信息
 
 > ```cpp
 > int main() {

@@ -142,8 +142,8 @@ int main() {
 
 ```cpp
 struct thread_struct {
-    pthread_t tid; 			// 线程ID
-    void* stack;			// 线程栈
+    pthread_t tid;             // 线程ID
+    void* stack;            // 线程栈
     ……
 }
 ```

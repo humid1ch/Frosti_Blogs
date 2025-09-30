@@ -141,7 +141,7 @@ int&& rr3 = fmin(x, y);
 
 int main() {
     int m = 1;
-   	int&& n = m;
+       int&& n = m;
     
     return 0;
 }
@@ -236,9 +236,9 @@ int main() {
 
         ```cpp
         string(string &&str) 
-        	: _str(nullptr)
-        	, _size(0)
-        	, _capacity(0) {
+            : _str(nullptr)
+            , _size(0)
+            , _capacity(0) {
             ...
         }
         ```
@@ -255,9 +255,9 @@ int main() {
         }
         
         string(string &&str) 
-        	: _str(nullptr)
-        	, _size(0)
-        	, _capacity(0) {
+            : _str(nullptr)
+            , _size(0)
+            , _capacity(0) {
             swap(str);
         }
         ```
@@ -316,26 +316,26 @@ int main() {
 
 ```cpp
 July::string to_string(int value) {
-	bool flag = true;
-	if (value < 0) {
-  		flag = false;
-  		value = 0 - value;
-	}
+    bool flag = true;
+    if (value < 0) {
+          flag = false;
+          value = 0 - value;
+    }
 
-	July::string str;
-	while (value > 0) {
-  		int x = value % 10;
-  		value /= 10;
+    July::string str;
+    while (value > 0) {
+          int x = value % 10;
+          value /= 10;
 
-  		str += ('0' + x);
-	}
+          str += ('0' + x);
+    }
 
-	if (flag == false) {
-  		str += '-';
-	}
-	std::reverse(str.begin(), str.end());
+    if (flag == false) {
+          str += '-';
+    }
+    std::reverse(str.begin(), str.end());
 
-	return str;
+    return str;
 }
 ```
 
@@ -484,15 +484,15 @@ void PerfectForward(T&& t) {
 }
 
 int main() {
-    PerfectForward(10); 			// 传右值
+    PerfectForward(10);             // 传右值
 
     int a;
-    PerfectForward(a); 				// 传左值
-    PerfectForward(std::move(a)); 	// 传右值
+    PerfectForward(a);                 // 传左值
+    PerfectForward(std::move(a));     // 传右值
 
     const int b = 8;
-    PerfectForward(b); 				// 传const左值
-    PerfectForward(std::move(b)); 	// 传const右值
+    PerfectForward(b);                 // 传const左值
+    PerfectForward(std::move(b));     // 传const右值
 
     return 0;
 }
@@ -580,10 +580,10 @@ int main() {
     int&& rref = getRValue();
     
     auto& val1 = rref;  // auto& &&
-    auto& val2 = lref;	// auto& &
+    auto& val2 = lref;    // auto& &
     
-    auto&& val3 = lref;	// auto&& &
-    auto&& val4 = rref;	// auto&& &&
+    auto&& val3 = lref;    // auto&& &
+    auto&& val4 = rref;    // auto&& &&
     
     return 0;
 }
@@ -615,7 +615,7 @@ a = 7;
 void fun(int&& f) {}
 
 int main() {
-	int &&d = 10;
+    int &&d = 10;
     fun(d);
     
     return 0;
@@ -725,15 +725,15 @@ void PerfectForward(T&& t) {
 }
 
 int main() {
-    PerfectForward(10); 			// 右值
+    PerfectForward(10);             // 右值
 
     int a;
-    PerfectForward(a); 				// 左值
-    PerfectForward(std::move(a)); 	// 右值
+    PerfectForward(a);                 // 左值
+    PerfectForward(std::move(a));     // 右值
 
     const int b = 8;
-    PerfectForward(b); 				// const 左值
-    PerfectForward(std::move(b)); 	// const 右值
+    PerfectForward(b);                 // const 左值
+    PerfectForward(std::move(b));     // const 右值
 
     return 0;
 }
@@ -756,7 +756,7 @@ int main() {
 ```cpp
 template <typename _Tp>
 constexpr _Tp&& forward(typename std::remove_reference<_Tp>::type& __t) noexcept {
-	return static_cast<_Tp&&>(__t);
+    return static_cast<_Tp&&>(__t);
 }
 ```
 

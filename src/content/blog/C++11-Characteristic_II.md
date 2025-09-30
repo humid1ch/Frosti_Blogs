@@ -358,8 +358,8 @@ auto lamSwap1 = [a, b]()mutable{
 并且, C++11还设计了 混合使用. 即, 可以实现类似下面这样的捕捉:
 
 ```cpp
-[&, a] 			// a对象传值捕捉, 其他父级作用域内的所有对象 传引用捕捉
-[=, &a]			// a对象传引用捕捉, 其他父级作用域的所有对象 传值捕捉
+[&, a]             // a对象传值捕捉, 其他父级作用域内的所有对象 传引用捕捉
+[=, &a]            // a对象传引用捕捉, 其他父级作用域的所有对象 传值捕捉
 ```
 
 所以, `lambda` 表达式的使用, 实际上是非常灵活的.
@@ -457,34 +457,34 @@ C++中 可调用类型的对象就变成了三种: `函数指针`, `仿函数`, 
 ```cpp
 template<class F, class T>
 T useF(F f, T x) {
-	static int count = 0; 		// static 用来记录实例化出的同一个函数被执行多少次
-	cout << "count:" << ++count << endl;
-	cout << "count:" << &count << endl;
+    static int count = 0;         // static 用来记录实例化出的同一个函数被执行多少次
+    cout << "count:" << ++count << endl;
+    cout << "count:" << &count << endl;
 
-	return f(x);
+    return f(x);
 }
 
 double f(double i) {
-	return i / 2;
+    return i / 2;
 }
 
 struct Functor {
-	double operator()(double d) {
-		return d / 3;
-	}
+    double operator()(double d) {
+        return d / 3;
+    }
 };
 
 int main() {
-	// 函数名
-	cout << useF(f, 11.11) << endl;
+    // 函数名
+    cout << useF(f, 11.11) << endl;
 
-	// 函数对象
-	cout << useF(Functor(), 11.11) << endl;
+    // 函数对象
+    cout << useF(Functor(), 11.11) << endl;
 
-	// lamber表达式
-	cout << useF([](double d)->double{ return d / 4; }, 11.11) << endl;
+    // lamber表达式
+    cout << useF([](double d)->double{ return d / 4; }, 11.11) << endl;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -530,18 +530,18 @@ C++11 之后, 设计了一个 `std::function类模板`, 也是一个包装器.
 #include <functional>
 
 double f(double i) {
-	return i / 2;
+    return i / 2;
 }
 
 struct Functor {
-	double operator()(double d) {
-		return d / 3;
-	}
+    double operator()(double d) {
+        return d / 3;
+    }
 };
 
 int main() {
     // 函数名
-	std::function<double(double)> func1 = f;
+    std::function<double(double)> func1 = f;
     cout << "未使用包装器 f 类型" << typeid(f).name() << endl;
     cout << "包装器后 类型" << typeid(func1).name() << endl << endl;
 
@@ -556,7 +556,7 @@ int main() {
     cout << "未使用包装器 lambda 类型" << typeid(lam1).name() << endl;
     cout << "包装器后 类型" << typeid(func3).name() << endl;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -574,13 +574,13 @@ int main() {
 #include <functional>
 
 double f(double i) {
-	return i / 2;
+    return i / 2;
 }
 
 struct Functor {
-	double operator()(double d) {
-		return d / 3;
-	}
+    double operator()(double d) {
+        return d / 3;
+    }
 };
 
 int main() {
@@ -613,21 +613,21 @@ using std::endl;
 
 template<class F, class T>
 T useF(F f, T x) {
-	static int count = 0; 		// static 用来记录实例化出的同一个函数被执行多少次
-	cout << "count:" << ++count << endl;
-	cout << "count:" << &count << endl;
+    static int count = 0;         // static 用来记录实例化出的同一个函数被执行多少次
+    cout << "count:" << ++count << endl;
+    cout << "count:" << &count << endl;
 
-	return f(x);
+    return f(x);
 }
 
 double f(double i) {
-	return i / 2;
+    return i / 2;
 }
 
 struct Functor {
-	double operator()(double d) {
-		return d / 3;
-	}
+    double operator()(double d) {
+        return d / 3;
+    }
 };
 
 int main() {
@@ -659,8 +659,8 @@ int main() {
 class Plus{
 public:
     static int plusi(int a, int b) {
-		return a + b;
-	}
+        return a + b;
+    }
 
     double plusd(double a, double b) {
         return a + b;
@@ -800,7 +800,7 @@ int main() {
     Sub s;
     // 绑定成员函数
     std::function<int(int, int)> func = std::bind(&Sub::sub, s, placeholders::_1, placeholders::_2);
-	cout << func(3, 4) << endl;
+    cout << func(3, 4) << endl;
     
     return 0;
 }

@@ -182,9 +182,9 @@ tags:
 ```cpp
 int main()
 {
-	SeqList slt1;
+    SeqList slt1;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -235,16 +235,16 @@ int main()
 调试一段代码: 
 
 ```cpp
-SeqList slt1;			// 全局对象
+SeqList slt1;            // 全局对象
 
 int main()
 {
-	SeqList slt2;			// 局部顺序表对象
-	Date d1;				// 局部日期对象
+    SeqList slt2;            // 局部顺序表对象
+    Date d1;                // 局部日期对象
 
-	static Date d2;		// static修饰的对象
+    static Date d2;        // static修饰的对象
 
-	return 0;
+    return 0;
 }
 ```
 

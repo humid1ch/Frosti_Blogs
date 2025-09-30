@@ -244,11 +244,11 @@ import Question from "../../components/mdx/Question.astro";
 猜测, 用法应该是:
 
 ```cangjie
-if (let 100 <- x)			// 常量模式
-if (let _ <- x)				// 通配符模式, 可能等同于true
-if (let v <- x)				// 绑定模式
-if (let (v, l) <- (1, 2))	// 元组模式
-if (let Some(v) <- x)		// Option 解构, enum 模式
+if (let 100 <- x)            // 常量模式
+if (let _ <- x)                // 通配符模式, 可能等同于true
+if (let v <- x)                // 绑定模式
+if (let (v, l) <- (1, 2))    // 元组模式
+if (let Some(v) <- x)        // Option 解构, enum 模式
 ```
 
 用实际的代码测试:
@@ -797,9 +797,9 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 
 ```cangjie
 match (value) {
-	case (x, y) => println("${x}, ${y}")
-	case (x, _) => println("${x}")
-	case (_, _) => "Nothing"
+    case (x, y) => println("${x}, ${y}")
+    case (x, _) => println("${x}")
+    case (_, _) => "Nothing"
 }
 ```
 
@@ -812,8 +812,8 @@ enum Single {
 
 let value = Single.Value(20)
 match (value) {
-	case Value(x) => println(value)
-	case _ => "Nothing"
+    case Value(x) => println(value)
+    case _ => "Nothing"
 }
 ```
 

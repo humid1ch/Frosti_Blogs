@@ -390,7 +390,7 @@ public:
     ~Widget();
 
 signals:
-    void diySignal();	// 自定义信号
+    void diySignal();    // 自定义信号
 
 private slots:
     void on_pushButton_clicked();
@@ -475,11 +475,11 @@ public:
     ~Widget();
 
 signals:
-    void diySignal(int, const QString&); 	// 带参数的信号
+    void diySignal(int, const QString&);     // 带参数的信号
 
 private slots:
     void on_pushButton_clicked();
-    void diySignalHandler(int, const QString&);	// 带参数的槽
+    void diySignalHandler(int, const QString&);    // 带参数的槽
 
 private:
     Ui::Widget* ui;
@@ -587,12 +587,12 @@ public:
     ~Widget();
 
 signals:
-    void diySignal(int, const QString&); 	// 一个自定义带参信号
+    void diySignal(int, const QString&);     // 一个自定义带参信号
 
 private slots:
     void on_pushButton_clicked();
-    void diySignalHandler1(int num, const QString&);	// 两个参数的槽
-    void diySignalHandler2(int num);	// 一个参数的槽
+    void diySignalHandler1(int num, const QString&);    // 两个参数的槽
+    void diySignalHandler2(int num);    // 一个参数的槽
 
 private:
     Ui::Widget* ui;

@@ -101,8 +101,8 @@ typedef int SLTDataType;        // int typedef 为 SLTDataType
 // 单链表(SingleList)结构
 typedef struct SListNode
 {
-	SLTDataType val;               // val 用来存放数据
-	struct SListNode* next;       // next 存放下一节点地址, 用来指向下一节点 
+    SLTDataType val;               // val 用来存放数据
+    struct SListNode* next;       // next 存放下一节点地址, 用来指向下一节点 
 }SListNode;
 ```
 
@@ -139,17 +139,17 @@ typedef struct SListNode
 ```cpp
 SListNode* BuySLTNode(SLTDataType x)
 {
-	SListNode* newNode = (SListNode*)malloc(sizeof(SListNode));
-	if(newNode == NULL)
-	{
-		printf("BuyNode fail.\n");
-		exit(-1);
-	}
-	// malloc 成功
-	newNode->val = x;            // 将新节点val 赋予 x
-	newNode->next = NULL;        // 将新节点的next 指向空
-	
-	return newNode;              // 返回新节点
+    SListNode* newNode = (SListNode*)malloc(sizeof(SListNode));
+    if(newNode == NULL)
+    {
+        printf("BuyNode fail.\n");
+        exit(-1);
+    }
+    // malloc 成功
+    newNode->val = x;            // 将新节点val 赋予 x
+    newNode->next = NULL;        // 将新节点的next 指向空
+    
+    return newNode;              // 返回新节点
 }
 ```
 
@@ -167,17 +167,17 @@ SListNode* BuySLTNode(SLTDataType x)
 ```cpp
 void SListPushBack(SListNode* phead, SLTDataType x)
 {
-	assert(pnode);
-	
-	SListNode* newNode = BuyNode(x);
-	
-	SListNode* tail = phead;        //记录首节点
-	while(tail->next != NULL)
-	{// 从首节点开始找尾
-		tail = tail->next;
-	}
-	// 退出循环就代表找到尾节点
-	tail->next = newNode;
+    assert(pnode);
+    
+    SListNode* newNode = BuyNode(x);
+    
+    SListNode* tail = phead;        //记录首节点
+    while(tail->next != NULL)
+    {// 从首节点开始找尾
+        tail = tail->next;
+    }
+    // 退出循环就代表找到尾节点
+    tail->next = newNode;
 }
 ```
 代码实现完毕, 尾插来验证一下。
@@ -242,25 +242,25 @@ OK, 现在情况应该考虑完整了
 // 单链表尾插
 void SListPushBack(SListNode** pphead, SLTDataType x)
 {// 传首节点指针 的地址, 要用**
-	assert(pphead);				// 断言 首节点指针的地址不为空
+    assert(pphead);                // 断言 首节点指针的地址不为空
 
-	SListNode* newNode = BuySLTNode(x);
-	
-	// 首节点为空, 将新节点变为首节点
-	if (*pphead == NULL)
-	{
-		*pphead = newNode;
-		return;
-	}
+    SListNode* newNode = BuySLTNode(x);
+    
+    // 首节点为空, 将新节点变为首节点
+    if (*pphead == NULL)
+    {
+        *pphead = newNode;
+        return;
+    }
 
-	// 首节点不为空就 找尾
-	SListNode* tail = *pphead;        //记录首节点
-	while (tail->next != NULL)
-	{// 从首节点开始找尾
-		tail = tail->next;
-	}
-	// 退出循环就代表找到尾节点
-	tail->next = newNode;
+    // 首节点不为空就 找尾
+    SListNode* tail = *pphead;        //记录首节点
+    while (tail->next != NULL)
+    {// 从首节点开始找尾
+        tail = tail->next;
+    }
+    // 退出循环就代表找到尾节点
+    tail->next = newNode;
 }
 ```
 
@@ -283,13 +283,13 @@ void SListPushBack(SListNode** pphead, SLTDataType x)
 // 单链表打印
 void SListPrint(SListNode* phead)
 {
-	SListNode* cur = phead;
-	while (cur != NULL)
-	{// cur 为空时退出循环
-		printf("%d->", cur->val);
-		cur = cur->next;
-	}
-	printf("NULL\n");
+    SListNode* cur = phead;
+    while (cur != NULL)
+    {// cur 为空时退出循环
+        printf("%d->", cur->val);
+        cur = cur->next;
+    }
+    printf("NULL\n");
 }
 ```
 
@@ -315,43 +315,43 @@ void SListPrint(SListNode* phead)
 // 单链表尾删
 void SListPopBack(SListNode** pphead)
 {
-	assert(pphead);
+    assert(pphead);
 
-	// 空链表
-	if (*pphead == NULL)
-		return;
+    // 空链表
+    if (*pphead == NULL)
+        return;
 
-	// 只有一个节点
-	if ((*pphead)->next == NULL)
-	{
-		free(*pphead);
-		*pphead = NULL;
-		return;
-	}
+    // 只有一个节点
+    if ((*pphead)->next == NULL)
+    {
+        free(*pphead);
+        *pphead = NULL;
+        return;
+    }
 
-	// 多个节点
-	SListNode* cur = *pphead;
-	while (cur->next->next != NULL)
-	{
-		cur = cur->next;
-	}
-	// 退出循环时, cur即在尾节点的前一节点处
-	free(cur->next);			// 释放cur的next节点(尾节点)
-	cur->next = NULL;			// cur->next 指向空
+    // 多个节点
+    SListNode* cur = *pphead;
+    while (cur->next->next != NULL)
+    {
+        cur = cur->next;
+    }
+    // 退出循环时, cur即在尾节点的前一节点处
+    free(cur->next);            // 释放cur的next节点(尾节点)
+    cur->next = NULL;            // cur->next 指向空
 
-	/* 或者用前后指针的方法, 将 cur 的前一个节点存储起来
-	SListNode* prev = NULL;
-	SListNode* cur = *pphead;
-	while(cur->next != NULL)
-	{
-		prev = cur;				// 每次进入循环先将 cur 用prev存储起来
-		cur = cur->next;
-	}
-	//退出循环时, cur是尾节点, prev是尾节点的前一个节点
-	free(cur);					// 释放尾节点
-	prev->next = NULL;
-	cur = NULL;
-	*/
+    /* 或者用前后指针的方法, 将 cur 的前一个节点存储起来
+    SListNode* prev = NULL;
+    SListNode* cur = *pphead;
+    while(cur->next != NULL)
+    {
+        prev = cur;                // 每次进入循环先将 cur 用prev存储起来
+        cur = cur->next;
+    }
+    //退出循环时, cur是尾节点, prev是尾节点的前一个节点
+    free(cur);                    // 释放尾节点
+    prev->next = NULL;
+    cur = NULL;
+    */
 }
 ```
 
@@ -387,11 +387,11 @@ void SListPopBack(SListNode** pphead)
 // 单链表头插
 void SListPushFront(SListNode** pphead, SLTDataType x)
 {
-	assert(pphead);
+    assert(pphead);
 
-	SListNode* newNode = BuySLTNode(x);
-	newNode->next = *pphead;            // 新节点的next 指向 *pphead
-	*pphead = newNode;                // 将新节点置为 *pphead
+    SListNode* newNode = BuySLTNode(x);
+    newNode->next = *pphead;            // 新节点的next 指向 *pphead
+    *pphead = newNode;                // 将新节点置为 *pphead
 }
 ```
 
@@ -415,29 +415,29 @@ void SListPushFront(SListNode** pphead, SLTDataType x)
 那么头删的逻辑应该是什么呢？
 1. 判断链表是否为空
 2. 链表不空: 
-	1. 将 `首节点` 存起来, 然后将 `首节点的next` 置为 `*pphead`, 然后释放 `首节点`
-	2. 将 `第二节点` 存起来, 然后将 `首节点` 释放, 然后释放 `第二节点` 置为 `*pphead`。
+    1. 将 `首节点` 存起来, 然后将 `首节点的next` 置为 `*pphead`, 然后释放 `首节点`
+    2. 将 `第二节点` 存起来, 然后将 `首节点` 释放, 然后释放 `第二节点` 置为 `*pphead`。
 
 两种思路都实现一下:
 ```cpp
 // 单链表头删
 void SListPopFront(SListNode** pphead)
 {
-	assert(pphead);
-	
-	if (*pphead == NULL)
-		return;
-	
-	// 存首节点
-	SListNode* tail = *pphead;
-	*pphead = tail->next;
-	free(tail);
-	tail = NULL;
-	
-	// 存第二节点
-	/*SListNode* tail = (*pphead)->next;
-	free(*pphead);
-	*pphead = tail;*/
+    assert(pphead);
+    
+    if (*pphead == NULL)
+        return;
+    
+    // 存首节点
+    SListNode* tail = *pphead;
+    *pphead = tail->next;
+    free(tail);
+    tail = NULL;
+    
+    // 存第二节点
+    /*SListNode* tail = (*pphead)->next;
+    free(*pphead);
+    *pphead = tail;*/
 }
 ```
 
@@ -466,16 +466,16 @@ void SListPopFront(SListNode** pphead)
 ```cpp
 SListNode* SListFind(SListNode* phead, SLTDataType x)
 {
-	SListNode* tail = phead;    // 记录首节点
-	while(tail != NULL)
-	{// tail不为空 进循环后 再进行判断
-		if(tail->val == x)
-			return tail;        // 找到就返回节点
-			
-		tail = tail->next;      // 没找到, tail 就变为 自己的 next
-	}
+    SListNode* tail = phead;    // 记录首节点
+    while(tail != NULL)
+    {// tail不为空 进循环后 再进行判断
+        if(tail->val == x)
+            return tail;        // 找到就返回节点
+            
+        tail = tail->next;      // 没找到, tail 就变为 自己的 next
+    }
 
-	return NULL;    // 没进入循环或者从循环出来了, 就代表没找到, 返回NULL
+    return NULL;    // 没进入循环或者从循环出来了, 就代表没找到, 返回NULL
 }
 ```
 
@@ -497,9 +497,9 @@ SListNode* SListFind(SListNode* phead, SLTDataType x)
 ```cpp
 void SListInsertAfter(SListNode *pos, SLTDateType x)
 {
-	assert(pos);
+    assert(pos);
 
-	SListNode *newNode = BuySLTNode(x);
+    SListNode *newNode = BuySLTNode(x);
     newNode->next = pos->next;             // 先将新节点的next 链上 pos的next
     pos->next = newNode;            // 再将pos的next指向新节点
 }
@@ -533,15 +533,15 @@ void SListInsertAfter(SListNode *pos, SLTDateType x)
 // 单链表删除(pos之后)
 void SListEraseAfter(SLTNode* pos)
 {
-	assert(pos);
+    assert(pos);
 
-	SListNode* next = pos->next;			//先记录 pos 的 next 节点
-	if (next)
-	{// 若此节点不为空则进行操作
-		pos->next = next->next;			// 先将 pos的next 指向 next的next
-		free(next);						// 再释放 next
-		next = NULL;
-	}
+    SListNode* next = pos->next;            //先记录 pos 的 next 节点
+    if (next)
+    {// 若此节点不为空则进行操作
+        pos->next = next->next;            // 先将 pos的next 指向 next的next
+        free(next);                        // 再释放 next
+        next = NULL;
+    }
 }
 ```
 
@@ -566,17 +566,17 @@ void SListEraseAfter(SLTNode* pos)
 // 销毁单链表
 void SListDestroy(SListNode** pphead)
 {
-	assert(pphead);
-	
-	SListNode* tail = *pphead;
-	while(tail != NULL)
-	{// 链表不为空
-		SListNode* next = tail->next;    //销毁当前结点之前,要将下一节点存储起来
-		free(tail);
-		tail = next;                // 将tail 赋成 存储起来的节点
-	}
-	
-	*pphead = NULL;
+    assert(pphead);
+    
+    SListNode* tail = *pphead;
+    while(tail != NULL)
+    {// 链表不为空
+        SListNode* next = tail->next;    //销毁当前结点之前,要将下一节点存储起来
+        free(tail);
+        tail = next;                // 将tail 赋成 存储起来的节点
+    }
+    
+    *pphead = NULL;
 }
 ```
 验证: 

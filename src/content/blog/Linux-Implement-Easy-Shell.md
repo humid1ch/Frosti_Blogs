@@ -23,7 +23,7 @@ tags:
 
 1. 首先要知道, shell应该是一个死循环的程序.
 
-	为什么？因为shell是可以`循环从命令行接收用户输入的内容`的
+    为什么？因为shell是可以`循环从命令行接收用户输入的内容`的
 
 2. 其次, shell 需要一个设置一个提示符. 类似这样的东西: 
    
@@ -31,13 +31,13 @@ tags:
 
 3. 第三, 我们使用shell是需要执行命令的, 且这些命令需要在环境变量PATH下
 
-	这些命令大多都是需要由我们的shell创建子进程来执行的
+    这些命令大多都是需要由我们的shell创建子进程来执行的
 
 4. 第四, shell需要可以 `等待回收` 创建的子进程
 
 5. 第五, 需要实现一些内建命令: 比如 `export` 等
 
-	这些命令 是不需要创建子进程来执行的
+    这些命令 是不需要创建子进程来执行的
 
 上面就是一个shell的最基本的功能
 
@@ -79,7 +79,7 @@ int main() {
         // 首先是用户提示符: 
         printf("[七月July@MyBlog 当前目录]# ");
         fgets(command_V, SIZE, stdin);
-        printf("%s", argV);					// 测试进程是否接收了输入内容
+        printf("%s", argV);                    // 测试进程是否接收了输入内容
     }
 
     return 0;
@@ -397,7 +397,7 @@ int putEnvInmyShell(char *put_Env) {
 }
 
 int changeDir(const char* new_path) {
-    chdir(new_path);					// 系统调用
+    chdir(new_path);                    // 系统调用
 
     return 0;
 }
@@ -434,7 +434,7 @@ int main() {
         if(strcmp(command_argV[0], "cd") == 0 && command_argV[1] != NULL) {
             // 使用cd命令时, command_argV[1]位置应该是需要进入的路径
             changeDir(command_argV[1]);
-            continue;								// 非子进程命令, 不用执行下面的代码, 所以直接进入下个循环
+            continue;                                // 非子进程命令, 不用执行下面的代码, 所以直接进入下个循环
         }
         if(strcmp(command_argV[0], "export") == 0 && command_argV[1] != NULL) {
             // 我们接收的命令, 都在command_S 字符串中, 此字符串每次循环都会被清除
@@ -495,7 +495,7 @@ int putEnvInmyShell(char *put_Env) {
 }
 
 int changeDir(const char* new_path) {
-    chdir(new_path);					// 系统调用
+    chdir(new_path);                    // 系统调用
 
     return 0;
 }
@@ -531,7 +531,7 @@ int main() {
         if(strcmp(command_argV[0], "cd") == 0 && command_argV[1] != NULL) {
             // 使用cd命令时, command_argV[1]位置应该是需要进入的路径
             changeDir(command_argV[1]);
-            continue;								// 非子进程命令, 不用执行下面的代码, 所以直接进入下个循环
+            continue;                                // 非子进程命令, 不用执行下面的代码, 所以直接进入下个循环
         }
         if(strcmp(command_argV[0], "export") == 0 && command_argV[1] != NULL) {
             // 我们接收的命令, 都在command_S 字符串中, 此字符串每次循环都会被清除

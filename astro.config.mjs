@@ -8,6 +8,7 @@ import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
+import rehypeAddClasses from 'rehype-add-classes';
 import updateConfig from "./src/integration/updateConfig.ts";
 
 import { CODE_THEME, USER_SITE } from "./src/config.ts";
@@ -217,12 +218,22 @@ export default defineConfig({
       ],
     },
     remarkPlugins: [remarkMath, remarkReadingTime],
-    rehypePlugins: [rehypeKatex, [
-      rehypeExternalLinks,
-      {
-        content: { type: "text", value: "↗" },
-      },
-    ]],
+    rehypePlugins: [
+        rehypeKatex,
+        [
+          rehypeExternalLinks,
+          {
+            content: { type: "text", value: "↗" },
+          },
+        ],
+        [
+          rehypeAddClasses,
+          {
+            'ol': 'custom-list',
+            // 'ul': 'my-unordered-list-class',
+          }
+        ]
+    ]
   },
   vite: {
     css: {

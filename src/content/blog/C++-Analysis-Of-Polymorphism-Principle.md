@@ -126,16 +126,16 @@ tags:
 >
 > ```cpp
 > void PrintVTable(VFTPTR vTable[])
-> {	// 虚表指针地址是一个二维数组, 所以形参可以为 VFTPTR 类型的数组
-> 	// 依次取虚表中的虚函数指针打印并调用。调用就可以看出存的是哪个函数
-> 	cout << " 虚表地址>" << vTable << endl;
-> 	for (int i = 0; vTable[i] != nullptr; ++i)
-> 	{
-> 		printf(" 第%d个虚函数地址 :0X%x,->", i, vTable[i]);
-> 		VFTPTR f = vTable[i]; 		// 取函数指针
-> 		f(); 						// 函数指针调用函数
-> 	}
-> 	cout << endl;
+> {    // 虚表指针地址是一个二维数组, 所以形参可以为 VFTPTR 类型的数组
+>     // 依次取虚表中的虚函数指针打印并调用。调用就可以看出存的是哪个函数
+>     cout << " 虚表地址>" << vTable << endl;
+>     for (int i = 0; vTable[i] != nullptr; ++i)
+>     {
+>         printf(" 第%d个虚函数地址 :0X%x,->", i, vTable[i]);
+>         VFTPTR f = vTable[i];         // 取函数指针
+>         f();                         // 函数指针调用函数
+>     }
+>     cout << endl;
 > }
 > ```
 >

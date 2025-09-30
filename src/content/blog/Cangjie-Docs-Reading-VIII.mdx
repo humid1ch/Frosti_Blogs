@@ -78,11 +78,11 @@ import Question from "../../components/mdx/Question.astro";
 >
 > ```cangjie
 > var i: Int32 = 5
-> i++     	// i = 6
-> i--     	// i = 5
-> i--++   	// syntax error
+> i++         // i = 6
+> i--         // i = 5
+> i--++       // syntax error
 > var j = 0
-> j = i-- 	// semantics error
+> j = i--     // semantics error
 > ```
 
 仓颉规定`++`和`--`只能后置, 且只能用于整型, 且变量必须可变
@@ -183,12 +183,12 @@ import Question from "../../components/mdx/Question.astro";
 > 2. 当左操作类型为`Float64`时, 右操作数只能为`Int64`类型或`Float64`类型, 表达式的类型为`Float64`
 >
 > ```cangjie
-> let p1 = 2 ** 3               	// p1 = 8
-> let p2 = 2 ** UInt64(3 ** 2)  	// p2 = 512
-> let p3 = 2.0 ** 3.0           	// p3 = 8.0
-> let p4 = 2.0 ** 3 ** 2        	// p4 = 512.0
-> let p5 = 2.0 ** 3.0           	// p5 = 8.0
-> let p6 = 2.0 ** 3.0 ** 2.0    	// p6 = 512.0
+> let p1 = 2 ** 3                   // p1 = 8
+> let p2 = 2 ** UInt64(3 ** 2)      // p2 = 512
+> let p3 = 2.0 ** 3.0               // p3 = 8.0
+> let p4 = 2.0 ** 3 ** 2            // p4 = 512.0
+> let p5 = 2.0 ** 3.0               // p5 = 8.0
+> let p6 = 2.0 ** 3.0 ** 2.0        // p6 = 512.0
 > ```
 >
 > 当左操作类型为`Float64`, 右操作数类型为`Int64`时, 存在一些特殊情况需要明确求幂表达式的值
@@ -196,21 +196,21 @@ import Question from "../../components/mdx/Question.astro";
 > 具体罗列为: 
 >
 > ```cangjie
-> x ** 0 = 1.0                               	// 对 任意 x
-> 0.0 ** n = POSITIVE_INFINITY               	// 对 n < 0 的奇数
-> -0.0 ** n = NEGATIVE_INFINITY              	// 对 n < 0 的奇数
-> 0.0 ** n = POSITIVE_INFINITY               	// 对 n < 0 的偶数
-> -0.0 ** n = POSITIVE_INFINITY              	// 对 n < 0 的偶数
-> 0.0 ** n = 0.0                             	// 对 n > 0 的偶数
-> -0.0 ** n = 0.0                            	// 对 n > 0 的偶数
-> 0.0 ** n = 0.0                             	// 对 n > 0 的奇数
-> -0.0 ** n = -0.0                           	// 对 n > 0 的奇数
-> POSITIVE_INFINITY ** n = POSITIVE_INFINITY 	// 对 n > 0
-> NEGATIVE_INFINITY ** n = NEGATIVE_INFINITY 	// 对 n > 0 的奇数
-> NEGATIVE_INFINITY ** n = POSITIVE_INFINITY 	// 对 n > 0 的偶数
-> POSITIVE_INFINITY ** n = 0.0               	// 对 n < 0
-> NEGATIVE_INFINITY ** n = -0.0              	// 对 n < 0 的奇数
-> NEGATIVE_INFINITY ** n = 0.0               	// 对 n < 0 的偶数
+> x ** 0 = 1.0                                   // 对 任意 x
+> 0.0 ** n = POSITIVE_INFINITY                   // 对 n < 0 的奇数
+> -0.0 ** n = NEGATIVE_INFINITY                  // 对 n < 0 的奇数
+> 0.0 ** n = POSITIVE_INFINITY                   // 对 n < 0 的偶数
+> -0.0 ** n = POSITIVE_INFINITY                  // 对 n < 0 的偶数
+> 0.0 ** n = 0.0                                 // 对 n > 0 的偶数
+> -0.0 ** n = 0.0                                // 对 n > 0 的偶数
+> 0.0 ** n = 0.0                                 // 对 n > 0 的奇数
+> -0.0 ** n = -0.0                               // 对 n > 0 的奇数
+> POSITIVE_INFINITY ** n = POSITIVE_INFINITY     // 对 n > 0
+> NEGATIVE_INFINITY ** n = NEGATIVE_INFINITY     // 对 n > 0 的奇数
+> NEGATIVE_INFINITY ** n = POSITIVE_INFINITY     // 对 n > 0 的偶数
+> POSITIVE_INFINITY ** n = 0.0                   // 对 n < 0
+> NEGATIVE_INFINITY ** n = -0.0                  // 对 n < 0 的奇数
+> NEGATIVE_INFINITY ** n = 0.0                   // 对 n < 0 的偶数
 > ```
 >
 > > 注: 在上述所列特殊情况之外, 当左操作数的值为`NaN`时, 无论右操作数取何值, 求幂表达式的值均等于`NaN`
@@ -228,26 +228,26 @@ import Question from "../../components/mdx/Question.astro";
 > -0.0 ** NEGATIVE_INFINITY = POSITIVE_INFINITY 
 > 0.0 ** POSITIVE_INFINITY = 0.0 
 > -0.0 ** POSITIVE_INFINITY = 0.0 
-> 0.0 ** y = 0.0                             	// 对 有限的 y > 0.0 且它的值等于奇数整数时 
-> -0.0 ** y = -0.0                           	// 对 有限的 y > 0.0 且它的值等于奇数整数时  
+> 0.0 ** y = 0.0                                 // 对 有限的 y > 0.0 且它的值等于奇数整数时 
+> -0.0 ** y = -0.0                               // 对 有限的 y > 0.0 且它的值等于奇数整数时  
 > -1.0 ** POSITIVE_INFINITY = 1.0
 > -1.0 ** NEGATIVE_INFINITY = 1.0
-> 1.0 ** y = 1.0                             	// 对 任意 y 
-> x ** POSITIVE_INFINITY = 0.0               	// 对 -1.0 < x < 1.0
-> x ** POSITIVE_INFINITY = POSITIVE_INFINITY 	// 对 任意 < -1.0 的 x 或 任意 > 1.0 的 x
-> x ** NEGATIVE_INFINITY = POSITIVE_INFINITY 	// 对 -1.0 < x < 1.0 
-> x ** NEGATIVE_INFINITY = 0.0               	// 对 任意 x < -1.0 或 任意 > 1.0 的 x
-> POSITIVE_INFINITY ** y = 0.0               	// 对 y < 0.0 
-> POSITIVE_INFINITY ** y = POSITIVE_INFINITY 	// 对 y > 0.0 
-> NEGATIVE_INFINITY ** y = -0.0              	// 对 有限的 y < 0.0 且它的值等于奇数整数时 
-> NEGATIVE_INFINITY ** y = NEGATIVE_INFINITY 	// 对 有限的 y > 0.0 且它的值等于奇数整数时 
-> NEGATIVE_INFINITY ** y = 0.0               	// 对 有限的 y < 0.0 且它的值不为奇数整数时 
-> NEGATIVE_INFINITY ** y = POSITIVE_INFINITY 	// 对 有限的 y > 0.0 且它的值不为奇数整数时 
-> 0.0 ** y = POSITIVE_INFINITY               	// 对 有限的 y < 0.0 且它的值不为奇数整数时 
-> -0.0 ** y = POSITIVE_INFINITY              	// 对 有限的 y < 0.0 且它的值不为奇数整数时 
-> 0.0 ** y = 0.0                             	// 对 有限的 y > 0.0 且它的值不为奇数整数时 
-> -0.0 ** y = 0.0                            	// 对 有限的 y > 0.0 且它的值不为奇数整数时 
-> x ** y = NaN                               	// 对 有限的 x < 0.0 且 有限的 y 的值不为整数时
+> 1.0 ** y = 1.0                                 // 对 任意 y 
+> x ** POSITIVE_INFINITY = 0.0                   // 对 -1.0 < x < 1.0
+> x ** POSITIVE_INFINITY = POSITIVE_INFINITY     // 对 任意 < -1.0 的 x 或 任意 > 1.0 的 x
+> x ** NEGATIVE_INFINITY = POSITIVE_INFINITY     // 对 -1.0 < x < 1.0 
+> x ** NEGATIVE_INFINITY = 0.0                   // 对 任意 x < -1.0 或 任意 > 1.0 的 x
+> POSITIVE_INFINITY ** y = 0.0                   // 对 y < 0.0 
+> POSITIVE_INFINITY ** y = POSITIVE_INFINITY     // 对 y > 0.0 
+> NEGATIVE_INFINITY ** y = -0.0                  // 对 有限的 y < 0.0 且它的值等于奇数整数时 
+> NEGATIVE_INFINITY ** y = NEGATIVE_INFINITY     // 对 有限的 y > 0.0 且它的值等于奇数整数时 
+> NEGATIVE_INFINITY ** y = 0.0                   // 对 有限的 y < 0.0 且它的值不为奇数整数时 
+> NEGATIVE_INFINITY ** y = POSITIVE_INFINITY     // 对 有限的 y > 0.0 且它的值不为奇数整数时 
+> 0.0 ** y = POSITIVE_INFINITY                   // 对 有限的 y < 0.0 且它的值不为奇数整数时 
+> -0.0 ** y = POSITIVE_INFINITY                  // 对 有限的 y < 0.0 且它的值不为奇数整数时 
+> 0.0 ** y = 0.0                                 // 对 有限的 y > 0.0 且它的值不为奇数整数时 
+> -0.0 ** y = 0.0                                // 对 有限的 y > 0.0 且它的值不为奇数整数时 
+> x ** y = NaN                                   // 对 有限的 x < 0.0 且 有限的 y 的值不为整数时
 > ```
 > 
 >> 注: 在上述所列特殊情况之外, 一旦有操作数的值为`NaN`, 则求幂表达式的值等于`NaN`
@@ -488,22 +488,22 @@ import Question from "../../components/mdx/Question.astro";
 >     let derived1: Derived1 = Derived1()
 >     let derived2: Derived2 = Derived2()
 >     
->     let castOP1 = base1 as Base				// castOP = Option<Base>.Some(base1)
->     let castOP2 = base1 as Derived1			// castOP = Option<Derived1>.None
->     let castOP3 = base1 as Derived2			// castOP = Option<Derived2>.None
->     let castOP4 = base2 as Base				// castOP = Option<Base>.Some(base2)
->     let castOP5 = base2 as Derived1			// castOP = Option<Derived1>.Some(base2)
->     let castOP6 = base2 as Derived2			// castOP = Option<Derived2>.None
->     let castOP7 = base3 as Base				// castOP = Option<Base>.Some(base3)
->     let castOP8 = base3 as Derived1			// castOP = Option<Derived1>.None
->     let castOP9 = base3 as Derived2			// castOP = Option<Derived2>.Some(base3)
-> 	
->     let castOP10 = derived1 as Base			// castOP = Option<Base>.Some(derived1)
->     let castOP11 = derived1 as Derived1		// castOP = Option<Derived1>.Some(derived1)
->     let castOP12 = derived1 as Derived2		// castOP = Option<Derived2>.None
->     let castOP13 = derived2 as Base			// castOP = Option<Base>.Some(derived2)
->     let castOP14 = derived2 as Derived1		// castOP = Option<Derived1>.None
->     let castOP15 = derived2 as Derived2		// castOP = Option<Derived2>.Some(derived2)
+>     let castOP1 = base1 as Base                // castOP = Option<Base>.Some(base1)
+>     let castOP2 = base1 as Derived1            // castOP = Option<Derived1>.None
+>     let castOP3 = base1 as Derived2            // castOP = Option<Derived2>.None
+>     let castOP4 = base2 as Base                // castOP = Option<Base>.Some(base2)
+>     let castOP5 = base2 as Derived1            // castOP = Option<Derived1>.Some(base2)
+>     let castOP6 = base2 as Derived2            // castOP = Option<Derived2>.None
+>     let castOP7 = base3 as Base                // castOP = Option<Base>.Some(base3)
+>     let castOP8 = base3 as Derived1            // castOP = Option<Derived1>.None
+>     let castOP9 = base3 as Derived2            // castOP = Option<Derived2>.Some(base3)
+>     
+>     let castOP10 = derived1 as Base            // castOP = Option<Base>.Some(derived1)
+>     let castOP11 = derived1 as Derived1        // castOP = Option<Derived1>.Some(derived1)
+>     let castOP12 = derived1 as Derived2        // castOP = Option<Derived2>.None
+>     let castOP13 = derived2 as Base            // castOP = Option<Base>.Some(derived2)
+>     let castOP14 = derived2 as Derived1        // castOP = Option<Derived1>.None
+>     let castOP15 = derived2 as Derived2        // castOP = Option<Derived2>.Some(derived2)
 > 
 >     return 0
 > }
@@ -566,15 +566,15 @@ import Question from "../../components/mdx/Question.astro";
 >
 > ```cangjie
 > func foo(): Unit {
->     !10             	// The result is -11
->     !20             	// The result is -21
->     10 << 1         	// The result is 20
->     10 << 1 << 1    	// The result is 40
->     10 >> 1         	// The result is 5
->     10 & 15         	// The result is 10
->     10 ^ 15         	// The result is 5
->     10 | 15         	// The result is 15
->     1 ^ 8 & 15 | 24 	// The result is 25
+>     !10                 // The result is -11
+>     !20                 // The result is -21
+>     10 << 1             // The result is 20
+>     10 << 1 << 1        // The result is 40
+>     10 >> 1             // The result is 5
+>     10 & 15             // The result is 10
+>     10 ^ 15             // The result is 5
+>     10 | 15             // The result is 15
+>     1 ^ 8 & 15 | 24     // The result is 25
 > }
 > ```
 
@@ -603,8 +603,8 @@ import Question from "../../components/mdx/Question.astro";
 > 另外, **如果右移或左移的位数(右操作数)等于或者大于操作数的宽度, 则为`overshift`, 如果编译时可以检测到则报错, 否则运行时抛出异常**
 >
 > ```cangjie
-> let x1 : UInt8 = 30 	// 0b00011110
-> let y1 = x1 >> 11   	// compilation error
+> let x1 : UInt8 = 30     // 0b00011110
+> let y1 = x1 >> 11       // compilation error
 > ```
 
 仓颉的位运算, 除了移位时超出位数的强制安全措施, 其他运算方式基本与与C/C++中的一致

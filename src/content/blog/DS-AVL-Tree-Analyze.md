@@ -119,14 +119,14 @@ bool insert(const T& data) {
     if (_root == nullptr) {
         // 树为空 插入节点 直接将新节点作为树的根
         _root = new Node(data);
-        _root->_bf = 0;		// 只有根节点的树, 根节点平衡因子为 0
+        _root->_bf = 0;        // 只有根节点的树, 根节点平衡因子为 0
 
-        return true;		// 插入成功, 直接返回
+        return true;        // 插入成功, 直接返回
     }
 
     // 走到这里就说明需要 查找插入位置 了
-    Node* cur = _root;	// 从根节点开始比较
-    Node* parent = nullptr;	// 需要记录父亲节点 供插入时连接
+    Node* cur = _root;    // 从根节点开始比较
+    Node* parent = nullptr;    // 需要记录父亲节点 供插入时连接
     while (cur) {
         // 循环结束的条件是 cur为空, cur为空时就说明 插入位置找到了
         if (cur->_data > data) {
@@ -149,10 +149,10 @@ bool insert(const T& data) {
     cur = new Node(data);
     // 将cur与树连接起来
     if (data > parent->_data) {
-        parent->_pRight = cur;		// 插入数据比父亲节点数据大, 则插入到父亲节点的右孩子
+        parent->_pRight = cur;        // 插入数据比父亲节点数据大, 则插入到父亲节点的右孩子
     }
     else if (data < parent->_data) {
-        parent->_pLeft = cur;			// 插入数据比父亲节点数据小, 则插入到父亲节点的左孩子
+        parent->_pLeft = cur;            // 插入数据比父亲节点数据小, 则插入到父亲节点的左孩子
     }
     // 三叉链结构, cur节点虚存储父亲节点
     cur->_pParent = parent;
@@ -249,7 +249,7 @@ cur->_pParent = parent;
 
 while (parent) {
     if (cur == parent->_pLeft)
-        parent->_bf--;			// 新节点在父亲节点的左孩子, 则父亲节点的左子树高度+1, 则父亲节点的平衡因子-1
+        parent->_bf--;            // 新节点在父亲节点的左孩子, 则父亲节点的左子树高度+1, 则父亲节点的平衡因子-1
     else
         parent->_bf++;
 
@@ -396,42 +396,42 @@ while (parent) {
 
 ```cpp
 void RotateL(Node* parent) {
-	Node* subR = parent->_pRight;		// 即 不平衡节点的右孩子
-	Node* subRL = subR->_pLeft;			// 不平衡节点的右孩子 的 左孩子
+    Node* subR = parent->_pRight;        // 即 不平衡节点的右孩子
+    Node* subRL = subR->_pLeft;            // 不平衡节点的右孩子 的 左孩子
 
-	/* parent 可能是 整棵树的根, 也可能是某节点的子树根
-	* 而 由于AVL树的节点是三叉链的结构, 所以改变节点的位置 需要改变此节点的父亲节点, 所以
-	* 当 parent 是整棵树的根时, 即parent->_pParent 为空, 那么左旋时 就需要直接将 subR改为整棵树的根
-	* 当 parent 是某节点的子树时, 就需要将 parent->_pParent 与 subR 连接起来
-	* 所以 需要将 parent->_pParent 存储起来
-	*/
-	Node* ppNode = parent->_pParent;
+    /* parent 可能是 整棵树的根, 也可能是某节点的子树根
+    * 而 由于AVL树的节点是三叉链的结构, 所以改变节点的位置 需要改变此节点的父亲节点, 所以
+    * 当 parent 是整棵树的根时, 即parent->_pParent 为空, 那么左旋时 就需要直接将 subR改为整棵树的根
+    * 当 parent 是某节点的子树时, 就需要将 parent->_pParent 与 subR 连接起来
+    * 所以 需要将 parent->_pParent 存储起来
+    */
+    Node* ppNode = parent->_pParent;
 
-	// 不平衡节点的右孩子的左孩子 变为 父亲节点的右孩子, 并将 父亲节点 变为 此节点的左孩子
-	// 并记得 链接三叉链
-	parent->_pRight = subRL;
-	if (subRL)
-		subRL->_pParent = parent;
+    // 不平衡节点的右孩子的左孩子 变为 父亲节点的右孩子, 并将 父亲节点 变为 此节点的左孩子
+    // 并记得 链接三叉链
+    parent->_pRight = subRL;
+    if (subRL)
+        subRL->_pParent = parent;
 
-	subR->_pLeft = parent;
-	parent->_pParent = subR;
+    subR->_pLeft = parent;
+    parent->_pParent = subR;
 
-	// 改变不平衡节点 的 父亲节点的指向
-	if (parent == _root) {
-		_root = subR;
-		_root->_pParent = nullptr;
-	}
-	else {
-		if (parent == ppNode->_pLeft)		// 不平衡节点是其父亲节点的左孩子
-			ppNode->_pLeft = subR;			// 把 subR 连接到 其父亲节点的左孩子上
-		else
-			ppNode->_pRight = subR;			// 把 subR 连接到 其父亲节点的右孩子上
+    // 改变不平衡节点 的 父亲节点的指向
+    if (parent == _root) {
+        _root = subR;
+        _root->_pParent = nullptr;
+    }
+    else {
+        if (parent == ppNode->_pLeft)        // 不平衡节点是其父亲节点的左孩子
+            ppNode->_pLeft = subR;            // 把 subR 连接到 其父亲节点的左孩子上
+        else
+            ppNode->_pRight = subR;            // 把 subR 连接到 其父亲节点的右孩子上
 
-		subR->_pParent = ppNode;		// 更新 subR 的父亲节点
-	}
+        subR->_pParent = ppNode;        // 更新 subR 的父亲节点
+    }
 
-	parent->_bf = 0;
-	subR->_bf = 0;
+    parent->_bf = 0;
+    subR->_bf = 0;
 }
 ```
 
@@ -499,36 +499,36 @@ void RotateL(Node* parent) {
 
 ```cpp
 void RotateR(Node* parent) {
-	Node* subL = parent->_pLeft;		// 不平衡节点的左孩子
-	Node* subLR = subL->_pRight;		// 不平衡节点的左孩子 的 右孩子
+    Node* subL = parent->_pLeft;        // 不平衡节点的左孩子
+    Node* subLR = subL->_pRight;        // 不平衡节点的左孩子 的 右孩子
 
-	Node* ppNode = parent->_pParent;
+    Node* ppNode = parent->_pParent;
 
-	// 将 不平衡节点的左孩子的的右孩子 变为 父亲节点的左孩子, 并将 父亲节点 变为 此节点的右孩子
-	// 并记得 链接三叉链
-	parent->_pLeft = subLR;
-	if (subLR)			// 右孩子不为空才链接父亲节点
-		subLR->_pParent = parent;
+    // 将 不平衡节点的左孩子的的右孩子 变为 父亲节点的左孩子, 并将 父亲节点 变为 此节点的右孩子
+    // 并记得 链接三叉链
+    parent->_pLeft = subLR;
+    if (subLR)            // 右孩子不为空才链接父亲节点
+        subLR->_pParent = parent;
 
-	subL->_pRight = parent;
-	parent->_pParent = subL;
+    subL->_pRight = parent;
+    parent->_pParent = subL;
 
-	// 改变不平衡节点 的 父亲节点的指向
-	if (parent == _root) {
-		_root = subL;
-		_root->_pParent = nullptr;
-	}
-	else {
-		if (parent == ppNode->_pLeft)		// 不平衡节点是其父亲节点的左孩子
-			ppNode->_pLeft = subL;			// 把 subL 连接到 其父亲节点的左孩子上
-		else
-			ppNode->_pRight = subL;			// 把 subL 连接到 其父亲节点的右孩子上
+    // 改变不平衡节点 的 父亲节点的指向
+    if (parent == _root) {
+        _root = subL;
+        _root->_pParent = nullptr;
+    }
+    else {
+        if (parent == ppNode->_pLeft)        // 不平衡节点是其父亲节点的左孩子
+            ppNode->_pLeft = subL;            // 把 subL 连接到 其父亲节点的左孩子上
+        else
+            ppNode->_pRight = subL;            // 把 subL 连接到 其父亲节点的右孩子上
 
-		subL->_pParent = ppNode;		// 更新 subL 的父亲节点
-	}
+        subL->_pParent = ppNode;        // 更新 subL 的父亲节点
+    }
 
-	parent->_bf = 0;
-	subL->_bf = 0;
+    parent->_bf = 0;
+    subL->_bf = 0;
 }
 ```
 
@@ -577,29 +577,29 @@ void RotateR(Node* parent) {
 >
 > ![60节点 就是新插入的节点  |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154147781.webp) 
 >
-> 	此时应该怎么调整呢？
-> 			
-> 	最终要调节的是 80节点, 80节点是因为左子树高而失衡的, 所以 `最终需要右单旋来调节`
-> 			
-> 	但是 右单旋处理的是 `左左` 的情况
-> 			
-> 	所以 需要将 此树调整为 `左左`
-> 			
-> 	而 左单旋就是将 `parent` 旋转到 `subR` 的左孩子, 并将`subR`连接到`parent`的父亲节点下
-> 			
-> 	那么 就以 40节点为`parent`进行左单旋
-> 			
-> 	即 
+>     此时应该怎么调整呢？
+>             
+>     最终要调节的是 80节点, 80节点是因为左子树高而失衡的, 所以 `最终需要右单旋来调节`
+>             
+>     但是 右单旋处理的是 `左左` 的情况
+>             
+>     所以 需要将 此树调整为 `左左`
+>             
+>     而 左单旋就是将 `parent` 旋转到 `subR` 的左孩子, 并将`subR`连接到`parent`的父亲节点下
+>             
+>     那么 就以 40节点为`parent`进行左单旋
+>             
+>     即 
 >
 >   ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154149928.webp)
 >
-> 	这样 就把树的结构调整为了 `左左` 的情况
-> 			
-> 	然后 以 80节点 为 `parent` 进行 `右单旋`: 
+>     这样 就把树的结构调整为了 `左左` 的情况
+>             
+>     然后 以 80节点 为 `parent` 进行 `右单旋`: 
 >
 > ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154151958.webp)
 >
-> 	树平衡
+>     树平衡
 >
 > 2. `h = 1`
 >
@@ -607,27 +607,27 @@ void RotateR(Node* parent) {
 >
 > ![(虚线, 表示其他可插入位置)  |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154153945.webp)
 >
-> 	以80节点为根的树 失衡的情况是 `左右`
-> 			
-> 	80节点因为左子树高 而失衡, 最终需要 `右单旋`调节
-> 			
-> 	所以 需要先将此树调整为 `左左`
-> 			
-> 	以 40节点为 `parent` 进行左单旋, 可以将 `subR`(60节点)调整为左子树高, 且将 `subR` 连接在 `parent` 的父亲节点下
-> 			
-> 	即可以将 此树调整为 `左左`
-> 			
-> 	所以, 以 40节点为 `parent` 进行左单旋: 
+>     以80节点为根的树 失衡的情况是 `左右`
+>             
+>     80节点因为左子树高 而失衡, 最终需要 `右单旋`调节
+>             
+>     所以 需要先将此树调整为 `左左`
+>             
+>     以 40节点为 `parent` 进行左单旋, 可以将 `subR`(60节点)调整为左子树高, 且将 `subR` 连接在 `parent` 的父亲节点下
+>             
+>     即可以将 此树调整为 `左左`
+>             
+>     所以, 以 40节点为 `parent` 进行左单旋: 
 >
 > ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154156148.webp)
 >
-> 	此时 以80节点为根的树 失衡的情况就变成了 `左左`
-> 			
-> 	就可以 以 80节点为 `parent` 进行`右单旋`
+>     此时 以80节点为根的树 失衡的情况就变成了 `左左`
+>             
+>     就可以 以 80节点为 `parent` 进行`右单旋`
 >
 > ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154158334.webp)
 >
-> 	树平衡
+>     树平衡
 >
 > 3. `h = 2`
 >
@@ -635,27 +635,27 @@ void RotateR(Node* parent) {
 >
 > ![(虚线, 表示其他可插入位置)  |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154200057.webp)
 >
-> 	A、D树各 3 种情况, 新节点可能插入位置有 4 个, 所以此情况的结构一共有 `36` 种
-> 			
-> 	但是还是可以用相同的思路分析: 
-> 			
-> 	80节点平衡因子是 -2, 最终需要 `右单旋`进行平衡
-> 			
-> 	而 `右单旋`解决的是 `“左左”` 的情况, 而现在是 `“左右”`
-> 			
-> 	根绝 左单旋的结果的特点 可以知道, 以 40节点为parent 执行左单旋操作
-> 			
-> 	会将 `subR`(60节点)的左子树增高, 并将 `subR` 连接在 `parent` 的父亲节点之下
-> 			
-> 	进而 可以使 以 80节点为根的树的失衡情况变为 `“左左”`
+>     A、D树各 3 种情况, 新节点可能插入位置有 4 个, 所以此情况的结构一共有 `36` 种
+>             
+>     但是还是可以用相同的思路分析: 
+>             
+>     80节点平衡因子是 -2, 最终需要 `右单旋`进行平衡
+>             
+>     而 `右单旋`解决的是 `“左左”` 的情况, 而现在是 `“左右”`
+>             
+>     根绝 左单旋的结果的特点 可以知道, 以 40节点为parent 执行左单旋操作
+>             
+>     会将 `subR`(60节点)的左子树增高, 并将 `subR` 连接在 `parent` 的父亲节点之下
+>             
+>     进而 可以使 以 80节点为根的树的失衡情况变为 `“左左”`
 >
 > ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154202208.webp)
 >
-> 	然后就可以, 以 80节点为`parent` 执行`右单旋`操作
+>     然后就可以, 以 80节点为`parent` 执行`右单旋`操作
 >
 > ![ |wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722154204759.webp)
 >
-> 	树平衡
+>     树平衡
 >
 > 4. `h = 3` ······
 >
@@ -699,32 +699,32 @@ void RotateR(Node* parent) {
 
 ```cpp
 void RotateLR(Node* parent) {
-	Node* subL = parent->_pLeft;		// 不平衡节点的左孩子
-	Node* subLR = subL->_pRight;		// 不平衡节点的左孩子的右孩子
-	int bf = subLR->_bf;
-	// 左右双旋
-	RotateL(parent->_pLeft);
-	RotateR(parent);
+    Node* subL = parent->_pLeft;        // 不平衡节点的左孩子
+    Node* subLR = subL->_pRight;        // 不平衡节点的左孩子的右孩子
+    int bf = subLR->_bf;
+    // 左右双旋
+    RotateL(parent->_pLeft);
+    RotateR(parent);
 
-	// 画图可以看出来 如果插入的位置不同 平衡因子的更新规则也不同
-	if (bf == 0) {
-		parent->_bf = 0;
-		subL->_bf = 0;
-		subLR->_bf = 0;
-	}
-	else if (bf == 1) {
-		parent->_bf = 0;
-		subL->_bf = -1;
-		subLR->_bf = 0;
-	}
-	else if (bf == -1) {
-		parent->_bf = 1;
-		subL->_bf = 0;
-		subLR->_bf = 0;
-	}
-	else {
-		assert(false);
-	}
+    // 画图可以看出来 如果插入的位置不同 平衡因子的更新规则也不同
+    if (bf == 0) {
+        parent->_bf = 0;
+        subL->_bf = 0;
+        subLR->_bf = 0;
+    }
+    else if (bf == 1) {
+        parent->_bf = 0;
+        subL->_bf = -1;
+        subLR->_bf = 0;
+    }
+    else if (bf == -1) {
+        parent->_bf = 1;
+        subL->_bf = 0;
+        subLR->_bf = 0;
+    }
+    else {
+        assert(false);
+    }
 }
 ```
 
@@ -762,31 +762,31 @@ a
 >
 > ```cpp
 > void RotateRL(Node* parent) {
-> 	Node* subR = parent->_pRight;
-> 	Node* subRL = subR->_pLeft;
-> 	int bf = subRL->_bf;
-> 	// 右左双旋
-> 	RotateR(parent->_pRight);
-> 	RotateL(parent);
+>     Node* subR = parent->_pRight;
+>     Node* subRL = subR->_pLeft;
+>     int bf = subRL->_bf;
+>     // 右左双旋
+>     RotateR(parent->_pRight);
+>     RotateL(parent);
 > 
-> 	if (bf == 0) {
-> 		parent->_bf = 0;
-> 		subR->_bf = 0;
-> 		subRL->_bf = 0;
-> 	}
-> 	else if (bf == 1) {
-> 		parent->_bf = -1;
-> 		subR->_bf = 0;
-> 		subRL->_bf = 0;
-> 	}
-> 	else if (bf == -1) {
-> 		parent->_bf = 0;
-> 		subR->_bf = 1;
-> 		subRL->_bf = 0;
-> 	}
-> 	else {
-> 		assert(false);
-> 	}
+>     if (bf == 0) {
+>         parent->_bf = 0;
+>         subR->_bf = 0;
+>         subRL->_bf = 0;
+>     }
+>     else if (bf == 1) {
+>         parent->_bf = -1;
+>         subR->_bf = 0;
+>         subRL->_bf = 0;
+>     }
+>     else if (bf == -1) {
+>         parent->_bf = 0;
+>         subR->_bf = 1;
+>         subRL->_bf = 0;
+>     }
+>     else {
+>         assert(false);
+>     }
 > }
 > ```
 >
@@ -801,221 +801,221 @@ a
 
 ```cpp
 public:
-	bool insert(const T& data) {
-		// 首先按照 二叉搜索树的方式 查找插入位置并插入节点
-		if (_root == nullptr) {
-			// 树为空 插入节点 直接将新节点作为树的根
-			_root = new Node(data);
-			_root->_bf = 0;		// 只有根节点的树, 根节点平衡因子为 0
+    bool insert(const T& data) {
+        // 首先按照 二叉搜索树的方式 查找插入位置并插入节点
+        if (_root == nullptr) {
+            // 树为空 插入节点 直接将新节点作为树的根
+            _root = new Node(data);
+            _root->_bf = 0;        // 只有根节点的树, 根节点平衡因子为 0
 
-			return true;		// 插入成功, 直接返回
-		}
+            return true;        // 插入成功, 直接返回
+        }
 
-		// 走到这里就说明需要 查找插入位置 了
-		Node* cur = _root;	// 从根节点开始比较
-		Node* parent = nullptr;	// 需要记录父亲节点 供插入时连接
-		while (cur) {
-			// 循环结束的条件是 cur为空, cur为空时就说明 插入位置找到了
-			if (cur->_data > data) {
-				// 插入值比当前节点值 小, 则向左孩子找
-				parent = cur;
-				cur = cur->_pLeft;
-			}
-			else if (cur->_data < data) {
-				// 插入值比当前节点值 大, 则向右孩子找
-				parent = cur;
-				cur = cur->_pRight;
-			}
-			else {
-				// 走到这里 说明数中已存在相同数据
-				return false;
-			}
-		}
+        // 走到这里就说明需要 查找插入位置 了
+        Node* cur = _root;    // 从根节点开始比较
+        Node* parent = nullptr;    // 需要记录父亲节点 供插入时连接
+        while (cur) {
+            // 循环结束的条件是 cur为空, cur为空时就说明 插入位置找到了
+            if (cur->_data > data) {
+                // 插入值比当前节点值 小, 则向左孩子找
+                parent = cur;
+                cur = cur->_pLeft;
+            }
+            else if (cur->_data < data) {
+                // 插入值比当前节点值 大, 则向右孩子找
+                parent = cur;
+                cur = cur->_pRight;
+            }
+            else {
+                // 走到这里 说明数中已存在相同数据
+                return false;
+            }
+        }
 
-		// 出循环之后, cur 即为数据需要插入的位置
-		cur = new Node(data);
-		// 将cur与树连接起来
-		if (data > parent->_data) {
-			parent->_pRight = cur;		// 插入数据比父亲节点数据大, 则插入到父亲节点的右孩子
-		}
-		else if (data < parent->_data) {
-			parent->_pLeft = cur;			// 插入数据比父亲节点数据小, 则插入到父亲节点的左孩子
-		}
+        // 出循环之后, cur 即为数据需要插入的位置
+        cur = new Node(data);
+        // 将cur与树连接起来
+        if (data > parent->_data) {
+            parent->_pRight = cur;        // 插入数据比父亲节点数据大, 则插入到父亲节点的右孩子
+        }
+        else if (data < parent->_data) {
+            parent->_pLeft = cur;            // 插入数据比父亲节点数据小, 则插入到父亲节点的左孩子
+        }
         
-		// 三叉链结构, cur节点虚存储父亲节点
-		cur->_pParent = parent;
-		while (parent) {
-			if (cur == parent->_pLeft)
-				parent->_bf--;			// 新节点在父亲节点的左孩子, 则父亲节点的左子树高度+1, 则父亲节点的平衡因子-1
-			else
-				parent->_bf++;
+        // 三叉链结构, cur节点虚存储父亲节点
+        cur->_pParent = parent;
+        while (parent) {
+            if (cur == parent->_pLeft)
+                parent->_bf--;            // 新节点在父亲节点的左孩子, 则父亲节点的左子树高度+1, 则父亲节点的平衡因子-1
+            else
+                parent->_bf++;
 
-			// 更新完之后, 就需要判断 需要继续更新 还是停止更新 或是调整平衡了
-			if (parent->_bf == 0) {
-				// 某祖先节点的平衡因子 从 -1 或 1 -> 0, 说明 插入新节点使此祖先节点的左右子树高度相等了
-				// 不会再影响更上边的节点, 所以可以结束
-				break;
-			}
-			else if (parent->_bf == -1 || parent->_bf == 1) {
-				cur = cur->_pParent;
-				parent = parent->_pParent;
-			}
-			else if (parent->_bf == -2 || parent->_bf == 2) {
-				// 左单旋的情况
-				if (parent->_bf == 2 && cur->_bf == 1) {
-					RotateL(parent);
-				}
-				// 右单旋的情况
-				else if (parent->_bf == -2 && cur->_bf == -1) {
-					RotateR(parent);
-				}
-				// 左右双旋的情况
-				else if (parent->_bf == -2 && cur->_bf == 1) {
-					RotateLR(parent);
-				}
-				else if (parent->_bf == 2 && cur->_bf == -1) {
-					RotateRL(parent);
-				}
+            // 更新完之后, 就需要判断 需要继续更新 还是停止更新 或是调整平衡了
+            if (parent->_bf == 0) {
+                // 某祖先节点的平衡因子 从 -1 或 1 -> 0, 说明 插入新节点使此祖先节点的左右子树高度相等了
+                // 不会再影响更上边的节点, 所以可以结束
+                break;
+            }
+            else if (parent->_bf == -1 || parent->_bf == 1) {
+                cur = cur->_pParent;
+                parent = parent->_pParent;
+            }
+            else if (parent->_bf == -2 || parent->_bf == 2) {
+                // 左单旋的情况
+                if (parent->_bf == 2 && cur->_bf == 1) {
+                    RotateL(parent);
+                }
+                // 右单旋的情况
+                else if (parent->_bf == -2 && cur->_bf == -1) {
+                    RotateR(parent);
+                }
+                // 左右双旋的情况
+                else if (parent->_bf == -2 && cur->_bf == 1) {
+                    RotateLR(parent);
+                }
+                else if (parent->_bf == 2 && cur->_bf == -1) {
+                    RotateRL(parent);
+                }
 
-				break;
-			}
-			else {
-				// 以上情况都是在保证插入新节点时, 树已经是平衡二叉搜索树
-				// 如果不是 则会走到此处 触发断言 进而发现错误
-				assert(false);
-			}
-		}
-		
-		return true;
-	}
+                break;
+            }
+            else {
+                // 以上情况都是在保证插入新节点时, 树已经是平衡二叉搜索树
+                // 如果不是 则会走到此处 触发断言 进而发现错误
+                assert(false);
+            }
+        }
+        
+        return true;
+    }
 
 private:
-	void RotateL(Node* parent) {
-		Node* subR = parent->_pRight;		// 此节点, 即不平衡节点的右孩子
-		Node* subRL = subR->_pLeft;			// 此节点左孩子
+    void RotateL(Node* parent) {
+        Node* subR = parent->_pRight;        // 此节点, 即不平衡节点的右孩子
+        Node* subRL = subR->_pLeft;            // 此节点左孩子
 
-		/* parent 可能是 整棵树的根, 也可能是某节点的子树根
-		* 而 由于AVL树的节点是三叉链的结构, 所以改变节点的位置 需要改变此节点的父亲节点, 所以
-		* 当 parent 是整棵树的根时, 即parent->_pParent 为空, 那么左旋时 就需要直接将 subR改为整棵树的根
-		* 当 parent 是某节点的子树时, 就需要将 parent->_pParent 与 subR 连接起来
-		* 所以 需要将 parent->_pParent 存储起来
-		*/
-		Node* ppNode = parent->_pParent;
+        /* parent 可能是 整棵树的根, 也可能是某节点的子树根
+        * 而 由于AVL树的节点是三叉链的结构, 所以改变节点的位置 需要改变此节点的父亲节点, 所以
+        * 当 parent 是整棵树的根时, 即parent->_pParent 为空, 那么左旋时 就需要直接将 subR改为整棵树的根
+        * 当 parent 是某节点的子树时, 就需要将 parent->_pParent 与 subR 连接起来
+        * 所以 需要将 parent->_pParent 存储起来
+        */
+        Node* ppNode = parent->_pParent;
 
-		// 将 此节点的左孩子 变为 父亲节点的右孩子, 并将 此节点的父亲节点 变为 此节点的左孩子
-		// 并记得 链接三叉链
-		parent->_pRight = subRL;
-		if (subRL)
-			subRL->_pParent = parent;
+        // 将 此节点的左孩子 变为 父亲节点的右孩子, 并将 此节点的父亲节点 变为 此节点的左孩子
+        // 并记得 链接三叉链
+        parent->_pRight = subRL;
+        if (subRL)
+            subRL->_pParent = parent;
 
-		subR->_pLeft = parent;
-		parent->_pParent = subR;
+        subR->_pLeft = parent;
+        parent->_pParent = subR;
 
-		// 改变不平衡节点 的 父亲节点的指向
-		if (parent == _root) {
-			_root = subR;
-			_root->_pParent = nullptr;
-		}
-		else {
-			if (parent == ppNode->_pLeft)		// 不平衡节点是其父亲节点的左孩子
-				ppNode->_pLeft = subR;			// 把 subR 连接到 其父亲节点的左孩子上
-			else
-				ppNode->_pRight = subR;			// 把 subR 连接到 其父亲节点的右孩子上
+        // 改变不平衡节点 的 父亲节点的指向
+        if (parent == _root) {
+            _root = subR;
+            _root->_pParent = nullptr;
+        }
+        else {
+            if (parent == ppNode->_pLeft)        // 不平衡节点是其父亲节点的左孩子
+                ppNode->_pLeft = subR;            // 把 subR 连接到 其父亲节点的左孩子上
+            else
+                ppNode->_pRight = subR;            // 把 subR 连接到 其父亲节点的右孩子上
 
-			subR->_pParent = ppNode;		// 更新 subR 的父亲节点
-		}
+            subR->_pParent = ppNode;        // 更新 subR 的父亲节点
+        }
 
-		parent->_bf = 0;
-		subR->_bf = 0;
-	}
+        parent->_bf = 0;
+        subR->_bf = 0;
+    }
 
-	void RotateR(Node* parent) {
-		Node* subL = parent->_pLeft;		// 此节点, 即不平衡节点的左孩子
-		Node* subLR = subL->_pRight;		// 此节点右孩子
+    void RotateR(Node* parent) {
+        Node* subL = parent->_pLeft;        // 此节点, 即不平衡节点的左孩子
+        Node* subLR = subL->_pRight;        // 此节点右孩子
 
-		Node* ppNode = parent->_pParent;
+        Node* ppNode = parent->_pParent;
         
-		parent->_pLeft = subLR;
-		if (subLR)
-			subLR->_pParent = parent;
+        parent->_pLeft = subLR;
+        if (subLR)
+            subLR->_pParent = parent;
 
-		subL->_pRight = parent;
-		parent->_pParent = subL;
+        subL->_pRight = parent;
+        parent->_pParent = subL;
 
-		// 改变不平衡节点 的 父亲节点的指向
-		if (parent == _root) {
-			_root = subL;
-			_root->_pParent = nullptr;
-		}
-		else {
-			if (parent == ppNode->_pLeft)		// 不平衡节点是其父亲节点的左孩子
-				ppNode->_pLeft = subL;			// 把 subL 连接到 其父亲节点的左孩子上
-			else
-				ppNode->_pRight = subL;			// 把 subL 连接到 其父亲节点的右孩子上
+        // 改变不平衡节点 的 父亲节点的指向
+        if (parent == _root) {
+            _root = subL;
+            _root->_pParent = nullptr;
+        }
+        else {
+            if (parent == ppNode->_pLeft)        // 不平衡节点是其父亲节点的左孩子
+                ppNode->_pLeft = subL;            // 把 subL 连接到 其父亲节点的左孩子上
+            else
+                ppNode->_pRight = subL;            // 把 subL 连接到 其父亲节点的右孩子上
 
-			subL->_pParent = ppNode;		// 更新 subL 的父亲节点
-		}
+            subL->_pParent = ppNode;        // 更新 subL 的父亲节点
+        }
 
-		parent->_bf = 0;
-		subL->_bf = 0;
-	}
+        parent->_bf = 0;
+        subL->_bf = 0;
+    }
 
-	void RotateLR(Node* parent) {
-		Node* subL = parent->_pLeft;
-		Node* subLR = subL->_pRight;
-		int bf = subLR->_bf;
-		// 左右双旋
-		RotateL(parent->_pLeft);
-		RotateR(parent);
-		
-		// 画图可以看出来 如果插入的位置不同 平衡因子的更新规则也不同
-		if (bf == 0) {
-			parent->_bf = 0;
-			subL->_bf = 0;
-			subLR->_bf = 0;
-		}
-		else if (bf == 1) {
-			parent->_bf = 0;
-			subL->_bf = -1;
-			subLR->_bf = 0;
-		}
-		else if (bf == -1) {
-			parent->_bf = 1;
-			subL->_bf = 0;
-			subLR->_bf = 0;
-		}
-		else {
-			assert(false);
-		}
-	}
+    void RotateLR(Node* parent) {
+        Node* subL = parent->_pLeft;
+        Node* subLR = subL->_pRight;
+        int bf = subLR->_bf;
+        // 左右双旋
+        RotateL(parent->_pLeft);
+        RotateR(parent);
+        
+        // 画图可以看出来 如果插入的位置不同 平衡因子的更新规则也不同
+        if (bf == 0) {
+            parent->_bf = 0;
+            subL->_bf = 0;
+            subLR->_bf = 0;
+        }
+        else if (bf == 1) {
+            parent->_bf = 0;
+            subL->_bf = -1;
+            subLR->_bf = 0;
+        }
+        else if (bf == -1) {
+            parent->_bf = 1;
+            subL->_bf = 0;
+            subLR->_bf = 0;
+        }
+        else {
+            assert(false);
+        }
+    }
 
-	void RotateRL(Node* parent) {
-		Node* subR = parent->_pRight;
-		Node* subRL = subR->_pLeft;
-		int bf = subRL->_bf;
-		// 右左双旋
-		RotateR(parent->_pRight);
-		RotateL(parent);
-		
-		if (bf == 0) {
-			parent->_bf = 0;
-			subR->_bf = 0;
-			subRL->_bf = 0;
-		}
-		else if (bf == 1) {
-			parent->_bf = -1;
-			subR->_bf = 0;
-			subRL->_bf = 0;
-		}
-		else if (bf == -1) {
-			parent->_bf = 0;
-			subR->_bf = 1;
-			subRL->_bf = 0;
-		}
-		else {
-			assert(false);
-		}
-	}
+    void RotateRL(Node* parent) {
+        Node* subR = parent->_pRight;
+        Node* subRL = subR->_pLeft;
+        int bf = subRL->_bf;
+        // 右左双旋
+        RotateR(parent->_pRight);
+        RotateL(parent);
+        
+        if (bf == 0) {
+            parent->_bf = 0;
+            subR->_bf = 0;
+            subRL->_bf = 0;
+        }
+        else if (bf == 1) {
+            parent->_bf = -1;
+            subR->_bf = 0;
+            subRL->_bf = 0;
+        }
+        else if (bf == -1) {
+            parent->_bf = 0;
+            subR->_bf = 1;
+            subRL->_bf = 0;
+        }
+        else {
+            assert(false);
+        }
+    }
 ```
 
 AVL树的 插入操作, 是AVL树第二难理解的内容, 最难理解的内容是 `AVL树 数据的删除`

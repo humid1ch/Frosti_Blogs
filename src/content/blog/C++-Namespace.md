@@ -65,14 +65,14 @@ C语言因为这个规定, 就会造成: 如果存在命名相同, 那就只能�
 
 namespace July
 {
-	int J = 10;
-	int U = 11;
+    int J = 10;
+    int U = 11;
 }
 
 int main()
 {
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -87,14 +87,14 @@ int main()
 
 namespace July
 {
-	int J = 10;
-	int U = 11;
+    int J = 10;
+    int U = 11;
 }
 
 namespace July_
 {
-	int J = 20;
-	int U = 21;
+    int J = 20;
+    int U = 21;
 }
 
 int J = 30;
@@ -102,7 +102,7 @@ int U = 31;
 int main()
 {
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -117,18 +117,18 @@ int main()
 > ```cpp
 > namespace July
 > {
-> 	int J = 10;
-> 	int U = 11;
-> 	namespace July1
-> 	{
-> 		int J = 10;
-> 		int U = 11;
-> 		namespace July11
-> 		{
-> 			int J = 10;
-> 			int U = 11;
-> 		}
-> 	}
+>     int J = 10;
+>     int U = 11;
+>     namespace July1
+>     {
+>         int J = 10;
+>         int U = 11;
+>         namespace July11
+>         {
+>             int J = 10;
+>             int U = 11;
+>         }
+>     }
 > }
 > ```
 >
@@ -151,27 +151,27 @@ int main()
 
 namespace July
 {
-	int J = 10;
-	int U = 11;
-	namespace July1
-	{
-		int J = 10;
-		int U = 11;
-		namespace July11
-		{
-			int J = 10;
-			int U = 11;
-		}
-	}
+    int J = 10;
+    int U = 11;
+    namespace July1
+    {
+        int J = 10;
+        int U = 11;
+        namespace July11
+        {
+            int J = 10;
+            int U = 11;
+        }
+    }
 }
 
 int main()
 {
-	printf("%d\n", July::J);
-	printf("%d\n", July::July1::J);
-	printf("%d\n", July::July1::July11::J);
+    printf("%d\n", July::J);
+    printf("%d\n", July::July1::J);
+    printf("%d\n", July::July1::July11::J);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -191,22 +191,22 @@ int main()
 
 namespace July
 {
-	int J = 10;
-	int U = 11;
-	namespace July1
-	{
-		int L = 20;
-		int Y = 21;
-	}
+    int J = 10;
+    int U = 11;
+    namespace July1
+    {
+        int L = 20;
+        int Y = 21;
+    }
 }
 
 using namespace July;
 
 int main()
 {
-	printf("%d\n", July1::L);
+    printf("%d\n", July1::L);
 
-	return 0;
+    return 0;
 }
 ```
 

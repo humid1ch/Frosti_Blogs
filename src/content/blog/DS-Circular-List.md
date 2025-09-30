@@ -480,10 +480,10 @@ struct ListNode *detectCycle(struct ListNode *head)
         pfast = pfast->next->next;
         pslow = pslow->next;
 
-        if(pfast == pslow)		// 有环
+        if(pfast == pslow)        // 有环
         {
             struct ListNode* phead = head;
-            while(phead != pslow)		//使 两个指针 分别从 首节点和相遇点 一次一步 移动, 直到相遇
+            while(phead != pslow)        //使 两个指针 分别从 首节点和相遇点 一次一步 移动, 直到相遇
             {
                 phead = phead->next;
                 pslow = pslow->next;

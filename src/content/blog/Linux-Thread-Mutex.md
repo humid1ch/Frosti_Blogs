@@ -233,9 +233,9 @@ int main() {
 
 1. 无论 `tickets > 0` 还是 `tickets--` 这 **`两个计算操作都不是原子的`**
 
-	这两个操作都具有中间状态, 即 CPU计算的过程需要读取、计算、返回多个操作. 存在中间状态, 就有可能在处于中间状态的时候 暂停 然后其他线程访问同一个数据.
-	
-	如果, 这两个操作都是原子性的, 根本不存在什么中间状态, 就不会再造成这种情况
+    这两个操作都具有中间状态, 即 CPU计算的过程需要读取、计算、返回多个操作. 存在中间状态, 就有可能在处于中间状态的时候 暂停 然后其他线程访问同一个数据.
+    
+    如果, 这两个操作都是原子性的, 根本不存在什么中间状态, 就不会再造成这种情况
 
 2. 在已经有一个线程访问临界资源的时候, 其他线程依旧可以访问临界资源.
 
@@ -333,7 +333,7 @@ using std::cout;
 using std::endl;
 
 int tickets = 10000;
-pthread_mutex_t mutex;		// 定义锁
+pthread_mutex_t mutex;        // 定义锁
 
 void* grabTicket(void* args) {
     const char* name = static_cast<const char*>(args);
@@ -356,7 +356,7 @@ void* grabTicket(void* args) {
 }
 
 int main() {
-    pthread_mutex_init(&mutex, nullptr); 		// 初始化锁
+    pthread_mutex_init(&mutex, nullptr);         // 初始化锁
 
     pthread_t tid1, tid2, tid3, tid4;
 
@@ -468,7 +468,7 @@ using std::cout;
 using std::endl;
 
 int tickets = 10000;
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;		// 定义全局锁, 并用宏来初始化
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;        // 定义全局锁, 并用宏来初始化
 
 void* grabTicket(void* args) {
     const char* name = static_cast<const char*>(args);
@@ -563,7 +563,7 @@ int main() {
 
     pthread_t tid1, tid2, tid3, tid4;
 
-    pthread_create(&tid1, nullptr, grabTicket, (void*)&mutex); 			// 将锁地址当参数传入
+    pthread_create(&tid1, nullptr, grabTicket, (void*)&mutex);             // 将锁地址当参数传入
     pthread_create(&tid2, nullptr, grabTicket, (void*)&mutex);
     pthread_create(&tid3, nullptr, grabTicket, (void*)&mutex);
     pthread_create(&tid4, nullptr, grabTicket, (void*)&mutex);
@@ -606,7 +606,7 @@ int tickets = 10000;
 typedef struct threadData {
     char _name[64];
     pthread_mutex_t* _mutex; 
-}threadData;							// 定义struct 成员包括 name 和 锁
+}threadData;                            // 定义struct 成员包括 name 和 锁
 
 void* grabTicket(void* args) {
     threadData* tD = (threadData*)args;
@@ -721,10 +721,10 @@ int main() {
 movb $0, %al
 xchgb %al, mutex
 if(al > 0) {
-	return 0;
+    return 0;
 }
 else 
-	阻塞等待;
+    阻塞等待;
 goto lock;
 ```
 
@@ -852,7 +852,7 @@ void* startRoutine(void* args) {
             break;
         }
         printf("%s, grab tickets success\n", name);
-        sleep(1);			// 为了方便观察, 设置为1s
+        sleep(1);            // 为了方便观察, 设置为1s
     }
 
     return nullptr;
@@ -887,17 +887,17 @@ int main() {
 
 1. `myMutex互斥量类`, 即 `锁类`.
 
-	构造函数的内容就是 锁的初始化. 析构函数的内容就是 锁的摧毁.
-	
-	还有两个成员函数就是 上锁和解锁.
+    构造函数的内容就是 锁的初始化. 析构函数的内容就是 锁的摧毁.
+    
+    还有两个成员函数就是 上锁和解锁.
 
 2. `lockGuard类`, 此类其实是为了更加简单的使用上锁和解锁而封装的.
 
-	此类中, 定义了一个成员变量 是我们封装的 myMutex类.
-	
-	而 此类的构造函数, 首先通过初始化列表初始化成员变量. 然后通过成员变量来调用我们封装过的上锁函数. 就可以达到一个 实例化 `lockGuard` 对象自动上锁的功能
-	
-	然后是 此类的析构函数, 析构函数的内容就是通过成员变量调用我们封装过的解锁函数. 就可以达到 在 `lockGuard`对象析构的时候, 自动解锁的功能
+    此类中, 定义了一个成员变量 是我们封装的 myMutex类.
+    
+    而 此类的构造函数, 首先通过初始化列表初始化成员变量. 然后通过成员变量来调用我们封装过的上锁函数. 就可以达到一个 实例化 `lockGuard` 对象自动上锁的功能
+    
+    然后是 此类的析构函数, 析构函数的内容就是通过成员变量调用我们封装过的解锁函数. 就可以达到 在 `lockGuard`对象析构的时候, 自动解锁的功能
 
 那么, 在 `myThread.cpp` 的这段使用我们封装的类的代码中, 我们是怎么上锁和解锁的？
 

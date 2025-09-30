@@ -23,22 +23,22 @@ C++ 升级了 `struct` , 使其定义的结构体:
 ```cpp
 struct User
 {
-	void Init(const char* name, const char* sex, const char* tele, int age)
-	{
-		strcpy(_name, name);
-		strcpy(_sex, sex);
-		strcpy(_tele, tele);
-		_age = age;
-	}
-	void Print()
-	{
-		cout << _name << "  " << _sex << "  " << _tele << "  " << _age << endl;
-	}
+    void Init(const char* name, const char* sex, const char* tele, int age)
+    {
+        strcpy(_name, name);
+        strcpy(_sex, sex);
+        strcpy(_tele, tele);
+        _age = age;
+    }
+    void Print()
+    {
+        cout << _name << "  " << _sex << "  " << _tele << "  " << _age << endl;
+    }
 
-	char _name[20];
-	char _sex[10];
-	char _tele[20];
-	int _age;
+    char _name[20];
+    char _sex[10];
+    char _tele[20];
+    int _age;
 };
 ```
 
@@ -91,23 +91,23 @@ C++中的 结构体和类的内部 其实都设置有访问权限。但是结构
 class User
 {
 public:
-	void Init(const char* name, const char* sex, const char* tele, int age)
-	{
-		strcpy(_name, name);
-		strcpy(_sex, sex);
-		strcpy(_tele, tele);
-		_age = age;
-	}
-	void Print()
-	{
-		cout << _name << "  " << _sex << "  " << _tele << "  " << _age << endl;
-	}
+    void Init(const char* name, const char* sex, const char* tele, int age)
+    {
+        strcpy(_name, name);
+        strcpy(_sex, sex);
+        strcpy(_tele, tele);
+        _age = age;
+    }
+    void Print()
+    {
+        cout << _name << "  " << _sex << "  " << _tele << "  " << _age << endl;
+    }
 
 private:
-	char _name[20];
-	char _sex[10];
-	char _tele[20];
-	int _age;
+    char _name[20];
+    char _sex[10];
+    char _tele[20];
+    int _age;
 };
 ```
 
@@ -154,62 +154,62 @@ using namespace std;
 class Stack 
 {
 public:
-	// 栈的初始化
-	void StackInit()
-	{
-		_data = nullptr;
-		_top = 0;			// 栈顶初始位置定义 (top = -1, 先++后赋值; top = 0, 先赋值后++)
-		_capacity = 0;
-	}
-	// 栈的销毁
-	void StackDestroy()
-	{
-		free(_data);
-		_data = nullptr;
-		_top = _capacity = 0;
-	}
-	// 压栈
-	void StackPush(int x)
-	{
-		if (_top == _capacity)
-		{
-			int newCapacity = _capacity == 0 ? 4 : _capacity * 2;
-			int* tmp = (int*)realloc(_data, newCapacity * sizeof(int));
-			if (tmp == nullptr)
-			{
-				printf("realloc failed\n");
-				exit(-1);
-			}
-			else
-				_data = tmp;
+    // 栈的初始化
+    void StackInit()
+    {
+        _data = nullptr;
+        _top = 0;            // 栈顶初始位置定义 (top = -1, 先++后赋值; top = 0, 先赋值后++)
+        _capacity = 0;
+    }
+    // 栈的销毁
+    void StackDestroy()
+    {
+        free(_data);
+        _data = nullptr;
+        _top = _capacity = 0;
+    }
+    // 压栈
+    void StackPush(int x)
+    {
+        if (_top == _capacity)
+        {
+            int newCapacity = _capacity == 0 ? 4 : _capacity * 2;
+            int* tmp = (int*)realloc(_data, newCapacity * sizeof(int));
+            if (tmp == nullptr)
+            {
+                printf("realloc failed\n");
+                exit(-1);
+            }
+            else
+                _data = tmp;
 
-			_capacity = newCapacity;
-		}
+            _capacity = newCapacity;
+        }
 
-		_data[_top++] = x;
-	}
-	// 出栈
-	void StackPop()
-	{
-		assert(_top > 0);
+        _data[_top++] = x;
+    }
+    // 出栈
+    void StackPop()
+    {
+        assert(_top > 0);
 
-		--_top;
-	}
-	// 判空
-	bool StackEmpty()
-	{
-		return _top == 0;			// top 等于 0 栈为空, 返回 true; 不等于 0 , 返回 false
-	}
-	// 栈顶数据
-	int StackTop()
-	{
-		return _data[_top - 1];
-	}
+        --_top;
+    }
+    // 判空
+    bool StackEmpty()
+    {
+        return _top == 0;            // top 等于 0 栈为空, 返回 true; 不等于 0 , 返回 false
+    }
+    // 栈顶数据
+    int StackTop()
+    {
+        return _data[_top - 1];
+    }
 
 private:
-	int *_data;
-	int _top;				// 栈顶位置
-	int _capacity;			// 栈的容量
+    int *_data;
+    int _top;                // 栈顶位置
+    int _capacity;            // 栈的容量
 };
 ```
 
@@ -363,25 +363,25 @@ private:
 class A
 {
 public:
-	void PrintA()
-	{
-		cout << _a << endl;
-	}
-	void Show()
-	{
-		cout << "Show()" << endl;
-	}
+    void PrintA()
+    {
+        cout << _a << endl;
+    }
+    void Show()
+    {
+        cout << "Show()" << endl;
+    }
 private:
-	int _a;
+    int _a;
 };
 
 int main()
 {
-	A* p = nullptr;
+    A* p = nullptr;
     p->Show();
-	p->PrintA();
+    p->PrintA();
 
-	return 0;
+    return 0;
 }
 ```
 
