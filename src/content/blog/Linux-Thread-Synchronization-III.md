@@ -227,11 +227,11 @@ tags:
 
 1. 生产者需要的是什么资源？
 
-	需要**空间资源**, 因为需要向队列中, 入数据
+    需要**空间资源**, 因为需要向队列中, 入数据
 
 2. 消费者需要的是什么资源？
 
-	需要**数据资源**, 因为需要从队列中, 出数据
+    需要**数据资源**, 因为需要从队列中, 出数据
 
 那么, 就可以针对不同的资源, 创建两个信号量
 
@@ -463,7 +463,7 @@ using std::cout;
 using std::endl;
 using std::vector;
 
-const int gDefultCap = 30; 				// 实现了多线程, 适当的将队列放大 
+const int gDefultCap = 30;                 // 实现了多线程, 适当的将队列放大 
 
 template <class T>
 class ringQueue {

@@ -104,7 +104,7 @@ public:
         
         // right移动到数组末尾之前, 循环不结束
         while (right < nums.size()) {
-			if (nums[right] != 0) {
+            if (nums[right] != 0) {
                 swap(nums[left], nums[right]);
                 left++;
             }

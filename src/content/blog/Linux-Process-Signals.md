@@ -474,7 +474,7 @@ void handler(int signo) {
 
 int main(int argc, char* argv[]) {
     signal(2, handler);
-    signal(SIGABRT, handler);	// 捕捉 SIGABRT 信号
+    signal(SIGABRT, handler);    // 捕捉 SIGABRT 信号
 
     while (true) {      // 循环给自己发送 信号2
         raise(2);
@@ -650,7 +650,7 @@ int main() {
     //int* pi = nullptr;
     //*pi = 10;
 
-    // 除0	
+    // 除0    
     //int i = 10;
     //i /= 0;
 
@@ -662,15 +662,15 @@ int main() {
 
 1. 越界访问:
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175622291.webp)
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175622291.webp)
 
 2. 解引用空指针:
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175623963.webp)
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175623963.webp)
 
 3. 除0: 
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175625827.webp)
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175625827.webp)
 
 可以看到, 当我们将1~31信号自定义处理时, 从代码的执行结果就可以看出来, 其实 进程代码发生异常错误导致进程崩溃退出,  **`本质上是 异常错误产生了相应的信号 并发送给了进程, 进而才导致了进程的退出`**
 
@@ -750,7 +750,7 @@ int main() {
     // 捕捉进程, 自定义处理
     signal(8, handler);
     
-    // 除0	
+    // 除0    
     int i = 10;
     i /= 0;
 
@@ -874,25 +874,25 @@ core 文件的命名, 其实就是  **`core.进程pid`**
 
 1. 首先, 我们将上面的代码重新 以调试模式 编译链接一下: 
 
-	`g++ -g mykill.cc -o mykillg`
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175647315.webp)
+    `g++ -g mykill.cc -o mykillg`
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175647315.webp)
 
 2. 然后再执行 `./mykillg`, 会生成一个新的 core文件
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175648913.webp)
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175648913.webp)
 
 3. 然后我们使用 gdb 调试进程: 
 
-	`gdb mykillg`
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175650794.webp)
+    `gdb mykillg`
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175650794.webp)
 
 4. 在 gdb 调试界面, 直接输入 `core-file core.2127`
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175652649.webp)
-	
-	可以发现, 我们通过gdb调试进程时使用core文件, 可以  **`直接定位出 进程上次运行的错误位置、信息`**
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175652649.webp)
+    
+    可以发现, 我们通过gdb调试进程时使用core文件, 可以  **`直接定位出 进程上次运行的错误位置、信息`**
 
 也就是说 core 文件, 其实是为 事后使用gdb调试程序时 快速定位错误信息 所生成的文件.
 
@@ -1023,37 +1023,37 @@ int sigismember(const sigset_t *set, int signo);
 
 2. `int sigemptyset()`:
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175705578.webp)
-	
-	调用此函数, 会将传入的信号集初始化为空, 即所有信号、阻塞会被消除, 信号集的所有位设置为0
-	
-	成功返回0, 错误返回-1
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175705578.webp)
+    
+    调用此函数, 会将传入的信号集初始化为空, 即所有信号、阻塞会被消除, 信号集的所有位设置为0
+    
+    成功返回0, 错误返回-1
 
 3. `int sigfillset()`:
 
-	![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175707381.webp)
-	
-	调用此函数, 会将传入的信号集所有位设置为1.
-	
-	成功返回0, 错误返回-1
+    ![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175707381.webp)
+    
+    调用此函数, 会将传入的信号集所有位设置为1.
+    
+    成功返回0, 错误返回-1
 
 4. `int sigaddset()` 和 `int sigdelset()`:
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175708900.webp)
-	
-	`sigaddset()` 的作用是, 给指定信号集中添加指定信号, 即 将指定信号集中的指定位置设置为1
-	
-	`sigdelset()` 的作用是, 删除指定信号集中的指定信号, 即 将指定信号集中的指定位置设置为0
-	
-	着两个函数, 都是成功返回0, 失败返回-1.
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175708900.webp)
+    
+    `sigaddset()` 的作用是, 给指定信号集中添加指定信号, 即 将指定信号集中的指定位置设置为1
+    
+    `sigdelset()` 的作用是, 删除指定信号集中的指定信号, 即 将指定信号集中的指定位置设置为0
+    
+    着两个函数, 都是成功返回0, 失败返回-1.
 
 5. `int sigismember()`:
 
-	![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175710510.webp)
-	
-	调用此函数, 可以判断 信号集中是否有某信号. 即 判断信号集的某位是否为1
-	
-	如果 信号在信号集中 返回1, 如果不在 返回0, 如果出现错误 则返回-1
+    ![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175710510.webp)
+    
+    调用此函数, 可以判断 信号集中是否有某信号. 即 判断信号集的某位是否为1
+    
+    如果 信号在信号集中 返回1, 如果不在 返回0, 如果出现错误 则返回-1
 
 #### sigprocmask()
 
@@ -1073,45 +1073,45 @@ int sigismember(const sigset_t *set, int signo);
 
 1. 首先介绍 `const sigset_t *set` 也就是第二个参数
 
-	第二个参数需要传入一个信号集, 此信号集是  **`修改进程的信号屏蔽字(mask)用的`**.
-	
-	此参数`需要根据 how(第一个参数) 的不同, 来传入不同意义的信号集`
+    第二个参数需要传入一个信号集, 此信号集是  **`修改进程的信号屏蔽字(mask)用的`**.
+    
+    此参数`需要根据 how(第一个参数) 的不同, 来传入不同意义的信号集`
 
 2. 然后是 `sigset_t *oldset` 第三个参数
 
-	第三个参数也是需要传入一个信号集, 不过一般传入被全部置0的信号集.
-	
-	此参数是一个输出型参数, 用于获取没做修改的 mask, 即函数执行结束后,  **`此参数会获取没有执行此函数时的mask`**.
+    第三个参数也是需要传入一个信号集, 不过一般传入被全部置0的信号集.
+    
+    此参数是一个输出型参数, 用于获取没做修改的 mask, 即函数执行结束后,  **`此参数会获取没有执行此函数时的mask`**.
 
 3. 最后介绍 `int how` 第一个参数
 
-	how 是一个整型参数, 需要传入系统提供的宏. 不同宏的选择此函数会有不同的功能, 就需要传入不同意义的 set(第二个参数)
-	
-	| how             | set的意义                               | 函数功能                                                     |
-	| --------------- | --------------------------------------- | ------------------------------------------------------------ |
-	| **SIG_BLOCK**   | set的内容为 需要添加阻塞的信号的位置为1 | 在mask中 为set指定的信号 添加阻塞. 以位图的角度可以看作 mask \|= set |
-	| **SIG_UNBLOCK** | set的内容为 需要解除阻塞的信号的位置为1 | 在mask中 为set指定的信号 解除阻塞. 以位图的角度可以看作 mask &= ~set |
-	| **SIG_SETMASK** | set的内容为 需要指定设置的mask          | 将set设置为mask. 以位图的角度可以看作 mask = set             |
+    how 是一个整型参数, 需要传入系统提供的宏. 不同宏的选择此函数会有不同的功能, 就需要传入不同意义的 set(第二个参数)
+    
+    | how             | set的意义                               | 函数功能                                                     |
+    | --------------- | --------------------------------------- | ------------------------------------------------------------ |
+    | **SIG_BLOCK**   | set的内容为 需要添加阻塞的信号的位置为1 | 在mask中 为set指定的信号 添加阻塞. 以位图的角度可以看作 mask \|= set |
+    | **SIG_UNBLOCK** | set的内容为 需要解除阻塞的信号的位置为1 | 在mask中 为set指定的信号 解除阻塞. 以位图的角度可以看作 mask &= ~set |
+    | **SIG_SETMASK** | set的内容为 需要指定设置的mask          | 将set设置为mask. 以位图的角度可以看作 mask = set             |
 
 只用文字的话, 这个函数的使用方法及功能很抽象. 下面我用图片的形式 解释一下.
 
 1. 如果需要为指定位置添加阻塞: 
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175714782.webp)
-	
-	其实就是 将传入的 set 与进程原来的信号屏蔽字 做  **`按位或操作`**, 最终结果 作为进程最新的信号屏蔽字
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175714782.webp)
+    
+    其实就是 将传入的 set 与进程原来的信号屏蔽字 做  **`按位或操作`**, 最终结果 作为进程最新的信号屏蔽字
 
 2. 如果需要为指定信号解除阻塞: 
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175716771.webp)
-	
-	其实就是 将传入的 `set先按位取反`, 再与进程原来的信号屏蔽字 做 `按位与操作`. 最终结果 作为进程的新的信号屏蔽字
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175716771.webp)
+    
+    其实就是 将传入的 `set先按位取反`, 再与进程原来的信号屏蔽字 做 `按位与操作`. 最终结果 作为进程的新的信号屏蔽字
 
 3. 如果需要直接设置信号屏蔽字: 
 
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175718971.webp)
-	
-	其实就是, 直接将传入的 `set 覆盖进程原来的信号屏蔽字`, 即  **`将传入的set 作为进程新的信号屏蔽字`**
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175718971.webp)
+    
+    其实就是, 直接将传入的 `set 覆盖进程原来的信号屏蔽字`, 即  **`将传入的set 作为进程新的信号屏蔽字`**
 
 ### 信号集操作相关代码演示
 
@@ -1395,29 +1395,29 @@ int main() {
 
 2. 第二个参数 `const struct sigaction *act`, 这个参数很奇怪, 它与此函数同名, 并且是一个结构体指针
 
-	这个结构体的内容是什么？
-	
-	![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175750664.webp)
-	
-	在man手册中, 可以看到 `struct sigaction` 的内容一共有5个: 
-	
-	1. `void (*sa_handler)(int);`, 此成员的含义其实就是 `自定义处理信号的函数指针`;
-	2. `void (*sa_sigcation)(int, siginfo_t *, void *);`, 此成员也是一个函数指针. 但是这个函数的意义是用来 处理实时信号的, 不考虑分析. (siginfo_t 是表示实时信号的结构体)
-	3. `sigset_t sa_mask;`, 此成员是一个信号集, 这个信号集有什么用呢？我们在使用时解释
-	4. `int sa_flags;`, 此成员包含着系统提供的一些选项, 本篇文章使用中都设置为0
-	5. `void (*sa_restorer)(void);`, 很明显 此成员也是一个函数指针. 但我们暂时不考虑他的意义.
-	
-	也就是说, 我们暂时可以知道, `sigaction()`的第二个参数是一个结构体指针, 并且指向的结构体里 **`有一个成员是用来自定义处理信号`** 的
-	
-	此参数的作用就是, 将指定信号的处理动作改为传入的`struct sigaction` 的内容
+    这个结构体的内容是什么？
+    
+    ![|large](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175750664.webp)
+    
+    在man手册中, 可以看到 `struct sigaction` 的内容一共有5个: 
+    
+    1. `void (*sa_handler)(int);`, 此成员的含义其实就是 `自定义处理信号的函数指针`;
+    2. `void (*sa_sigcation)(int, siginfo_t *, void *);`, 此成员也是一个函数指针. 但是这个函数的意义是用来 处理实时信号的, 不考虑分析. (siginfo_t 是表示实时信号的结构体)
+    3. `sigset_t sa_mask;`, 此成员是一个信号集, 这个信号集有什么用呢？我们在使用时解释
+    4. `int sa_flags;`, 此成员包含着系统提供的一些选项, 本篇文章使用中都设置为0
+    5. `void (*sa_restorer)(void);`, 很明显 此成员也是一个函数指针. 但我们暂时不考虑他的意义.
+    
+    也就是说, 我们暂时可以知道, `sigaction()`的第二个参数是一个结构体指针, 并且指向的结构体里 **`有一个成员是用来自定义处理信号`** 的
+    
+    此参数的作用就是, 将指定信号的处理动作改为传入的`struct sigaction` 的内容
 
 3. `struct sigaction *oldact`, 第三个参数看起来似曾相识, 好像我们在介绍 `sigprocmask()` 接口时的第三个参数
 
-	其实这两个函数的第三个参数的作用是相似的, 都是一个输出型参数.
-	
-	在 `sigaction()` 这个函数中, 第三个参数的作用是获取 此次修改信号`struct sigaction`之前的原本的`struct sigaction`
-	
-	如果传入为空指针, 则不获取
+    其实这两个函数的第三个参数的作用是相似的, 都是一个输出型参数.
+    
+    在 `sigaction()` 这个函数中, 第三个参数的作用是获取 此次修改信号`struct sigaction`之前的原本的`struct sigaction`
+    
+    如果传入为空指针, 则不获取
 
 那么, 我们就来简单的使用一下这个函数:
 
@@ -1681,7 +1681,7 @@ int main() {
 而, 如果我们在 flags定义时 使用volatile关键字, 那么就会有不同的结果: 
 
 ```cpp
-volatile int flags = 0; 		// 全局变量
+volatile int flags = 0;         // 全局变量
 ```
 
 ![volatile_O2  |inline](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722175819101.gif)

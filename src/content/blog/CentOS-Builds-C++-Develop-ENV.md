@@ -285,7 +285,7 @@ vi /etc/profile
 # 在打开文件的末尾 添加一句
 export PATH=$PATH:/usr/local/node/bin
 # 保存退出
-source /etc/profile 	# 使更改生效
+source /etc/profile     # 使更改生效
 ```
 
 此时查看node和npm版本: 
@@ -392,13 +392,13 @@ llvm和clang12.0.0 是为了 使用 Coc.nvim给C/C++语法补全用的
 > 开辟swap空间: 
 >
 > ```shell
-> free -m 		   # 查看是否有swap空间, 若存在且足够大, 则不用开辟
+> free -m            # 查看是否有swap空间, 若存在且足够大, 则不用开辟
 > dd if=/dev/zero of=/swap bs=1MB count=2048
-> ll / |grep swap 	# 查看swap文件是否生成
+> ll / |grep swap     # 查看swap文件是否生成
 > cd /
 > mkswap swap
 > swapon swap
-> free -m 		   # 再查看swap空间是否开辟成功
+> free -m            # 再查看swap空间是否开辟成功
 > # bs 为单位块的大小
 > # count 为需要开多少块
 > # 可以根据需要修改
@@ -459,7 +459,7 @@ mv clang-tools-extra-12.0.0.src clang-tools-extra
 vi /etc/profile
 # 在文件末尾添加 
 export CLANG_GCC=/usr/local # 然后保存退出
-source /etc/profile 	# 使更改生效
+source /etc/profile     # 使更改生效
 
 # [root@dxyt llvm-clang]# pwd
 # /root/App/llvm-clang

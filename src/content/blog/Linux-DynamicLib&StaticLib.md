@@ -232,85 +232,85 @@ cp *.h lib-dynamic/include
 
 1. #### 将我们的库文件添加到系统的库文件路径下
 
-	Linux操作系统的库文件路径一般在: /lib64
-	
-	我们需要将静态库文件添加到此路径下: 
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160427990.webp)
-	
-	然后再编译链接: 
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160429911.webp)
-	
-	会发现, 还是错误.
-	
-	这是又是为什么呢？
-	
-	以往我们使用C语言时, 我们使用的都是c语言提供的库. 而`gcc默认是认识c语言的库的, 但是它并不认识其他的第三方库`, 比如我们的库. 它不认识我们的库, 那么`即使我们的库就在系统库目录下、就在他眼前, 它也认不出来`
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160432140.webp)
-	
-	系统的库文件目录下, 已经存在了我们的库文件, 但是gcc不认识
-	
-	所以, `除了让gcc可以找到库文件, 还要让gcc认识库文件`
-	
-	这是, 就需要使用 `-l` 选项, 来指定我们需要的库: 
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160434509.webp)
-	
-	> gcc使用-l, 可以告诉gcc需要使用哪个库. 就是让gcc认识我们使用的库
-	>
-	> -l后需要跟库名, 但是并不需要跟完整的库名, 比如`libxxxx.a`, 只需要跟`xxxx`的部分
-	>
-	> -l后可以跟空格, 也可以不跟
-	
-	这样的方式, `其实就是将第三方库安装到了系统中`.
-	
-	但是, 并不推荐直接将第三方库安装到系统的库文件目录下
-	
-	这样的操作其实是, **`污染了系统库`**. 所以我们最好将刚刚添加的库文件删除了.
-	
-	删除之后, 再执行gcc语句: 
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160436813.webp)
+    Linux操作系统的库文件路径一般在: /lib64
+    
+    我们需要将静态库文件添加到此路径下: 
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160427990.webp)
+    
+    然后再编译链接: 
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160429911.webp)
+    
+    会发现, 还是错误.
+    
+    这是又是为什么呢？
+    
+    以往我们使用C语言时, 我们使用的都是c语言提供的库. 而`gcc默认是认识c语言的库的, 但是它并不认识其他的第三方库`, 比如我们的库. 它不认识我们的库, 那么`即使我们的库就在系统库目录下、就在他眼前, 它也认不出来`
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160432140.webp)
+    
+    系统的库文件目录下, 已经存在了我们的库文件, 但是gcc不认识
+    
+    所以, `除了让gcc可以找到库文件, 还要让gcc认识库文件`
+    
+    这是, 就需要使用 `-l` 选项, 来指定我们需要的库: 
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160434509.webp)
+    
+    > gcc使用-l, 可以告诉gcc需要使用哪个库. 就是让gcc认识我们使用的库
+    >
+    > -l后需要跟库名, 但是并不需要跟完整的库名, 比如`libxxxx.a`, 只需要跟`xxxx`的部分
+    >
+    > -l后可以跟空格, 也可以不跟
+    
+    这样的方式, `其实就是将第三方库安装到了系统中`.
+    
+    但是, 并不推荐直接将第三方库安装到系统的库文件目录下
+    
+    这样的操作其实是, **`污染了系统库`**. 所以我们最好将刚刚添加的库文件删除了.
+    
+    删除之后, 再执行gcc语句: 
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160436813.webp)
 
 2. #### 指定头文件路径和库文件路径
 
-	我们修改一下test.c的内容: 
-	
-	```cpp
-	#include "myPrint.h"
-	#include "myMath.h"
-	#include <stdio.h>
-	
-	int main() {
-		int ret = addToVal(20, 30);
-		printf("addToVal(20, 30): %d\n", ret);
-	
-		myPrint("Hello world, hello July");
-	
-		return 0;
-	}
-	```
-	
-	再直接进行编译链接: 
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160439464.webp)
-	
-	头文件也找不到了, 而且库文件也肯定找不到, 使用的第三方库函数肯定也无法找到
-	
-	那么在不污染系统查找路径的前提下, 如何正确的编译链接呢？
-	
-	gcc 有两个选项: 
-	
-	1. `-I`: 可以用来指定包含的头文件的路径
-	2. `-L`: 可以用来指定所使用库文件的路径
-	
-	那么使用这两个选项: 
-	
-	`gcc test.c -I ./include -L ./lib -lMyfunc`
-	
-	![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160441361.webp)
+    我们修改一下test.c的内容: 
+    
+    ```cpp
+    #include "myPrint.h"
+    #include "myMath.h"
+    #include <stdio.h>
+    
+    int main() {
+        int ret = addToVal(20, 30);
+        printf("addToVal(20, 30): %d\n", ret);
+    
+        myPrint("Hello world, hello July");
+    
+        return 0;
+    }
+    ```
+    
+    再直接进行编译链接: 
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160439464.webp)
+    
+    头文件也找不到了, 而且库文件也肯定找不到, 使用的第三方库函数肯定也无法找到
+    
+    那么在不污染系统查找路径的前提下, 如何正确的编译链接呢？
+    
+    gcc 有两个选项: 
+    
+    1. `-I`: 可以用来指定包含的头文件的路径
+    2. `-L`: 可以用来指定所使用库文件的路径
+    
+    那么使用这两个选项: 
+    
+    `gcc test.c -I ./include -L ./lib -lMyfunc`
+    
+    ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160441361.webp)
 
 ### 动态库的使用
 

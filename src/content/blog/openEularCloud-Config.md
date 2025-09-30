@@ -459,8 +459,8 @@ usermod -a -G wheel username
 
 # 添加新用户的 sudo权限
 nvim /etc/sudoers
-# 在 root	ALL=(ALL)	ALL 下一行
-# 添加 username	ALL=(ALL)	ALL
+# 在 root    ALL=(ALL)    ALL 下一行
+# 添加 username    ALL=(ALL)    ALL
 
 # 然后给用户设置新密码
 passwd username

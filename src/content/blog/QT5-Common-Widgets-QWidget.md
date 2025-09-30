@@ -307,7 +307,7 @@ void Widget::on_pushButton_clicked() {
 
     int x = rand() % winWidth;
     int y = rand() % winHeight;
-	// 防止按钮越界
+    // 防止按钮越界
     x > (winWidth - ui->pushButton->geometry().width()) ? (x = winWidth - ui->pushButton->geometry().width()) : x;
     y > (winHeight - ui->pushButton->geometry().height()) ? (y = winHeight - ui->pushButton->geometry().height()) : y;
 
@@ -486,7 +486,7 @@ Widget::Widget(QWidget* parent)
     title = this->windowTitle();
     qDebug() << title;
 
-    btn = new QPushButton(this); 	// btn 添加为成员变量
+    btn = new QPushButton(this);     // btn 添加为成员变量
     btn->setText("这是一个按钮");
     connect(btn, &QPushButton::clicked, this, &Widget::btnClickedHandler);
 }
@@ -958,12 +958,12 @@ Widget::Widget(QWidget* parent)
 
     QFont fonts;
     fonts.setFamily("FiraCode Nerd Font"); // 设置 字体族
-    fonts.setPointSize(14);				   // 设置 字体大小14
-    fonts.setBold(true);				   // 开启 粗体
-    fonts.setItalic(false);				   // 关闭 斜体
-    fonts.setUnderline(false);			   // 关闭 下划线
-    fonts.setStrikeOut(true);			   // 开启 删除线
-    fonts.setKerning(true);				   // 关闭 字距调整
+    fonts.setPointSize(14);                   // 设置 字体大小14
+    fonts.setBold(true);                   // 开启 粗体
+    fonts.setItalic(false);                   // 关闭 斜体
+    fonts.setUnderline(false);               // 关闭 下划线
+    fonts.setStrikeOut(true);               // 开启 删除线
+    fonts.setKerning(true);                   // 关闭 字距调整
 
     ui->label->setFont(fonts);
     ui->label->setText("This is a QLabel.");
@@ -1053,11 +1053,11 @@ Widget::~Widget() {
 
 ```cpp
 enum FocusPolicy {
-    NoFocus = 0, 								// 不接收键盘焦点, 即 无法聚焦
-    TabFocus = 0x1,								// 可以且只能通过Tab键获取焦点
-    ClickFocus = 0x2,							// 可以且只能通过点击获取焦点
-    StrongFocus = TabFocus | ClickFocus | 0x8,	// 可以同时通过Tab或点击获取焦点
-    WheelFocus = StrongFocus | 0x4 				// 还可以通过滚轮滚动获取焦点
+    NoFocus = 0,                                 // 不接收键盘焦点, 即 无法聚焦
+    TabFocus = 0x1,                                // 可以且只能通过Tab键获取焦点
+    ClickFocus = 0x2,                            // 可以且只能通过点击获取焦点
+    StrongFocus = TabFocus | ClickFocus | 0x8,    // 可以同时通过Tab或点击获取焦点
+    WheelFocus = StrongFocus | 0x4                 // 还可以通过滚轮滚动获取焦点
 };
 ```
 

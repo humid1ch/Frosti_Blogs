@@ -23,14 +23,14 @@ C语言中, `memcpy()`可以用来按字节大小将数据拷贝到另外一个�
 #include <string.h>
 
 int main() {
-	unsigned char array[4] = {0x12, 0x34, 0x56, 0x78};
-	unsigned int num = 0;
+    unsigned char array[4] = {0x12, 0x34, 0x56, 0x78};
+    unsigned int num = 0;
 
-	memcpy(&num, array, 4);
+    memcpy(&num, array, 4);
 
-	printf("0x%X\n", num);
+    printf("0x%X\n", num);
 
-	return 0;
+    return 0;
 }
 ```
 

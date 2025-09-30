@@ -55,10 +55,10 @@ tags:
 
 > ```cpp
 > int main() {
-> 	Widget x;
-> 	f(x);
+>     Widget x;
+>     f(x);
 >     
-> 	return 0;
+>     return 0;
 > }
 > ```
 > 

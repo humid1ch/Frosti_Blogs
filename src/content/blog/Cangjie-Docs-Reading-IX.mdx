@@ -148,13 +148,13 @@ C++中也存在流, 只不过与仓颉中的流 好像并不是同一种东西?
 > func f(x: Int32): Float32 { Float32(x) }
 > func g(x: Float32): Int32 { Int32(x) }
 > 
-> var fg = f ~> g 						// 等价于: {x: Int32 => g(f(x))}
+> var fg = f ~> g                         // 等价于: {x: Int32 => g(f(x))}
 > 
-> let lambdaComp = {x: Int32 => x} ~> f 	// ok
+> let lambdaComp = {x: Int32 => x} ~> f     // ok
 > 
 > func h1<T>(x: T): T { x }
 > func h2<T>(x: T): T { x }
-> var hh = h1<Int32> ~> h2<Int32> 		// ok
+> var hh = h1<Int32> ~> h2<Int32>         // ok
 > 
 > class A {
 >     operator func ()(x: Int32): Int32 {
@@ -279,10 +279,10 @@ C++与仓颉都拥有的赋值运算符, 使用上大致都相同, 但`&&=`和`|
 > main(): Int64 {
 >     var a = 1
 >     var b = 1
->     a = (b = 0) 	// semantics error
->     if (a = 5) {  	// semantics error
+>     a = (b = 0)     // semantics error
+>     if (a = 5) {      // semantics error
 >     }
->     a = b = 0   	// syntax error
+>     a = b = 0       // syntax error
 >     
 >     return 0
 > }

@@ -69,22 +69,22 @@ tags:
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-	class Widget;
+    class Widget;
 }
 QT_END_NAMESPACE
 
 class Widget : public QWidget {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Widget(QWidget* parent = nullptr);
-	~Widget();
+    Widget(QWidget* parent = nullptr);
+    ~Widget();
 
     // 定义一个槽函数
-	void changeText();
+    void changeText();
 
 private:
-	Ui::Widget* ui;
+    Ui::Widget* ui;
 };
 ```
 
@@ -95,23 +95,23 @@ private:
 #include "ui_widget.h"
 
 Widget::Widget(QWidget* parent)
-	: QWidget(parent)
-	, ui(new Ui::Widget) {
-	ui->setupUi(this);
+    : QWidget(parent)
+    , ui(new Ui::Widget) {
+    ui->setupUi(this);
 
     // 连接信号与槽
-	connect(ui->pushButton, &QPushButton::clicked, this, &Widget::changeText);
+    connect(ui->pushButton, &QPushButton::clicked, this, &Widget::changeText);
 }
 
 Widget::~Widget() {
-	delete ui;
+    delete ui;
 }
 
 void Widget::changeText() {
-	if (ui->pushButton->text() != "Hello QT")
-		ui->pushButton->setText("Hello QT");
-	else
-		ui->pushButton->setText("Hello World");
+    if (ui->pushButton->text() != "Hello QT")
+        ui->pushButton->setText("Hello QT");
+    else
+        ui->pushButton->setText("Hello World");
 }
 ```
 
@@ -187,22 +187,22 @@ QObject::connect(
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-	class Widget;
+    class Widget;
 }
 QT_END_NAMESPACE
 
 class Widget : public QWidget {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Widget(QWidget* parent = nullptr);
-	~Widget();
+    Widget(QWidget* parent = nullptr);
+    ~Widget();
 
-	void changeText();
+    void changeText();
 
 private:
-	Ui::Widget* ui;
-	QPushButton* btn;
+    Ui::Widget* ui;
+    QPushButton* btn;
 };
 ```
 
@@ -213,25 +213,25 @@ private:
 #include "ui_widget.h"
 
 Widget::Widget(QWidget* parent)
-	: QWidget(parent)
-	, ui(new Ui::Widget) {
-	ui->setupUi(this);
+    : QWidget(parent)
+    , ui(new Ui::Widget) {
+    ui->setupUi(this);
 
-	btn = new QPushButton(this);
-	btn->setText("  Hello MFK  ");
+    btn = new QPushButton(this);
+    btn->setText("  Hello MFK  ");
 
-	connect(btn, &QPushButton::clicked, this, &Widget::changeText);
+    connect(btn, &QPushButton::clicked, this, &Widget::changeText);
 }
 
 Widget::~Widget() {
-	delete ui;
+    delete ui;
 }
 
 void Widget::changeText() {
-	if (btn->text() != "Hello QT")
-		btn->setText("Hello QT");
-	else
-		btn->setText("Hello World");
+    if (btn->text() != "Hello QT")
+        btn->setText("Hello QT");
+    else
+        btn->setText("Hello World");
 }
 ```
 
@@ -268,27 +268,27 @@ void Widget::changeText() {
 #include "ui_widget.h"
 
 Widget::Widget(QWidget* parent)
-	: QWidget(parent)
-	, ui(new Ui::Widget) {
-	ui->setupUi(this);
+    : QWidget(parent)
+    , ui(new Ui::Widget) {
+    ui->setupUi(this);
 
-	btn = new QPushButton(this);
-	btn->setText("  Hello MFK  ");
+    btn = new QPushButton(this);
+    btn->setText("  Hello MFK  ");
     // 将按钮移动到X:300, Y:300的位置
-	btn->move(300, 300);
+    btn->move(300, 300);
 
-	connect(btn, &QPushButton::clicked, this, &Widget::changeText);
+    connect(btn, &QPushButton::clicked, this, &Widget::changeText);
 }
 
 Widget::~Widget() {
-	delete ui;
+    delete ui;
 }
 
 void Widget::changeText() {
-	if (btn->text() != "Hello QT")
-		btn->setText("Hello QT");
-	else
-		btn->setText("Hello World");
+    if (btn->text() != "Hello QT")
+        btn->setText("Hello QT");
+    else
+        btn->setText("Hello World");
 }
 ```
 

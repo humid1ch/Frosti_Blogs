@@ -109,13 +109,13 @@ fopen的第一个参数传入的是需要打开文件的路径, 第二个参数�
 #include <stdio.h>
 
 int main() {
-	FILE *pf = fopen("new_log.txt", "w+");
+    FILE *pf = fopen("new_log.txt", "w+");
 
-	fprintf(pf, "88888888888\n");
+    fprintf(pf, "88888888888\n");
 
-	fclose(pf);
+    fclose(pf);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -151,16 +151,16 @@ int main() {
 #include <stdio.h>
 
 int main() {
-	FILE *pf = fopen("new_log.txt", "w+");
-	
-	int cnt = 5;
-	while(cnt--) {
-		fprintf(pf, "88888888888\n");
-	}
+    FILE *pf = fopen("new_log.txt", "w+");
+    
+    int cnt = 5;
+    while(cnt--) {
+        fprintf(pf, "88888888888\n");
+    }
 
-	fclose(pf);
+    fclose(pf);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -172,13 +172,13 @@ int main() {
 #include <stdio.h>
 
 int main() {
-	FILE *pf = fopen("new_log.txt", "w+");
-	
-	fprintf(pf, "88888888888\n");
+    FILE *pf = fopen("new_log.txt", "w+");
+    
+    fprintf(pf, "88888888888\n");
 
-	fclose(pf);
+    fclose(pf);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -204,13 +204,13 @@ int main() {
 #include <stdio.h>
 
 int main() {
-	FILE *pf = fopen("new_log.txt", "a+");
-	
-	fprintf(pf, "222\n");
+    FILE *pf = fopen("new_log.txt", "a+");
+    
+    fprintf(pf, "222\n");
 
-	fclose(pf);
+    fclose(pf);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -238,18 +238,18 @@ int main() {
 #define SIZE 1024
 
 int main(int argc, char *argv[]) {
-	if(argc != 2) {						// 执行程序时 之后没有跟随一个文件时
-		printf("using: ./%s filename", argv[0]);
-	}
+    if(argc != 2) {                        // 执行程序时 之后没有跟随一个文件时
+        printf("using: ./%s filename", argv[0]);
+    }
 
-	FILE *pf = fopen(argv[1], "r");		// 只读方式打开传入的文件
-	
-	char buffer[SIZE];
-	while (fgets(buffer, sizeof(buffer), pf) != NULL) {			// 从打开的文件中读取文本写入到buffer数组中
-		printf("%s", buffer);
-	}
+    FILE *pf = fopen(argv[1], "r");        // 只读方式打开传入的文件
+    
+    char buffer[SIZE];
+    while (fgets(buffer, sizeof(buffer), pf) != NULL) {            // 从打开的文件中读取文本写入到buffer数组中
+        printf("%s", buffer);
+    }
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -259,42 +259,42 @@ int main(int argc, char *argv[]) {
 
 1. 在Linux系统中, 我们向文件内写入数据, 本质上是否是向什么中写入数据？
 
-	向文件写入数据, 本质上其实是`向磁盘中写入数据`, 因为文件没有打开时, 本质上还是在磁盘中存储的
+    向文件写入数据, 本质上其实是`向磁盘中写入数据`, 因为文件没有打开时, 本质上还是在磁盘中存储的
 
 2. 磁盘是硬件, 谁有资格向硬件中写入数据？
 
-	只有作为软硬件的管理者`操作系统, 有资格向硬件中写入数据`
+    只有作为软硬件的管理者`操作系统, 有资格向硬件中写入数据`
 
 3. 那么我们在上层访问文件的操作, 是否可以绕开操作系统？
 
-	上层访问文件的操作, `不可能绕开操作系统`, 访问文件本质上都是由操作系统操作的
+    上层访问文件的操作, `不可能绕开操作系统`, 访问文件本质上都是由操作系统操作的
 
 4. 操作系统如何给上层用户提供访问文件的操作？
 
-	操作系统可以给上层`提供系统调用`
+    操作系统可以给上层`提供系统调用`
 
 5. 为什么C语言中没有见过也没有使用过系统调用？
 
-	因为, C语言中的不管是文件操作, 还是某些流的操作, 都对系统调用进行了封装
+    因为, C语言中的不管是文件操作, 还是某些流的操作, 都对系统调用进行了封装
 
 
-​	
+​    
 
 6. 为什么语言要对系统调用进行封装？
 
-	首先, 原生的系统调用接口的使用并不是很简单的, 使用成本有点高(与封装后的接口相比)
-	
-	其次, 原生的系统调用接口并不具备跨平台的功能, `不同平台相同的功能的系统调用接口是不同的`, Windows、Linux、MacOS等都是不同的, 所以语言需要`对不同的平台的系统调用接口进行封装, 进而使语言具备跨平台的功能`
+    首先, 原生的系统调用接口的使用并不是很简单的, 使用成本有点高(与封装后的接口相比)
+    
+    其次, 原生的系统调用接口并不具备跨平台的功能, `不同平台相同的功能的系统调用接口是不同的`, Windows、Linux、MacOS等都是不同的, 所以语言需要`对不同的平台的系统调用接口进行封装, 进而使语言具备跨平台的功能`
 
 7. 封装如何解决不能跨平台的问题？
 
-	以C语言为例, C语言的fopen()操作 实际上可能是将所有支持的平台的关于打卡文件的系统调用接口穷举了一遍, 并结合条件编译 使fopen()实现了跨平台的功能
+    以C语言为例, C语言的fopen()操作 实际上可能是将所有支持的平台的关于打卡文件的系统调用接口穷举了一遍, 并结合条件编译 使fopen()实现了跨平台的功能
 
 8. 为什么要学习系统级的文件相关接口？
 
-	首先, 系统级的相关接口比起每种语言的接口来说, 一定更接近系统底层, 可以更加了解底层
-	
-	其次, 学习系统调用之后, 对于各种语言的相关封装接口也可以有更加透彻的理解
+    首先, 系统级的相关接口比起每种语言的接口来说, 一定更接近系统底层, 可以更加了解底层
+    
+    其次, 学习系统调用之后, 对于各种语言的相关封装接口也可以有更加透彻的理解
 
 # Linux系统文件接口
 
@@ -389,13 +389,13 @@ int open(const char* pathname, int flags, mode_t mode);
 #include <unistd.h>
 
 int main() {
-	int fd = open("newlog.txt", O_CREAT | O_WRONLY);			// 以只读方式打开newlog.txt 文件, 且若文件不存在, 则创建文件
-	
-	if(fd < 0) {
-		perror("open");
-	}
+    int fd = open("newlog.txt", O_CREAT | O_WRONLY);            // 以只读方式打开newlog.txt 文件, 且若文件不存在, 则创建文件
+    
+    if(fd < 0) {
+        perror("open");
+    }
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -417,13 +417,13 @@ int main() {
 #include <unistd.h>
 
 int main() {
-	int fd = open("newlog.txt", O_CREAT | O_WRONLY, 0666);			// 以只读方式打开newlog.txt 文件, 且若文件不存在, 则创建文件
-	
-	if(fd < 0) {
-		perror("open");
-	}
+    int fd = open("newlog.txt", O_CREAT | O_WRONLY, 0666);            // 以只读方式打开newlog.txt 文件, 且若文件不存在, 则创建文件
+    
+    if(fd < 0) {
+        perror("open");
+    }
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -455,14 +455,14 @@ int main() {
 #include <unistd.h>
 
 int main() {
-	umask(0);		// 设置进程umask为0
-	int fd = open("newlog.txt", O_CREAT | O_WRONLY, 0666);			// 以只读方式打开newlog.txt 文件, 且若文件不存在, 则创建文件
-	
-	if(fd < 0) {
-		perror("open");
-	}
+    umask(0);        // 设置进程umask为0
+    int fd = open("newlog.txt", O_CREAT | O_WRONLY, 0666);            // 以只读方式打开newlog.txt 文件, 且若文件不存在, 则创建文件
+    
+    if(fd < 0) {
+        perror("open");
+    }
 
-	return 0;
+    return 0;
 }
 ```
 ![ ](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160901628.webp)
@@ -506,21 +506,21 @@ ssize_t write(int fd, const void* buf, size_t count);
 #include <string.h>
 
 int main() {
-	umask(0);
-	int fd = open("newFile.txt", O_CREAT | O_RDWR, 0666);		// 以读写方式打开newFile.txt, 文件不存在则创建新文件
-	if(fd < 0) {
-		perror("open");
-	}
+    umask(0);
+    int fd = open("newFile.txt", O_CREAT | O_RDWR, 0666);        // 以读写方式打开newFile.txt, 文件不存在则创建新文件
+    if(fd < 0) {
+        perror("open");
+    }
 
-	const char* buffer = "hello world, hello July\n";
-	int cnt = 5;
-	while (cnt--) {
-		write(fd, buffer, strlen(buffer));
-	}
+    const char* buffer = "hello world, hello July\n";
+    int cnt = 5;
+    while (cnt--) {
+        write(fd, buffer, strlen(buffer));
+    }
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -547,20 +547,20 @@ read()接口的使用并不难:
 #include <string.h>
 
 int main() {
-	umask(0);
-	int fd = open("newFile.txt", O_RDONLY);		// 以只读方式打开文件
-	if(fd < 0) {
-		perror("open");
-	}
+    umask(0);
+    int fd = open("newFile.txt", O_RDONLY);        // 以只读方式打开文件
+    if(fd < 0) {
+        perror("open");
+    }
 
-	// 从文件中读取内容写入buffer, 并输出
-	char buffer[128];
-	read(fd, buffer, sizeof(buffer)-1);
-	printf("buffer: %s\n", buffer);
+    // 从文件中读取内容写入buffer, 并输出
+    char buffer[128];
+    read(fd, buffer, sizeof(buffer)-1);
+    printf("buffer: %s\n", buffer);
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -591,18 +591,18 @@ open()打开文件时, 并不只有`创建(O_CREAT)`和`读写(O_RDONLY、O_WRON
 #include <string.h>
 
 int main() {
-	umask(0);
-	int fd = open("newFile.txt", O_CREAT | O_RDWR, 0666);		// 以读写方式打开newFile.txt, 文件不存在则创建新文件
-	if(fd < 0) {
-		perror("open");
-	}
+    umask(0);
+    int fd = open("newFile.txt", O_CREAT | O_RDWR, 0666);        // 以读写方式打开newFile.txt, 文件不存在则创建新文件
+    if(fd < 0) {
+        perror("open");
+    }
 
-	const char* buffer = "66666666666";
-	write(fd, buffer, strlen(buffer));
+    const char* buffer = "66666666666";
+    write(fd, buffer, strlen(buffer));
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -625,18 +625,18 @@ int main() {
 #include <string.h>
 
 int main() {
-	umask(0);
-	int fd = open("newFile.txt", O_CREAT | O_RDWR | O_TRUNC, 0666);		// 以读写并清空原内容的方式打开newFile.txt, 文件不存在则创建新文件
-	if(fd < 0) {
-		perror("open");
-	}
+    umask(0);
+    int fd = open("newFile.txt", O_CREAT | O_RDWR | O_TRUNC, 0666);        // 以读写并清空原内容的方式打开newFile.txt, 文件不存在则创建新文件
+    if(fd < 0) {
+        perror("open");
+    }
 
-	const char* buffer = "66666666666\n";
-	write(fd, buffer, strlen(buffer));
+    const char* buffer = "66666666666\n";
+    write(fd, buffer, strlen(buffer));
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -659,18 +659,18 @@ open()同样可以, 当open()的flags参数中传入`O_WRONLY | O_APPEND`时, �
 #include <string.h>
 
 int main() {
-	umask(0);
-	int fd = open("newFile.txt", O_CREAT | O_WRONLY | O_APPEND, 0666);		// 以只写并追加方式打开newFile.txt, 文件不存在则创建新文件
-	if(fd < 0) {
-		perror("open");
-	}
+    umask(0);
+    int fd = open("newFile.txt", O_CREAT | O_WRONLY | O_APPEND, 0666);        // 以只写并追加方式打开newFile.txt, 文件不存在则创建新文件
+    if(fd < 0) {
+        perror("open");
+    }
 
-	const char *buffer = "Hello world, hello July\n";
-	write(fd, buffer, strlen(buffer));
+    const char *buffer = "Hello world, hello July\n";
+    write(fd, buffer, strlen(buffer));
 
-	close(fd);
+    close(fd);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -704,26 +704,26 @@ fd与C语言中fopen()返回的文件指针在功能上看起来十分相似, �
 #include <unistd.h>
 
 int main() {
-	umask(0);
-	int fda = open("newFile.txt", O_RDWR | O_CREAT, 0666);		// 以读写方式打开文件, 若文件不存在则创建文件
-	int fdb = open("newFile.txt", O_RDWR | O_CREAT, 0666);		// 以读写方式打开文件, 若文件不存在则创建文件
-	int fdc = open("newFile.txt", O_RDWR | O_CREAT, 0666);		// 以读写方式打开文件, 若文件不存在则创建文件
-	int fdd = open("newFile.txt", O_RDWR | O_CREAT, 0666);		// 以读写方式打开文件, 若文件不存在则创建文件
-	int fde = open("newFile.txt", O_RDWR | O_CREAT, 0666);		// 以读写方式打开文件, 若文件不存在则创建文件
-	
-	printf("fda: %d\n", fda);		// 输出打开文件的fd
-	printf("fdb: %d\n", fdb);		// 输出打开文件的fd
-	printf("fdc: %d\n", fdc);		// 输出打开文件的fd
-	printf("fdd: %d\n", fdd);		// 输出打开文件的fd
-	printf("fde: %d\n", fde);		// 输出打开文件的fd
+    umask(0);
+    int fda = open("newFile.txt", O_RDWR | O_CREAT, 0666);        // 以读写方式打开文件, 若文件不存在则创建文件
+    int fdb = open("newFile.txt", O_RDWR | O_CREAT, 0666);        // 以读写方式打开文件, 若文件不存在则创建文件
+    int fdc = open("newFile.txt", O_RDWR | O_CREAT, 0666);        // 以读写方式打开文件, 若文件不存在则创建文件
+    int fdd = open("newFile.txt", O_RDWR | O_CREAT, 0666);        // 以读写方式打开文件, 若文件不存在则创建文件
+    int fde = open("newFile.txt", O_RDWR | O_CREAT, 0666);        // 以读写方式打开文件, 若文件不存在则创建文件
+    
+    printf("fda: %d\n", fda);        // 输出打开文件的fd
+    printf("fdb: %d\n", fdb);        // 输出打开文件的fd
+    printf("fdc: %d\n", fdc);        // 输出打开文件的fd
+    printf("fdd: %d\n", fdd);        // 输出打开文件的fd
+    printf("fde: %d\n", fde);        // 输出打开文件的fd
 
-	close(fda);
-	close(fdb);
-	close(fdc);
-	close(fdd);
-	close(fde);
+    close(fda);
+    close(fdb);
+    close(fdc);
+    close(fdd);
+    close(fde);
 
-	return 0;
+    return 0;
 }
 
 ```
@@ -759,17 +759,17 @@ Linux进程运行时会先打开三个文件:
 #include <string.h>
 
 int main() {
-	// 不手动打开任何文件
-	
-	// 从 fd=0 中, 读取数据并存储到buffer中
-	char buffer[1024];
-	read(0, buffer, sizeof(buffer)-1);
+    // 不手动打开任何文件
+    
+    // 从 fd=0 中, 读取数据并存储到buffer中
+    char buffer[1024];
+    read(0, buffer, sizeof(buffer)-1);
 
-	// 分别向fd=1 和 fd=2 中写入数据
-	write(1, buffer, strlen(buffer));
-	write(2, buffer, strlen(buffer));
+    // 分别向fd=1 和 fd=2 中写入数据
+    write(1, buffer, strlen(buffer));
+    write(2, buffer, strlen(buffer));
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -803,12 +803,12 @@ int main() {
 > #include <stdio.h>
 > 
 > int main() {
-> 	// C语言会默认打开 stdin, stdout, stderr
-> 	printf("stdin-fd: %d\n", stdin->_fileno);
-> 	printf("stdout-fd: %d\n", stdout->_fileno);
-> 	printf("stderr-fd: %d\n", stderr->_fileno);
+>     // C语言会默认打开 stdin, stdout, stderr
+>     printf("stdin-fd: %d\n", stdin->_fileno);
+>     printf("stdout-fd: %d\n", stdout->_fileno);
+>     printf("stderr-fd: %d\n", stderr->_fileno);
 > 
-> 	return 0;
+>     return 0;
 > }
 > ```
 >

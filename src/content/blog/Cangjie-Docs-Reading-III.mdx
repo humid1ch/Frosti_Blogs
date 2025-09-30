@@ -241,8 +241,8 @@ arr[0..2] = 1
 arr[0..2] = [2, 2]
 // arr = [2, 2, 0, 0, 0]
 
-arr[0..2] = [3, 3, 3] 	// size不匹配, 运行时抛异常
-arr[0..2] = [4] 		// size不匹配, 运行时抛异常
+arr[0..2] = [3, 3, 3]     // size不匹配, 运行时抛异常
+arr[0..2] = [4]         // size不匹配, 运行时抛异常
 
 let arr2 = [1, 2, 3, 4, 5]
 arr[0..2] = arr2[0..2] // ok
@@ -331,15 +331,15 @@ arr[..] = arr2
 >
 > ```cangjie
 > var arr7: VArray<Int64, $2> = [0, 1]
-> let element0 = arr7[0] 					// element0 = 0
-> arr7[1] = 10 							// change the value of the second element of 'arr7' through index
+> let element0 = arr7[0]                     // element0 = 0
+> arr7[1] = 10                             // change the value of the second element of 'arr7' through index
 > 
 > // Get and Set of multi-dimensional VArrays.
 > var arr8: VArray<VArray<Int64, $2>, $2> = [[1, 2], [3, 4]]
 > let arr9: VArray<Int64, $2> = [0, 1]
-> let element1 = arr8[1][0] 				// element1 = 3
-> arr8[1][1] = 5 							// error: function call returns immutable value 
-> arr8[1] = arr9 							// arr8 = [[1, 2], [0, 1]]
+> let element1 = arr8[1][0]                 // element1 = 3
+> arr8[1][1] = 5                             // error: function call returns immutable value 
+> arr8[1] = arr9                             // arr8 = [[1, 2], [0, 1]]
 > ```
 
 因为`VArray`是值类型的数组
@@ -360,7 +360,7 @@ arr[..] = arr2
 main() {
     var arr8: VArray<VArray<Int64, $2>, $2> = [[1, 2], [3, 4]]
 
-    arr8[0] = [5, 6]	// 直接覆盖整个维度
+    arr8[0] = [5, 6]    // 直接覆盖整个维度
 
     println("${arr8[0][0]} ${arr8[0][1]}")
     
@@ -429,11 +429,11 @@ main() {
 
 ```cangjie
 (修饰符) struct 名字(<T>约束) {
-	// 主构造函数(可选)
-	// 成员变量
-	// 成员属性
-	// 构造函数
-	// 成员函数
+    // 主构造函数(可选)
+    // 成员变量
+    // 成员属性
+    // 构造函数
+    // 成员函数
 }
 ```
 
@@ -476,7 +476,7 @@ main() {
 >     }
 >     
 >     func area1(): Int32 {
->     	width1 * length1
+>         width1 * length1
 >     }
 > }
 > 
@@ -641,9 +641,9 @@ main() {
 > structPrimaryInit
 >     : (structNonStaticMemberModifier)? structName '('
 >       structPrimaryInitParamLists? ')'
->  	  '{'
->  	       expressionOrDeclarations?
->  	  '}'
+>        '{'
+>             expressionOrDeclarations?
+>        '}'
 >     ;
 > 
 > structName
@@ -728,11 +728,11 @@ main() {
 >     let name: String = "afdoaidfad"
 >     
 >     private Test( 
->         name: String,             		// regular parameter  
->         annotation!: String = "nnn",   	// regular parameter  
->         var width!: Int64 = 1,     		// member variable parameter with initial value
->         private var length!: Int64,    	// member variable parameter
->         private var height!: Int64 = 3	// member variable parameter 
+>         name: String,                     // regular parameter  
+>         annotation!: String = "nnn",       // regular parameter  
+>         var width!: Int64 = 1,             // member variable parameter with initial value
+>         private var length!: Int64,        // member variable parameter
+>         private var height!: Int64 = 3    // member variable parameter 
 >     ) {}
 > }
 > ```
@@ -765,7 +765,7 @@ main() {
 >
 > ```cangjie
 > struct B<X,Y> { 
->     B(	// 主构造函数, 与sturct同名
+>     B(    // 主构造函数, 与sturct同名
 >         x: Int64,
 >         y: X,
 >         v!: Int64 = 1,     // 普通参数
@@ -794,14 +794,14 @@ main() {
 
 ```cangjie
 struct B<X,Y> { 
-    B(	// 主构造函数, 与sturct同名
+    B(    // 主构造函数, 与sturct同名
         x: Int64,
         y: X,
         v!: Int64 = 1,     // 普通参数
         private var z!: Y  // 成员变量形参
     ) {}
 
-	// 显式定义init()构造函数
+    // 显式定义init()构造函数
     init(x: Int64, y: X, v!: Int64 = 1, z!: Y) {
         this.z = z
     }
@@ -894,8 +894,8 @@ struct B<X,Y> {
 >     举例如下:
 >
 >     ```cangjie
->     let newRectangle1_1 = Rectangle1(100, 200)	// Invoke the first custom constructor
->     let newRectangle1_2 = Rectangle1(300)     	// Invoke the second custom constructor
+>     let newRectangle1_1 = Rectangle1(100, 200)    // Invoke the first custom constructor
+>     let newRectangle1_2 = Rectangle1(300)         // Invoke the second custom constructor
 >     ```
 >
 > 2. 定义泛型`struct`的实例:`StructName<Type1, Type2, ... , TypeK>(labelValue1, labelValue2, ... , labelValueN)`
@@ -905,8 +905,8 @@ struct B<X,Y> {
 >     举例如下:
 >
 >     ```cangjie
->     let newRectangle2_1 = Rectangle2<Int32>(100) 						// Invoke the custom constructor
->     let newRectangle2_1 = Rectangle2<Int32>(width2: 10, length2: 20)	// Invoke another custom constructor
+>     let newRectangle2_1 = Rectangle2<Int32>(100)                         // Invoke the custom constructor
+>     let newRectangle2_1 = Rectangle2<Int32>(width2: 10, length2: 20)    // Invoke another custom constructor
 >     ```
 >
 > 最后, 需要注意的是:

@@ -43,22 +43,22 @@ tags:
 
 ```cpp
 namespace ns_searcher {
-	class searcher {
-	private:
-		ns_index::index* _index; // 建立索引的类
+    class searcher {
+    private:
+        ns_index::index* _index; // 建立索引的类
 
-	public:
+    public:
         // 初始化接口
         // 在搜索之前需要先建立索引. 这个接口就是建立索引用的
-		void initSearcher(const std::string& input) {}
+        void initSearcher(const std::string& input) {}
 
-		// 搜索接口
-		// 搜索需要实现什么功能?
+        // 搜索接口
+        // 搜索需要实现什么功能?
         // 搜索需要接收字符串, 然后针对字符串进行分词 再根据分词在索引中进行查找
-		// 首先参数部分需要怎么实现?
-		// 参数部分, 需要接收需要搜索的句子或关键字, 还需要一个输出型参数 用于输出查找结果
-		//  查找结果我们使用jsoncpp进行序列化和反序列化
-		void search(const std::string& query, std::string* jsonString) {}
+        // 首先参数部分需要怎么实现?
+        // 参数部分, 需要接收需要搜索的句子或关键字, 还需要一个输出型参数 用于输出查找结果
+        //  查找结果我们使用jsoncpp进行序列化和反序列化
+        void search(const std::string& query, std::string* jsonString) {}
 ```
 
 基本的结构就这么简单. 只需要对外提供两个接口:
@@ -79,87 +79,87 @@ namespace ns_searcher {
 ```cpp
 namespace ns_index {
 
-	// 用于正排索引中 存储文档内容
-	typedef struct docInfo {
-		std::string _title;	  // 文档标题
-		std::string _content; // 文档去标签之后的内容
-		std::string _url;	  // 文档对应官网url
-		std::size_t _docId;	  // 文档id
-	} docInfo_t;
+    // 用于正排索引中 存储文档内容
+    typedef struct docInfo {
+        std::string _title;      // 文档标题
+        std::string _content; // 文档去标签之后的内容
+        std::string _url;      // 文档对应官网url
+        std::size_t _docId;      // 文档id
+    } docInfo_t;
 
-	// 用于倒排索引中 记录关键字对应的文档id和权重
-	typedef struct invertedElem {
-		std::size_t _docId;	   // 文档id
-		std::string _keyword;  // 关键字
-		std::uint64_t _weight; // 搜索此关键字, 此文档id 所占权重
+    // 用于倒排索引中 记录关键字对应的文档id和权重
+    typedef struct invertedElem {
+        std::size_t _docId;       // 文档id
+        std::string _keyword;  // 关键字
+        std::uint64_t _weight; // 搜索此关键字, 此文档id 所占权重
 
-		invertedElem() // 权重初始化为0
-			: _weight(0) {}
-	} invertedElem_t;
+        invertedElem() // 权重初始化为0
+            : _weight(0) {}
+    } invertedElem_t;
 
-	// 关键字的词频
-	typedef struct keywordCnt {
-		std::size_t _titleCnt;	 // 关键字在标题中出现的次数
-		std::size_t _contentCnt; // 关键字在内容中出现的次数
+    // 关键字的词频
+    typedef struct keywordCnt {
+        std::size_t _titleCnt;     // 关键字在标题中出现的次数
+        std::size_t _contentCnt; // 关键字在内容中出现的次数
 
-		keywordCnt()
-			: _titleCnt(0)
-			, _contentCnt(0) {}
-	} keywordCnt_t;
+        keywordCnt()
+            : _titleCnt(0)
+            , _contentCnt(0) {}
+    } keywordCnt_t;
 
-	// 倒排拉链
-	typedef std::vector<invertedElem_t> invertedList_t;
+    // 倒排拉链
+    typedef std::vector<invertedElem_t> invertedList_t;
 
-	class index {
-	private:
-		// 正排索引使用vector, 下标天然是 文档id
-		std::vector<docInfo_t> forwardIndex;
-		// 倒排索引 使用 哈希表, 因为倒排索引 一定是 一个keyword 对应一组 invertedElem拉链
-		std::unordered_map<std::string, invertedList_t> invertedIndex;
+    class index {
+    private:
+        // 正排索引使用vector, 下标天然是 文档id
+        std::vector<docInfo_t> forwardIndex;
+        // 倒排索引 使用 哈希表, 因为倒排索引 一定是 一个keyword 对应一组 invertedElem拉链
+        std::unordered_map<std::string, invertedList_t> invertedIndex;
 
-		// 单例模式设计
-		index() {}
+        // 单例模式设计
+        index() {}
 
-		index(const index&) = delete;
-		index& operator=(const index&) = delete;
+        index(const index&) = delete;
+        index& operator=(const index&) = delete;
 
-		static index* _instance; // 单例
-		static std::mutex _mtx;
+        static index* _instance; // 单例
+        static std::mutex _mtx;
 
-	public:
-		// 获取单例
-		static index* getInstance() {
-			if (nullptr == _instance) {
-				_mtx.lock();
-				if (nullptr == _instance) {
-					_instance = new index;
-				}
-				_mtx.unlock();
-			}
+    public:
+        // 获取单例
+        static index* getInstance() {
+            if (nullptr == _instance) {
+                _mtx.lock();
+                if (nullptr == _instance) {
+                    _instance = new index;
+                }
+                _mtx.unlock();
+            }
 
-			return _instance;
-		}
-		
+            return _instance;
+        }
+        
         // 通过关键字 检索倒排索引, 获取对应的 倒排拉链
-		invertedList_t* getInvertedList(const std::string& keyword) {}
+        invertedList_t* getInvertedList(const std::string& keyword) {}
 
-		// 通过倒排拉链中 每个倒排元素中存储的 文档id, 检索正排索引, 获取对应文档内容
-		docInfo_t* getForwardIndex(std::size_t docId) {}
+        // 通过倒排拉链中 每个倒排元素中存储的 文档id, 检索正排索引, 获取对应文档内容
+        docInfo_t* getForwardIndex(std::size_t docId) {}
 
-		// 根据parser模块处理过的 所有文档的信息
-		// 提取文档信息, 建立 正排索引和倒排索引
-		// input 为 ./data/output/raw
-		bool buildIndex(const std::string& input) {}
+        // 根据parser模块处理过的 所有文档的信息
+        // 提取文档信息, 建立 正排索引和倒排索引
+        // input 为 ./data/output/raw
+        bool buildIndex(const std::string& input) {}
 
-	private:
-		// 对一个文档建立正排索引
-		docInfo_t* buildForwardIndex(const std::string& file) {}
+    private:
+        // 对一个文档建立正排索引
+        docInfo_t* buildForwardIndex(const std::string& file) {}
         // 对一个文档建立倒排索引
-		bool buildInvertedIndex(const docInfo_t& doc) {}
-	};
-	// 单例相关
-	index* index::_instance = nullptr;
-	std::mutex index::_mtx;
+        bool buildInvertedIndex(const docInfo_t& doc) {}
+    };
+    // 单例相关
+    index* index::_instance = nullptr;
+    std::mutex index::_mtx;
 }
 ```
 
@@ -289,7 +289,7 @@ void search(const std::string& query, std::string* jsonString) {
             item._docId = elem._docId;
             item._weight += elem._weight;
             // 权重需要+= 是因为多个关键词指向了同一个文档 那么就说明此文档的与搜索内容的相关性更高
-      		// 就可以将多个关键字关于此文档的权重相加, 表示搜索相关性高
+              // 就可以将多个关键字关于此文档的权重相加, 表示搜索相关性高
             // 最好也将 此文档相关的关键词 也存储起来, 因为在客户端搜索结果中, 可能需要对网页中有的关键字进行高亮
             // 但是 invertedElem 的第三个成员是 单独的一个string对象, 不太合适
             // 所以, 可以定义一个与invertedElem 相似的, 但是第三个成员是一个 vector 的类, 比如 invertedElemOut
@@ -519,23 +519,23 @@ std::string getDesc(const std::string& content, const std::string& keyword) {
 const std::string& rawPath = "./data/output/raw";
 
 int main() {
-	ns_searcher::searcher searcher;
-	searcher.initSearcher(rawPath);
+    ns_searcher::searcher searcher;
+    searcher.initSearcher(rawPath);
 
-	std::string query;
-	std::string json_string;
+    std::string query;
+    std::string json_string;
 
-	char buffer[1024];
-	while (true) {
-		std::cout << "Please Enter You Search Query# ";
-		fgets(buffer, sizeof(buffer) - 1, stdin);
-		buffer[strlen(buffer) - 1] = 0;
-		query = buffer;
-		searcher.search(query, &json_string);
-		std::cout << json_string << std::endl;
-	}
+    char buffer[1024];
+    while (true) {
+        std::cout << "Please Enter You Search Query# ";
+        fgets(buffer, sizeof(buffer) - 1, stdin);
+        buffer[strlen(buffer) - 1] = 0;
+        query = buffer;
+        searcher.search(query, &json_string);
+        std::cout << json_string << std::endl;
+    }
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -859,7 +859,7 @@ bool buildInvertedIndex(const docInfo_t& doc) {
     // ns_util::jiebaUtil::cutString(doc._title, &titleKeywords);
     // 标题词频统计 与 转换 记录
     for (auto keyword : titleKeywords) {
-        boost::to_lower(keyword);		  // 关键字转小写
+        boost::to_lower(keyword);          // 关键字转小写
         keywordsMap[keyword]._titleCnt++; // 记录关键字 并统计标题中词频
         // unordered_map 的 [], 是用来通过keyword值 访问value的. 如果keyword值已经存在, 则返回对应的value, 如果keyword值不存在, 则会插入keyword并创建对应的value
     }
@@ -870,7 +870,7 @@ bool buildInvertedIndex(const docInfo_t& doc) {
     // ns_util::jiebaUtil::cutString(doc._content, &contentKeywords);
     // 内容词频统计 与 转换 记录
     for (auto keyword : contentKeywords) {
-        boost::to_lower(keyword);			// 关键字转小写
+        boost::to_lower(keyword);            // 关键字转小写
         keywordsMap[keyword]._contentCnt++; // 记录关键字 并统计内容中词频
     }
 
@@ -882,7 +882,7 @@ bool buildInvertedIndex(const docInfo_t& doc) {
     // 就可以遍历 keywordsMap 获取关键字信息, 构建 invertedElem 并添加到 invertedIndex中 关键词的倒排拉链 invertedList中了
     for (auto& keywordInfo : keywordsMap) {
         invertedElem_t item;
-        item._docId = doc._docId;		   // 本文档id
+        item._docId = doc._docId;           // 本文档id
         item._keyword = keywordInfo.first; // 关键字
         item._weight = keywordInfo.second._titleCnt * titleWeight + keywordInfo.second._contentCnt * contentWeight;
 

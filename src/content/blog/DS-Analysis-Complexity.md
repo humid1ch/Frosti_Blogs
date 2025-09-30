@@ -35,10 +35,10 @@ tags:
 // 一个简单的循环
 void Fun1(int n)
 {
-	for(int i = 0; i < n; i++)
-	{
-		printf("%d ", i);
-	}
+    for(int i = 0; i < n; i++)
+    {
+        printf("%d ", i);
+    }
 }
 ```
 这段代码, `for` 循环执行的次数, 是根据传入的参数来具体决定的, 即循环 `n` 次。就可以说, 这个函数的 时间复杂度是 `O(N)`。
@@ -49,25 +49,25 @@ void Fun1(int n)
 ```cpp
 void Fun2(int n)
 {
-	int count = 0;  
-	for (int i = 0; i < N ; ++ i)  
-	{  
-		for (int j = 0; j < N ; ++ j)  
-		{  
-			++count;  
-		}  
-	}  
-	
-	for (int k = 0; k < 2 * N ; ++ k)  
-	{  
-		++count;  
-	}  
-	
-	int M = 10;  
-	while (M--)  
-	{  
-		++count;  
-	}
+    int count = 0;  
+    for (int i = 0; i < N ; ++ i)  
+    {  
+        for (int j = 0; j < N ; ++ j)  
+        {  
+            ++count;  
+        }  
+    }  
+    
+    for (int k = 0; k < 2 * N ; ++ k)  
+    {  
+        ++count;  
+    }  
+    
+    int M = 10;  
+    while (M--)  
+    {  
+        ++count;  
+    }
 
 }
 ```
@@ -80,10 +80,10 @@ void Fun2(int n)
 > int count = 0;  
 > for (int i = 0; i < N ; ++ i)  
 > {  
-> 	for (int j = 0; j < N ; ++ j)  
-> 	{  
-> 		++count;  
-> 	}  
+>     for (int j = 0; j < N ; ++ j)  
+>     {  
+>         ++count;  
+>     }  
 > }  
 > ```
 > 这个循环是一个循环的嵌套, 执行次数是 `N*N`
@@ -91,7 +91,7 @@ void Fun2(int n)
 >```cpp
 > for (int k = 0; k < 2 * N ; ++ k)  
 > {  
-> 	++count;  
+>     ++count;  
 > }  
 > ```
 > 这个循环就是一个普通的循环, 执行次数是 `2*N`
@@ -100,7 +100,7 @@ void Fun2(int n)
 >int M = 10;  
 > while (M--)  
 > {  
-> 	++count;  
+>     ++count;  
 > }
 > ```
 > 这个循环是 可以确定次数的循环, 每次函数调用执行的次数是一定的, 执行次数是 `10` 次
@@ -126,7 +126,7 @@ void Fun2(int n)
 
 ## 大 O 的渐进表示法
 
-	大O符号（Big O notation）: 是用于描述函数渐进 行为 的数学符号
+    大O符号（Big O notation）: 是用于描述函数渐进 行为 的数学符号
 
 用 `大O表示法` 计算复杂度的方法一般有: 
 1. 基本操作的执行次数中, 相加的常数一般用 `1` 取代
@@ -147,18 +147,18 @@ void Fun2(int n)
 //查找整型数组中第一个 10 的位置
 int Find_10(int *arr, int arrSize)
 {
-	int i = 0;
-	while(arrSize--)
-	{
-		if(*arr == 10)
-		{
-			return i;	
-		}
-		arr++;
-		i++;
-	}
+    int i = 0;
+    while(arrSize--)
+    {
+        if(*arr == 10)
+        {
+            return i;    
+        }
+        arr++;
+        i++;
+    }
 
-	return -1;
+    return -1;
 }
 ```
 
@@ -175,18 +175,18 @@ int Find_10(int *arr, int arrSize)
 > // 计算Func1的时间复杂度？  
 > void Func1(int N)  
 > {  
-> 	int count = 0;  
-> 	for (int k = 0; k < 2 * N ; ++k)  
-> 	{  
-> 		++count;  
-> 	}
-> 	
-> 	int M = 10;  
-> 	while (M--)  
-> 	{  
-> 		++count;  
-> 	}  
-> 	printf("%d\n", count);  
+>     int count = 0;  
+>     for (int k = 0; k < 2 * N ; ++k)  
+>     {  
+>         ++count;  
+>     }
+>     
+>     int M = 10;  
+>     while (M--)  
+>     {  
+>         ++count;  
+>     }  
+>     printf("%d\n", count);  
 > }
 > ```
 > 此函数, 通过分析
@@ -197,16 +197,16 @@ int Find_10(int *arr, int arrSize)
 > // 计算Func2的时间复杂度？  
 > void Func2(int N, int M)  
 > {  
-> 	int count = 0;  
-> 	for (int k = 0; k < M; ++k)  
-> 	{  
-> 		++count;  
-> 	}  
-> 	for (int k = 0; k < N ; ++ k)  
-> 	{  
-> 		++count;  
-> 	}  
-> 	printf("%d\n", count);  
+>     int count = 0;  
+>     for (int k = 0; k < M; ++k)  
+>     {  
+>         ++count;  
+>     }  
+>     for (int k = 0; k < N ; ++ k)  
+>     {  
+>         ++count;  
+>     }  
+>     printf("%d\n", count);  
 > }
 > ```
 > 此函数, 通过分析
@@ -217,12 +217,12 @@ int Find_10(int *arr, int arrSize)
 > // 计算Func3的时间复杂度？  
 > void Func3(int N)  
 > {  
-> 	int count = 0;  
-> 	for (int k = 0; k < 100; ++k)  
-> 	{  
-> 		++count;  
-> 	}  
-> 	printf("%d\n", count);  
+>     int count = 0;  
+>     for (int k = 0; k < 100; ++k)  
+>     {  
+>         ++count;  
+>     }  
+>     printf("%d\n", count);  
 > }
 > ```
 > 此函数, 通过分析
@@ -233,22 +233,22 @@ int Find_10(int *arr, int arrSize)
 > // 计算BubbleSort的时间复杂度？  
 > void BubbleSort(int* a, int n)  
 > {  
-> 	assert(a);  
-> 	
-> 	for (size_t end = n; end > 0; --end)  
-> 	{  
-> 		int exchange = 0;  
-> 		for (size_t i = 1; i < end; ++i)  
-> 		{  
-> 			if (a[i-1] > a[i])  
-> 			{  
-> 				Swap(&a[i-1], &a[i]); 
-> 				exchange = 1;  
-> 			}  
-> 		}  
-> 		if (exchange == 0)  
-> 			break;  
-> 	}  
+>     assert(a);  
+>     
+>     for (size_t end = n; end > 0; --end)  
+>     {  
+>         int exchange = 0;  
+>         for (size_t i = 1; i < end; ++i)  
+>         {  
+>             if (a[i-1] > a[i])  
+>             {  
+>                 Swap(&a[i-1], &a[i]); 
+>                 exchange = 1;  
+>             }  
+>         }  
+>         if (exchange == 0)  
+>             break;  
+>     }  
 > }
 > ```
 > 此函数为`冒泡排序（排升序）`
@@ -261,22 +261,22 @@ int Find_10(int *arr, int arrSize)
 > // 计算BinarySearch的时间复杂度？  
 > int BinarySearch(int* a, int n, int x)  
 > {  
-> 	assert(a);  
+>     assert(a);  
 > 
-> 	int begin = 0;  
-> 	int end = n-1;  
-> 	while (begin < end)  
-> 	{  
-> 		int mid = begin + ((end-begin)>>1);  
-> 		if (a[mid] < x)  
-> 			begin = mid+1;  
-> 		else if (a[mid] > x)  
-> 			end = mid;  
-> 		else  
-> 			return mid;  
-> 	}  
+>     int begin = 0;  
+>     int end = n-1;  
+>     while (begin < end)  
+>     {  
+>         int mid = begin + ((end-begin)>>1);  
+>         if (a[mid] < x)  
+>             begin = mid+1;  
+>         else if (a[mid] > x)  
+>             end = mid;  
+>         else  
+>             return mid;  
+>     }  
 > 
-> 	return -1;  
+>     return -1;  
 > }
 > ```
 > 此函数为`二分查找`, `(被查找的数据必须是有序的)`
@@ -298,10 +298,10 @@ int Find_10(int *arr, int arrSize)
 > // 计算阶乘递归Fac的时间复杂度？  
 > long long Fac(size_t N)  
 > {  
-> 	if(0 == N)  
-> 		return 1;  
+>     if(0 == N)  
+>         return 1;  
 > 
-> 	return Fac(N-1)*N;  
+>     return Fac(N-1)*N;  
 > }
 > ```
 > 此函数为 `递归求阶乘`
@@ -312,10 +312,10 @@ int Find_10(int *arr, int arrSize)
 > // 计算斐波那契递归Fib的时间复杂度
 > long long Fib(size_t N)  
 > {  
-> 	if(N < 3)  
-> 		return 1;  
+>     if(N < 3)  
+>         return 1;  
 > 
-> 	return Fib(N-1) + Fib(N-2);  
+>     return Fib(N-1) + Fib(N-2);  
 > }
 > ```
 > 此函数为 `递归求斐波那契数列`
@@ -357,22 +357,22 @@ int Find_10(int *arr, int arrSize)
 > // 计算BubbleSort的空间复杂度？  
 > void BubbleSort(int* a, int n)  
 > {  
-> 	assert(a);  
-> 	
-> 	for (size_t end = n; end > 0; --end)  
-> 	{  
-> 		int exchange = 0;  
-> 		for (size_t i = 1; i < end; ++i)  
-> 		{  
-> 			if (a[i-1] > a[i])  
-> 			{  
-> 				Swap(&a[i-1], &a[i]); 
-> 				exchange = 1;  
-> 			}  
-> 		}  
-> 		if (exchange == 0)  
-> 			break;  
-> 	}  
+>     assert(a);  
+>     
+>     for (size_t end = n; end > 0; --end)  
+>     {  
+>         int exchange = 0;  
+>         for (size_t i = 1; i < end; ++i)  
+>         {  
+>             if (a[i-1] > a[i])  
+>             {  
+>                 Swap(&a[i-1], &a[i]); 
+>                 exchange = 1;  
+>             }  
+>         }  
+>         if (exchange == 0)  
+>             break;  
+>     }  
 > }
 > ```
 > 分析代码可以看出, 冒泡排序额外使用的空间并没有与 `N` 发生关联。使用了常量个额外空间
@@ -384,17 +384,17 @@ int Find_10(int *arr, int arrSize)
 > // 返回斐波那契数列的前n项  
 > long long* Fibonacci(size_t n)  
 > {  
-> 	if(n==0)  
-> 		return NULL;  
-> 	long long * fibArray = (long long *)malloc((n+1) * sizeof(long long));  
-> 	fibArray[0] = 0;  
-> 	fibArray[1] = 1;  
-> 	for (int i = 2; i <= n ; ++i)  
-> 	{  
-> 		fibArray[i] = fibArray[i - 1] + fibArray [i - 2];  
-> 	}  
+>     if(n==0)  
+>         return NULL;  
+>     long long * fibArray = (long long *)malloc((n+1) * sizeof(long long));  
+>     fibArray[0] = 0;  
+>     fibArray[1] = 1;  
+>     for (int i = 2; i <= n ; ++i)  
+>     {  
+>         fibArray[i] = fibArray[i - 1] + fibArray [i - 2];  
+>     }  
 > 
-> 	return fibArray;  
+>     return fibArray;  
 > }
 > ```
 > 这是使用 `数组实现的计算斐波那契数列的 前N 项`
@@ -407,10 +407,10 @@ int Find_10(int *arr, int arrSize)
 > // 计算阶乘递归Fac的空间复杂度？  
 > long long Fac(size_t N)  
 > {  
-> 	if(N == 0)  
-> 		return 1;  
+>     if(N == 0)  
+>         return 1;  
 > 
-> 	return Fac(N-1)*N;  
+>     return Fac(N-1)*N;  
 > }
 > ```
 > `递归求N的阶乘`

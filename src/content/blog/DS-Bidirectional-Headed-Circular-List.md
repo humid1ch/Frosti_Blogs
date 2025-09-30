@@ -48,9 +48,9 @@ tags:
 typedef int ListDataType;
 typedef struct ListNode
 {
-	ListDataType val;
-	struct ListNode *prev;
-	struct ListNode *next;
+    ListDataType val;
+    struct ListNode *prev;
+    struct ListNode *next;
 }ListNode;
 ```
 
@@ -85,18 +85,18 @@ void ListPushBack(ListNode *phead, ListDataType x);
 > ```cpp
 > ListNode* BuyListNode(ListDataType x)
 > {
-> 	ListNode *newNode = (ListNode*)malloc(sizeof(ListNode));
-> 	if (newNode == NULL)
-> 	{
-> 		printf("BuyListNode fail!\n");
-> 		exit(-1);
-> 	}
-> 	// 节点赋值
-> 	newNode->val = x;
-> 	newNode->prev = NULL;
-> 	newNode->next = NULL;
+>     ListNode *newNode = (ListNode*)malloc(sizeof(ListNode));
+>     if (newNode == NULL)
+>     {
+>         printf("BuyListNode fail!\n");
+>         exit(-1);
+>     }
+>     // 节点赋值
+>     newNode->val = x;
+>     newNode->prev = NULL;
+>     newNode->next = NULL;
 > 
-> 	return newNode;
+>     return newNode;
 > }
 > ```
 
@@ -112,16 +112,16 @@ void ListPushBack(ListNode *phead, ListDataType x);
 // 带头双向循环链表 尾插
 void ListPushBack(ListNode *phead, ListDataType x)
 {
-	assert(phead);
+    assert(phead);
 
-	ListNode *newNode = BuyListNode(x);
-	ListNode *tail = phead->prev;				// 记录 头结点的prev节点
+    ListNode *newNode = BuyListNode(x);
+    ListNode *tail = phead->prev;                // 记录 头结点的prev节点
 
-	newNode->prev = tail;
-	tail->next = newNode;
+    newNode->prev = tail;
+    tail->next = newNode;
 
-	newNode->next = phead;
-	phead->prev = newNode;
+    newNode->next = phead;
+    phead->prev = newNode;
 }
 ```
 
@@ -150,11 +150,11 @@ ListNode* ListInit();
 ```cpp
 void ListInit(ListNode **pphead)
 {
-	assert(pphead);
+    assert(pphead);
 
-	*pphead = BuyListNode(0);
-	(*pphead)->next = *pphead;
-	(*pphead)->prev = *pphead;
+    *pphead = BuyListNode(0);
+    (*pphead)->next = *pphead;
+    (*pphead)->prev = *pphead;
 }
 ```
 
@@ -173,9 +173,9 @@ void ListInit(ListNode **pphead)
 ```cpp
 ListNode* ListInit()
 {
-	ListNode *phead = BuyListNode(0);
-	phead->next = phead;
-	phead->prev = phead;
+    ListNode *phead = BuyListNode(0);
+    phead->next = phead;
+    phead->prev = phead;
     
     return phead;
 }
@@ -240,20 +240,20 @@ void ListPopBack(ListNode *phead);
 ```cpp
 void ListPopBack(ListNode *phead)
 {
-	assert(phead);
-	if (phead->next == phead)
-	{
-		return;					// 防止只有头节点
-	}
+    assert(phead);
+    if (phead->next == phead)
+    {
+        return;                    // 防止只有头节点
+    }
 
-	ListNode *tail = phead->prev;
-	ListNode *tailPrev = tail->prev;		//记录尾节点的prev 防止重找
+    ListNode *tail = phead->prev;
+    ListNode *tailPrev = tail->prev;        //记录尾节点的prev 防止重找
 
-	tailPrev->next = phead;
-	phead->prev = tailPrev;
+    tailPrev->next = phead;
+    phead->prev = tailPrev;
 
-	free(tail);
-	tail = NULL;
+    free(tail);
+    tail = NULL;
 }
 ```
 
@@ -274,15 +274,15 @@ void ListPrint(ListNode *phead);
 ```cpp
 void ListPrint(ListNode *phead)
 {
-	assert(phead);
+    assert(phead);
 
-	ListNode *tail = phead->next;		// 记录 phead 的 next
-	while (tail != phead)//从 phead 的next 开始打印
-	{
-		printf("<-%d->", tail->val);
-		tail = tail->next;
-	}
-	printf("\n");
+    ListNode *tail = phead->next;        // 记录 phead 的 next
+    while (tail != phead)//从 phead 的next 开始打印
+    {
+        printf("<-%d->", tail->val);
+        tail = tail->next;
+    }
+    printf("\n");
 }
 ```
 
@@ -305,16 +305,16 @@ void ListPushFront(ListNode *phead, ListDataType x);
 ```cpp
 void ListPushFront(ListNode *phead, ListDataType x)
 {
-	assert(phead);
+    assert(phead);
 
-	ListNode *newNode = BuyListNode(x);
-	ListNode *Next = phead->next;
+    ListNode *newNode = BuyListNode(x);
+    ListNode *Next = phead->next;
 
-	Next->prev = newNode;
-	newNode->next = Next;
+    Next->prev = newNode;
+    newNode->next = Next;
 
-	newNode->prev = phead;
-	phead->next = newNode;
+    newNode->prev = phead;
+    phead->next = newNode;
 }
 ```
 
@@ -325,14 +325,14 @@ void ListPushFront(ListNode *phead, ListDataType x)
 ```cpp
 void ListPopFront(ListNode *phead)
 {
-	assert(phead);
-	assert(phead->next != phead);
+    assert(phead);
+    assert(phead->next != phead);
 
-	ListNode* Next = phead->next->next;
-	free(phead->next);
+    ListNode* Next = phead->next->next;
+    free(phead->next);
 
-	phead->next = Next;
-	Next->prev = phead;
+    phead->next = Next;
+    Next->prev = phead;
 }
 ```
 
@@ -349,24 +349,24 @@ ListNode* ListFind(ListNode *phead, ListDataType x);
 ```cpp
 ListNode* ListFind(ListNode *phead, ListDataType x)
 {
-	assert(phead);
-	if (phead->next == phead)
-	{
-		return;
-	}
+    assert(phead);
+    if (phead->next == phead)
+    {
+        return;
+    }
 
-	ListNode* cur = phead->next;
-	while (cur != phead)
-	{
-		if (cur->val == x)
-		{
-			return cur;
-		}
+    ListNode* cur = phead->next;
+    while (cur != phead)
+    {
+        if (cur->val == x)
+        {
+            return cur;
+        }
 
-		cur = cur->next;
-	}
+        cur = cur->next;
+    }
 
-	return NULL;
+    return NULL;
 }
 ```
 
@@ -387,16 +387,16 @@ void ListInsert(ListNode *pos, ListDataType x);
 ```cpp
 void ListInsert(ListNode *pos, ListDataType x)
 {
-	assert(pos);
+    assert(pos);
 
-	ListNode *newNode = BuyListNode(x);
-	ListNode *posPrev = pos->prev;
+    ListNode *newNode = BuyListNode(x);
+    ListNode *posPrev = pos->prev;
 
-	posPrev->next = newNode;
-	newNode->prev = posPrev;
+    posPrev->next = newNode;
+    newNode->prev = posPrev;
 
-	newNode->next = pos;
-	pos->prev = newNode;
+    newNode->next = pos;
+    pos->prev = newNode;
 }
 ```
 
@@ -413,17 +413,17 @@ void ListInsert(ListNode *pos, ListDataType x)
 ```cpp
 void ListPushBack(ListNode *phead, ListDataType x)
 {
-	assert(phead);
+    assert(phead);
 
-	/*ListNode *newNode = BuyListNode(x);
-	ListNode *tail = phead->prev;
+    /*ListNode *newNode = BuyListNode(x);
+    ListNode *tail = phead->prev;
 
-	newNode->prev = tail;
-	tail->next = newNode;
+    newNode->prev = tail;
+    tail->next = newNode;
 
-	newNode->next = phead;
-	phead->prev = newNode;*/
-	
+    newNode->next = phead;
+    phead->prev = newNode;*/
+    
     ListInsert(phead, x);
 }
 ```
@@ -433,16 +433,16 @@ void ListPushBack(ListNode *phead, ListDataType x)
 ```cpp
 void ListPushFront(ListNode *phead, ListDataType x)
 {
-	assert(phead);
+    assert(phead);
 
-	/*ListNode *newNode = BuyListNode(x);
-	ListNode *Next = phead->next;
+    /*ListNode *newNode = BuyListNode(x);
+    ListNode *Next = phead->next;
 
-	Next->prev = newNode;
-	newNode->next = Next;
+    Next->prev = newNode;
+    newNode->next = Next;
 
-	newNode->prev = phead;
-	phead->next = newNode;*/
+    newNode->prev = phead;
+    phead->next = newNode;*/
     ListInsert(phead->next, x);
 }
 ```
@@ -462,16 +462,16 @@ void ListErase(ListNode *pos);
 ```cpp
 void ListErase(ListNode *pos)
 {
-	assert(pos);
+    assert(pos);
 
-	ListNode* posPrev = pos->prev;
-	ListNode* posNext = pos->next;
+    ListNode* posPrev = pos->prev;
+    ListNode* posNext = pos->next;
 
-	free(pos);
-	pos = NULL;
+    free(pos);
+    pos = NULL;
 
-	posPrev->next = posNext;
-	posNext->prev = posPrev;
+    posPrev->next = posNext;
+    posNext->prev = posPrev;
 }
 ```
 
@@ -484,20 +484,20 @@ void ListErase(ListNode *pos)
 ```cpp
 void ListPopBack(ListNode *phead)
 {
-	assert(phead);
-	if (phead->next == phead)
-	{
-		return;					// 防止只有头节点
-	}
+    assert(phead);
+    if (phead->next == phead)
+    {
+        return;                    // 防止只有头节点
+    }
 
-	/*ListNode *tail = phead->prev;
-	ListNode *tailPrev = tail->prev;		//记录尾节点的prev 防止重找
+    /*ListNode *tail = phead->prev;
+    ListNode *tailPrev = tail->prev;        //记录尾节点的prev 防止重找
 
-	tailPrev->next = phead;
-	phead->prev = tailPrev;
+    tailPrev->next = phead;
+    phead->prev = tailPrev;
 
-	free(tail);
-	tail = NULL;*/
+    free(tail);
+    tail = NULL;*/
     
     ListErase(phead->prev);
 }
@@ -508,14 +508,14 @@ void ListPopBack(ListNode *phead)
 ```cpp
 void ListPopFront(ListNode *phead)
 {
-	assert(phead);
-	assert(phead->next != phead);
+    assert(phead);
+    assert(phead->next != phead);
 
-	/*ListNode* Next = phead->next->next;
-	free(phead->next);
+    /*ListNode* Next = phead->next->next;
+    free(phead->next);
 
-	phead->next = Next;
-	Next->prev = phead;*/
+    phead->next = Next;
+    Next->prev = phead;*/
     
     ListErase(phead->next);
 }
@@ -534,16 +534,16 @@ void ListDestroy(ListNode *phead);
 ```cpp
 void ListDestroy(ListNode *phead)
 {
-	assert(phead);
+    assert(phead);
 
-	ListNode *cur = phead->next;
-	while (cur != phead)
-	{
-		ListNode *Next = cur->next;
-		free(cur);
-		cur = Next;
-	}
-	free(phead);
+    ListNode *cur = phead->next;
+    while (cur != phead)
+    {
+        ListNode *Next = cur->next;
+        free(cur);
+        cur = Next;
+    }
+    free(phead);
 }
 ```
 

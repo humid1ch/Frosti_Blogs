@@ -78,9 +78,9 @@ typedef int StackDataType;
 
 typedef struct Stack
 {
-	StackDataType *data;
-	int Top;				//记录栈顶位置
-	int Capacity;			//记录数组容量
+    StackDataType *data;
+    int Top;                //记录栈顶位置
+    int Capacity;            //记录数组容量
 }Stack;
 ```
 
@@ -124,10 +124,10 @@ typedef struct Stack
 ```cpp
 void StackInit(Stack *pst)
 {
-	assert(pst);
-	
-	pst->data = NULL;
-	pst->Top = pst->Capacity = 0;
+    assert(pst);
+    
+    pst->data = NULL;
+    pst->Top = pst->Capacity = 0;
 }
 ```
 
@@ -140,24 +140,24 @@ void StackInit(Stack *pst)
 ```cpp
 void StackPush(Stack *pst, StackDataType x)
 {
-	assert(pst);
+    assert(pst);
 
-	if (pst->Top == pst->Capacity)		// 数组已满	扩容
-	{
-		int newCapacity = pst->Capacity == 0 ? 4 : pst->Capacity * 2;
-		StackDataType *tmp = (StackDataType*)realloc(pst->data, sizeof(StackDataType)* newCapacity);
-		if (tmp == NULL)
-		{
-			printf("realloc fail\n");
-			exit(-1);
-		}
+    if (pst->Top == pst->Capacity)        // 数组已满    扩容
+    {
+        int newCapacity = pst->Capacity == 0 ? 4 : pst->Capacity * 2;
+        StackDataType *tmp = (StackDataType*)realloc(pst->data, sizeof(StackDataType)* newCapacity);
+        if (tmp == NULL)
+        {
+            printf("realloc fail\n");
+            exit(-1);
+        }
 
-		pst->data = tmp;
-		pst->Capacity = newCapacity;
-	}
+        pst->data = tmp;
+        pst->Capacity = newCapacity;
+    }
 
-	pst->data[pst->Top++] = x;
-    /*	Top 初值为 -1
+    pst->data[pst->Top++] = x;
+    /*    Top 初值为 -1
     psy->data[++pst->Top] = x;
     */
 }
@@ -174,13 +174,13 @@ void StackPush(Stack *pst, StackDataType x)
 ```cpp
 void StackPop(Stack *pst)
 {
-	assert(pst);
-	assert(pst->Top > 0);		//保证栈不为空
-	/*	Top 初值为 -1
-	assert(pst->Top > -1);
-	*/
+    assert(pst);
+    assert(pst->Top > 0);        //保证栈不为空
+    /*    Top 初值为 -1
+    assert(pst->Top > -1);
+    */
 
-	--pst->Top;
+    --pst->Top;
 }
 ```
 
@@ -192,13 +192,13 @@ void StackPop(Stack *pst)
 // 取栈顶元素
 StackDataType StackTop(const Stack *pst)
 {
-	assert(pst);
-	assert(pst->Top > 0);	
+    assert(pst);
+    assert(pst->Top > 0);    
 
-	return pst->data[pst->Top - 1];
-	/*	Top 初值为 -1
-	return pst->data[pst->Top];
-	*/
+    return pst->data[pst->Top - 1];
+    /*    Top 初值为 -1
+    return pst->data[pst->Top];
+    */
 }
 ```
 
@@ -210,12 +210,12 @@ StackDataType StackTop(const Stack *pst)
 // 判空
 bool StackEmpty(const Stack *pst)
 {
-	assert(pst);
+    assert(pst);
 
-	return pst->Top == 0;
-	/*	Top 初值为 -1
-	return pst->Top == -1;
-	*/
+    return pst->Top == 0;
+    /*    Top 初值为 -1
+    return pst->Top == -1;
+    */
 }
 ```
 
@@ -226,12 +226,12 @@ bool StackEmpty(const Stack *pst)
 ```cpp
 int StackSize(const Stack *pst)
 {
-	assert(pst);
+    assert(pst);
 
-	return pst->Top;
-	/*	Top 初值为 -1
-	return pst->Top + 1;
-	*/
+    return pst->Top;
+    /*    Top 初值为 -1
+    return pst->Top + 1;
+    */
 }
 ```
 
@@ -242,11 +242,11 @@ int StackSize(const Stack *pst)
 ```cpp
 void StackDestory(Stack *pst)
 {
-	assert(pst);
+    assert(pst);
 
-	free(pst->data);
-	pst->data = NULL;
-	pst->Capacity = pst->Top = 0;
+    free(pst->data);
+    pst->data = NULL;
+    pst->Capacity = pst->Top = 0;
 }
 ```
 

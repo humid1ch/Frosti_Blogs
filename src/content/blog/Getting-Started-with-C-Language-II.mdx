@@ -140,7 +140,7 @@ C语言中, 声明变量需要使用一个关键字`extern`
 声明变量的动作为:
 
 ```c
-extern int var;	// 声明有一个变量var
+extern int var;    // 声明有一个变量var
 ```
 
 这只是一个声明动作, 并没有真正的创建变量
@@ -381,10 +381,10 @@ double _theFloat;
 double Double;
 
 /* 错误例子 */
-int 2age;	// 首字符禁止为数字
-int float;	// 禁止与关键字完全一致
-float the-weight;	// 非法字符
-double $float;	// 非法字符
+int 2age;    // 首字符禁止为数字
+int float;    // 禁止与关键字完全一致
+float the-weight;    // 非法字符
+double $float;    // 非法字符
 ```
 
 #### 变量的分类 以及 作用域和生命周期
@@ -401,7 +401,7 @@ int main() {
     /*
     入口内, 即 main() 函数内
     */
-	return 0;
+    return 0;
 }
 /*
 入口外, 即 main() 函数外
@@ -450,26 +450,26 @@ int main() {
 #include <stdio.h>
 
 int globalVar = 10; // 全局变量
-int var = 20;		// 全局变量
+int var = 20;        // 全局变量
 
 int main() {
-	printf("globalVar: %d\n", globalVar);
-	printf("var: %d\n", var);
+    printf("globalVar: %d\n", globalVar);
+    printf("var: %d\n", var);
 
-	int var = 30; // 局部变量
-	printf("var: %d\n", var);
+    int var = 30; // 局部变量
+    printf("var: %d\n", var);
 
-	{
-		int _var = 40;
-		int var = 50;
-		printf("_var: %d\n", _var);
-		printf("var: %d\n", var);
-	}
+    {
+        int _var = 40;
+        int var = 50;
+        printf("_var: %d\n", _var);
+        printf("var: %d\n", var);
+    }
 
-	// printf("_var: %d\n", _var);
-	printf("var: %d\n", var);
+    // printf("_var: %d\n", _var);
+    printf("var: %d\n", var);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -542,7 +542,7 @@ int main() {
 #include <stdio.h>
 
 int main() {
-	int var = 0;
+    int var = 0;
     int var = 20;
     
     return 0;

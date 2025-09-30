@@ -57,21 +57,21 @@ import Question from "../../components/mdx/Question.astro";
 > ```cangjie
 > let f2 = 77
 > 
-> func f2() {				// Error,  function name is the same as the variable f2
+> func f2() {                // Error,  function name is the same as the variable f2
 >     print("${f2}")
 > }     
 > 
 > // Variable, function, type names cannot be the same as keywords 
-> let Int64 = 77			// Error: 'Int64' is a keyword
+> let Int64 = 77            // Error: 'Int64' is a keyword
 > 
-> func class() {			// Error: class is a keyword
+> func class() {            // Error: class is a keyword
 >     print("${f2}")
 > }    
 > 
 > main(): Int64 {  
->     print("${f2}")		// Print 77
+>     print("${f2}")        // Print 77
 > 
->     let f2 = { =>		// Shadowed the global variable f2
+>     let f2 = { =>        // Shadowed the global variable f2
 >        print("10")
 >     }
 >     f2()
@@ -305,8 +305,8 @@ C/C++无论是函数、类型和变量, 都需要"先声明"再使用, 这里的
 > let score: Int64 = 90
 > let good = 70
 > var scoreResult: String = match (score) { // binding pattern
->     case 60 => "pass" 	// constant pattern.
->     case 100 => "Full" 	// constant pattern.
+>     case 60 => "pass"     // constant pattern.
+>     case 100 => "Full"     // constant pattern.
 >     case good => "good" // 这里的good作用域级别高于第 2 行的good, 触发遮盖
 > }
 > ```
@@ -428,7 +428,7 @@ C/C++无论是函数、类型和变量, 都需要"先声明"再使用, 这里的
 >
 > ```cangjie
 > func g(): Unit {
->   	f(1, 2)  // OK. f 是顶层定义, 在整个文件中可见
+>       f(1, 2)  // OK. f 是顶层定义, 在整个文件中可见
 > }
 > 
 > func f(x: Int32, y: Int32): Unit {  
@@ -483,7 +483,7 @@ C/C++无论是函数、类型和变量, 都需要"先声明"再使用, 这里的
 > var x = 1   
 > 
 > open class A {
->   	var x = 3   // 这个 x 遮盖了顶层作用域的 x
+>       var x = 3   // 这个 x 遮盖了顶层作用域的 x
 > }
 > 
 > class B <: A {
@@ -599,13 +599,13 @@ C/C++无论是函数、类型和变量, 都需要"先声明"再使用, 这里的
 > 下面给出变量定义的一些实例: 
 >
 > ```cangjie
-> let b: Int32					// 定义 Int32 类型 只读变量b
-> let c: Int64					// 定义 Int64 类型 只读变量b
-> var bb: String				// 定义 String 类型 可写变量bb
-> var (x, y): (Int8, Int16)		// 定义 Int8和Int16 类型 两个可写变量x, y
-> var`open`= 1				// 定义 变量名为`open`的值为1的变量
-> var`throw`= "throw"			// 定义 变量名为`throw`的值为"throw"的变量
-> const d: Int64 = 0			// 定义 Int64 类型 const变量bb, 初始化值为0
+> let b: Int32                    // 定义 Int32 类型 只读变量b
+> let c: Int64                    // 定义 Int64 类型 只读变量b
+> var bb: String                // 定义 String 类型 可写变量bb
+> var (x, y): (Int8, Int16)        // 定义 Int8和Int16 类型 两个可写变量x, y
+> var`open`= 1                // 定义 变量名为`open`的值为1的变量
+> var`throw`= "throw"            // 定义 变量名为`throw`的值为"throw"的变量
+> const d: Int64 = 0            // 定义 Int64 类型 const变量bb, 初始化值为0
 > ```
 
 #### 变量的初始化

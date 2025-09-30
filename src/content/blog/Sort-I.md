@@ -30,7 +30,7 @@ tags:
 >
 >     ```cpp
 >     void bubbleSort() {
->     	cout << "冒泡排序开始" << endl << endl;
+>         cout << "冒泡排序开始" << endl << endl;
 >
 >         /* 冒泡排序主体 */
 >
@@ -43,7 +43,7 @@ tags:
 >     ```cpp
 >     // 数组打印函数, 在有需要时直接调用
 >     void printVector(const std::vector<int>& nums) {
->     	for (auto elem : nums) {
+>         for (auto elem : nums) {
 >             cout << elem << " ";
 >         }
 >         cout << endl;
@@ -81,10 +81,10 @@ tags:
 ```cpp
 
 void bubbleSort(std::vector<int>& nums) {
-	for (int i = 0; i < nums.size(); i++) {
+    for (int i = 0; i < nums.size(); i++) {
         for (int j = 0; j < nums.size() - i - 1; j++) {
             if (nums[j] > nums[j+1]) {
-				std::swap(nums[j], nums[j+1]);
+                std::swap(nums[j], nums[j+1]);
             }
         }
     }
@@ -116,18 +116,18 @@ void bubbleSort(std::vector<int>& nums) {
 ```cpp
 
 void bubbleSort(std::vector<int>& nums) {
-	for (int i = 0; i < nums.size(); i++) {
-        int isExchange = 0;				// 用于记录本趟冒泡是否发生数据交换
+    for (int i = 0; i < nums.size(); i++) {
+        int isExchange = 0;                // 用于记录本趟冒泡是否发生数据交换
         for (int j = 0; j < nums.size() - i - 1; j++) {
             if (nums[j] > nums[j+1]) {
-				std::swap(nums[j], nums[j+1]);
-                isExchange = 1;			// 发生数据交换, 置1
+                std::swap(nums[j], nums[j+1]);
+                isExchange = 1;            // 发生数据交换, 置1
             }
         }
         // 一趟冒泡结束
         if (!isExchange) 
-            break;				// 如果一趟冒泡结束了, 还没有发生数据交换
-        						// 说明整个数组已经有序了, 可以退出外部循环
+            break;                // 如果一趟冒泡结束了, 还没有发生数据交换
+                                // 说明整个数组已经有序了, 可以退出外部循环
     }
 }
 ```
@@ -178,12 +178,12 @@ void bubbleSort(std::vector<int>& nums) {
 
 ```cpp
 void selectSort(std::vector<int>& nums) {
-	for (int i = 0; i < nums.size(); i++) {
+    for (int i = 0; i < nums.size(); i++) {
         int maxi = 0;
-        int left =  nums.size() - i;		// left 是每趟需要放最大值的位置
+        int left =  nums.size() - i;        // left 是每趟需要放最大值的位置
         for (int j = 0; j <= left; j++) {
-			if (nums[j] > nums[maxi]) {
-				maxi = j;					// 记录最大值的坐标
+            if (nums[j] > nums[maxi]) {
+                maxi = j;                    // 记录最大值的坐标
             }
         }
         std::swap(nums[maxi], nums[left]);
@@ -218,9 +218,9 @@ void selectSort(std::vector<int>& nums) {
         int maxi = left;
         for (int i = left; i <= right; i++) {
             if (nums[i] > nums[maxi])
-                maxi = i;				// 记录最大值的位置
+                maxi = i;                // 记录最大值的位置
             if (nums[i] < nums[mini])
-                mini = i;				// 记录最小值的位置
+                mini = i;                // 记录最小值的位置
         }
         
         // 找完极值, 就可以交换数据
@@ -346,18 +346,18 @@ void selectSort(std::vector<int>& nums) {
 ```cpp
 void insertSort(std::vector<int>& nums) {
     for (int i = 0; i < nums.size() - 1; i++) {
-        int end = i;				// end 与 i同步
-        int cur = nums[end+1];		// 记录nums[end+1], 因为前面的数据可能要往后移动, 会覆盖掉nums[end+1], 所以需要使用变量存储nums[end+1]
-        int now = end;				// 从 end位置开始, 向前遍历对比数据大小
+        int end = i;                // end 与 i同步
+        int cur = nums[end+1];        // 记录nums[end+1], 因为前面的数据可能要往后移动, 会覆盖掉nums[end+1], 所以需要使用变量存储nums[end+1]
+        int now = end;                // 从 end位置开始, 向前遍历对比数据大小
         
         // 当遍历到整个数组头结束
         while (now >= 0) {
-			if (nums[now] > cur) {	// 对比数据比cur大, 数据向后移动一位
+            if (nums[now] > cur) {    // 对比数据比cur大, 数据向后移动一位
                 nums[now+1] = nums[now];
                 now--;
             }
             else {
-				break; 				// 对比数据<=cur, 就表示找到了合适的位置
+                break;                 // 对比数据<=cur, 就表示找到了合适的位置
             }
         }
         
@@ -389,17 +389,17 @@ void insertSort(std::vector<int>& nums) {
 ```cpp
 void insertSort(std::vector<int>& nums) {
     for (int i = 0; i < nums.size() - 1; i++) {
-        int end = i;				// end 与 i同步
-        int cur = nums[end+1];		// 记录nums[end+1], 因为前面的数据可能要往后移动, 会覆盖掉nums[end+1], 所以需要使用变量存储nums[end+1]
+        int end = i;                // end 与 i同步
+        int cur = nums[end+1];        // 记录nums[end+1], 因为前面的数据可能要往后移动, 会覆盖掉nums[end+1], 所以需要使用变量存储nums[end+1]
         
         // 当遍历到整个数组头结束
         while (end >= 0) {
-			if (nums[end] > cur) {	// 对比数据比cur大, 数据向后移动一位
+            if (nums[end] > cur) {    // 对比数据比cur大, 数据向后移动一位
                 nums[end+1] = nums[end];
                 now--;
             }
             else {
-				break; 				// 对比数据<=cur, 就表示找到了合适的位置
+                break;                 // 对比数据<=cur, 就表示找到了合适的位置
             }
         }
         
@@ -549,7 +549,7 @@ void shellSort(std::vector<int>& nums) {
         gap = gap / 3 + 1;          // 预排序 gap的取值方法
         for (int i = 0; i < gap; i++) {     // 外层循环次数 其实就是分出来的的组数
             for (int j = i; j < nums.size() - gap; j += gap) {
-                int end = j;				// 对以gap为间隔分组的数据, 进行插入排序
+                int end = j;                // 对以gap为间隔分组的数据, 进行插入排序
                 int cur = nums[end + gap];
                 while (end >= 0) {
                     if (cur < nums[end]) {
@@ -603,16 +603,16 @@ void shellSort(std::vector<int>& nums) {
 
 ```cpp
 void shellSort(std::vector<int>& nums) {
-	int gap = nums.size();
+    int gap = nums.size();
     
     while (gap > 1) {
         gap = gap / 3 + 1;
         for (int i = 0; i < nums.size() - gap; i++) {
-			int end = i;
+            int end = i;
             int cur = nums[end + gap];
             while (end >= 0) {
                 if (cur < nums[end]) {
-					nums[end + gap] = nums[end];
+                    nums[end + gap] = nums[end];
                     end -= gap;
                 }
                 else {
@@ -621,7 +621,7 @@ void shellSort(std::vector<int>& nums) {
             }
             nums[end + gap] = cur;
         }
-	}
+    }
 }
 ```
 

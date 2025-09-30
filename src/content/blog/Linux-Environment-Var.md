@@ -166,11 +166,11 @@ export其实也可以创建一个环境变量:
 
 3. `HOME` 指 当前用户的主工作目录
 
-	关于 `环境变量HOME`, 可以切换用户 观察其变化
-	
-	在非root用户使用su命令, 并输入root密码之后, 在查看 `环境变量HOME`, 可以发现其值改变了: 
-	
-	![|medium](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160553505.webp)
+    关于 `环境变量HOME`, 可以切换用户 观察其变化
+    
+    在非root用户使用su命令, 并输入root密码之后, 在查看 `环境变量HOME`, 可以发现其值改变了: 
+    
+    ![|medium](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722160553505.webp)
 
 4. `MAIL` 邮箱全局变量
 
@@ -213,11 +213,11 @@ using std::cout;
 using std::endl;
 
 int main(int argc, char *argv[]) {
-	for(int i = 0; i < argc; i++) {
-		cout << "argv[" << i << "] : " << argv[i] << endl;
-	}
-	
-	return 0;
+    for(int i = 0; i < argc; i++) {
+        cout << "argv[" << i << "] : " << argv[i] << endl;
+    }
+    
+    return 0;
 }
 ```
 
@@ -251,7 +251,7 @@ using std::cout;
 using std::endl;
 
 int main(int argc, char *argv[]) {
-	if(argc != 4) {         // 数组将会接收4个元素
+    if(argc != 4) {         // 数组将会接收4个元素
          cout << "./myCalc [-a|-s|-m|-d] one_data two_data" << endl;     // a=add, s=sub, m=mul, d=div
          return -1;
      }
@@ -281,7 +281,7 @@ int main(int argc, char *argv[]) {
          return -1;
      }
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -329,12 +329,12 @@ using std::cout;
 using std::endl;
 
 int main() {
-	extern char **environ;
-	for(int i = 0; environ[i]; i++) {
-		cout << environ[i] << endl;
-	}
-	
-	return 0;
+    extern char **environ;
+    for(int i = 0; environ[i]; i++) {
+        cout << environ[i] << endl;
+    }
+    
+    return 0;
 }
 ```
 
@@ -357,10 +357,10 @@ using std::cout;
 using std::endl;
 
 int main() {
-	char *Var = getenv("SHELL");
-	cout << Var << endl;
-	
-	return 0;
+    char *Var = getenv("SHELL");
+    cout << Var << endl;
+    
+    return 0;
 }
 ```
 
@@ -380,16 +380,16 @@ using std::cout;
 using std::endl;
 
 int main() {
-	char *User = getenv("USER");
-	if(strcmp("July", User) == 0) {
-		// 程序功能代码: ……
-		cout << "可以执行" << endl;
-	}
-	else {
-		cout << "用户错误" << endl;
-	}
-	
-	return 0;
+    char *User = getenv("USER");
+    if(strcmp("July", User) == 0) {
+        // 程序功能代码: ……
+        cout << "可以执行" << endl;
+    }
+    else {
+        cout << "用户错误" << endl;
+    }
+    
+    return 0;
 }
 ```
 

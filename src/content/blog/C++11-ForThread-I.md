@@ -70,18 +70,18 @@ C++使用`std::thread`创建线程非常的简单:
 int cnt = 0;
 
 void loopPrint() {
-	while (true) {
-		std::cout << "thread_"<< std::this_thread::get_id() << ", out: " << cnt++ << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	}
+    while (true) {
+        std::cout << "thread_"<< std::this_thread::get_id() << ", out: " << cnt++ << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
 }
 
 int main() {
-	std::thread td1(loopPrint);
+    std::thread td1(loopPrint);
 
-	td1.join();
+    td1.join();
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -165,21 +165,21 @@ int main() {
 #include <thread>
 
 void loopPrint(int cnt) {
-	while (cnt < 10) {
-		std::cout << "thread_" << std::this_thread::get_id() << ", out: " << cnt++ << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	}
+    while (cnt < 10) {
+        std::cout << "thread_" << std::this_thread::get_id() << ", out: " << cnt++ << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
 }
 
 int main() {
-	int cnt = 5;
-	std::thread td1(loopPrint, cnt);
+    int cnt = 5;
+    std::thread td1(loopPrint, cnt);
 
-	td1.join();
+    td1.join();
 
-	std::cout << "主线程, cnt: " << cnt << std::endl;
+    std::cout << "主线程, cnt: " << cnt << std::endl;
 
-	return 0;
+    return 0;
 }
 
 ```
@@ -194,10 +194,10 @@ int main() {
 
 ```cpp
 void loopPrint(int& cnt) {
-	while (cnt < 10) {
-		std::cout << "thread_" << std::this_thread::get_id() << ", out: " << cnt++ << std::endl;
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	}
+    while (cnt < 10) {
+        std::cout << "thread_" << std::this_thread::get_id() << ", out: " << cnt++ << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
 }
 ```
 
@@ -217,19 +217,19 @@ void loopPrint(int& cnt) {
 #include <utility>
 
 void loopPrint(const int& cnt) {
-	std::cout << "thread_" << std::this_thread::get_id() << ", out:" << cnt << std::endl;
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::cout << "thread_" << std::this_thread::get_id() << ", out:" << cnt << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }
 
 int main() {
-	int cnt = 6;
-	std::thread td1(loopPrint, cnt);
+    int cnt = 6;
+    std::thread td1(loopPrint, cnt);
 
-	td1.join();
+    td1.join();
 
-	std::cout << "主线程, cnt: " << cnt << std::endl;
+    std::cout << "主线程, cnt: " << cnt << std::endl;
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -273,7 +273,7 @@ using _Invoker_type = _Invoker<__decayed_tuple<_Callable, _Args...>>;
 _M_start_thread(
     _S_make_state<_Invoker_type>(std::forward<_Callable>(__f),
                                  std::forward<_Args>(__args)...),
-								  __depend);
+                                  __depend);
 }
 ```
 
@@ -286,23 +286,23 @@ _M_start_thread(
 ```cpp
 template <typename _Callable>
 struct _State_impl : public _State {
-	_Callable _M_func;
+    _Callable _M_func;
 
-	template <typename... _Args>
-	_State_impl(_Args&&... __args)
-		: _M_func{ { std::forward<_Args>(__args)... } } {}
+    template <typename... _Args>
+    _State_impl(_Args&&... __args)
+        : _M_func{ { std::forward<_Args>(__args)... } } {}
 
-	void _M_run() {
-		_M_func();
-	}
+    void _M_run() {
+        _M_func();
+    }
 };
 
 void _M_start_thread(_State_ptr, void (*)());
 
 template <typename _Callable, typename... _Args>
 static _State_ptr _S_make_state(_Args&&... __args) {
-	using _Impl = _State_impl<_Callable>;
-	return _State_ptr{ new _Impl{ std::forward<_Args>(__args)... } };
+    using _Impl = _State_impl<_Callable>;
+    return _State_ptr{ new _Impl{ std::forward<_Args>(__args)... } };
 }
 ```
 
@@ -344,8 +344,8 @@ static _Invoker<__decayed_tuple<_Callable, _Args...>>
 __make_invoker(_Callable&& __callable, _Args&&... __args) {
     return { 
         __decayed_tuple<_Callable, _Args...> { 
-        	std::forward<_Callable>(__callable),
-        	std::forward<_Args>(__args)... }
+            std::forward<_Callable>(__callable),
+            std::forward<_Args>(__args)... }
     };
 }
 ```

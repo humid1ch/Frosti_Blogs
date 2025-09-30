@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 ```cpp
 QT_BEGIN_NAMESPACE
 namespace Ui {
-	class Widget;
+    class Widget;
 }
 QT_END_NAMESPACE
 ```
@@ -67,11 +67,11 @@ QT_END_NAMESPACE
 // qglobal.h 头文件中的相关定义
 
 #if !defined(QT_NAMESPACE) || defined(Q_MOC_RUN)
-#	define QT_BEGIN_NAMESPACE
-#	define QT_END_NAMESPACE
+#    define QT_BEGIN_NAMESPACE
+#    define QT_END_NAMESPACE
 #else
-#	define QT_BEGIN_NAMESPACE namespace QT_NAMESPACE {
-#	define QT_END_NAMESPACE }
+#    define QT_BEGIN_NAMESPACE namespace QT_NAMESPACE {
+#    define QT_END_NAMESPACE }
 #endif
 ```
 
@@ -87,7 +87,7 @@ QT_END_NAMESPACE
 
     ```cpp
     namespace Ui {
-    	class Widget;
+        class Widget;
     }
     ```
 
@@ -97,7 +97,7 @@ QT_END_NAMESPACE
     // 这里 QT_NAMESPACE 这个宏的内容也是由用户指定
     namespace QT_NAMESPACE {
     namespace Ui {
-    	class Widget;
+        class Widget;
     }
     }
     ```
@@ -111,15 +111,15 @@ QT_END_NAMESPACE
 ```cpp
 // Widget类名, 是创建项目时自定义的
 class Widget : public QWidget {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Widget(QWidget* parent = nullptr);
+    Widget(QWidget* parent = nullptr);
     
-	~Widget();
+    ~Widget();
 
 private:
-	Ui::Widget* ui;
+    Ui::Widget* ui;
 };
 
 ```
@@ -150,9 +150,9 @@ private:
 
 ```cpp
 Widget::Widget(QWidget* parent)
-	: QWidget(parent)
-	, ui(new Ui::Widget) {
-	ui->setupUi(this);
+    : QWidget(parent)
+    , ui(new Ui::Widget) {
+    ui->setupUi(this);
 }
 ```
 
@@ -384,11 +384,11 @@ QObject*;
 
 class MyLabel : public QLabel {
 public:
-	MyLabel(QWidget* parent = nullptr);
-	~MyLabel();
+    MyLabel(QWidget* parent = nullptr);
+    ~MyLabel();
 
 private:
-	static int count;
+    static int count;
 };
 ```
 
@@ -402,12 +402,12 @@ private:
 int MyLabel::count = 0;
 
 MyLabel::MyLabel(QWidget* parent)
-	: QLabel(parent) {
+    : QLabel(parent) {
 }
 
 MyLabel::~MyLabel() {
-	count++;
-	std::cout << MyLabel::count << "  MyLabel delete" << std::endl;
+    count++;
+    std::cout << MyLabel::count << "  MyLabel delete" << std::endl;
 }
 ```
 
@@ -421,33 +421,33 @@ MyLabel::~MyLabel() {
 #include <QLabel>
 
 Widget::Widget(QWidget* parent)
-	: QWidget(parent)
-	, ui(new Ui::Widget) {
-	ui->setupUi(this);
+    : QWidget(parent)
+    , ui(new Ui::Widget) {
+    ui->setupUi(this);
 
-	// 在堆上创建MyLabel对象, 并指定this为父节点
-	MyLabel* hq1 = new MyLabel(this);
-	MyLabel* hq2 = new MyLabel(this);
+    // 在堆上创建MyLabel对象, 并指定this为父节点
+    MyLabel* hq1 = new MyLabel(this);
+    MyLabel* hq2 = new MyLabel(this);
     // 不指定this为父节点
-	MyLabel* hq3 = new MyLabel;
+    MyLabel* hq3 = new MyLabel;
 
-	// 创建一个QFont 字体对象
-	QFont font;
-	font.setFamily(QString::fromUtf8("HarmonyOS Sans SC Medium"));
-	font.setPointSize(14);
+    // 创建一个QFont 字体对象
+    QFont font;
+    font.setFamily(QString::fromUtf8("HarmonyOS Sans SC Medium"));
+    font.setPointSize(14);
         
-	// 设置MyLabel的字体
-	hq1->setFont(font);
-	hq2->setFont(font);
-	hq3->setFont(font);
-	// 设置MyLabel的文本
-	hq1->setText("Hello QT5");
-	hq2->setText("Hello QT5");
-	hq3->setText("Hello QT5");
+    // 设置MyLabel的字体
+    hq1->setFont(font);
+    hq2->setFont(font);
+    hq3->setFont(font);
+    // 设置MyLabel的文本
+    hq1->setText("Hello QT5");
+    hq2->setText("Hello QT5");
+    hq3->setText("Hello QT5");
 }
 
 Widget::~Widget() {
-	delete ui;
+    delete ui;
 }
 
 ```

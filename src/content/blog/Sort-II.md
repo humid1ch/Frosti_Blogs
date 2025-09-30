@@ -167,17 +167,17 @@ C++中`std::sort()`, 在数据量较大但不会超负荷时, 就会采用快速
 
 ```cpp
 void numSwap(int& num1, int& num2) {
-	int tmp = num1;
+    int tmp = num1;
     num1 = num2;
     num2 = tmp;
 }
 
 // Hoare版
 int hoareSortAPart(std::vector<int>& nums, int left, int right) {
-	int keyi = left;
+    int keyi = left;
     int key = nums[keyi];
     while (left < right) {
-		while (nums[right] >= key && left < right)
+        while (nums[right] >= key && left < right)
             right--;
         
         while (nums[left] <= key && left < right)
@@ -187,17 +187,17 @@ int hoareSortAPart(std::vector<int>& nums, int left, int right) {
     }
     numSwap(nums[keyi], nums[left]);
     
-    return left;	// 返回 left, 即两只指针相遇地点, 也就是划分数组界限的位置
+    return left;    // 返回 left, 即两只指针相遇地点, 也就是划分数组界限的位置
 }
 
 void _quickSort(std::vector<int>& nums, int begin, int end) {
     if (begin >= end) {
-        return;			// 两指针不在维护一个长度>1的有效数组, 返回
+        return;            // 两指针不在维护一个长度>1的有效数组, 返回
     }
     
-    int keyi = hoareSortAPart(nums, begin, end);	// 处理给定范围的数组
-    _quickSort(nums, begin, keyi - 1);				// 处理划分出来 <key的部分
-    _quickSort(nums, keyi + 1, end);				// 处理划分出来 >key的部分
+    int keyi = hoareSortAPart(nums, begin, end);    // 处理给定范围的数组
+    _quickSort(nums, begin, keyi - 1);                // 处理划分出来 <key的部分
+    _quickSort(nums, keyi + 1, end);                // 处理划分出来 >key的部分
 }
 
 void quickSort(std::vector<int>& nums) {
@@ -219,7 +219,7 @@ int pitSortAPart(std::vector<int>& nums, int left, int right) {
     int key = nums[left];
     int pit = left;
     while (left < right) {
-		while (nums[right] >= key && left < right)
+        while (nums[right] >= key && left < right)
             right--;
         nums[pit] = nums[right];
         pit = right;
@@ -229,19 +229,19 @@ int pitSortAPart(std::vector<int>& nums, int left, int right) {
         nums[pit] = nums[left];
         pit = left;
     }
-	nums[left] = key;		// 相遇位置是最后的坑
+    nums[left] = key;        // 相遇位置是最后的坑
     
-    return left;	// 返回 left, 即两只指针相遇地点, 也就是划分数组界限的位置
+    return left;    // 返回 left, 即两只指针相遇地点, 也就是划分数组界限的位置
 }
 
 void _quickSort(std::vector<int>& nums, int begin, int end) {
     if (begin >= end) {
-        return;			// 两指针不在维护一个长度>1的有效数组, 返回
+        return;            // 两指针不在维护一个长度>1的有效数组, 返回
     }
     
-    int keyi = pitSortAPart(nums, begin, end);		// 处理给定范围的数组
-    _quickSort(nums, begin, keyi - 1);				// 处理划分出来 <key的部分
-    _quickSort(nums, keyi + 1, end);				// 处理划分出来 >key的部分
+    int keyi = pitSortAPart(nums, begin, end);        // 处理给定范围的数组
+    _quickSort(nums, begin, keyi - 1);                // 处理划分出来 <key的部分
+    _quickSort(nums, keyi + 1, end);                // 处理划分出来 >key的部分
 }
 
 void quickSort(std::vector<int>& nums) {
@@ -257,7 +257,7 @@ void quickSort(std::vector<int>& nums) {
 
 ```cpp
 void numSwap(int& num1, int& num2) {
-	int tmp = num1;
+    int tmp = num1;
     num1 = num2;
     num2 = tmp;
 }
@@ -268,24 +268,24 @@ int pointerSortAPart(std::vector<int>& nums, int left, int right) {
     int fast = left + 1;
     int last = left;
     while (fast <= right) {
-		if (nums[fast] < key && fast != ++last)
+        if (nums[fast] < key && fast != ++last)
             numSwap(nums[fast], nums[last]);
         
         fast++;
     }
     numSwap(nums[left], nums[last]);
     
-    return last;	// 返回 last, 划分数组界限的位置
+    return last;    // 返回 last, 划分数组界限的位置
 }
 
 void _quickSort(std::vector<int>& nums, int begin, int end) {
     if (begin >= end) {
-        return;			// 两指针不在维护一个长度>1的有效数组, 返回
+        return;            // 两指针不在维护一个长度>1的有效数组, 返回
     }
     
-    int keyi = pointerSortAPart(nums, begin, end);	// 处理给定范围的数组
-    _quickSort(nums, begin, keyi - 1);				// 处理划分出来 <key的部分
-    _quickSort(nums, keyi + 1, end);				// 处理划分出来 >key的部分
+    int keyi = pointerSortAPart(nums, begin, end);    // 处理给定范围的数组
+    _quickSort(nums, begin, keyi - 1);                // 处理划分出来 <key的部分
+    _quickSort(nums, keyi + 1, end);                // 处理划分出来 >key的部分
 }
 
 void quickSort(std::vector<int>& nums) {
@@ -311,26 +311,26 @@ void quickSort(std::vector<int>& nums) {
 
 ```cpp
 void numSwap(int& num1, int& num2) {
-	int tmp = num1;
+    int tmp = num1;
     num1 = num2;
     num2 = tmp;
 }
 
 int qSortGetMid(std::vector<int>& nums, int begin, int end) {
     // 假如 [12, 20], 那么 mid 为 16
-    int mid = begin + (end - begin) / 2;		// begin 不一定为0
+    int mid = begin + (end - begin) / 2;        // begin 不一定为0
     if (nums[begin] > nums[mid]) {
-        if (nums[mid] > nums[end]) 				// begin > mid > end
+        if (nums[mid] > nums[end])                 // begin > mid > end
             return mid;
-        else if (nums[end] > nums[begin])		// end > begin > mid
+        else if (nums[end] > nums[begin])        // end > begin > mid
             return begin;
         else 
             return end;
     }
     else { // mid > begin
-        if (nums[end] > nums[mid]) 				// end > mid > begin
+        if (nums[end] > nums[mid])                 // end > mid > begin
             return mid;
-        else if (nums[begin] > nums[end])		// mid > begin > end
+        else if (nums[begin] > nums[end])        // mid > begin > end
             return begin;
         else 
             return end;
@@ -339,15 +339,15 @@ int qSortGetMid(std::vector<int>& nums, int begin, int end) {
 
 void _quickSort(std::vector<int>& nums, int begin, int end) {
     if (begin >= end) {
-        return;			// 两指针不在维护一个长度>1的有效数组, 返回
+        return;            // 两指针不在维护一个长度>1的有效数组, 返回
     }
     
     int midi = qSortGetMid(nums, begin, end);
-    numSwap(nums[midi], nums[begin]);				// 将取到的中值, 与数组头元素交换位置, 后边的处理中, 就会用中值做key
+    numSwap(nums[midi], nums[begin]);                // 将取到的中值, 与数组头元素交换位置, 后边的处理中, 就会用中值做key
     
-    int keyi = pointerSortAPart(nums, begin, end);	// 处理给定范围的数组
-    _quickSort(nums, begin, keyi - 1);				// 处理划分出来 <key的部分
-    _quickSort(nums, keyi + 1, end);				// 处理划分出来 >key的部分
+    int keyi = pointerSortAPart(nums, begin, end);    // 处理给定范围的数组
+    _quickSort(nums, begin, keyi - 1);                // 处理划分出来 <key的部分
+    _quickSort(nums, keyi + 1, end);                // 处理划分出来 >key的部分
 }
 ```
 
@@ -383,7 +383,7 @@ void _quickSort(std::vector<int>& nums, int begin, int end) {
 
 ```cpp
 void nonRecursiveQuickSort(std::vector<int>& nums) {
-    std::stack<int> qSortIntervalSt;	// 快排区间栈, 用于存储数组区间
+    std::stack<int> qSortIntervalSt;    // 快排区间栈, 用于存储数组区间
     qSortIntervalSt.push(0);
     qSortIntervalSt.push(nums.size() - 1);
     
@@ -394,10 +394,10 @@ void nonRecursiveQuickSort(std::vector<int>& nums) {
         qSortIntervalSt.pop();
         
         int midi = qSortGetMid(nums, begin, end);
-    	numSwap(nums[midi], nums[begin]);				// 将取到的中值, 与数组头元素交换位置, 后边的处理中, 就会用中值做key
+        numSwap(nums[midi], nums[begin]);                // 将取到的中值, 与数组头元素交换位置, 后边的处理中, 就会用中值做key
         
-        int keyi = pointerSortAPart(nums, begin, end);	// 处理给定范围的数组
-        if (begin < keyi - 1) {			// 保证入栈为有效数组区间
+        int keyi = pointerSortAPart(nums, begin, end);    // 处理给定范围的数组
+        if (begin < keyi - 1) {            // 保证入栈为有效数组区间
             qSortIntervalSt.push(begin);
             qSortIntervalSt.push(keyi - 1);
         }
@@ -508,7 +508,7 @@ void nonRecursiveQuickSort(std::vector<int>& nums) {
 ## 代码实现
 
 ```cpp
-// 归并	排序的递归函数
+// 归并    排序的递归函数
 void _mergeSort(std::vector<int>& nums, int begin, int end, std::vector<int>& tmpNums) {
     // 如果begin和end维护的序列长度 <=1, 返回
     if (begin >= end)
@@ -518,21 +518,21 @@ void _mergeSort(std::vector<int>& nums, int begin, int end, std::vector<int>& tm
     int mid = (begin + end) / 2;
     
     // 开始递归分化
-    _mergeSort(nums, begin, mid, tmpNums);		// 先左子序列
-    _mergeSort(nums, mid + 1, end, tmpNums);	// 再右子序列
+    _mergeSort(nums, begin, mid, tmpNums);        // 先左子序列
+    _mergeSort(nums, mid + 1, end, tmpNums);    // 再右子序列
     
     // 走到这里, 表示begin~mid 和 mid+1~end, 两序列在原数组中有序
     // 需要将这两部分进行合并, 不能直接在原数组中合并, 会覆盖还没有处理的数据
     // 在tmpNums中合并, 再拷贝到原数组对应位置
-    int beginLeft = begin, endLeft = mid;		// 左子序列的开始和结束位置
-    int beginRight = mid + 1, endRight = end;	// 右子序列的开始和结束位置
+    int beginLeft = begin, endLeft = mid;        // 左子序列的开始和结束位置
+    int beginRight = mid + 1, endRight = end;    // 右子序列的开始和结束位置
     // 遍历两个序列, 直到一个序列遍历结束
     while (beginLeft <= endLeft && beginRight <= endRight) {
         if (nums[beginLeft] <= nums[beginRight])
             tmpNums.push_back(nums[beginLeft++]);
         else
             tmpNums.push_back(nums[beginRight++]);
-	}
+    }
     
     // 走到这里, 至少有一个序列的所有数据都已经存储到了tmpNums
     // 可能还有另外一个序列没有遍历结束
@@ -559,7 +559,7 @@ void mergeSort(std::vector<int>& nums) {
     // 归并排序需要合并数组, 所以要用一个临时数组
     // 但是如果每次递归时, 都创建一个临时数组, 会有额外开销, 所以在开始递归之前, 定义一个数组
     // 向递归函数传入数组就可以了
-	std::vector<int> tmpNums;
+    std::vector<int> tmpNums;
     _mergeSort(nums, 0, nums.size() - 1, tmpNums);
 }
 ```
@@ -629,12 +629,12 @@ void nonRecursiveMergeSort(std::vector<int>& nums) {
                     tmpNums.push_back(nums[beginRight++]);
             }
         }
-		// 退出for循环, 则表示以gap为间隔进行划分区间, 并对区间两两归并完毕
-    	// 向原数组中赋值
-    	nums.swap(tmpNums);
-    	tmpNums.resize(0);
+        // 退出for循环, 则表示以gap为间隔进行划分区间, 并对区间两两归并完毕
+        // 向原数组中赋值
+        nums.swap(tmpNums);
+        tmpNums.resize(0);
 
-    	gap *= 2;  // 扩大间隔, 扩大下次划分区间的间隔
+        gap *= 2;  // 扩大间隔, 扩大下次划分区间的间隔
     }
 }
 ```
@@ -730,14 +730,14 @@ void countSort(std::vector<int>& nums) {
             min = e;
     }
     
-    std::vector<int> count(max - min + 1); 	// 构建count数组
+    std::vector<int> count(max - min + 1);     // 构建count数组
     for (int i = 0; i < nums.size(); i++) {
-        count[nums[i] - min]++;				// 映射并计数
+        count[nums[i] - min]++;                // 映射并计数
     }
     
     int j = 0;
     for (int i = 0; i < count.size(); i++) {
-        while (count[i]-- > 0) {			// 将count[i]清零
+        while (count[i]-- > 0) {            // 将count[i]清零
             nums[j++] = i + min;
         }
     }
@@ -914,17 +914,17 @@ void bigRootAdjustDown(std::vector<int>& nums, int size, int root) {
     int parent = root;
     int child = parent * 2 + 1;
     while (child < size) {
-		// child 默认表示左孩子, 要判断左右孩子谁大
+        // child 默认表示左孩子, 要判断左右孩子谁大
         if (child + 1 < size && nums[child] < nums[child + 1])
-            child++;			// 右孩子大, child += 1 记录右孩子下标
-       	
+            child++;            // 右孩子大, child += 1 记录右孩子下标
+           
         if (nums[parent] < nums[child]) {
-			numSwap(nums[parent], nums[child]);
+            numSwap(nums[parent], nums[child]);
             parent = child;
             child = parent * 2 + 1;
         }
-        else {		// 已经是大根堆了
-			break;	// 不需要再向下走, 此次调整完毕
+        else {        // 已经是大根堆了
+            break;    // 不需要再向下走, 此次调整完毕
         }
     }
 }
@@ -933,19 +933,19 @@ void heapSort(std::vector<int>& nums) {
     // 先建立 大根堆
     // 从最后一个非叶子节点开始
     for (int index = nums.size() / 2 - 1; index >= 0; index--) {
-		bigRootAdjustDown(nums, nums.size(), index);
+        bigRootAdjustDown(nums, nums.size(), index);
     }
     
     // 大根堆建立完成
     // 正式开始堆排序
     // 进入循环之前, 数组首元素已经是最大值, 所以先将首元素与尾元素调换位置
     // 并缩减需要 向下调整处理的数据范围
-   	// 直到 缩减到 0
-    int end = nums.size() - 1;	// 需要处理的数据范围 [0, end)
+       // 直到 缩减到 0
+    int end = nums.size() - 1;    // 需要处理的数据范围 [0, end)
     while (end > 0) {
         numSwap(nums[end], nums[0]);
         bigRootAdjustDown(nums, end, 0);
-        end--;					// 缩减end
+        end--;                    // 缩减end
     }
     // 排序完毕
 }

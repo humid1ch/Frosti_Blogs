@@ -1362,56 +1362,56 @@ private:
 };
 
 bool makeRequest(const std::string& message, request* req) {
-	// 首先消除指令消息中的空格
-	std::string tmpMsg;
-	std::string opStr = OPS;
-	for (auto e : message) {
-		if ((e <= '9' && e >= '0') || (std::string::npos != opStr.find(e))) {
-			tmpMsg += e;
-		}
-		else if (e != ' ') {
-			return false;
-		}
-	}
-	std::cout << tmpMsg << std::endl;
+    // 首先消除指令消息中的空格
+    std::string tmpMsg;
+    std::string opStr = OPS;
+    for (auto e : message) {
+        if ((e <= '9' && e >= '0') || (std::string::npos != opStr.find(e))) {
+            tmpMsg += e;
+        }
+        else if (e != ' ') {
+            return false;
+        }
+    }
+    std::cout << tmpMsg << std::endl;
 
-	// 这里要分两种情况来判断
-	// 因为有可能 操作数前有 + 或 - 号
-	// 所以要分清 + 或 -是否属于数值 或 运算符
-	// 然后找到真正运算符的位置
+    // 这里要分两种情况来判断
+    // 因为有可能 操作数前有 + 或 - 号
+    // 所以要分清 + 或 -是否属于数值 或 运算符
+    // 然后找到真正运算符的位置
 
-	int opPos = 0;
+    int opPos = 0;
 
-	int first_pos = tmpMsg.find_first_of(opStr);
-	int last_pos = tmpMsg.find_last_of(opStr);
-	if ((tmpMsg[last_pos] != '-' && tmpMsg[last_pos] != '+') && !isdigit(tmpMsg[last_pos - 1])) {
-		// 当最后一个操作符不是 - + 也不是真正运算符时, 输入错误
-		return false;
-	}
-	if ((tmpMsg[first_pos] == '-' || tmpMsg[first_pos] == '+')) {
-		if (first_pos == 0) {
-			opPos = tmpMsg.find_first_of(opStr, first_pos + 1);
-		}
-		else {
-			opPos = first_pos;
-		}
-	}
-	else {
-		if (first_pos == 0)
-			return false;
-		opPos = first_pos;
-	}
+    int first_pos = tmpMsg.find_first_of(opStr);
+    int last_pos = tmpMsg.find_last_of(opStr);
+    if ((tmpMsg[last_pos] != '-' && tmpMsg[last_pos] != '+') && !isdigit(tmpMsg[last_pos - 1])) {
+        // 当最后一个操作符不是 - + 也不是真正运算符时, 输入错误
+        return false;
+    }
+    if ((tmpMsg[first_pos] == '-' || tmpMsg[first_pos] == '+')) {
+        if (first_pos == 0) {
+            opPos = tmpMsg.find_first_of(opStr, first_pos + 1);
+        }
+        else {
+            opPos = first_pos;
+        }
+    }
+    else {
+        if (first_pos == 0)
+            return false;
+        opPos = first_pos;
+    }
 
-	std::string left = tmpMsg.substr(0, opPos);
-	std::string right = tmpMsg.substr(opPos + 1);
+    std::string left = tmpMsg.substr(0, opPos);
+    std::string right = tmpMsg.substr(opPos + 1);
 
-	req->set_x(atoi(left.c_str()));
-	req->set_y(atoi(right.c_str()));
-	req->set_op(tmpMsg[opPos]);
+    req->set_x(atoi(left.c_str()));
+    req->set_y(atoi(right.c_str()));
+    req->set_op(tmpMsg[opPos]);
 
-	req->debug();
+    req->debug();
 
-	return true;
+    return true;
 }
 
 ```

@@ -305,7 +305,7 @@ void* callBack1(void* args) {
     cout << "thread_1 is over" << endl;
 
     int* ret = new int(123);
-    return (void*)ret;				// 返回一个堆区数据 123
+    return (void*)ret;                // 返回一个堆区数据 123
 }
 
 int main() {
@@ -322,7 +322,7 @@ int main() {
     sleep(2);
 
     cout << "print thread_1 ret: " << *((int*)ret) << endl;
-    delete (int*)ret; 		// 释放堆区数据
+    delete (int*)ret;         // 释放堆区数据
 
     return 0;
 }
@@ -575,8 +575,8 @@ int main() {
 
     pthread_create(&tid1, nullptr, callBack1, (void*)"thread_1");
     sleep(2);
-	pthread_cancel(tid1); 						// 主线程向新线程发送取消请求
-   	cout << "main thread cancel thread_1" << endl;
+    pthread_cancel(tid1);                         // 主线程向新线程发送取消请求
+       cout << "main thread cancel thread_1" << endl;
 
     void* ret = nullptr;
     pthread_join(tid1, &ret);
@@ -670,7 +670,7 @@ void printTid(const char* threadName, const pthread_t& tid) {
 }
 
 void* startRoutine(void* args) {
-    pthread_detach(pthread_self());			// 线程分离
+    pthread_detach(pthread_self());            // 线程分离
     
     string name = (char*)args;
     int cnt = 1;
@@ -820,8 +820,8 @@ int main() {
 
     int joinRet = pthread_join(tid1, nullptr);
     cout << strerror(joinRet) << endl;
-	
-    sleep(5); 		// 防止主线程先退出
+    
+    sleep(5);         // 防止主线程先退出
     
     return 0;
 }

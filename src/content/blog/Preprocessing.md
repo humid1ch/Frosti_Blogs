@@ -32,18 +32,18 @@ __STDC__  //当编译器遵循ANSI C时, 其值为1, 否则未定义
 
 int main()
 {
-	FILE* pf = fopen("log.txt", "w");
+    FILE* pf = fopen("log.txt", "w");
 
-	for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
 
-	{
-		fprintf(pf, "%s %s %s %d i=%d \n", __DATE__, __TIME__, __FILE__, __LINE__, i);
-	}
+    {
+        fprintf(pf, "%s %s %s %d i=%d \n", __DATE__, __TIME__, __FILE__, __LINE__, i);
+    }
 
-	fclose(pf);
-	printf("执行完成\n");
+    fclose(pf);
+    printf("执行完成\n");
 
-	return 0;
+    return 0;
 }
 ```
 代码执行效果: 
@@ -63,7 +63,7 @@ int main()
 #define uchar unsigned char
 #define TIME_PRINT printf("Today is %s.\n\
 The time now is %s.\n", \
-						   __TIME__, __DATE__)
+                           __TIME__, __DATE__)
 ```
 这些被定义的 **宏** 在使用的时候, 是不需要输入参数的, 可以直接在代码编写中使用: 
 
@@ -74,8 +74,8 @@ The time now is %s.\n", \
 然后使用 `TIME_PRINT` 来输出时间
 > ```cpp
 > #define TIME_PRINT printf("Today is %s.\n \
-> 						   The time now is %s.\n", \
-> 						   __TIME__, __DATE__)
+>                            The time now is %s.\n", \
+>                            __TIME__, __DATE__)
 > ```
 >
 > > 在这一句使用 #define 定义中, 第一个 `\n` 后的  ```\``` , 和 `,`  后的 ```\``` , 作用都是续行
@@ -111,17 +111,17 @@ The time now is %s.\n", \
 
 int Add(int x, int y)
 {
-	return x + y;
+    return x + y;
 }
 
 int main()
 {
-	int a = 20;
-	int b = 30;
-	printf("%d\n", ADD(a, b));
-	printf("%d\n", Add(a, b));
+    int a = 20;
+    int b = 30;
+    printf("%d\n", ADD(a, b));
+    printf("%d\n", Add(a, b));
 
-	return 0;
+    return 0;
 }
 ```
 ![define_function-pk |inline](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722182125798.webp)

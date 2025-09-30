@@ -82,9 +82,9 @@ import Warning from "../../components/mdx/Warning.astro";
 > main(){
 >     var c: Rune = 'a'
 >     var num: UInt32 = 0
->     num = UInt32(c)	// num = 97
->     num -= 32       	// num = 65
->     c = Rune(num)  	// c =`A`
+>     num = UInt32(c)    // num = 97
+>     num -= 32           // num = 65
+>     c = Rune(num)      // c =`A`
 >     
 >     return 0
 > }
@@ -106,12 +106,12 @@ import Warning from "../../components/mdx/Warning.astro";
 >
 > ```
 > numericTypeConvExpr
-> 	: numericTypes '(' expression ')'
->    	;
->    	
+>     : numericTypes '(' expression ')'
+>        ;
+>        
 > numericTypes
->    	: 'Int8' | 'Int16' | 'Int32' | 'Int64' | 'IntNative' | 'UInt8' | 'UInt16' | 'UInt32' | 'UInt64' | 'UIntNative' | 'Float16' | 'Float32' | 'Float64'
->    	;
+>        : 'Int8' | 'Int16' | 'Int32' | 'Int64' | 'IntNative' | 'UInt8' | 'UInt16' | 'UInt32' | 'UInt64' | 'UIntNative' | 'Float16' | 'Float32' | 'Float64'
+>        ;
 > ```
 
 > 如果根据数值类型所占`bit`数来定义数值类型间的"大小关系"(所占`bit`数越多, 类型越"大", 所占`bit`数越少, 类型越"小"), 则仓颉编程语言支持以下类型转换: 
@@ -125,10 +125,10 @@ import Warning from "../../components/mdx/Warning.astro";
 >     var i8Number: Int8 = 127
 >     var i16Number: Int16 = 0
 > 
->     i16Number = Int16(i8Number)		// ok: i16Number = 127
->     i8Number = Int8(i16Number)		// ok: i8Number = 127
+>     i16Number = Int16(i8Number)        // ok: i16Number = 127
+>     i8Number = Int8(i16Number)        // ok: i8Number = 127
 >     i16Number = 128
->     i8Number = Int8(i16Number)		// throw an ArithmeticException
+>     i8Number = Int8(i16Number)        // throw an ArithmeticException
 > 
 >     return 0
 > }
@@ -143,10 +143,10 @@ import Warning from "../../components/mdx/Warning.astro";
 >     var u16Number: UInt16 = 65535
 >     var u32Number: UInt32 = 0
 > 
->     u32Number = UInt32(u16Number)		// ok: u32Number = 65535
->     u16Number = UInt16(u32Number)		// ok: u16Number = 65535
+>     u32Number = UInt32(u16Number)        // ok: u32Number = 65535
+>     u16Number = UInt16(u32Number)        // ok: u16Number = 65535
 >     u32Number = 65536
->     u16Number = UInt16(u32Number)		// throw an ArithmeticException
+>     u16Number = UInt16(u32Number)        // throw an ArithmeticException
 > 
 >     return 0
 > }
@@ -167,20 +167,20 @@ import Warning from "../../components/mdx/Warning.astro";
 >     var f32Number: Float32 = 1.1
 >     var f64Number: Float64 = 0.0
 > 
->     f64Number = Float64(f32Number)		// f64Number = 1.100000023841858
->     f32Number = Float32(f64Number)		// f32Number = 1.1
+>     f64Number = Float64(f32Number)        // f64Number = 1.100000023841858
+>     f32Number = Float32(f64Number)        // f32Number = 1.1
 > 
 >     f64Number = 1.123456789
->     f32Number = Float32(f64Number)		// f32Number = 1.1234568
+>     f32Number = Float32(f64Number)        // f32Number = 1.1234568
 > 
->     f32Number = 4.4E38					// f32Number = POSITIVE_INFINITY
->     f64Number = Float64(f32Number)		// f64Number = POSITIVE_INFINITY
+>     f32Number = 4.4E38                    // f32Number = POSITIVE_INFINITY
+>     f64Number = Float64(f32Number)        // f64Number = POSITIVE_INFINITY
 > 
 >     f64Number = 4.4E38
->     f32Number = Float32(f64Number)		// f32Number = POSITIVE_INFINITY
+>     f32Number = Float32(f64Number)        // f32Number = POSITIVE_INFINITY
 > 
 >     f64Number = Float64(f32Number * 0.0)
->     f32Number = Float32(f64Number)		// f32Number = NaN
+>     f32Number = Float32(f64Number)        // f32Number = NaN
 > 
 >     return 0
 > }
@@ -205,13 +205,13 @@ import Warning from "../../components/mdx/Warning.astro";
 >     var i8Number: Int8 = 127
 >     var u8Number: UInt8 = 0
 > 
->     u8Number = UInt8(i8Number)	// ok: u8Number = 127
+>     u8Number = UInt8(i8Number)    // ok: u8Number = 127
 >     u8Number = 100
->     i8Number = Int8(u8Number)	// ok: i8Number= 100
+>     i8Number = Int8(u8Number)    // ok: i8Number= 100
 >     i8Number= -100
->     u8Number = UInt8(i8Number)	// throw an ArithmeticException
+>     u8Number = UInt8(i8Number)    // throw an ArithmeticException
 >     u8Number = 255
->     i8Number = Int8(u8Number)	// throw an ArithmeticException
+>     i8Number = Int8(u8Number)    // throw an ArithmeticException
 > 
 >     return 0
 > }
@@ -243,23 +243,23 @@ import Warning from "../../components/mdx/Warning.astro";
 >     var f16Number: Float16 = 0.0
 >     var f32Number: Float32 = 0.0
 > 
->     f16Number = Float16(i32Number)		// ok: f16Number = 1024.0
->     f32Number = Float32(i32Number)		// ok: f32Number = 1024.0
+>     f16Number = Float16(i32Number)        // ok: f16Number = 1024.0
+>     f32Number = Float32(i32Number)        // ok: f32Number = 1024.0
 >     i32Number = 2147483647
->     f16Number = Float16(i32Number)		// f16Number = POSITIVE_INFINITY	正无穷
->     f32Number = Float32(i32Number)		// precision lost: f32Number = 2.14748365E9	精度丢失
+>     f16Number = Float16(i32Number)        // f16Number = POSITIVE_INFINITY    正无穷
+>     f32Number = Float32(i32Number)        // precision lost: f32Number = 2.14748365E9    精度丢失
 > 
 >     f32Number = 1024.1024
->     i32Number = Int32(f32Number)		// ok: i32Number = 1024
+>     i32Number = Int32(f32Number)        // ok: i32Number = 1024
 > 
 >     f32Number = 1024e10
->     i32Number = Int32(f32Number)		// throw an Exception
+>     i32Number = Int32(f32Number)        // throw an Exception
 > 
->     f32Number = 3.4e40					// f32Number = POSITIVE_INFINITY
->     i32Number = Int32(f32Number)		// throw an Exception
+>     f32Number = 3.4e40                    // f32Number = POSITIVE_INFINITY
+>     i32Number = Int32(f32Number)        // throw an Exception
 > 
->     f32Number = 3.4e40 * 0.0			// f32Number = NaN
->     i32Number = Int32(f32Number)		// throw an Exception
+>     f32Number = 3.4e40 * 0.0            // f32Number = NaN
+>     i32Number = Int32(f32Number)        // throw an Exception
 > 
 >     return 0
 > }
@@ -331,8 +331,8 @@ type 别名(<泛型类型参数>)= 实际类型(可以是泛型)
 >
 >     ```cangjie
 >     func test(){
->         type Point2D = (Float64, Float64)				// error: type alias can only be defined at top-level
->         type Point3D = (Float64, Float64, Float64)		// error: type alias can only be defined at top-level
+>         type Point2D = (Float64, Float64)                // error: type alias can only be defined at top-level
+>         type Point3D = (Float64, Float64, Float64)        // error: type alias can only be defined at top-level
 >     }
 >     ```
 >
@@ -340,15 +340,15 @@ type 别名(<泛型类型参数>)= 实际类型(可以是泛型)
 >
 >     ```cangjie
 >     class LongNameClassA {}
->     type ClassB = LongNameClassB			// error: use of undeclared type 'LongNameClassB'
+>     type ClassB = LongNameClassB            // error: use of undeclared type 'LongNameClassB'
 >     ```
 >
 > 3. 定义泛型别名时, 如果泛型别名中引入了原类型中没有使用的泛型参数, 则编译器会告警
 >
 >     ```cangjie
->     type Class1<V> = GenericClassA<Int64, V> 			// ok. ClassA is a generic class
->     type Class2<Value, V> = GenericClassB<Int64, V> 	// warning: the type parameter 'Value' in 'Class2<Value, V>' is not used in 'GenericClassB<Int64, V>'
->     type Int<T> = Int32 				            	// warning: the type parameter 'T' in 'Int<T>' is not used in`Int32`
+>     type Class1<V> = GenericClassA<Int64, V>             // ok. ClassA is a generic class
+>     type Class2<Value, V> = GenericClassB<Int64, V>     // warning: the type parameter 'Value' in 'Class2<Value, V>' is not used in 'GenericClassB<Int64, V>'
+>     type Int<T> = Int32                                 // warning: the type parameter 'T' in 'Int<T>' is not used in`Int32`
 >     ```
 
 仓颉中的`type`与C语言中的`typedef`有不同点
@@ -362,18 +362,18 @@ type 别名(<泛型类型参数>)= 实际类型(可以是泛型)
 >     另外, 原类型中已有的泛型约束会"传递"至别名
 >
 >     ```cangjie
->     type Class1<V> where V <: MyTrait = GenericClassA<Int64, V> 	// error: generic constraints are not allowed here
->     type Class2<V> = GenericClassB<Int64, V> where V <: MyTrait 	// error: generic constraints are not allowed here
+>     type Class1<V> where V <: MyTrait = GenericClassA<Int64, V>     // error: generic constraints are not allowed here
+>     type Class2<V> = GenericClassB<Int64, V> where V <: MyTrait     // error: generic constraints are not allowed here
 >                     
 >     type Class3<V> = GenericClassC<Int64, V>
->     func foo<V> (p: Class3<V>)where V <: MyTrait {             	// add generic constraints when 'Class3<V>' is used
+>     func foo<V> (p: Class3<V>)where V <: MyTrait {                 // add generic constraints when 'Class3<V>' is used
 >         functionBody
 >     }
 >                     
 >     class ClassWithLongName<T> where T<:MyTrait {
 >         classBody
 >     }
->     type Class<T> = ClassWithLongName<T>                       	// Class<T> also has the constraint 'where T<:MyTrait'
+>     type Class<T> = ClassWithLongName<T>                           // Class<T> also has the constraint 'where T<:MyTrait'
 >     ```
 
 别名只是起别名, 定义别名 不能额外添加原类型不存在的功能
@@ -385,10 +385,10 @@ type 别名(<泛型类型参数>)= 实际类型(可以是泛型)
 >     其中, 判断循环引用的方式是通过名字判断是否存在循环引用, 并不是使用类型展开的方式
 >
 >     ```cangjie
->     type Value = GenericClassAp<Int64, Value>		// error: 'Value' references itself
->     type Type1 = (Int64)->Type1					// error: 'Type1' references itself
->     type Type2 = (Int64, Type2)					// error: 'Type2' references itself
->     type Type3 = Type4							// error: 'Type3' indirectlly references itself
+>     type Value = GenericClassAp<Int64, Value>        // error: 'Value' references itself
+>     type Type1 = (Int64)->Type1                    // error: 'Type1' references itself
+>     type Type2 = (Int64, Type2)                    // error: 'Type2' references itself
+>     type Type3 = Type4                            // error: 'Type3' indirectlly references itself
 >     type Type4 = Type3
 >     ```
 
@@ -406,7 +406,7 @@ type 别名(<泛型类型参数>)= 实际类型(可以是泛型)
 >             
 >     func add(left: Int, right: Int32): Int { left + right }
 >             
->     func add(left: Int32, right: Int32): Int32 { left + right } 	// error: invalid redeclaration of 'add : (Int32, Int32)->Int32'
+>     func add(left: Int32, right: Int32): Int32 { left + right }     // error: invalid redeclaration of 'add : (Int32, Int32)->Int32'
 >     ```
 
 > 7. `type`定义的默认可见性为`default`
@@ -429,11 +429,11 @@ type 别名(<泛型类型参数>)= 实际类型(可以是泛型)
 >                 
 >     }
 >              
->     public type classA = ClassWithLongNameA			// ok
->     type classAInter = ClassWithLongNameA			// ok 
+>     public type classA = ClassWithLongNameA            // ok
+>     type classAInter = ClassWithLongNameA            // ok 
 >             
 >     /* error: classB can not be declared with modifier 'public', as 'ClassWithLongNameB' is internal */
->     public type classB = ClassWithLongNameB 		
+>     public type classB = ClassWithLongNameB         
 >             
 >     // b.cj
 >     package B

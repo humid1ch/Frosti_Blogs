@@ -40,9 +40,9 @@ struct Point {
 };
 
 int main() {
-    int a = 1; 			// 之前
-    int b = {2};		// C++11 支持
-    int c{3};			// C++11 支持
+    int a = 1;             // 之前
+    int b = {2};        // C++11 支持
+    int c{3};            // C++11 支持
 
     Point po1 = {1, 2};
     Point po2{1, 2};
@@ -143,7 +143,7 @@ int main() {
 
 ```cpp
 int main() {
-	vector<int> v1{1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+    vector<int> v1{1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
     vector<int> v2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
     vector<int>* v3 = new vector<int>[4]{ {1,2,3,4},{5,6,7,8},{9,10,11,12},{12,13,14,15} };
     
@@ -165,10 +165,10 @@ int main() {
 
 ```cpp
 int main() {
- 	 set<int> s1{1, 2, 3, 4, 5, 6, 7};
+      set<int> s1{1, 2, 3, 4, 5, 6, 7};
     set<int> s2 = {1, 2, 3, 4, 5, 6, 7};
 
-	 return 0;
+     return 0;
 }
 ```
 
@@ -178,9 +178,9 @@ int main() {
 
 ```cpp
 int main() {
-	 map<string, string> dict ={ {"apple", "苹果"}, {"banana", "香蕉"}, {"sun", "太阳"} };
+     map<string, string> dict ={ {"apple", "苹果"}, {"banana", "香蕉"}, {"sun", "太阳"} };
     
-	 return 0;
+     return 0;
 }
 ```
 
@@ -393,7 +393,7 @@ void ShowList(Args... args) {}
 ```cpp
 template <class ...Args>
 void ShowList(Args... args) {
-	args[0];
+    args[0];
     // 类似这样的方法, 以及范围for, 都无法使用. 
 }
 ```
@@ -521,7 +521,7 @@ int main() {
     arr.push_back({ 50, "五十" });
     
     for (auto e : arr) {
-		cout << e.first << ":" << e.second << endl;
+        cout << e.first << ":" << e.second << endl;
     }
     
     return 0;

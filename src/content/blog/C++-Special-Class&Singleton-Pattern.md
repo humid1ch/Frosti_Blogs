@@ -226,7 +226,7 @@ int main() {
 
     ```cpp
     static StackOnly CreateObj() {
-    	StackOnly st;
+        StackOnly st;
         return st;
     }
     ```
@@ -343,7 +343,7 @@ private:
     Singleton(const Singleton&) = delete;
     Singleton& operator=(const Singleton&) = delete;
     
-    static Singleton _instance; 	// 声明
+    static Singleton _instance;     // 声明
 };
 ```
 
@@ -357,7 +357,7 @@ private:
     Singleton(const Singleton&) = delete;
     Singleton& operator=(const Singleton&) = delete;
     
-    static Singleton _instance; 	// 声明
+    static Singleton _instance;     // 声明
 };
 
 Singleton Singleton::_instance;
@@ -531,22 +531,22 @@ public:
     }
 
     class CGarbo {
-	public:
+    public:
         // CGarbo的析构函数会 delete 单例对象
         // 然后会调用 Singleton的析构函数, 完成需求
-		~CGarbo(){
-			if (_instance)
-				delete _instance;
-		}
-	};
+        ~CGarbo(){
+            if (_instance)
+                delete _instance;
+        }
+    };
 
-	// 定义一个静态成员变量, 程序结束时, 系统会自动调用它的析构函数从而释放单例对象
-	static CGarbo Garbo;
+    // 定义一个静态成员变量, 程序结束时, 系统会自动调用它的析构函数从而释放单例对象
+    static CGarbo Garbo;
     
 private:
     Singleton() {}
     
-	~Singleton() {}
+    ~Singleton() {}
     
     Singleton(const Singleton&) = delete;
     Singleton& operator=(const Singleton&) = delete;

@@ -137,15 +137,15 @@ cp cpp-httplib-0.7.16/httplib.h gitHub/Boost-Doc-Searcher/.
 // 由于库中使用了线程相关接口, 所以要包含线程头文件
 
 int main() {
-	httplib::Server svr;
+    httplib::Server svr;
 
-	svr.Get("/hi", [](const httplib::Request&, httplib::Response& res) {
-		res.set_content("Hello World!", "text/plain");
-	});
+    svr.Get("/hi", [](const httplib::Request&, httplib::Response& res) {
+        res.set_content("Hello World!", "text/plain");
+    });
 
-	svr.listen("0.0.0.0", 8080);
+    svr.listen("0.0.0.0", 8080);
 
-	return 0;
+    return 0;
 }
 ```
 
@@ -213,13 +213,13 @@ svr.Get("/search", [](const httplib::Request& request, httplib::Response& respon
 
 ```cpp
 svr.Get("/search", [](const httplib::Request& request, httplib::Response& response) {
-		if (!request.has_param("word")) {
-			// url中没有 word 键值
-			// set_content() 第一个参数是设置正文内容, 第二个参数是 正文内容类型等属性
-			response.set_content("请输入内容后搜索", "text/plain; charset=utf-8");
-		}
-		std::string word = request.get_param_value("word");
-		response.set_content(word, "text/plain; charset=utf-8");
+        if (!request.has_param("word")) {
+            // url中没有 word 键值
+            // set_content() 第一个参数是设置正文内容, 第二个参数是 正文内容类型等属性
+            response.set_content("请输入内容后搜索", "text/plain; charset=utf-8");
+        }
+        std::string word = request.get_param_value("word");
+        response.set_content(word, "text/plain; charset=utf-8");
 });
 ```
 
@@ -463,7 +463,7 @@ int main() {
         <button onclick="Search()" class="search-button">&#9829; Search</button>
       </div>
       <div class="result">
-     	// 这里是展示搜索结果的地方
+         // 这里是展示搜索结果的地方
       </div>
     </div>
     <script>
@@ -1048,7 +1048,7 @@ int main() {
             response.set_content("请输入内容后搜索", "text/plain; charset=utf-8");
         }
         std::string searchContent = request.get_param_value("word");
-        LOG(NOTICE, "User search:: %s", searchContent.c_str()); 	// 调用LOG()
+        LOG(NOTICE, "User search:: %s", searchContent.c_str());     // 调用LOG()
         // std::cout << "User search:: " << searchContent << std::endl;
 
         std::string searchJsonResult;

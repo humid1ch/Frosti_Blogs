@@ -30,7 +30,7 @@ void* myMemcpy(void* dest, const void* src, size_t num) {
     
     while(num--) {
         *(char*)dest = *(char*)src;
-        dest = (char*)dest + 1;	//上边强制类型转换解引用后, dest 的类型依旧是 void*, 无法直接加加, 所以依旧需要强制类型转换
+        dest = (char*)dest + 1;    //上边强制类型转换解引用后, dest 的类型依旧是 void*, 无法直接加加, 所以依旧需要强制类型转换
         src = (char*)src + 1;
     }
     
@@ -54,17 +54,17 @@ void* myMemmove(void* dest, const void* src, size_t num) {
     assert(dest && src);
     
     if(dest < src) {
-    	// 从前向后拷贝
+        // 从前向后拷贝
         while(num--) {
-        	*(char*)dest = *(char*)src;
-        	dest = (char*)dest + 1;	//上边强制类型转换解引用后, dest 的类型依旧是 void*, 无法直接加加, 所以依旧需要强制类型转换
-        	src = (char*)src + 1;
-    	}
+            *(char*)dest = *(char*)src;
+            dest = (char*)dest + 1;    //上边强制类型转换解引用后, dest 的类型依旧是 void*, 无法直接加加, 所以依旧需要强制类型转换
+            src = (char*)src + 1;
+        }
     }
     else {
         // 从后向前拷贝
         while(num--)
-        	*((char*)dest+num) = *((char*)src+num);
+            *((char*)dest+num) = *((char*)src+num);
     }
     
     return ret; //有返回类型, 必须返回一个值(可忽略此返回值)

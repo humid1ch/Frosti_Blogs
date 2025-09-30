@@ -61,7 +61,7 @@ map 则是 `template<class Key, class Value>`
 >
 >  阅读左半部分的源码, 可以发现 STL实现红黑树节点, 使用了继承: 
 >
->  ​	将 每个节点都具有的部分: 颜色 父亲 左孩子 右孩子 定义为类 `rb_tree_node_base`; 定义另一个类 只拥有一个Value类型的成员变量, 其他继承于子类
+>  ​    将 每个节点都具有的部分: 颜色 父亲 左孩子 右孩子 定义为类 `rb_tree_node_base`; 定义另一个类 只拥有一个Value类型的成员变量, 其他继承于子类
 >
 >  再阅读右半部分的源码, 发现 `__rb_tree_node<Value> 被typedef为 rb_tree_node`, 所以 红黑树的节点其实是 `__rb_tree_node<Value>` 类型的
 >
@@ -101,20 +101,20 @@ struct RBTreeNode {
     RBTreeNode(const T& data = T())
         : _pLeft(nullptr), _pRight(nullptr), _pParent(nullptr)
         , _data(data)
-        , _color(RED) 	// 新节点默认为红节点 
+        , _color(RED)     // 新节点默认为红节点 
     {}
 
-    RBTreeNode<T>* _pLeft;			// 节点左孩子
-    RBTreeNode<T>* _pRight;		    // 节点右孩子
-    RBTreeNode<T>* _pParent;		// 节点父亲节点
+    RBTreeNode<T>* _pLeft;            // 节点左孩子
+    RBTreeNode<T>* _pRight;            // 节点右孩子
+    RBTreeNode<T>* _pParent;        // 节点父亲节点
 
-    T _data;					     // 节点数据
-    Color _color;					// 节点颜色
+    T _data;                         // 节点数据
+    Color _color;                    // 节点颜色
 };
 
 template<class Key, class Value_type>
 class RBTree {
-    typedef RBTreeNode<Value_type> Node;			// 以 Value_type 作为节点类的模板参数 并 typedef
+    typedef RBTreeNode<Value_type> Node;            // 以 Value_type 作为节点类的模板参数 并 typedef
 
 public:
     bool insert(const Value_type& data) {}
@@ -213,38 +213,38 @@ struct RBTreeNode {
     RBTreeNode(const T& data = T())
         : _pLeft(nullptr), _pRight(nullptr), _pParent(nullptr)
         , _data(data)
-        , _color(RED) 	// 新节点默认为红节点 
+        , _color(RED)     // 新节点默认为红节点 
     {}
 
-    RBTreeNode<T>* _pLeft;			// 节点左孩子
-    RBTreeNode<T>* _pRight;		    // 节点右孩子
-    RBTreeNode<T>* _pParent;		// 节点父亲节点
+    RBTreeNode<T>* _pLeft;            // 节点左孩子
+    RBTreeNode<T>* _pRight;            // 节点右孩子
+    RBTreeNode<T>* _pParent;        // 节点父亲节点
 
-    T _data;					     // 节点数据
-    Color _color;					// 节点颜色
+    T _data;                         // 节点数据
+    Color _color;                    // 节点颜色
 };
 
 template<class Key, class Value_type, class KeyOfValue>
 class RB_Tree {
-    typedef RBTreeNode<Value_type> Node;			// 对节点类型进行typedef
+    typedef RBTreeNode<Value_type> Node;            // 对节点类型进行typedef
 
 public:
     bool insert(const Value_type& data) {
         if (_root == nullptr) {
             // 树为空时, 插入新节点
             _root = new Node(data);
-            _root->_color = BLACK;			// 根节点要为 黑
+            _root->_color = BLACK;            // 根节点要为 黑
 
             return true;
         }
         
-        KeyOfValue KOV;				// 实例化仿函数对象, 为调用仿函数
+        KeyOfValue KOV;                // 实例化仿函数对象, 为调用仿函数
         
         // 树不为空, 就从根节点开始找位置
         Node* cur = _root;
         Node* parent = cur->_pParent;
         while (cur) {
-            if (KOV(data) > KOV(cur->_data)) {		// 调用仿函数找key值 对比
+            if (KOV(data) > KOV(cur->_data)) {        // 调用仿函数找key值 对比
                 // 插入数据大, 就向右子树找
                 parent = cur;
                 cur = cur->_pRight;
@@ -277,37 +277,37 @@ public:
         // 上面插入新节点时 已经记录了 cur 和 parent节点
         while (parent && parent->_color == RED) {
             // 父亲节点存在, 且父亲节点也为红色时
-            Node* grandFa = parent->_pParent; 			// 记录祖先节点
-            assert(grandFa);						 // 断言祖父节点存在
+            Node* grandFa = parent->_pParent;             // 记录祖先节点
+            assert(grandFa);                         // 断言祖父节点存在
             // 如果祖父节点不存在, 就说明 parent节点是树的根, 是不可能的 因为红黑树根不可能是红色的
 
             if (parent == grandFa->_pLeft) {
                 // 父亲节点是祖先节点的左孩子
-                Node* uncle = grandFa->_pRight;			// 记录叔叔节点
+                Node* uncle = grandFa->_pRight;            // 记录叔叔节点
                 if (uncle && uncle->_color == RED) {
                     // 叔叔节点存在 且是红节点
-                    parent->_color = uncle->_color = BLACK;			// 父亲节点 和 叔叔节点改为黑色
-                    grandFa->_color = RED;						 // 祖父节点 改为红色
+                    parent->_color = uncle->_color = BLACK;            // 父亲节点 和 叔叔节点改为黑色
+                    grandFa->_color = RED;                         // 祖父节点 改为红色
 
-                    cur = grandFa;								// 更新 grandFa节点为新的cur节点
-                    parent = cur->_pParent;						  // 更新 新的parent节点
+                    cur = grandFa;                                // 更新 grandFa节点为新的cur节点
+                    parent = cur->_pParent;                          // 更新 新的parent节点
                 }
                 else {
                     // uncle为空 或 为黑时
                     if (cur == parent->_pLeft) {
                         // parent是grandFa的左孩子, cur是parent的左孩子, 即 直线的情况
-                        rotateR(grandFa);				// 将 祖先节点作为rotateR的parent, 右单旋
+                        rotateR(grandFa);                // 将 祖先节点作为rotateR的parent, 右单旋
 
-                        parent->_color = BLACK;			 // 更新 parent节点颜色为黑
-                        grandFa->_color = RED;			 // 更新 grandFa节点颜色为红
+                        parent->_color = BLACK;             // 更新 parent节点颜色为黑
+                        grandFa->_color = RED;             // 更新 grandFa节点颜色为红
                     }
                     else {
                         // parent是grandFa的左孩子, cur是parent的右孩子, 即 折线的情况
-                        rotateL(parent);				// 先将 parent节点作为rotateL的parent, 左单旋
-                        rotateR(grandFa); 				// 再将 grandFa节点作为rotateR的parent, 右单旋
+                        rotateL(parent);                // 先将 parent节点作为rotateL的parent, 左单旋
+                        rotateR(grandFa);                 // 再将 grandFa节点作为rotateR的parent, 右单旋
 
-                        cur->_color = BLACK;			// 更新 cur节点颜色为黑
-                        grandFa->_color = RED;			// 更新 grandFa节点颜色为红
+                        cur->_color = BLACK;            // 更新 cur节点颜色为黑
+                        grandFa->_color = RED;            // 更新 grandFa节点颜色为红
                     }
                     // 处理之后 结束循环
                     break;
@@ -315,7 +315,7 @@ public:
             }
             else {
                 // 父亲节点是祖先节点的右孩子
-                Node* uncle = grandFa->_pLeft;			// 记录叔叔节点
+                Node* uncle = grandFa->_pLeft;            // 记录叔叔节点
                 if (uncle && uncle->_color == RED) {
                     parent->_color = uncle->_color = BLACK;
                     grandFa->_color = RED;
@@ -327,27 +327,27 @@ public:
                     // uncle为空 或 为黑时
                     if (cur == parent->_pRight) {
                         // parent是grandFa的右孩子, cur是parent的右孩子, 即 直线的情况
-                        rotateL(grandFa);				// 将 祖先节点作为rotateL的parent, 左单旋
+                        rotateL(grandFa);                // 将 祖先节点作为rotateL的parent, 左单旋
 
-                        parent->_color = BLACK;			 // 更新 parent节点颜色为黑
-                        grandFa->_color = RED;			 // 更新 grandFa节点颜色为红
+                        parent->_color = BLACK;             // 更新 parent节点颜色为黑
+                        grandFa->_color = RED;             // 更新 grandFa节点颜色为红
                     }
                     else {
                         // parent是grandFa的右孩子, cur是parent的左孩子, 即 折线的情况
-                        rotateR(parent);				// 先将 parent节点作为rotateR的parent, 右单旋
-                        rotateL(grandFa); 				// 再将 grandFa节点作为rotateL的parent, 左单旋
+                        rotateR(parent);                // 先将 parent节点作为rotateR的parent, 右单旋
+                        rotateL(grandFa);                 // 再将 grandFa节点作为rotateL的parent, 左单旋
 
-                        cur->_color = BLACK;			// 更新 cur节点颜色为黑
-                        grandFa->_color = RED;			// 更新 grandFa节点颜色为红
+                        cur->_color = BLACK;            // 更新 cur节点颜色为黑
+                        grandFa->_color = RED;            // 更新 grandFa节点颜色为红
                     }
                     // 处理之后 结束循环
                     break;
                 }
             }
         }
-        _root->_color = BLACK;				  // 无论如何 最后更新根节点的颜色为黑
+        _root->_color = BLACK;                  // 无论如何 最后更新根节点的颜色为黑
 
-        return true;						// 插入完成, 返回true
+        return true;                        // 插入完成, 返回true
     }
 
 private:
@@ -371,18 +371,18 @@ private:
 > ```cpp
 > template<class Key>
 > class Set {
-> 	typedef Key key_type;
-> 	typedef Key value_type;
+>     typedef Key key_type;
+>     typedef Key value_type;
 > 
-> 	// 取key值的仿函数
-> 	struct SetKeyOfValue {
-> 		const key_type& operator() (const value_type& key) {
-> 			return key;
-> 		}
-> 	};
+>     // 取key值的仿函数
+>     struct SetKeyOfValue {
+>         const key_type& operator() (const value_type& key) {
+>             return key;
+>         }
+>     };
 > 
 > private:
-> 	RB_Tree<key_type, key_type, SetKeyOfValue> _tree;
+>     RB_Tree<key_type, key_type, SetKeyOfValue> _tree;
 > };
 > ```
 
@@ -391,18 +391,18 @@ private:
 > ```cpp
 > template<class Key, class Value>
 > class Map {
-> 	typedef Key key_type;
-> 	typedef pair<Key, Value> value_type;		// pair<Key, Value>作为数据类型
+>     typedef Key key_type;
+>     typedef pair<Key, Value> value_type;        // pair<Key, Value>作为数据类型
 > 
-> 	// 取key值的仿函数
-> 	struct MapKeyOfValue {
-> 		const key_type& operator() (const value_type& kv) {
-> 			return kv.first;
-> 		}
-> 	};
+>     // 取key值的仿函数
+>     struct MapKeyOfValue {
+>         const key_type& operator() (const value_type& kv) {
+>             return kv.first;
+>         }
+>     };
 > 
 > private:
-> 	RB_Tree<key_type, value_type, MapKeyOfValue> _tree;
+>     RB_Tree<key_type, value_type, MapKeyOfValue> _tree;
 > };
 > ```
 
@@ -411,7 +411,7 @@ private:
 红黑树是二叉树, 每个单位是一个节点, 所以 红黑树迭代器 应该与 链表的迭代器相似 成员变量是红黑树的节点
 
 ```cpp
-template<class Type, class Ref, class Ptr>			// 模板参数分别是 原类型, 引用类型, 指针类型
+template<class Type, class Ref, class Ptr>            // 模板参数分别是 原类型, 引用类型, 指针类型
 struct _RB_Tree_Iterator {
     typedef RBTreeNode<Type> Node;
     typedef _RB_Tree_Iterator<Typr, Ref, Ptr> Self;
@@ -421,11 +421,11 @@ struct _RB_Tree_Iterator {
     {}
     
     Ref operator*() {
-        return _node->_data;					// * 解引用 返回节点中的数据。返回值是引用类型 因为需要提供修改功能
+        return _node->_data;                    // * 解引用 返回节点中的数据。返回值是引用类型 因为需要提供修改功能
     }
     
     Ptr operator->() {
-        return &_node->_data;					// & 取地址 返回节点中数据的地址。返回值是指针类型
+        return &_node->_data;                    // & 取地址 返回节点中数据的地址。返回值是指针类型
     }
     
     // 可能需要其他类访问, 所以设置为公有的
@@ -504,17 +504,17 @@ struct _RB_Tree_Iterator {
 >
 >     31节点 —> 34节点(31节点的祖父);
 >
->     ​	31节点是22节点的右孩子, 所以向上找到 22节点, 22节点是34节点的左孩子, 即 `22节点是 31节点祖先路径上的第一个不是右孩子的节点`, 所以 迭代器需要 指向 `22节点的父亲节点`
+>     ​    31节点是22节点的右孩子, 所以向上找到 22节点, 22节点是34节点的左孩子, 即 `22节点是 31节点祖先路径上的第一个不是右孩子的节点`, 所以 迭代器需要 指向 `22节点的父亲节点`
 >
 >     41节点 —> 53节点(41节点的祖父);
 >
 >     78节点 —> 82节点(78节点的父亲的祖父);
 >
->     ​	78节点是77节点的右孩子, 向上找到 77节点, 77节点又是 70节点的右孩子, 继续向上找 70节点, 70节点是82节点的左孩子, 即 `70节点是 78祖先路径上的第一个不是右孩子的节点`, 所以 迭代器++ 需要指向 `70节点的父亲节点, 82节点`
+>     ​    78节点是77节点的右孩子, 向上找到 77节点, 77节点又是 70节点的右孩子, 继续向上找 70节点, 70节点是82节点的左孩子, 即 `70节点是 78祖先路径上的第一个不是右孩子的节点`, 所以 迭代器++ 需要指向 `70节点的父亲节点, 82节点`
 >
 > 但是 其实 1 和 3 是同一种情况: 
 >
-> ​	**`此节点向上所在的路径上 第一个不是某节点右孩子的节点的父亲节点`**
+> ​    **`此节点向上所在的路径上 第一个不是某节点右孩子的节点的父亲节点`**
 >
 > 所以, 一共有两种情况
 >
@@ -612,7 +612,7 @@ Self operator--(int) {
 `++` 和 `--` 介绍过之后, 红黑树迭代器 最重要的内容就已经介绍完了, 剩下的就是补齐迭代器 相等和不等比较的功能
 
 ```cpp
-template<class Type, class Ref, class Ptr>			// 模板参数分别是 原类型, 引用类型, 指针类型
+template<class Type, class Ref, class Ptr>            // 模板参数分别是 原类型, 引用类型, 指针类型
 struct _RB_Tree_Iterator {
     typedef RBTreeNode<Type> Node;
     typedef _RB_Tree_Iterator<Typr, Ref, Ptr> Self;
@@ -622,11 +622,11 @@ struct _RB_Tree_Iterator {
     {}
 
     Ref operator*() {
-        return _node->_data;					// * 解引用 返回节点中的数据。返回值是引用类型 因为需要提供修改功能
+        return _node->_data;                    // * 解引用 返回节点中的数据。返回值是引用类型 因为需要提供修改功能
     }
 
     Ptr operator->() {
-        return &_node->_data;					// & 取地址 返回节点中数据的地址。返回值是指针类型
+        return &_node->_data;                    // & 取地址 返回节点中数据的地址。返回值是指针类型
     }
     
     Self& operator++() {        // 无 int参数, 前置++
@@ -732,18 +732,18 @@ struct RBTreeNode {
     RBTreeNode(const T& data = T())
         : _pLeft(nullptr), _pRight(nullptr), _pParent(nullptr)
         , _data(data)
-        , _color(RED) 	// 新节点默认为红节点 
+        , _color(RED)     // 新节点默认为红节点 
     {}
 
-    RBTreeNode<T>* _pLeft;			// 节点左孩子
-    RBTreeNode<T>* _pRight;		    // 节点右孩子
-    RBTreeNode<T>* _pParent;		// 节点父亲节点
+    RBTreeNode<T>* _pLeft;            // 节点左孩子
+    RBTreeNode<T>* _pRight;            // 节点右孩子
+    RBTreeNode<T>* _pParent;        // 节点父亲节点
 
-    T _data;					     // 节点数据
-    Color _color;					// 节点颜色
+    T _data;                         // 节点数据
+    Color _color;                    // 节点颜色
 };
 
-template<class Type, class Ref, class Ptr>			// 模板参数分别是 原类型, 引用类型, 指针类型
+template<class Type, class Ref, class Ptr>            // 模板参数分别是 原类型, 引用类型, 指针类型
 struct _RB_Tree_Iterator {
     typedef RBTreeNode<Type> Node;
     typedef _RB_Tree_Iterator<Type, Ref, Ptr> Self;
@@ -753,11 +753,11 @@ struct _RB_Tree_Iterator {
     {}
 
     Ref operator*() {
-        return _node->_data;					// * 解引用 返回节点中的数据。返回值是引用类型 因为需要提供修改功能
+        return _node->_data;                    // * 解引用 返回节点中的数据。返回值是引用类型 因为需要提供修改功能
     }
 
     Ptr operator->() {
-        return &_node->_data;					// -> 返回节点中数据的地址。返回值是指针类型
+        return &_node->_data;                    // -> 返回节点中数据的地址。返回值是指针类型
     }
     
     Self& operator++() {        // 无 int参数, 前置++
@@ -847,7 +847,7 @@ struct _RB_Tree_Iterator {
 
 template<class Key, class Value_type, class KeyOfValue>
 class RB_Tree {
-    typedef RBTreeNode<Value_type> Node;			// 对节点类型进行typedef
+    typedef RBTreeNode<Value_type> Node;            // 对节点类型进行typedef
 
 public:
     // 由于需要在类外使用  所以 typedef 为公共的
@@ -903,7 +903,7 @@ public:
         if (_root == nullptr) {
             // 树为空时, 插入新节点
             _root = new Node(data);
-            _root->_color = BLACK;			// 根节点要为 黑
+            _root->_color = BLACK;            // 根节点要为 黑
 
             return make_pair(iterator(_root), true);
         }
@@ -949,37 +949,37 @@ public:
         // 上面插入新节点时 已经记录了 cur 和 parent节点
         while (parent && parent->_color == RED) {
             // 父亲节点存在, 且父亲节点也为红色时
-            Node* grandFa = parent->_pParent; 			// 记录祖先节点
-            assert(grandFa);						 // 断言祖父节点存在
+            Node* grandFa = parent->_pParent;             // 记录祖先节点
+            assert(grandFa);                         // 断言祖父节点存在
             // 如果祖父节点不存在, 就说明 parent节点是树的根, 是不可能的 因为红黑树根不可能是红色的
 
             if (parent == grandFa->_pLeft) {
                 // 父亲节点是祖先节点的左孩子
-                Node* uncle = grandFa->_pRight;			// 记录叔叔节点
+                Node* uncle = grandFa->_pRight;            // 记录叔叔节点
                 if (uncle && uncle->_color == RED) {
                     // 叔叔节点存在 且是红节点
-                    parent->_color = uncle->_color = BLACK;			// 父亲节点 和 叔叔节点改为黑色
-                    grandFa->_color = RED;						 // 祖父节点 改为红色
+                    parent->_color = uncle->_color = BLACK;            // 父亲节点 和 叔叔节点改为黑色
+                    grandFa->_color = RED;                         // 祖父节点 改为红色
 
-                    cur = grandFa;								// 更新 grandFa节点为新的cur节点
-                    parent = cur->_pParent;						  // 更新 新的parent节点
+                    cur = grandFa;                                // 更新 grandFa节点为新的cur节点
+                    parent = cur->_pParent;                          // 更新 新的parent节点
                 }
                 else {
                     // uncle为空 或 为黑时
                     if (cur == parent->_pLeft) {
                         // parent是grandFa的左孩子, cur是parent的左孩子, 即 直线的情况
-                        rotateR(grandFa);				// 将 祖先节点作为rotateR的parent, 右单旋
+                        rotateR(grandFa);                // 将 祖先节点作为rotateR的parent, 右单旋
 
-                        parent->_color = BLACK;			 // 更新 parent节点颜色为黑
-                        grandFa->_color = RED;			 // 更新 grandFa节点颜色为红
+                        parent->_color = BLACK;             // 更新 parent节点颜色为黑
+                        grandFa->_color = RED;             // 更新 grandFa节点颜色为红
                     }
                     else {
                         // parent是grandFa的左孩子, cur是parent的右孩子, 即 折线的情况
-                        rotateL(parent);				// 先将 parent节点作为rotateL的parent, 左单旋
-                        rotateR(grandFa); 				// 再将 grandFa节点作为rotateR的parent, 右单旋
+                        rotateL(parent);                // 先将 parent节点作为rotateL的parent, 左单旋
+                        rotateR(grandFa);                 // 再将 grandFa节点作为rotateR的parent, 右单旋
 
-                        cur->_color = BLACK;			// 更新 cur节点颜色为黑
-                        grandFa->_color = RED;			// 更新 grandFa节点颜色为红
+                        cur->_color = BLACK;            // 更新 cur节点颜色为黑
+                        grandFa->_color = RED;            // 更新 grandFa节点颜色为红
                     }
                     // 处理之后 结束循环
                     break;
@@ -987,7 +987,7 @@ public:
             }
             else {
                 // 父亲节点是祖先节点的右孩子
-                Node* uncle = grandFa->_pLeft;			// 记录叔叔节点
+                Node* uncle = grandFa->_pLeft;            // 记录叔叔节点
                 if (uncle && uncle->_color == RED) {
                     parent->_color = uncle->_color = BLACK;
                     grandFa->_color = RED;
@@ -999,25 +999,25 @@ public:
                     // uncle为空 或 为黑时
                     if (cur == parent->_pRight) {
                         // parent是grandFa的右孩子, cur是parent的右孩子, 即 直线的情况
-                        rotateL(grandFa);				// 将 祖先节点作为rotateL的parent, 左单旋
+                        rotateL(grandFa);                // 将 祖先节点作为rotateL的parent, 左单旋
 
-                        parent->_color = BLACK;			 // 更新 parent节点颜色为黑
-                        grandFa->_color = RED;			 // 更新 grandFa节点颜色为红
+                        parent->_color = BLACK;             // 更新 parent节点颜色为黑
+                        grandFa->_color = RED;             // 更新 grandFa节点颜色为红
                     }
                     else {
                         // parent是grandFa的右孩子, cur是parent的左孩子, 即 折线的情况
-                        rotateR(parent);				// 先将 parent节点作为rotateR的parent, 右单旋
-                        rotateL(grandFa); 				// 再将 grandFa节点作为rotateL的parent, 左单旋
+                        rotateR(parent);                // 先将 parent节点作为rotateR的parent, 右单旋
+                        rotateL(grandFa);                 // 再将 grandFa节点作为rotateL的parent, 左单旋
 
-                        cur->_color = BLACK;			// 更新 cur节点颜色为黑
-                        grandFa->_color = RED;			// 更新 grandFa节点颜色为红
+                        cur->_color = BLACK;            // 更新 cur节点颜色为黑
+                        grandFa->_color = RED;            // 更新 grandFa节点颜色为红
                     }
                     // 处理之后 结束循环
                     break;
                 }
             }
         }
-        _root->_color = BLACK;				  // 无论如何 最后更新根节点的颜色为黑
+        _root->_color = BLACK;                  // 无论如何 最后更新根节点的颜色为黑
 
         return make_pair(iterator(newNode), true);
     }
@@ -1090,42 +1090,42 @@ set 和 map 是以红黑树为底层封装起来的, 上面已经实现了 红�
 > ```cpp
 > template<class Key>
 > class set {
-> 	typedef Key key_type;
-> 	typedef Key value_type;
+>     typedef Key key_type;
+>     typedef Key value_type;
 > 
-> 	// 取key值的仿函数
-> 	struct SetKeyOfValue {
-> 		const key_type& operator() (const value_type& key) {
-> 			return key;
-> 		}
-> 	};
+>     // 取key值的仿函数
+>     struct SetKeyOfValue {
+>         const key_type& operator() (const value_type& key) {
+>             return key;
+>         }
+>     };
 > 
 > public:
-> 	// 封装红黑树的迭代器
-> 	typedef typename RB_Tree<key_type, value_type, SetKeyOfValue>::const_iterator iterator;
-> 	typedef typename RB_Tree<key_type, value_type, SetKeyOfValue>::const_iterator const_iterator;
-> 	// 由于 迭代器需要在类外定义 所以需要typedef为 公用的
+>     // 封装红黑树的迭代器
+>     typedef typename RB_Tree<key_type, value_type, SetKeyOfValue>::const_iterator iterator;
+>     typedef typename RB_Tree<key_type, value_type, SetKeyOfValue>::const_iterator const_iterator;
+>     // 由于 迭代器需要在类外定义 所以需要typedef为 公用的
 > 
-> 	iterator begin() const {
-> 		return _tree.begin();
-> 	}
+>     iterator begin() const {
+>         return _tree.begin();
+>     }
 > 
-> 	iterator end() const {
-> 		return _tree.end();
-> 	}
+>     iterator end() const {
+>         return _tree.end();
+>     }
 > 
-> 	pair<iterator, bool> insert(const value_type& v) {
-> 		auto ret = _tree.insert(v);
+>     pair<iterator, bool> insert(const value_type& v) {
+>         auto ret = _tree.insert(v);
 > 
-> 		return pair<iterator, bool>(iterator(ret.first._node), ret.second);
-> 	}
+>         return pair<iterator, bool>(iterator(ret.first._node), ret.second);
+>     }
 > 
-> 	iterator find(const key_type& key) {
-> 		return _tree.find(key);
-> 	}
+>     iterator find(const key_type& key) {
+>         return _tree.find(key);
+>     }
 > 
 > private:
-> 	RB_Tree<key_type, value_type, SetKeyOfValue> _tree;
+>     RB_Tree<key_type, value_type, SetKeyOfValue> _tree;
 > };
 > ```
 
@@ -1134,49 +1134,49 @@ set 和 map 是以红黑树为底层封装起来的, 上面已经实现了 红�
 > ```cpp
 > template<class Key, class Value>
 > class map {
-> 	typedef Key key_type;
-> 	typedef pair<Key, Value> value_type;		// pair<Key, Value>作为数据类型
+>     typedef Key key_type;
+>     typedef pair<Key, Value> value_type;        // pair<Key, Value>作为数据类型
 > 
-> 	// 取key值的仿函数
-> 	struct MapKeyOfValue {
-> 		const key_type& operator() (const value_type& kv) {
-> 			return kv.first;
-> 		}
-> 	};
+>     // 取key值的仿函数
+>     struct MapKeyOfValue {
+>         const key_type& operator() (const value_type& kv) {
+>             return kv.first;
+>         }
+>     };
 > 
 > public:
-> 	// 封装红黑树的迭代器
-> 	typedef typename RB_Tree<key_type, value_type, MapKeyOfValue>::iterator iterator;
-> 	typedef typename RB_Tree<key_type, value_type, MapKeyOfValue>::const_iterator const_iterator;
+>     // 封装红黑树的迭代器
+>     typedef typename RB_Tree<key_type, value_type, MapKeyOfValue>::iterator iterator;
+>     typedef typename RB_Tree<key_type, value_type, MapKeyOfValue>::const_iterator const_iterator;
 > 
-> 	iterator begin() {
-> 		return _tree.begin();
-> 	}
+>     iterator begin() {
+>         return _tree.begin();
+>     }
 > 
-> 	iterator end() {
-> 		return _tree.end();
-> 	}
+>     iterator end() {
+>         return _tree.end();
+>     }
 > 
-> 	pair<iterator, bool> insert(const value_type& kv) {
-> 		return _tree.insert(kv);
-> 	}
+>     pair<iterator, bool> insert(const value_type& kv) {
+>         return _tree.insert(kv);
+>     }
 > 
-> 	iterator find(const key_type& k) {
-> 		return _tree.find(k);
-> 	}
+>     iterator find(const key_type& k) {
+>         return _tree.find(k);
+>     }
 > 
-> 	Value& operator[](const key_type& k) {
-> 		pair<iterator, bool> ret = insert(make_pair(k, Value()));				// 调用map的插入
+>     Value& operator[](const key_type& k) {
+>         pair<iterator, bool> ret = insert(make_pair(k, Value()));                // 调用map的插入
 > 
-> 		return ret.first->second;
-> 		// ret 的 first 是 map的迭代器
-> 		// 红黑树中实现过 迭代器的 -> 操作是取 迭代器所指向节点的数据
-> 		// map的数据是 pair<key_type, value_type> 类型的
-> 		// 所以 ret.first->second 即为结果
-> 	}
+>         return ret.first->second;
+>         // ret 的 first 是 map的迭代器
+>         // 红黑树中实现过 迭代器的 -> 操作是取 迭代器所指向节点的数据
+>         // map的数据是 pair<key_type, value_type> 类型的
+>         // 所以 ret.first->second 即为结果
+>     }
 > 
 > private:
-> 	RB_Tree<key_type, value_type, MapKeyOfValue> _tree;
+>     RB_Tree<key_type, value_type, MapKeyOfValue> _tree;
 > };
 > ```
 

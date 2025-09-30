@@ -322,12 +322,12 @@ main() {
 >
 > ```cangjie
 > main() {
->    	'A'=='A' 	// result: true
->    	'A'!='A' 	// result: false
->    	'A'<'a' 	// result: true
->    	'A'<='A' 	// result: true
->    	'A'>'a' 	// result: false
->    	'A'>='A' 	// result: true
+>        'A'=='A'     // result: true
+>        'A'!='A'     // result: false
+>        'A'<'a'     // result: true
+>        'A'<='A'     // result: true
+>        'A'>'a'     // result: false
+>        'A'>='A'     // result: true
 >     
 >     return 0
 > }
@@ -567,10 +567,10 @@ var (x, y): (Int64, Int64)
 
 ```cangjie
 let tuple = (1, 2)
-tuple[0]		// √
+tuple[0]        // √
 
 let index = 0
-tuple[index]	// ×
+tuple[index]    // ×
 ```
 
 ##### 定义元组类型的变量
@@ -579,9 +579,9 @@ tuple[index]	// ×
 >
 > ```cangjie
 > let tuplePIE = (3.14, "PIE")     // The type of tuplePIE is inferred to be (Float64, String).
-> var pointOne = (2.4, 3.5) 		// The type of pointOne is inferred to be (Float64, Float64).
-> var pointTwo = (2, 3, 4) 		// The type of pointTwo is inferred to be (Int64, Int64, Int64).
-> var pointThree = ((2, 3), 4) 	// The type of pointThree is inferred to be ((Int64, Int64), Int64).
+> var pointOne = (2.4, 3.5)         // The type of pointOne is inferred to be (Float64, Float64).
+> var pointTwo = (2, 3, 4)         // The type of pointTwo is inferred to be (Int64, Int64, Int64).
+> var pointThree = ((2, 3), 4)     // The type of pointThree is inferred to be ((Int64, Int64), Int64).
 > ```
 
 除了省略类型让编译器自动推断外, 肯定要先了解不省略的定义方式:
@@ -643,31 +643,31 @@ var pointThree: ((Int64, Int64), Int64) = ((2, 3), 4)
 > 3. 表达式`start..=end:step`中, 当`step > 0`且`start > end`, 或者`step < 0`且`start < end`时, `start..=end:step`返回一个空`Range`实例；如果`start..=end:step`的结果是非空`Range`实例, 则`Range`实例中元素的个数等于`((end-start)/step)+1`向下取整(即小于等于`((end-start)/step)+1`的最大整数)
 >
 >     ```cangjie
->     let range1 = 0..10:1 	// Define an half-open range [0,10) (with step = 1) which contains 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9.
->     let range2 = 0..=10:2 	// Define a closed range [0,10] (with step = 2) which contains 0, 2, 4, 6, 8 and 10.
->     let range3 = 10..0:-2 	// Define an half-open range [10,0) (with step = -2) which contains 10, 8, 6, 4 and 2.
->     let range4 = 10..=0:-1 	// Define a closed range [10,0] (with step = -1) which contains 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 and 0.
->     let range5 = 10..0:1 	// Define an empty range.
->     let range6 = 0..0:1 	// Define an empty range.
+>     let range1 = 0..10:1     // Define an half-open range [0,10) (with step = 1) which contains 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9.
+>     let range2 = 0..=10:2     // Define a closed range [0,10] (with step = 2) which contains 0, 2, 4, 6, 8 and 10.
+>     let range3 = 10..0:-2     // Define an half-open range [10,0) (with step = -2) which contains 10, 8, 6, 4 and 2.
+>     let range4 = 10..=0:-1     // Define a closed range [10,0] (with step = -1) which contains 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 and 0.
+>     let range5 = 10..0:1     // Define an empty range.
+>     let range6 = 0..0:1     // Define an empty range.
 >     let range7 = 0..=0:1    // Define a closed range [0,0] (with step = 1) which only contains 0.
->     let range8 = 0..=10:-1 	// Define an empty range.
+>     let range8 = 0..=10:-1     // Define an empty range.
 >     ```
 >
 > 4. 表达式`start..end:step`和`start..=end:step`中, **`step`的值不能等于`0`**
 >
 >     ```cangjie
->     let range9 = 0..10: 0 				// error: the value of the step should not be zero.
->     let range10 = 0..=10: 0 			// error: the value of the step should not be zero.
+>     let range9 = 0..10: 0                 // error: the value of the step should not be zero.
+>     let range10 = 0..=10: 0             // error: the value of the step should not be zero.
 >     ```
 >
 > 5. 除了下节提到的`Range<Int64>`类型的实例用在下标操作符`[]`中时可以省略`start`或`end`外, 其他场景下, **`start`和`end`均是必选的**, 只有`step`是可选的(默认`step=1`)
 >
 >     ```cangjie
->     let range11 = 1..10 		 // Define an half-open range [1, 10) with step = 1.
->     let range12 = 1..=10 		 // Define a closed range [1, 10] with step = 1.	
->     let range13 = ..10 		     // error: the start value is required.
->     let range14 = 1.. 		     // error: the end value is required.
->     let range15 = .. 		     // error: the start and end value are required.
+>     let range11 = 1..10          // Define an half-open range [1, 10) with step = 1.
+>     let range12 = 1..=10          // Define a closed range [1, 10] with step = 1.    
+>     let range13 = ..10              // error: the start value is required.
+>     let range14 = 1..              // error: the end value is required.
+>     let range15 = ..              // error: the start and end value are required.
 >     ```
 
 ##### `Range`类型的使用
@@ -709,10 +709,10 @@ obj[start..end:1]
 > 在定义`Range<T>`类型的变量时, 可以显式添加类型标注, 也可以省略类型标注(此时由编译器根据程序上下文推断)
 >
 > ```cangjie
-> let range16: Range<Int64> = 0..10 		// Define an half-open range [0,10) with step = 1
-> let range17: Range<Int64> = -10..10:2 	// Define an half-open range [-10,10) with step = 2
-> let range18 = 0..=10 		            // Define a closed range [0,10] with step = 1
-> let range19 = -10..=10:2 	            // Define a closed range [-10,10] with step = 2
+> let range16: Range<Int64> = 0..10         // Define an half-open range [0,10) with step = 1
+> let range17: Range<Int64> = -10..10:2     // Define an half-open range [-10,10) with step = 2
+> let range18 = 0..=10                     // Define a closed range [0,10] with step = 1
+> let range19 = -10..=10:2                 // Define a closed range [-10,10] with step = 2
 > ```
 
 #### `Function`类型
@@ -845,17 +845,17 @@ enum TimeUnit3<T1, T2> {
 >     ```cangjie
 >     enum TimeUnit4 { 
 >         | Year
->         | Year(Int32) 		                     // ok
->         | Year(Float32) 	                     // error: redeclaration of 'Year'
+>         | Year(Int32)                              // ok
+>         | Year(Float32)                          // error: redeclaration of 'Year'
 >         | Month(Int32, Float32)                  // ok
->         | Month(Int32, Int32) 	                 // error: redeclaration of 'Month'
->         | Month(Int32) 			                 // ok
+>         | Month(Int32, Int32)                      // error: redeclaration of 'Month'
+>         | Month(Int32)                              // ok
 >         | Day(Int32, Float32, Float32)           // ok
->         | Day(Float32, Float32, Float32) 	     // error: redeclaration of 'Day'
->         | Day(Float32, Float32) 			     // ok
+>         | Day(Float32, Float32, Float32)          // error: redeclaration of 'Day'
+>         | Day(Float32, Float32)                  // ok
 >         | Hour(Int32, Float32, Float32, Float32) // ok
->         | Hour(Int32, Int32, Int32, Int32) 	     // error: redeclaration of 'Hour'
->         | Hour(Int32, Int32, Int32) 		     // ok
+>         | Hour(Int32, Int32, Int32, Int32)          // error: redeclaration of 'Hour'
+>         | Hour(Int32, Int32, Int32)              // ok
 >     }
 >     ```
 >
