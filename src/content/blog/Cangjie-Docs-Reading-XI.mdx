@@ -454,7 +454,9 @@ import Question from "../../components/mdx/Question.astro";
 > 
 > 在 `struct` 类型的 `mut` 成员函数中，可以通过 `this` 修改成员变量，而在 `struct` 类型的非 `mut` 成员函数中，不可以通过 `this` 修改成员变量
 
-仓颉中, 可以用来`mut`修饰成员函数
+仓颉中, 普通的成员函数是不能通过`this`修改成员变量的
+
+仓颉中, 可以用来`mut`修饰成员函数, 使成员函数可以通过`this`修改成员变量
 
 #### 定义
 
@@ -512,6 +514,7 @@ import Question from "../../components/mdx/Question.astro";
 > `mut` 函数中的 `this` 具有额外的限制：
 > 
 > - 不能被捕获（意味着当前实例的字段也不能被捕获）
+> 
 > - 不能作为表达式
 > 
 > ```cangjie
@@ -529,31 +532,186 @@ import Question from "../../components/mdx/Question.astro";
 
 `mut`函数的作用是 `mut`函数可以通过`this`修改成员变量
 
-那么是不是说`struct`普通成员函数内, 无法修改成员变量?
+因为, 仓颉中的普通成员函数是无法修改成员变量的
 
-测试一下:
+不过, 仓颉中的`mut`函数内的`this`不能当作表达式, 即不能被返回、赋值给其他变量等
 
-```cangjie
-struct MutTest {
-    var value = 20
+至于原因, 应该是为了防止出现`this`暴露, 导致其他地方能够通过`this`访问成员变量?
 
-    func nonMutTest() {
-        value = 30
-    }
+毕竟`struct`是值类型的
 
-    mut func mutTest() {
-        value = 30
-    }
-}
+#### 接口中的`mut`函数
 
-main(): Int64 {
-    var mT = MutTest()
-    mT.nonMutTest()
-    mT.mutTest()
 
-    return 0
-}
-```
+> `struct` 类型在实现 `interface` 的函数时 **必须保持一样的 `mut` 修饰**
+> 
+> `struct` 以外的类型实现 `interface` 的函数时禁止使用 `mut` 修饰
+> 
+> ```cangjie
+> interface I {
+>     mut func f1(): Unit
+>     func f2(): Unit
+> }
+> 
+> struct A <: I {
+>     public mut func f1(): Unit {}     // ok
+>     public func f2(): Unit {}         // ok
+> }
+> struct B <: I {
+>     public func f1(): Unit {}         // error
+>     public mut func f2(): Unit {}     // error
+> }
+> class C <: I {
+>     public func f1(): Unit {}         // ok
+>     public func f2(): Unit {}         // ok
+> }
+> ```
+> 
+> 需要注意的是，当 `struct` 的实例赋值给 `interface` 类型时 是拷贝语义，因此 `interface` 的 `mut` 函数并不能修改原本 `struct` 实例的值
+> 
+> ```cangjie
+> interface I {
+>     mut func f(): Unit
+> }
+> 
+> struct Foo <: I {
+>     var v = 0
+>     public mut func f(): Unit {
+>         v += 1
+>     }
+> }
+> 
+> main() {
+>     var a = Foo()
+>     var b: I = a
+>     b.f()
+>     print(a.v)    // 0
+> 
+>     return 0
+> }
+> ```
 
-这段代码的执行结果为:
+继承自`interface`的`struct`类型, `struct`实例赋值给`interface`类型, 是拷贝语义
 
+#### 访问规则
+
+> 如果一个变量使用 `let` 声明，并且类型可能是 `struct`（包含静态类型是 `struct` 类型，或者类型变元可能是 `struct` 类型），那么这个变量不能访问该类型使用 `mut` 修饰的函数
+> 
+> 其它情况均允许访问
+> 
+> ```cangjie
+> interface I {
+>     mut func f(): Unit
+> }
+> struct Foo <: I {
+>     var i = 0
+>     public mut func f(): Unit {
+>         i += 1
+>     }
+> }
+> class Bar <: I {
+>     var i = 0
+>     public func f(): Unit {
+>         i += 1
+>     }
+> }
+> 
+> main() {
+>     let a = Foo()
+>     a.f()             // error
+>     var b = Foo()
+>     b.f()             // ok
+>     let c: I = Foo()
+>     c.f()             // ok
+> 
+>     return 0
+> }
+> 
+> func g1<T>(v: T): Unit where T <: I {
+>     v.f()             // error
+> }
+> 
+> func g2<T>(v: T): Unit where T <: Bar & I {
+>     v.f()             // ok
+> }
+> ```
+
+仓颉中, `let`修饰的变量, 只要静态类型可能是`strcut`, 就禁止调用`mut`函数
+
+> 如果一个变量的类型可能是 `struct`（包含静态类型是 `struct` 类型，或者类型变元可能是 `struct` 类型），那么这个变量不能 将该类型使用 `mut` 修饰的函数被作为 高阶函数使用，只能调用这些 `mut` 函数
+> 
+> ```cangjie
+> interface I {
+>     mut func f(): Unit
+> }
+> struct Foo <: I {
+>     var i = 0
+>     public mut func f(): Unit {
+>         i += 1
+>     }
+> }
+> class Bar <: I {
+>     var i = 0
+>     public func f(): Unit {
+>         i += 1
+>     }
+> }
+> 
+> main() {
+>     var a = Foo()
+>     var fn = a.f          // error
+>     var b: I = Foo()
+>     fn = b.f              // ok
+> 
+>     return 0
+> }
+> 
+> func g1<T>(v: T): Unit where T <: I {
+>     let fn = v.f          // error
+> }
+> func g2<T>(v: T): Unit where T <: Bar & I {
+>     let fn = v.f          // ok
+> }
+> ```
+
+仓颉中, `struct`类型实例的`mut`函数, 不能被当作高阶函数使用
+
+但文档中给出的例子, 并不是`mut`函数被当作高阶函数使用, 而是尝试当作第一公民使用
+
+> 非 `mut` 的实例成员函数（包括 `lambda` 表达式）不能访问 `this` 的 `mut` 函数，反之可以
+> 
+> ```cangjie
+> struct Foo {
+>     var i = 0
+>     mut func f(): Unit {
+>         i += 1
+>         g()           // ok
+>     }
+>     func g(): Unit {
+>         f()           // error
+>     }
+> }
+> 
+> interface I {
+>     mut func f(): Unit {
+>         g()           // ok
+>     }
+>     func g(): Unit {
+>         f()           // error
+>     }
+> }
+> ```
+
+仓颉中, 非`mut`函数不能访问`mut`函数
+
+---
+
+仓颉中, `struct`的普通成员函数是不能修改成员变量的, 但是是可以访问成员变量的
+
+这表示, `struct`的`this`默认是不可变的
+
+根本的原因是, 仓颉中的`struct`被设计为值类型, 如果`struct`实例被`let`修饰, 因为是值类型实例, 那么这个实例的成员应该是默认禁止被修改的
+
+如果`this`是可变的, 那么即使是被`let`修饰的实例, 通过普通的成员函数就可能会出现, 普通成员函数能够修改成员变量的情况
+
+这不符合`struct`的设计哲学
