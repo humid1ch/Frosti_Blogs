@@ -100,11 +100,11 @@ import Question from "../../components/mdx/Question.astro";
 
 但是, `class`可以实现多个接口, 所以之后可以使用`&`将所有实现的接口继承下来, 但是如果继承类 只能单继承
 
-#### 类的修饰符
+##### 类的修饰符
 
 > 在此小节中，我们将介绍定义类可以使用的修饰符
 
-##### 访问修饰符
+###### 访问修饰符
 
 > 类可以被所有访问修饰符修饰，默认的可访问性为 `internal`
 > 
@@ -112,7 +112,7 @@ import Question from "../../components/mdx/Question.astro";
 
 访问修饰符还是要在 包和模块管理 章节了解
 
-##### 继承性修饰符
+###### 继承性修饰符
 
 > - `open`：类用 `open` 修饰，表示允许其他类从这个类继承
 > 
@@ -179,7 +179,7 @@ import Question from "../../components/mdx/Question.astro";
 
 </Info>
 
-##### 抽象类修饰符
+###### 抽象类修饰符
 
 > `abstract`：该类属于抽象类，与普通类不同的是，在抽象类中除了可以定义普通的函数，还允许声明抽象函数，只有用该修饰符修饰的类才为抽象类
 > 
@@ -203,7 +203,7 @@ import Question from "../../components/mdx/Question.astro";
 
 抽象函数类似与纯虚函数, 即 没有函数体实现的函数
 
-#### 类继承
+##### 类继承
 
 > **类只支持单继承**
 > 
@@ -263,7 +263,7 @@ import Question from "../../components/mdx/Question.astro";
 
 仓颉中类除了存在`this`表示当前类对象, 还存在`super`表示当前类父类对象
 
-#### 实现接口
+##### 实现接口
 
 > 类支持实现一个或多个接口，通过 `<: I1 & I2 & ... & Ik` 的方式声明当前类想要实现的接口，多个接口之间用 `&` 分隔
 > 
@@ -324,7 +324,7 @@ import Question from "../../components/mdx/Question.astro";
 
 实现的接口可以是泛型接口, 但是 具体的**接口类型不能相同**
 
-#### 类体
+##### 类体
 
 > 类体表示当前类包括的内容，类体由大括号包围，包含以下内容：
 > 
@@ -387,4 +387,3 @@ import Question from "../../components/mdx/Question.astro";
 > 
 > 类体中引入的定义或声明均属于类的成员，将在[类的成员]章节中详细介绍
 
-### 类的成员
