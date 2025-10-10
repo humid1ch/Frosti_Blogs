@@ -48,23 +48,23 @@ import Question from "../../components/mdx/Question.astro";
 
 #### 类的定义
 
-> 在仓颉编程语言中，通过关键字 `class` 定义一个类，类定义包含以下几个部分：
+> 在仓颉编程语言中, 通过关键字`class`定义一个类, 类定义包含以下几个部分：
 > 
 > - 可选的修饰符
 > 
-> - `class` 关键字
+> -`class`关键字
 > 
-> - 类名，必须是合法的 `identifier`
+> - 类名, 必须是合法的`identifier`
 > 
 > - 可选的类型参数
 > 
-> - 可选的指定父类或者父接口（写在 `<:` 后面，使用 `&` 分隔），如果存在父类，父类必须写在第一个，否则编译报错；
+> - 可选的指定父类或者父接口(写在`<:`后面, 使用`&`分隔), 如果存在父类, 父类必须写在第一个, 否则编译报错; 
 > 
 > - 可选的泛型约束
 > 
 > - 类体
 > 
-> 类只能定义在源文件顶层，类定义的语法如下：
+> 类只能定义在源文件顶层, 类定义的语法如下：
 >
 > ```
 > classDefinition
@@ -87,10 +87,10 @@ import Question from "../../components/mdx/Question.astro";
 > interface I2 {}
 > open class A{}
 > 
-> // 下面的类 B 继承了类 A，并实现了接口 I2
+> // 下面的类 B 继承了类 A, 并实现了接口 I2
 > open class B <: A & I2 {}
 > 
-> /* 以下类 C 声明了 1 个类型参数 U. 它继承自 B，并实现了接口 I1<U>和 I2. 此外，它的类型参数有约束 U <: A */
+> /* 以下类 C 声明了 1 个类型参数 U. 它继承自 B, 并实现了接口 I1<U>和 I2. 此外, 它的类型参数有约束 U <: A */
 > class C<U> <: B & I1<U> & I2 where U <: A {}
 > ```
 
@@ -102,11 +102,11 @@ import Question from "../../components/mdx/Question.astro";
 
 ##### 类的修饰符
 
-> 在此小节中，我们将介绍定义类可以使用的修饰符
+> 在此小节中, 我们将介绍定义类可以使用的修饰符
 
 ###### 访问修饰符
 
-> 类可以被所有访问修饰符修饰，默认的可访问性为 `internal`
+> 类可以被所有访问修饰符修饰, 默认的可访问性为`internal`
 > 
 > 详细内容请参考包和模块管理章节 访问修饰符
 
@@ -114,10 +114,10 @@ import Question from "../../components/mdx/Question.astro";
 
 ###### 继承性修饰符
 
-> - `open`：类用 `open` 修饰，表示允许其他类从这个类继承
+> -`open`：类用`open`修饰, 表示允许其他类从这个类继承
 > 
->     ```cangjie
->     /* 以下类使用修饰符 `open` 声明，表示它可以被继承 */
+>    ```cangjie
+>     /* 以下类使用修饰符`open`声明, 表示它可以被继承 */
 >     open class C1 {  	
 >         func foo(): Unit {
 >             return
@@ -125,28 +125,28 @@ import Question from "../../components/mdx/Question.astro";
 >     }
 >     
 >     class C2 <: C1 {}
->     ```
+>    ```
 > 需要注意的是：
 > 
-> > 没有用 `open` 修饰的非抽象类不能被任何类继承
+> > 没有用`open`修饰的非抽象类不能被任何类继承
 
 仓颉中的普通类, 默认是禁止被继承的, 使用`open`修饰, 表示此类可以被继承
 
-> - `sealed`：修饰符表示只能在 `class` 定义所在的包内 继承该 `class`
+> -`sealed`：修饰符表示只能在`class`定义所在的包内 继承该`class`
 > 
->     - `sealed` 已经蕴含了 `public` 的语义，所以定义 `sealed class` 时的 `public` 修饰符是可选的
+>     -`sealed`已经蕴含了`public`的语义, 所以定义`sealed class`时的`public`修饰符是可选的
 > 
->     - `sealed` 的子类可以不是 `sealed` 类，仍可被 `open/sealed` 修饰，或不使用任何继承性修饰符
+>     -`sealed`的子类可以不是`sealed`类, 仍可被`open/sealed`修饰, 或不使用任何继承性修饰符
 > 
->       若 `sealed` 类的子类同时被 `public` 和 `open` 修饰，则其子类可在包外被继承
+>       若`sealed`类的子类同时被`public`和`open`修饰, 则其子类可在包外被继承
 > 
->     - `sealed` 的子类可以不被 `public` 修饰
+>     -`sealed`的子类可以不被`public`修饰
 > 
->     ```cangjie
+>    ```cangjie
 >     // package A
 >     package A
 >     public sealed class C1 {}         // OK
->     sealed class C2 {}                // OK, 使用 'sealed' 时，'public' 是可选的 
+>     sealed class C2 {}                // OK, 使用 'sealed' 时, 'public' 是可选的 
 > 
 >     class S1 <: C1 {}  // OK
 >     public open class S2 <: C1 {}     // OK
@@ -158,16 +158,16 @@ import Question from "../../components/mdx/Question.astro";
 >     import A.*
 > 
 >     class SS1 <: S2 {}                // OK
->     class SS2 <: S3 {}                // Error, S3 是一个密封类，不能在此处继承
->     ```
+>     class SS2 <: S3 {}                // Error, S3 是一个密封类, 不能在此处继承
+>    ```
 > 
 > 需要注意的是：
 > 
-> > 没有用 `open` 或 `sealed` 修饰的非抽象类不能被任何类继承
+> > 没有用`open`或`sealed`修饰的非抽象类不能被任何类继承
 
 仓颉中, `class`默认禁止被继承, 如果用`open`修饰, 则表示可以被继承, 只要能看到这个类; 如果用`sealed`修饰, 则表示可以在所在包中被继承, 不能在其他包中被继承, 即使其他包中可以看到这个类
 
-`sealed`的子类, 可以被 `open`修饰, 可以将子类暴露在包外, 在包外进行继承
+`sealed`的子类, 可以被`open`修饰, 可以将子类暴露在包外, 在包外进行继承
 
 <Info>
 
@@ -181,15 +181,15 @@ import Question from "../../components/mdx/Question.astro";
 
 ###### 抽象类修饰符
 
-> `abstract`：该类属于抽象类，与普通类不同的是，在抽象类中除了可以定义普通的函数，还允许声明抽象函数，只有用该修饰符修饰的类才为抽象类
+> `abstract`：该类属于抽象类, 与普通类不同的是, 在抽象类中除了可以定义普通的函数, 还允许声明抽象函数, 只有用该修饰符修饰的类才为抽象类
 > 
-> 如果一个函数没有函数体，我们称其为抽象函数
+> 如果一个函数没有函数体, 我们称其为抽象函数
 > 
 > 需要注意的是：
 > 
-> - 抽象类 `abstract` 修饰符已经包含了可被继承的语义，因此抽象类定义时的 `open` 修饰符是可选的，也可以使用 `sealed` 修饰符修饰抽象类，表示该抽象类只能在本包被继承
+> - 抽象类`abstract`修饰符已经包含了可被继承的语义, 因此抽象类定义时的`open`修饰符是可选的, 也可以使用`sealed`修饰符修饰抽象类, 表示该抽象类只能在本包被继承
 > 
-> - 抽象类中禁止定义 `private` 的抽象函数
+> - 抽象类中禁止定义`private`的抽象函数
 > 
 > - 不能为抽象类创建实例
 > 
@@ -207,7 +207,7 @@ import Question from "../../components/mdx/Question.astro";
 
 > **类只支持单继承**
 > 
-> 类通过`<: superClass` 的方式来指定当前类的直接父类（父类是某个已经定义了的类）
+> 类通过`<: superClass`的方式来指定当前类的直接父类(父类是某个已经定义了的类)
 > 
 > 以下示例展示了类C2继承类C1的语法：
 >
@@ -216,7 +216,7 @@ import Question from "../../components/mdx/Question.astro";
 > class C2 <: C1 {}
 > ```
 > 
-> 父类可以是一个泛型类，只需要在继承时提供合法的类型即可
+> 父类可以是一个泛型类, 只需要在继承时提供合法的类型即可
 > 
 > 例如：非泛型类C2与泛型类C3继承泛型类C1：
 > 
@@ -226,15 +226,15 @@ import Question from "../../components/mdx/Question.astro";
 > class C3<U> <: C1<U> {}
 > ```
 > 
-> 所有类都有一个父类，对于没有定义父类的类，默认其父类为`Object`
+> 所有类都有一个父类, 对于没有定义父类的类, 默认其父类为`Object`
 > 
-> `Object`例外，没有父类
+> `Object`例外, 没有父类
 > 
 > ```cangjie
 > class Empty {} 	//  隐式继承自 Object:  class Empty <: Object {}
 > ```
 > 
-> 类仅支持单继承, 以下示例中的语法将引起编译错误。
+> 类仅支持单继承, 以下示例中的语法将引起编译错误 
 > 
 > ```cangjie
 > open class C1 {}
@@ -242,18 +242,18 @@ import Question from "../../components/mdx/Question.astro";
 > class C3 <: C1 & C2 {}		// Error: 不支持多继承
 > ```
 > 
-> 当一个类继承另一个类时，将被继承的类称为父类，将产生继承行为的类称为子类
+> 当一个类继承另一个类时, 将被继承的类称为父类, 将产生继承行为的类称为子类
 > 
 > ```cangjie
 > open class C1 {}			// C1 is superclass
 > class C2 <: C1 {}			// C2 is subclass
 > ```
 > 
-> 子类将继承父类的所有成员，**私有成员和构造函数除外**
+> 子类将继承父类的所有成员, **私有成员和构造函数除外**
 > 
-> 子类可以直接访问父类的成员，但是在覆盖时，将不能直接通过名字来访问父类被覆盖的实例成员
+> 子类可以直接访问父类的成员, 但是在覆盖时, 将不能直接通过名字来访问父类被覆盖的实例成员
 > 
-> 这时可以通过 `super` 来指定（`super` 指向的是当前类对象的直接父类）或创建对象并通过对象来访问
+> 这时可以通过`super`来指定(`super`指向的是当前类对象的直接父类)或创建对象并通过对象来访问
 
 仓颉中, 类的继承使用的符号是`<:`
 
@@ -265,9 +265,9 @@ import Question from "../../components/mdx/Question.astro";
 
 ##### 实现接口
 
-> 类支持实现一个或多个接口，通过 `<: I1 & I2 & ... & Ik` 的方式声明当前类想要实现的接口，多个接口之间用 `&` 分隔
+> 类支持实现一个或多个接口, 通过`<: I1 & I2 & ... & Ik`的方式声明当前类想要实现的接口, 多个接口之间用`&`分隔
 > 
-> 如果当前类也指定了父类，则接口需要出现在父类后面
+> 如果当前类也指定了父类, 则接口需要出现在父类后面
 > 
 > 例如：
 > 
@@ -282,7 +282,7 @@ import Question from "../../components/mdx/Question.astro";
 > class C2 <: C1 & I1 & I2 {}	
 > ```
 > 
-> 接口也可以是泛型的，此时在实现泛型接口时需要给出合法的类型参数
+> 接口也可以是泛型的, 此时在实现泛型接口时需要给出合法的类型参数
 > 
 > 例如：
 > 
@@ -293,7 +293,7 @@ import Question from "../../components/mdx/Question.astro";
 > class C2<K, V> <: I1<V> & I2<K> {}
 > ```
 > 
-> 当类型实现接口时，对于非泛型接口不能直接实现多次，对于泛型接口不能用同样的类型参数直接实现多次
+> 当类型实现接口时, 对于非泛型接口不能直接实现多次, 对于泛型接口不能用同样的类型参数直接实现多次
 > 
 > 例如：
 > 
@@ -306,7 +306,7 @@ import Question from "../../components/mdx/Question.astro";
 > class C3<T> <: I2<T> & I2<Int32> {}       // ok
 > ```
 > 
-> 如果上述定义的泛型类C3在使用时被应用了类型参数Int32，导致重复实现了两个相同类型的接口，那么编译器会在类型被使用到的位置报错：
+> 如果上述定义的泛型类C3在使用时被应用了类型参数Int32, 导致重复实现了两个相同类型的接口, 那么编译器会在类型被使用到的位置报错：
 > 
 > ```cangjie
 > interface I1<T> {}
@@ -326,7 +326,7 @@ import Question from "../../components/mdx/Question.astro";
 
 ##### 类体
 
-> 类体表示当前类包括的内容，类体由大括号包围，包含以下内容：
+> 类体表示当前类包括的内容, 类体由大括号包围, 包含以下内容：
 > 
 > - 可选的静态初始化器
 > 
@@ -367,23 +367,23 @@ import Question from "../../components/mdx/Question.astro";
 >     ;
 > ```
 > 
-> 上述类体的语法定义中，包含以下内容：
+> 上述类体的语法定义中, 包含以下内容：
 > 
-> `staticInit` 代表一个静态初始化器的定义，一个类最多只能定义一个静态初始化器；
+> `staticInit`代表一个静态初始化器的定义, 一个类最多只能定义一个静态初始化器; 
 > 
-> `classPrimaryInit` 指的是主构造函数的定义，一个类最多只能定义一个；
+> `classPrimaryInit`指的是主构造函数的定义, 一个类最多只能定义一个; 
 > 
-> `classInit` 表示 `init` 构造函数的定义；
+> `classInit`表示`init`构造函数的定义; 
 > 
-> `variableDeclaration` 表示成员变量的声明；
+> `variableDeclaration`表示成员变量的声明; 
 > 
-> `operatorFunctionDefinition` 表示操作符重载成员函数的定义；
+> `operatorFunctionDefinition`表示操作符重载成员函数的定义; 
 > 
-> `macroExpression` 表示宏调用表达式，宏展开后依然要符合 `classMemberDeclaration` 的语法定义；
+> `macroExpression`表示宏调用表达式, 宏展开后依然要符合`classMemberDeclaration`的语法定义; 
 > 
-> `propertyDefinition` 表示属性的定义；
+> `propertyDefinition`表示属性的定义; 
 > 
-> `classFinalizer` 表示类的终结器的定义；
+> `classFinalizer`表示类的终结器的定义; 
 > 
-> 类体中引入的定义或声明均属于类的成员，将在[类的成员]章节中详细介绍
+> 类体中引入的定义或声明均属于类的成员, 将在[类的成员]章节中详细介绍
 
