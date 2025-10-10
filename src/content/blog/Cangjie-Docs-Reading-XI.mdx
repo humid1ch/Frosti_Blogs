@@ -454,7 +454,7 @@ import Question from "../../components/mdx/Question.astro";
 > 
 > 在 `struct` 类型的 `mut` 成员函数中，可以通过 `this` 修改成员变量，而在 `struct` 类型的非 `mut` 成员函数中，不可以通过 `this` 修改成员变量
 
-仓颉中, 普通的成员函数是不能通过`this`修改成员变量的
+仓颉中, `strcut`的普通成员函数是不能通过`this`修改成员变量的
 
 仓颉中, 可以用来`mut`修饰成员函数, 使成员函数可以通过`this`修改成员变量
 
@@ -532,7 +532,7 @@ import Question from "../../components/mdx/Question.astro";
 
 `mut`函数的作用是 `mut`函数可以通过`this`修改成员变量
 
-因为, 仓颉中的普通成员函数是无法修改成员变量的
+因为, 仓颉中, `struct`的普通成员函数是无法修改成员变量的
 
 不过, 仓颉中的`mut`函数内的`this`不能当作表达式, 即不能被返回、赋值给其他变量等
 

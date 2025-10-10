@@ -8,7 +8,7 @@ site:
   theme: # 更多主题 https://daisyui.com/docs/themes/
     light: winter # 主题的浅色模式
     # light: nord # 主题的浅色模式
-    dark: dracula # 主题的深色模式
+    dark: dim # 主题的深色模式
     code: catppuccin-macchiato # 代码块的主题 https://shiki.style/themes
   date_format: ddd MMM DD YYYY # 日期格式设置，支持自定义格式
   blog: # 博客相关配置
