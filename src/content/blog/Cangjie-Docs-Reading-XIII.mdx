@@ -447,7 +447,9 @@ import Question from "../../components/mdx/Question.astro";
 
 仓颉的类, 静态成员变量除了在定义时直接赋值进行初始化之外, 还可以通过静态初始化器进行初始化
 
-静态成员变量是不允许在构造函数内进行初始化的
+静态初始化器长这样: `static init() {}`
+
+静态成员变量是**不允许在构造函数内进行初始化**的
 
 原因很明显, 构造函数是构造实例时才执行的, 但静态成员变量不属于任何一个实例, 如果静态成员变量在构造函数内进行初始化, 直接通过类访问静态成员变量, 就可能会出现问题
 
@@ -478,15 +480,15 @@ import Question from "../../components/mdx/Question.astro";
 >         ```cangjie
 >         class Foo <: Bar {
 >             static let y: Int64
->             
+>                 
 >             static init() {       // 首先调用
 >                 y = x             // Error: 尚未初始化的变量
 >             }
 >         }
->             
+>                 
 >         open class Bar {
 >             static let x: Int64
->             
+>                 
 >             static init() {       // 然后调用
 >                 x = 2
 >             }
@@ -948,11 +950,11 @@ import Question from "../../components/mdx/Question.astro";
 >             this.b = b
 >         }
 >     }
->         
+>             
 >     main() : Int64 {
 >         var myC = C<Int32, Int64>(3, 4)
 >         var myC2 = C(3,4)                 // myC2 的类型推断为 C<Int64, Int64> 
->             
+>                 
 >         return 0
 >     }
 >     ```
