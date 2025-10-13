@@ -1,0 +1,113 @@
+---
+title: "仓颉文档阅读-语言规约X: 重载"
+pubDate: "2025-10-13 17:38:44"
+description: "一直对仓颉挺感兴趣的, 但是一直没有去读一下文档, 慢慢看一看, 了解一下"
+image: 'https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250929154944807.webp'
+categories: 
+    - Blogs
+tags:
+    - 开发语言
+    - 仓颉
+---
+
+import Info from "../../components/mdx/Info.astro";
+
+import Warning from "../../components/mdx/Warning.astro";
+
+import Question from "../../components/mdx/Question.astro";
+
+<Info>
+
+阅读文档版本:
+
+语言规约 [Cangjie-0.53.18-Spec](https://cangjie-lang.cn/docs?url=/0.53.18/Spec/source_zh_cn/Chapter_01_Lexical_Structure(zh).html)
+
+具体开发指南 [Cangjie-LTS-1.0.1](https://cangjie-lang.cn/docs?url=/1.0.1/index.html)
+
+在阅读 了解仓颉的语言规约时, 难免会涉及到一些仓颉的示例代码, 但 我们对仓颉并不熟悉, 所以可以用[仓颉在线体验](https://cangjie-lang.cn/playground)快速验证
+
+有条件当然可以直接[配置Canjie-SDK](https://cangjie-lang.cn/download/1.0.1)
+
+</Info>
+
+<Warning>
+
+博主在此之前, 基本就只接触过C/C++语言, 对大多现代语言都没有了解, 所以在阅读过程中遇到相似的概念, 难免会与C/C++中的相似概念作类比, 见谅
+
+</Warning>
+
+> 此样式内容, 表示文档原文内容
+
+## 重载
+
+### 函数重载
+
+#### 函数重载的定义
+
+
+> 在仓颉编程语言中，如果一个作用域中，同一个函数名对应多个参数类型不完全相同的函数定义，这种现象称为函数重载
+> 
+> 函数重载定义详见[函数重载定义](https://www.humid1ch.cn/blog/cangjie-docs-reading-xi#heading-4)
+> 
+> 需要注意的是：
+> 
+> - `class`、`interface`、`struct` 类型中的静态成员函数 和 实例成员函数之间不能重载
+> 
+> - 同一个类型的扩展中的 静态成员函数 和 实例成员函数之间 不能重载，同一个类型的不同扩展中两个函数都是 `private` 的除外
+> 
+> - `enum` 类型的 `constructor`、静态成员函数和实例成员函数之间不能重载
+
+> 下例中，`class A` 中的实例成员函数 `f` 和静态成员函数 `f` 重载，将编译报错
+> 
+> ```cangjie
+> class A {
+>     func f() {}
+>     
+>     static func f(a: Int64) {}            // Error, 静态成员函数不能被实例成员函数重载
+> }
+> ```
+> 
+> 下例中，`class A` 的扩展中实例成员函数 `g` 和静态成员函数 `g` 重载，将编译报错
+> 
+> ```cangjie
+> class A {}
+> 
+> extend A {
+>     func g() {}
+>     static func g(a: Int64) {}  // Error
+> }
+> ```
+> 
+> 下例中，实例成员函数 `h` 和静态成员函数 `h` 在 `class A` 的不同扩展中，且都是 `private`，编译不报错
+> 
+> ```cangjie
+> extend A {
+>     private func h() {}
+> }
+> 
+> extend A {
+>     private static func h(a: Int64) {}   // OK
+> }
+> ```
+> 
+> 下例中，`enum E` 的 `constructor f`, 实例成员函数 `f` 和静态成员函数 `f` 重载，将编译报错
+> 
+> ```cangjie
+> enum E {
+>     f(Int64)  // constructor
+> 
+>     // Instance member function can not be overloaded with constructor.
+>     func f(a: Float64) {}  // Error
+> 
+>     // Static member function can not be overloaded with instance member function or constructor.
+>     static func f(a: Bool) {}  // Error
+> }
+> ```
+> 
+> 在进行函数调用时，需要根据函数调用表达式中的实参的类型和上下文信息明确是哪一个函数定义被使用，分为以下几个步骤：
+> 
+> 第 1 步、构建函数候选集
+> 
+> 第 2 步、函数重载决议
+> 
+> 第 3 步、确定实参类型
