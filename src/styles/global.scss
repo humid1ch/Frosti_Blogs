@@ -1102,7 +1102,7 @@ blockquote p code {
 /* 一级：1. (默认) */
 .custom-list {
   list-style-type: decimal !important;
-  counter-reset: level1;
+//   counter-reset: level1;
 }
 
 .custom-list > li {

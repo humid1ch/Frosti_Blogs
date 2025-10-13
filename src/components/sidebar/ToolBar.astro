@@ -10,6 +10,16 @@ import { t } from "@config";
   <div class="toolbar-container p-4">
     <div class="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 justify-center items-center gap-4 flex-wrap">
       <!-- Navigation Buttons -->
+
+      <a
+        href="/"
+        class="btn btn-circle btn-md border-base-content/20 bg-base-100 shadow-sm hover:scale-110"
+        aria-label={t("主页")}
+        title={t("主页")}
+      >
+        <Icon name="material-symbols:home-outline-rounded" class="w-5 h-5" />
+      </a>
+
       <a
         href="/blog/tags"
         class="btn btn-circle btn-md border-base-content/20 bg-base-100 shadow-sm hover:scale-110"
@@ -19,14 +29,14 @@ import { t } from "@config";
         <Icon name="lucide:tag" class="w-5 h-5" />
       </a>
 
-      <a
+      <!-- <a
         href="/blog/categories"
         class="btn btn-circle btn-md border-base-content/20 bg-base-100 shadow-sm hover:scale-110"
         aria-label={t("label.categoryPage")}
         title={t("label.categoryPage")}
       >
         <Icon name="lucide:folder" class="w-5 h-5" />
-      </a>
+      </a> -->
 
       <a
         href="/blog/archives"
