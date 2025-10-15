@@ -200,24 +200,24 @@ import Question from "../../components/mdx/Question.astro";
 
 > 在修饰顶层元素时不同访问修饰符的语义如下：
 > 
-> - `private` 表示仅当前文件内可见
+> - **`private` 表示仅当前文件内可见**
 > 
 >     不同的文件无法访问这类成员
 > 
-> - `internal` 表示仅当前包及子包（包括子包的子包）内可见
+> - **`internal` 表示仅当前包及子包（包括子包的子包）内可见**
 > 
 >     同一个包内可以不导入就访问这类成员，当前包的子包（包括子包的子包）内可以通过导入来访问这类成员
 > 
-> - `protected` 表示仅当前 `module` 内可见
+> - **`protected` 表示仅当前 `module` 内可见**
 > 
 >     同一个包的文件可以不导入就访问这类成员，不同包但是在同一个 `module` 内的其它包可以通过导入访问这些成员，不同 `module` 的包无法访问
 > 
-> - `public` 表示 `module` 内外均可见
+> - **`public` 表示 `module` 内外均可见**
 > 
 >     同一个包的文件可以不导入就访问这类成员，其它包可以通过导入访问这些成员
 > 
-> | File | Package & Sub-Packages | Module | All | Packages |
-> | ---- | ---------------------- | ------ | --- | -------- |
+> |   | File | Package & Sub-Packages | Module | All Packages |
+> | - | ---- | ---------------------- | ------ | ------------ |
 > | `private` | Y | N | N | N |
 > | `internal` | Y | Y | N | N |
 > | `protected` | Y | Y | Y | N |
@@ -230,3 +230,113 @@ import Question from "../../components/mdx/Question.astro";
 > - `import` 支持使用全部访问修饰符，默认修饰符为 `private`
 > 
 > - 其他顶层声明支持使用全部访问修饰符，默认修饰符为 `internal`
+
+除`internal`之外, C++中也存在另外三个修饰词, 但 C++中的访问修饰符是用于类成员的, 用来声明成员可访问性
+
+仓颉中的访问修饰符, 还可以修饰包成员的可访问性
+
+#### 修饰非顶层成员
+
+> 在修饰非顶层成员时不同访问修饰符的语义如下：
+> 
+> **`private` 表示仅当前类型或扩展定义内可见**
+> 
+> **`internal` 表示仅当前包及子包（包括子包的子包）内可见**
+> 
+> **`protected` 表示当前 `module` 及当前类的子类可见**
+> 
+> **`public` 表示 `module` 内外均可见**
+> 
+> |   | Type/Extend | Package & Sub-Packages | Module & Sub-Classes | All Packages |
+> | - | ----------- | ---------------------- | -------------------- | ------------ |
+> | `private` | Y | N | N | N |
+> | `internal` | Y | Y | N | N |
+> | `protected` | Y | Y | Y | N |
+> | `public` | Y | Y | Y | Y |
+> 
+> 类型成员的访问修饰符 可以不同于 类型本身
+> 
+> 除接口外类型成员的默认修饰符（默认修饰符是指在省略情况下的修饰符语义，这些默认修饰符也允许显式写出）是 `internal`
+> 
+> 接口中的成员函数和属性**不可以写访问修饰符**，它们的访问级别等同于 `public`
+
+包内可见, 即表示 在此包内定义的实例, 可以通过实例访问类成员
+
+`protected`是`module`以及子类可以见的, 也就表示 如果不同属一个`module`, 此类成员是无法访问的
+
+`protected`和`internal`, 这两个修饰符, 在刚接触包可能会出现混淆:
+
+一个是`module`及子类可见, 一个是当前包及子包可见, 但`module`就是一个包含父子关系的包链, 那么这两个有什么区别?
+
+区别在于, `protected`修饰类成员, 父包也是可见的, 而`internal`只能当前包和子包
+
+而`private`和`public`则是两个极端, 只类内可见 或 全部可见没有限制
+
+#### 访问修饰符的合法性检查
+
+> 仓颉的访问级别排序为 `public` > `protected` > `internal` > `private`
+> 
+> 类型的访问级别：
+> 
+> - 非泛型类型的访问级别 由 类型声明的访问修饰符 决定
+> 
+> - 泛型实例化类型的访问级别等同于该泛型类型与该泛型类型实参的访问级别中最低的一个
+> 
+> 一个声明的访问修饰符 不得高于 该声明中用到的类型的访问修饰符的级别
+> 
+> 具体地：
+> 
+> - 变量、属性声明的访问级别不得高于其类型的访问级别
+> 
+> - 函数声明的访问级别不得高于参数类型、返回值类型，以及 `where` 约束中的类型上界的访问级别
+> 
+> - 类型别名的访问级别不得高于原类型的访问级别
+> 
+> - 类型声明的访问级别不得高于 `where` 约束中的类型上界的访问级别
+> 
+> - 子包的访问级别不得高于其父包的访问级别
+> 
+> - `import` 的访问修饰符不得高于其导入声明的访问级别
+> 
+> ```cangjie
+> private open class A {}
+> 
+> protected let a = A()                     // error: 使用 private 类型 A, 声明 protected 变量 a
+> let (a, b) = (A(), 1)                     // error: 使用 private 类型 A, 声明 internal 变量 a
+> 
+> func f(_: A) {}                           // error: 使用 private 类型 A, 声明 internal 函数 f
+> func f() { A() }                          // error: 使用 private 类型 A, 声明 internal 函数 f
+> func f<T>() where T <: A {}               // error: 使用 private 类型 A, 声明 internal 函数 f
+> 
+> public type X = A                         // error: 使用 private 类型 A, 声明 public 类型 X
+> public type ArrayA = Array<A>             // error: 使用 private 类型 A, 声明 public 类型 ArrayA
+> 
+> protected struct S<T> where T <: A {}     // error: 使用 private 类型 A, 约束 protected struct S<T>
+> 
+> // src/a.cj
+> public package a
+> 
+> // src/a/b/b.cj
+> protected package a.b                     // ok
+> 
+> // src/a/b/c/c.cj
+> public package a.b.c                      // error
+> ```
+
+当你在使用一个类型时, 可能使用这个类型进行 定义变量、声明别名、导入此包 等
+
+这些操作也可以使用访问修饰符修饰, 所以你不能 在进行这些操作的时候 尝试使用更大权限的修饰符去进行提权
+
+> 特别地，类继承时 子类访问级别 与 父类访问级别、类型实现/继承接口时 子类型访问级别 与 父接口访问级别 **不受上述规则限制**
+> 
+> ```cangjie
+> private open class A {}
+> public enum E { U | V }
+> interface I {}
+> 
+> public class C <: A {}                    // ok
+> 
+> public interface J <: I {}                // ok
+> 
+> extend E <: I {}                          // ok
+> ```
