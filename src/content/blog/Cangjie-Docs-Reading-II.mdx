@@ -110,7 +110,7 @@ main() {
 >
 > 可变类型包括`Array`类型、`VArray`类型、`struct`类型、`class`类型和`interface`类型
 >
-> 不可变类型和可变类型的区别在于: 不可变类型的值, 其数据值一经初始化后就不会发生变化；可变类型的值, 其数据值初始化后仍然有可以修改的方法
+> 不可变类型和可变类型的区别在于: 不可变类型的值, 其数据值一经初始化后就不会发生变化; 可变类型的值, 其数据值初始化后仍然有可以修改的方法
 
 对于基本只接触过C/C++的我来说, 我想真心的发问 可变类型和不可变类型是什么?
 
@@ -140,7 +140,7 @@ main() {
 >
 > 整数类型包含有符号(signed)整数类型和无符号(unsigned)整数类型
 >
-> 其中, 有符号整数类型包括`Int8`、`Int16`、`Int32`、`Int64`和`IntNative`, 分别用于表示编码长度为`8-bit`、`16-bit`、`32-bit`、`64-bit`和平台相关大小的有符号整数值的类型；
+> 其中, 有符号整数类型包括`Int8`、`Int16`、`Int32`、`Int64`和`IntNative`, 分别用于表示编码长度为`8-bit`、`16-bit`、`32-bit`、`64-bit`和平台相关大小的有符号整数值的类型; 
 >
 > 无符号整数类型包括`UInt8`、`UInt16`、`UInt32`、`UInt64`和`UIntNative`, 分别用于表示编码长度为`8-bit`、`16-bit`、`32-bit`、`64-bit`和平台相关大小的无符号整数值的类型
 >
@@ -183,9 +183,9 @@ main() {
 
 > 仓颉编程语言中的浮点小数类型的最小正值为非正规浮点小数 (subnormal floating point number)
 >
-> 对于`Float32`类型最小可表示的正浮点数为 2<sup>−149</sup>, 大约为`1.4e-45`；而最大值可表示的数为 (2 − 2<sup>−23</sup>)×2<sup>127</sup>, 大约为`3.40282e38`
+> 对于`Float32`类型最小可表示的正浮点数为 2<sup>−149</sup>, 大约为`1.4e-45`; 而最大值可表示的数为 (2 − 2<sup>−23</sup>)×2<sup>127</sup>, 大约为`3.40282e38`
 >
-> 对于`Float64`类型最小可表示的正浮点数为 2<sup>−1074</sup>, 大约为`4.9e-324`；而最大可表示的数为 (2 − 2<sup>−52</sup>)×2<sup>1023</sup>, 大约为`1.79769e308`
+> 对于`Float64`类型最小可表示的正浮点数为 2<sup>−1074</sup>, 大约为`4.9e-324`; 而最大可表示的数为 (2 − 2<sup>−52</sup>)×2<sup>1023</sup>, 大约为`1.79769e308`
 
 > 当非 0 的浮点小数字面值因过小或者过大而舍入得到 0 或者无穷, 那么编译器会告警
 
@@ -415,9 +415,9 @@ main() {
 
 > `Nothing`是一种特殊的类型, 它不包含任何值, 并且`Nothing`是所有类型的子类型
 >
-> `Nothing`暗示着死代码, 例如如果变量为`Nothing`类型, 则其永远不会被使用, 因此也不需要为其创建内存；
+> `Nothing`暗示着死代码, 例如如果变量为`Nothing`类型, 则其永远不会被使用, 因此也不需要为其创建内存; 
 >
-> 如果函数调用的某个参数为`Nothing`类型, 则该参数后面的参数不会被求值, 函数调用本身也不会被执行；
+> 如果函数调用的某个参数为`Nothing`类型, 则该参数后面的参数不会被求值, 函数调用本身也不会被执行; 
 >
 > 如果 块内 某条表达式是`Nothing`类型, 则其后的所有表达式和声明均不会被执行到
 >
@@ -494,7 +494,7 @@ main() {
 >
 > 2. 对于元组的每一维度, 例如第 K 维, 可以存放任何`TypeK`子类型的实例
 >
-> 3. 当`(Type1, Type2, ..., TypeN)`中的`Type1`到`TypeN`均支持使用`==`进行值判等(使用`!=`进行值判不等)时, 此`Tuple`类型才支持使用`==`进行值判等(使用`!=`进行值判不等)；
+> 3. 当`(Type1, Type2, ..., TypeN)`中的`Type1`到`TypeN`均支持使用`==`进行值判等(使用`!=`进行值判不等)时, 此`Tuple`类型才支持使用`==`进行值判等(使用`!=`进行值判不等); 
 >
 >     否则, 此`Tuple`类型不支持`==`和`!=`(如果使用`==`和`!=`, 编译报错)
 >
@@ -636,11 +636,11 @@ var pointThree: ((Int64, Int64), Int64) = ((2, 3), 4)
 >
 > 2. 表达式`start..end:step`中, 
 >
->     当`step > 0`且`start >= end`, 或者`step < 0`且`start <= end`时, `start..end:step`返回一个空`Range`实例(不包含任何元素的空序列)；
+>     当`step > 0`且`start >= end`, 或者`step < 0`且`start <= end`时, `start..end:step`返回一个空`Range`实例(不包含任何元素的空序列); 
 >
 >     如果`start..end:step`的结果是非空`Range`实例, 则`Range`实例中元素的个数等于`(end-start)/step`向上取整(即大于等于`(end-start)/step`的最小整数)
 >
-> 3. 表达式`start..=end:step`中, 当`step > 0`且`start > end`, 或者`step < 0`且`start < end`时, `start..=end:step`返回一个空`Range`实例；如果`start..=end:step`的结果是非空`Range`实例, 则`Range`实例中元素的个数等于`((end-start)/step)+1`向下取整(即小于等于`((end-start)/step)+1`的最大整数)
+> 3. 表达式`start..=end:step`中, 当`step > 0`且`start > end`, 或者`step < 0`且`start < end`时, `start..=end:step`返回一个空`Range`实例; 如果`start..=end:step`的结果是非空`Range`实例, 则`Range`实例中元素的个数等于`((end-start)/step)+1`向下取整(即小于等于`((end-start)/step)+1`的最大整数)
 >
 >     ```cangjie
 >     let range1 = 0..10:1     // Define an half-open range [0,10) (with step = 1) which contains 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9.
@@ -1132,7 +1132,7 @@ main() {
 >
 > 2. 对于`Option<T>`类型的表达式`e`, 通过调用函数`getOrThrow()`或`getOrThrow(exception: ()->Exception)`实现对`e`的解构: 
 >
->     如果`e`的值等于`Option<T>.Some(v)`, 则`e.getOrThrow()`(或`e.getOrThrow(lambdaArg)`)的值等于`v`的值；
+>     如果`e`的值等于`Option<T>.Some(v)`, 则`e.getOrThrow()`(或`e.getOrThrow(lambdaArg)`)的值等于`v`的值; 
 >
 >     如果`e`的值等于`Option<T>.None`, 则`e.getOrThrow()`在运行时抛出`NoneValueException`异常(`e.getOrThrow(lambdaArg)`在运行时抛出`lambdaArg`中指定的异常)
 >
@@ -1144,7 +1144,7 @@ main() {
 >
 > 3. 对于`Option<T>`类型的表达式`e1`和`T`类型的表达式`e2`, 表达式`e1 ?? e2`的类型为`T`
 >
->     当`e1`的值等于`Option<T>.Some(v)`时, `e1 ?? e2`的值等于`v`的值；
+>     当`e1`的值等于`Option<T>.Some(v)`时, `e1 ?? e2`的值等于`v`的值; 
 >
 >     当`e1`的值等于`Option<T>.None`时, `e1 ?? e2`的值等于`e2`的值
 >

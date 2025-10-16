@@ -63,7 +63,7 @@ tags:
 >
 > 每当一个文件打开后, 计算机会自动根据文件的状态、情况自动生成一个`FILE`类型的结构体变量, 并存入该文件的各种信息
 >
-> `FILE` 类型的具体成员, 内容。在不同的编译器中是不完全相同的, 但是差别不大
+> `FILE` 类型的具体成员, 内容. 在不同的编译器中是不完全相同的, 但是差别不大
 
 我们使用`FILE`类型定义的结构体指针变量, 就是一个文件指针变量
 
@@ -93,7 +93,7 @@ FILE* fopen(const char *filename, const char *mode);
 
     若只传入`TEST.c`, 只会默认打开(创建), 运行可执行程序时, 用户所在路径的 `TEST.c` 文件
 
-2. 第二个参数 `mode`, 应该传入 表示文件打开模式（方式）的字符串
+2. 第二个参数 `mode`, 应该传入 表示文件打开模式(方式)的字符串
 
     具体的模式有:
 
@@ -105,7 +105,7 @@ FILE* fopen(const char *filename, const char *mode);
         | `"w"`  | `写入` |  若文件不存在, 则创建一个新文件; 若文件存在, 则清空文件内容  |
         | `"a"`  | `追加` | 若文件不存在, 则创建一个新文件; 若文件存在, 则将写入的数据追加到文件的末尾 |
         | `"r+"` | `读写` |       既可以读取也可以写入. 文件必须存在, 否则打开失败       |
-        | `"w+"` | `写入` | 既可以读取也可以写入. 若文件不存在, 则创建一个新文件；若文件存在, 则清空文件内容 |
+        | `"w+"` | `写入` | 既可以读取也可以写入. 若文件不存在, 则创建一个新文件; 若文件存在, 则清空文件内容 |
         | `"a+"` | `追加` | 既可以读取也可以写入. 若文件不存在, 则创建一个新文件; 若文件存在, 则将写入的数据追加到文件的末尾 |
 
     2. 表示读写方式的: 
@@ -132,7 +132,7 @@ FILE* fopen(const char *filename, const char *mode);
     >
     > 读写方式放在读写权限的中间 `"rt+"`、`"rb+"`、`"wt+"`、`"wb+"`等等
 
-`fopen`函数的返回值 是`FILE*`类型的, 返回的是所打开的文件的文件信息区的首地址, 所以需要用 `FILE*` 类型的指针变量接收, 然后可以通过此指针变量操作此文件信息。
+`fopen`函数的返回值 是`FILE*`类型的, 返回的是所打开的文件的文件信息区的首地址, 所以需要用 `FILE*` 类型的指针变量接收, 然后可以通过此指针变量操作此文件信息. 
 
 #### `fclose()`
 
@@ -182,7 +182,7 @@ int fclose(FILE* stream);
 |   二进制输入   |  `fread`  | `size_t fread(void* buffer, size_t size, size_t count, FILE* stream );` |    文件    |
 |   二进制输出   | `fwrite`  | `size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream );` |    文件    |
 
-上面是对 打开的文件进行顺序读写时, 可用到的函数。
+上面是对 打开的文件进行顺序读写时, 可用到的函数. 
 
 #### 2.3.2 单个字符读写
 
@@ -382,7 +382,7 @@ int main() {
 
 ##### `fgets()`
 
-`fgets`函数的使用方法, 就与`fgetc`函数有很大的不同了。
+`fgets`函数的使用方法, 就与`fgetc`函数有很大的不同了. 
 
 ```cpp
 char* fgets(char* string, int n, FILE* stream);
@@ -525,7 +525,7 @@ int main() {
 
 #### 2.3.5 二进制读写
 
-二进制的读取和写入, 顾名思义, 就是将数据从内存以二进制的形式输出到文件（写入文件）, 或者将二进制的数据从文件中写入到内存（读取文件）
+二进制的读取和写入, 顾名思义, 就是将数据从内存以二进制的形式输出到文件(写入文件), 或者将二进制的数据从文件中写入到内存(读取文件)
 
 ##### `fwrite()`
 
@@ -533,12 +533,12 @@ int main() {
 size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream );
 ```
 
-`fwrite` 函数, 数据从内存以二进制的形式输出到文件（写入文件）
+`fwrite` 函数, 数据从内存以二进制的形式输出到文件(写入文件)
 
 此函数的参数表示的是: 
 
 1. `const void* buffer`: 需要输出到文件的数据
-2. `size_t size`: 需要写入的数据的类型（大小）
+2. `size_t size`: 需要写入的数据的类型(大小)
 3. `size_t count`: 需要写入的数据的个数
 4. `FILE* stream`: 文件流
 
@@ -556,7 +556,7 @@ struct Stu {
 int main() {
     struct Stu stu[3] = { {"CSDN", 15, "Not"}, {"July", 19, "Male"}, {"Three", 20, "Male"} };
     
-    FILE* pf = fopen("data.txt", "wb");        //以二进制输出形式打开文件（写入文件的形式）
+    FILE* pf = fopen("data.txt", "wb");        //以二进制输出形式打开文件(写入文件的形式)
     if (pf == NULL) {
         printf("打开文件失败\n");
         
@@ -586,7 +586,7 @@ int main() {
 size_t fread(void* buffer, size_t size, size_t count, FILE* stream);
 ```
 
-二进制输入与二进制输出相反, 可以将文件中的二进制数据, 输入到内存中（读取文件中的二进制数据）
+二进制输入与二进制输出相反, 可以将文件中的二进制数据, 输入到内存中(读取文件中的二进制数据)
 
 `fread` 函数的参数表示的是: 
 
@@ -595,7 +595,7 @@ size_t fread(void* buffer, size_t size, size_t count, FILE* stream);
 3. `size_t count`: 读取的数据的个数
 4. `FILE* stream`: 需要读取的文件流
 
-二进制输入（读取二进制数据）的示例: 
+二进制输入(读取二进制数据)的示例: 
 
 ```cpp
 #include <stdio.h>
@@ -609,7 +609,7 @@ struct Stu {
 int main() {
     struct Stu stu[3] = {0};
     
-    FILE* pf = fopen("data.txt", "rb");        //以二进制输入形式打开文件（读取文件的形式）
+    FILE* pf = fopen("data.txt", "rb");        //以二进制输入形式打开文件(读取文件的形式)
     // 打开的文件就是 上边的示例文件
     if (pf == NULL)
     {
@@ -657,7 +657,7 @@ int main() {
 int fseek(FILE *stream, long offset, int origin);
 ```
 
-`fseek` 函数的功能是, 根据文件指针 的位置和偏移量 来定位文件指针（或 通过给定文件指针 的位置和偏移量 来指定文件指针的位置）
+`fseek` 函数的功能是, 根据文件指针 的位置和偏移量 来定位文件指针(或 通过给定文件指针 的位置和偏移量 来指定文件指针的位置)
 
 本函数的参数含义是: 
 
@@ -691,7 +691,7 @@ int fseek(FILE *stream, long offset, int origin);
 
 `fseek`函数到底如何使用呢？具体作用究竟是什么呢？: 
 
->首先, 我们先创建一个文件（我这里路径是 `D:\TEST.txt` ）, 并输入内容
+>首先, 我们先创建一个文件(我这里路径是 `D:\TEST.txt` ), 并输入内容
 >
 >![fseek_TEST |inline](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250711174813979.webp)
 >
@@ -754,7 +754,7 @@ int fseek(FILE *stream, long offset, int origin);
 >
 >    fseek(pf, 10, SEEK_CUR);    //使文件指针, 从当前位置向后偏移 10 个字符
 >    //fseek(pf, 15, SEEK_SET);    //使文件指针, 从文件内容的首位, 向后偏移 15 个字符
->    //fseek(pf, -5, SEEK_END);    //使文件指针, 从文件内容的末字符之后, 向后偏移 -5 个字符（向前偏移 5 个字符）
+>    //fseek(pf, -5, SEEK_END);    //使文件指针, 从文件内容的末字符之后, 向后偏移 -5 个字符(向前偏移 5 个字符)
 >
 >    ch = fgetc(pf);
 >    printf("ch = %c\n", ch);

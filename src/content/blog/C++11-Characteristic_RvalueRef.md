@@ -71,7 +71,7 @@ int main() {
 
     ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250711175307968.webp)
 
-## 明确理解对象的 类型和“值型” ***
+## 明确理解对象的 类型和"值型" ***
 
 在正式开始了解右值引用之前, 先思考一个问题:
 

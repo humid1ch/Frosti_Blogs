@@ -640,7 +640,7 @@ ostream& operator<<(ostream& out, const string& s) {
 
 > C++库中 string 类的 `cin` 效果是 **`完全将原字符串替换为写入的字符串`**
 >
-> 被替换的还有 `_size`, 且 如果原来的 `_capacity` 不足以容纳输入的字符串, 就扩容；如果足以容纳, 则 `_capacity` 不变
+> 被替换的还有 `_size`, 且 如果原来的 `_capacity` 不足以容纳输入的字符串, 就扩容; 如果足以容纳, 则 `_capacity` 不变
 >
 > 并且 `cin >>` 的操作 会以 `' '` 和 '`\n'` 为结束标志
 

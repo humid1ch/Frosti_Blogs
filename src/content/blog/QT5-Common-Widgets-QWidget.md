@@ -1001,7 +1001,7 @@ Widget::~Widget() {
 | `int toolTipDuration() const;`       | **获取控件当前`tooltip`的持续显示时间, 单位`ms`** |
 | `void setToolTipDuration(int msec);` | **设置控件`tooltip`的持续显示时间, 单位`ms`**     |
 
-对`PushButton`设置`tooltip`: **“这只是一个什么用都没有的按钮”**, 持续显示时间为`5000ms`
+对`PushButton`设置`tooltip`: **"这只是一个什么用都没有的按钮"**, 持续显示时间为`5000ms`
 
 `widget.cc`:
 
