@@ -48,7 +48,7 @@ import Question from "../../components/mdx/Question.astro";
 >
 > 优先级和结合性规定了操作数与操作符的结合方式, 操作数的求值顺序规定了二元和三元操作符的操作数求值顺序, 它们都会对表达式的值产生影响
 >
-> **注：本章中对于各操作符的操作数类型的规定, 均建立在操作符没有被重载的前提下**
+> **注: 本章中对于各操作符的操作数类型的规定, 均建立在操作符没有被重载的前提下**
 
 ### 字面量
 
@@ -60,7 +60,7 @@ import Question from "../../components/mdx/Question.astro";
 >
 > 对于可在内部包含其他表达式的集合类字面量和元组字面量(参见 [值类型]), 它的值等于对其内部所有表达式求值后得到的字面量的值, 它的类型由其语法确定
 >
-> 字面量举例：
+> 字面量举例: 
 >
 > ```cangjie
 > main(): Int64 {
@@ -84,11 +84,11 @@ import Question from "../../components/mdx/Question.astro";
 
 > 变量名和函数名(这里的变量名和函数名也包括通过包名指向的变量或函数)本身也是表达式
 >
-> 对于变量名, 它的值等于变量求值后的值, 它的类型为变量的类型；
+> 对于变量名, 它的值等于变量求值后的值, 它的类型为变量的类型; 
 >
 > 对于函数名, 它的值是一个闭包, 它的类型为对应的函数类型
 >
-> 变量名和函数名举例：
+> 变量名和函数名举例: 
 >
 > ```cangjie
 > let intNum: Int64 = 100 // 'intNum' 是这个变量的名字, 值和类型分别是 100 和 Int64
@@ -113,7 +113,7 @@ import Question from "../../components/mdx/Question.astro";
 >
 > 当函数为泛型函数时, 函数名作为表达式使用时必须给出泛型函数的类型实参
 >
-> 例如：
+> 例如: 
 >
 > ```cangjie
 > func identity<T>(a: T) { // identity 是一个泛型函数
@@ -127,7 +127,7 @@ import Question from "../../components/mdx/Question.astro";
 >
 > `identity`是一个泛型函数, 所以`identity`不是合法的表达式, 只有给出了类型实参的`identity<Int32>`才是一个合法的表达式
 >
-> 若一个函数在当前作用域中被重载了, 当重载函数中存在多个类型完备的可选函数, 那么直接使用该类型名作为表达式是有歧义错误的, 例如：
+> 若一个函数在当前作用域中被重载了, 当重载函数中存在多个类型完备的可选函数, 那么直接使用该类型名作为表达式是有歧义错误的, 例如: 
 >
 > ```cangjie
 > interface Add<T> {
@@ -159,7 +159,7 @@ import Question from "../../components/mdx/Question.astro";
 
 > 条件表达式即`if`表达式, 可以根据判定条件是否成立来决定执行哪条代码分支, 实现分支控制逻辑
 >
-> `if`表达式的语法定义为：
+> `if`表达式的语法定义为: 
 >
 > ```
 > ifExpression
@@ -175,7 +175,7 @@ import Question from "../../components/mdx/Question.astro";
 
 只熟悉C/C++的我, 没有见过相关用法, 具体后面了解
 
-> `if`表达式举例：
+> `if`表达式举例: 
 >
 > ```
 > main(): Int64 {
@@ -211,7 +211,7 @@ import Question from "../../components/mdx/Question.astro";
 >
 > 我们可以用`if-let`表达式来做一些简单的解构操作
 >
-> 一个基础的`if-let`表达式举例：
+> 一个基础的`if-let`表达式举例: 
 >
 > ```
 > main(): Int64 {
@@ -309,7 +309,7 @@ main(): Int64 {
 >
 >     此时要求`if`的两个分支的类型都是上下文所要求的类型的子类型
 >
-> 举例如下：
+> 举例如下: 
 >
 > ```cangjie
 > struct S1 { }
@@ -344,7 +344,7 @@ main(): Int64 {
 > }
 > ```
 >
-> 注意：为了保持代码格式的规整以及提高代码的可维护性, 同时为了避免悬垂`else`(dangling-else)问题, 仓颉编程语言**要求每个`if`分支和`else`分支中的执行部分(即使只有一条表达式)必须使用一对花括号括起来成为一个块**
+> 注意: 为了保持代码格式的规整以及提高代码的可维护性, 同时为了避免悬垂`else`(dangling-else)问题, 仓颉编程语言**要求每个`if`分支和`else`分支中的执行部分(即使只有一条表达式)必须使用一对花括号括起来成为一个块**
 >
 > (悬垂`else`问题是指无法确定形如`if cond1 if cond2 expr1 else expr2`的代码中的`else expr2`是归属于内层`if`还是外层`if`的问题
 >
@@ -374,11 +374,11 @@ main(): Int64 {
 >
 > 直观上看, 模式描述的是一种结构, 这个结构定义了一个与之匹配的实例集合, 模式匹配就是去判断给定的实例是否属于模式定义的实例集合
 >
-> 显然, 匹配的结果只有两种：匹配成功和匹配失败
+> 显然, 匹配的结果只有两种: 匹配成功和匹配失败
 >
-> `match`表达式可分为两类：带 selector 的`match`表达式和不带 selector 的`match`表达式
+> `match`表达式可分为两类: 带 selector 的`match`表达式和不带 selector 的`match`表达式
 >
-> `match`表达式的语法定义为：
+> `match`表达式的语法定义为: 
 >
 > ```
 > matchExpression
@@ -411,7 +411,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >
 > 否则(与当前 pattern 不匹配), 继续与下一个 pattern 进行匹配判断, 依次类推
 >
-> 下面的例子展示了`match`表达式中使用常量模式进行分支控制：
+> 下面的例子展示了`match`表达式中使用常量模式进行分支控制: 
 >
 > ```cangjie
 > let score: Int64 = 90
@@ -463,9 +463,9 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 
 但, 依旧只能命中一个 pattern 
 
-> 类似于`if`表达式, 对于`match`表达式, 无论其是否有 selector , 它的类型遵循如下规则：
+> 类似于`if`表达式, 对于`match`表达式, 无论其是否有 selector , 它的类型遵循如下规则: 
 >
-> - 如果`match`表达式的值没有被读取或者返回, 那么`match`表达式的类型为`Unit`, 所有分支不要求存在公共父类型；否则, 按如下规则检查
+> - 如果`match`表达式的值没有被读取或者返回, 那么`match`表达式的类型为`Unit`, 所有分支不要求存在公共父类型; 否则, 按如下规则检查
 >
 > - 在上下文没有明确的类型要求时, 假设`match`的所有分支类型分别为`T1, ..., Tn`, 则`match`表达式的类型是`T1, ..., Tn`的最小公共父类型`T`, 如果不存在最小公共父类型`T`则报错
 >
@@ -479,7 +479,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 
 #### 模式
 
-> 仓颉编程语言提供了丰富的模式种类, 包括：
+> 仓颉编程语言提供了丰富的模式种类, 包括: 
 >
 > 1. 常量模式(constant patterns)
 > 2. 通配符模式(wildcard patterns)
@@ -488,7 +488,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 > 5. 类型模式(type patterns)
 > 6. `enum`模式(enum patterns)
 >
->  pattern 的语法定义为：
+>  pattern 的语法定义为: 
 >
 > ```
 > pattern
@@ -507,7 +507,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >
 > 常量模式中字面量的类型需要和 selector 的类型一致,  selector 和一个常量模式匹配成功的条件是 selector 与常量模式中的字面量相等(这里指值相等)
 >
-> 常量模式的语法定义为：
+> 常量模式的语法定义为: 
 >
 > ```
 > constantPattern
@@ -515,7 +515,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >     ;
 > ```
 >
-> 使用常量模式的例子如下：
+> 使用常量模式的例子如下: 
 >
 > ```cangjie
 > func f() {
@@ -538,7 +538,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 
 > 通配符模式使用下划线`_`表示, 它可以**匹配任意值**, 常用于部分匹配(例如作为占位符)或作为`match`表达式的最后一个 pattern 来匹配其它`case`未覆盖到的情况
 >
-> 通配符模式的语法定义为：
+> 通配符模式的语法定义为: 
 >
 > ```
 > wildcardPattern
@@ -546,7 +546,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >     ;
 > ```
 >
-> 使用通配符模式的例子如下：
+> 使用通配符模式的例子如下: 
 >
 > ```cangjie
 > let score: Int64 = 90
@@ -566,7 +566,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 
 > 绑定模式同样可以匹配任意值, 但与通配符模式不同的是, 绑定模式会将匹配到的值绑定到 binding pattern 中定义的变量, 以便在`=>`之后的表达式中进行访问
 >
-> 绑定模式的语法定义为：
+> 绑定模式的语法定义为: 
 >
 > ```
 > varBindingPattern
@@ -576,7 +576,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >
 > **绑定模式中定义的变量是不可变的**
 >
-> 使用绑定模式的例子如下：
+> 使用绑定模式的例子如下: 
 >
 > ```cangjie
 > let score: Int64 = 90
@@ -611,13 +611,13 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 
 ##### `Tuple`模式
 
->  tuple pattern 用于匹配`Tuple`值, tuple pattern 定义为由圆括号括起来的多个 pattern , 每个 pattern 之间使用逗号分隔：`(pattern_1, pattern_2, … pattern_k)`
+>  tuple pattern 用于匹配`Tuple`值, tuple pattern 定义为由圆括号括起来的多个 pattern , 每个 pattern 之间使用逗号分隔: `(pattern_1, pattern_2, … pattern_k)`
 >
 > 例如, `(x, y, z)`是由三个 binding pattern 组成的一个 tuple pattern , `(1, 0, 0)`是由三个 constant pattern 组成的一个 tuple pattern 
 >
 >  tuple pattern 中的子 pattern 个数需要和 selector 的维度相同, 并且如果子 pattern 是 constant pattern 或 enum pattern 时, 其类型要和 selector 对应维度的类型相同
 >
-> tuple 模式的语法定义为：
+> tuple 模式的语法定义为: 
 >
 > ```
 > tuplePattern
@@ -625,7 +625,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >     ;
 > ```
 >
-> 使用 tuple 模式的例子如下：
+> 使用 tuple 模式的例子如下: 
 >
 > ```cangjie
 > let scoreTuple = ("Allen", 90)
@@ -641,7 +641,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 
 > 使用类型模式可以很方便地实现`type check`和`type cast`
 >
-> 类型模式的语法定义为：
+> 类型模式的语法定义为: 
 >
 > ```
 > typePattern
@@ -655,7 +655,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >
 > 只有类型匹配, 才算成功匹配, 否则匹配失败, 因此, `varBindingPattern : type`(或`wildcardPattern : type`)可以同时实现`type test`和`type cast`
 >
-> 使用类型模式匹配的例子如下：
+> 使用类型模式匹配的例子如下: 
 >
 > ```cangjie
 > open class Point { 
@@ -696,7 +696,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >
 >  enum pattern 用于匹配`enum constructor`, 格式是`constructorName`(无参构造器)或`constructorName(pattern_1, pattern_2, ..., pattern_k)`(有参构造器), 圆括号内用逗号分隔的若干 pattern (可以是其它任何类型的 pattern , 并允许嵌套)依次对每个参数进行匹配
 >
-> `enum`模式的语法定义为：
+> `enum`模式的语法定义为: 
 >
 > ```
 > enumPattern
@@ -707,7 +707,7 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >    ;
 > ```
 >
-> 使用`enum`模式匹配的例子如下：
+> 使用`enum`模式匹配的例子如下: 
 >
 > ```cangjie
 > enum TimeUnit { 
@@ -780,13 +780,13 @@ C++直到现在也没有完善的模式匹配语法, 只有一个类似的只能
 >
 > 反之, 当一个 pattern 总是可以和它所要匹配的值匹配时, 称此 pattern 为 *irrefutable pattern*
 >
-> 对于上述介绍的各类 pattern , 规定：
+> 对于上述介绍的各类 pattern , 规定: 
 >
-> - constant pattern 总是 *refutable pattern*；
-> - wildcard pattern 总是 *irrefutable pattern*；
-> - binding pattern 总是 *irrefutable pattern*；
-> - tuple pattern 是 *irrefutable pattern*, 当且仅当其包含的每个 pattern 都是 *irrefutable pattern*；
-> - type pattern 总是 *refutable pattern*；
+> - constant pattern 总是 *refutable pattern*; 
+> - wildcard pattern 总是 *irrefutable pattern*; 
+> - binding pattern 总是 *irrefutable pattern*; 
+> - tuple pattern 是 *irrefutable pattern*, 当且仅当其包含的每个 pattern 都是 *irrefutable pattern*; 
+> - type pattern 总是 *refutable pattern*; 
 > - enum pattern 是 *irrefutable pattern*, 当且仅当其对应的`enum`类型中只有一个带参`constructor`, 且 enum pattern 中包含的其他 pattern (如果存在)都是 *irrefutable pattern*
 
 通配符和绑定模式, 总是 可以和其所要匹配的值匹配
@@ -837,7 +837,7 @@ match (value) {
 >
 > 匹配的过程中, 只有当值与 pattern 匹配并且满足`where`之后的`boolExpression`时, 整个`case`才算匹配成功, 否则匹配失败
 >
->  pattern guard 的语法定义为：
+>  pattern guard 的语法定义为: 
 >
 > ```
 > patternGuard
@@ -845,7 +845,7 @@ match (value) {
 >     ;
 > ```
 >
-> 使用`pattern guards`的例子如下：
+> 使用`pattern guards`的例子如下: 
 >
 > ```cangjie
 > let oneYear = Year(1.0) 

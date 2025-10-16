@@ -118,7 +118,7 @@ char* strcat(char* dest, const char* src);
 
 要求: 
 
-​    字符串`src`必须以`'\0'`结束；`dest`指向空间足够大且可修改
+​    字符串`src`必须以`'\0'`结束; `dest`指向空间足够大且可修改
 
 ```cpp
 char* my_strcat(char* dest, const char* src) {
@@ -127,7 +127,7 @@ char* my_strcat(char* dest, const char* src) {
     
     while(*dest) {
         // 注意: 循环里的"++" 不能放入循环条件里: 
-        // 若放至 dest 后, 会跳过原 dest 中的 '\0'；若放至 dest 前, 如果 dest 首字符为'\0'也会被跳过
+        // 若放至 dest 后, 会跳过原 dest 中的 '\0'; 若放至 dest 前, 如果 dest 首字符为'\0'也会被跳过
         dest++;
     }
 
@@ -224,7 +224,7 @@ char* my_strncat(char* dest, const char* src, size_t num) {
     
     while(*dest) {
         // 注意: "++" 不能放入循环条件里
-        // 若放至 dest 后, 会跳过原 dest 中的 '\0'；若放至 dest 前, 如果 dest 首字符为'\0'也会被跳过
+        // 若放至 dest 后, 会跳过原 dest 中的 '\0'; 若放至 dest 前, 如果 dest 首字符为'\0'也会被跳过
         dest++;
     }
     // dest 指向dest的'\0'位置
@@ -276,7 +276,7 @@ char* strstr(const char* string, const char* substr);
 
 作用: 
 
-​    在 字符串`string`中, 查找第一个`substr`字符串；若`substr`指向长度为零的字符串(即, `substr`为空), 则返回原字符串, 没找到返回空指针, 找到了返回找到的字符串的首字符地址
+​    在 字符串`string`中, 查找第一个`substr`字符串; 若`substr`指向长度为零的字符串(即, `substr`为空), 则返回原字符串, 没找到返回空指针, 找到了返回找到的字符串的首字符地址
 
 
 模拟实现 `strstr()`
@@ -328,7 +328,7 @@ char* strtok(char * str, const char * sep);
 
 - `strtok`函数的第一个参数不为`NULL`, 函数将找到`str`中第一个标记, `strtok`函数将保存它在字符串中的位置
 
-- `strtok`函数的第一个参数为`NULL`, 函数将在同一个字符串中被保存的位置开始, 查找下一个标记。如果字符串中不存在更多的标记, 则返回`NULL`指针
+- `strtok`函数的第一个参数为`NULL`, 函数将在同一个字符串中被保存的位置开始, 查找下一个标记. 如果字符串中不存在更多的标记, 则返回`NULL`指针
 
   >即:
   >
@@ -415,7 +415,7 @@ char* strerror(int errnum);
 |  `isupper `  |                        大写字母`A~Z`                         |
 |  `isalpha `  |                       字母`a~z`或`A~Z`                       |
 |  `isalnum `  |               字母或者数字, `a~z`,`A~Z`,`0~9`                |
-|  `ispunct `  |     标点符号, 任何不属于数字或者字母的图形字符（可打印）     |
+|  `ispunct `  |     标点符号, 任何不属于数字或者字母的图形字符(可打印)     |
 |  `isgraph `  |                         任何图形字符                         |
 |  `isprint `  |            任何可打印字符, 包括图形字符和空白字符            |
 

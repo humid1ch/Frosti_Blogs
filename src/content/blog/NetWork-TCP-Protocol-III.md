@@ -371,7 +371,7 @@ int main(int argc, char* argv[]) {
         >
         > ![|wide](https://humid1ch.oss-cn-shanghai.aliyuncs.com/20250722181859215.webp)
         >
-        > **tcp_fin_timeout（整数; 默认值: 60; 自 Linux2.2 起）**
+        > **tcp_fin_timeout(整数; 默认值: 60; 自 Linux2.2 起)**
         >
         > **它指定了在强制关闭套接字之前, 等待最终`FIN`数据包的秒数. 这违反了`TCP`规范, 但却是防止服务攻击所必需的. 在 Linux2.2 中, 默认值为 180**
         >

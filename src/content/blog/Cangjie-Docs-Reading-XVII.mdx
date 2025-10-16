@@ -40,9 +40,9 @@ import Question from "../../components/mdx/Question.astro";
 
 ## 扩展
 
-> 扩展可以为除函数、元组、接口外的在当前 `package` 可见的任何类型添加新功能
+> 扩展可以为除函数、元组、接口外的在当前`package`可见的任何类型添加新功能
 > 
-> 可以添加的功能包括：
+> 可以添加的功能包括: 
 > 
 > - 添加实例成员函数
 > 
@@ -56,15 +56,15 @@ import Question from "../../components/mdx/Question.astro";
 > 
 > - 实现接口
 > 
-> 扩展是在类型定义之后追加的功能，扩展不能破坏原有类型的封装性，因此以下功能是禁止的
+> 扩展是在类型定义之后追加的功能, 扩展不能破坏原有类型的封装性, 因此以下功能是禁止的
 > 
 > - 扩展不能增加字段
 > 
 > - 扩展不能增加抽象成员
 > 
-> - 扩展不能增加 `open` 成员
+> - 扩展不能增加`open`成员
 > 
-> - 扩展不能 `override/redef` 原有的成员
+> - 扩展不能`override/redef`原有的成员
 > 
 > - 扩展不能访问原类型的私有成员
 
@@ -78,7 +78,7 @@ import Question from "../../components/mdx/Question.astro";
 
 ### 扩展语法
 
-> 一个简单的扩展示例如下：
+> 一个简单的扩展示例如下: 
 > 
 > ```cangjie
 > extend String {
@@ -90,7 +90,7 @@ import Question from "../../components/mdx/Question.astro";
 > "123".printSize()         // 3
 > ```
 > 
-> 扩展定义的语法如下：
+> 扩展定义的语法如下: 
 > 
 > ```
 > extendDefinition
@@ -133,13 +133,13 @@ import Question from "../../components/mdx/Question.astro";
 >     ;
 > ```
 > 
-> 扩展的定义使用 `extend` 关键字，扩展定义依次为 `extend` 关键字、可选的泛型形参、被扩展的类型、可选的实现接口、可选的泛型约束，以及扩展体的定义
+> 扩展的定义使用`extend`关键字, 扩展定义依次为`extend`关键字、可选的泛型形参、被扩展的类型、可选的实现接口、可选的泛型约束, 以及扩展体的定义
 > 
-> 扩展体的定义不允许省略 `{}`
+> 扩展体的定义不允许省略`{}`
 > 
-> 扩展只能定义在 `top level`
+> 扩展只能定义在`top level`
 > 
-> 扩展分为直接扩展和接口扩展两种用法，直接扩展不需要声明额外的接口
+> 扩展分为直接扩展和接口扩展两种用法, 直接扩展不需要声明额外的接口
 
 扩展的关键字是`extend`, 之后要跟被扩展的类型名, 然后就类似类的定义
 
@@ -147,7 +147,7 @@ import Question from "../../components/mdx/Question.astro";
 
 #### 直接扩展
 
-> 直接扩展不需要声明额外的接口，可以用来直接为现有的类型添加新功能
+> 直接扩展不需要声明额外的接口, 可以用来直接为现有的类型添加新功能
 > 
 > ```cangjie
 > class Foo {}
@@ -166,7 +166,7 @@ import Question from "../../components/mdx/Question.astro";
 
 #### 接口扩展
 
-> 接口扩展可以用来为现有的类型添加新功能并实现接口，增强抽象灵活性
+> 接口扩展可以用来为现有的类型添加新功能并实现接口, 增强抽象灵活性
 > 
 > 使用接口扩展时必须要声明被实现的接口
 > 
@@ -182,7 +182,7 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 
-> 对一个类型使用接口扩展功能实现接口 `I`，其等价于在类型定义时实现接口 `I`，但使用范围会受到扩展导入导出的限制，详细见[扩展的导入导出]
+> 对一个类型使用接口扩展功能实现接口`I`, 其等价于在类型定义时实现接口`I`, 但使用范围会受到扩展导入导出的限制, 详细见[扩展的导入导出]
 > 
 > ```cangjie
 > func g(i: I) {
@@ -195,7 +195,7 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 我们可以在同一个扩展内同时实现多个接口，多个接口之间使用 `&` 分开，接口的顺序没有先后关系
+> 我们可以在同一个扩展内同时实现多个接口, 多个接口之间使用`&`分开, 接口的顺序没有先后关系
 > 
 > ```cangjie
 > interface I1 {
@@ -224,7 +224,7 @@ import Question from "../../components/mdx/Question.astro";
 但扩展的接口, 存在使用范围限制, 在之后有提及
 
 
-> 如果被扩展类型**已经实现**过某个接口，则 不能通过扩展重复实现该接口，包含使用扩展实现过的接口
+> 如果被扩展类型**已经实现**过某个接口, 则 不能通过扩展重复实现该接口, 包含使用扩展实现过的接口
 > 
 > ```cangjie
 > interface I {
@@ -245,9 +245,9 @@ import Question from "../../components/mdx/Question.astro";
 
 接口不允许重复实现, 扩展也同样如此, 因为扩展接口可以等价实现接口
 
-> 如果被扩展类型已经直接实现 某个非泛型接口，则不能使用扩展重新实现该接口
+> 如果被扩展类型已经直接实现 某个非泛型接口, 则不能使用扩展重新实现该接口
 > 
-> 如果被扩展类型已经直接实现某个泛型接口，则不能使用相同的类型参数扩展重新实现该接口
+> 如果被扩展类型已经直接实现某个泛型接口, 则不能使用相同的类型参数扩展重新实现该接口
 > 
 > ```cangjie
 > interface I1 {}
@@ -267,7 +267,7 @@ import Question from "../../components/mdx/Question.astro";
 
 依旧是不允许重复实现接口的原则, 泛型接口的类型变元相同也被看作同一接口类型
 
-> 如果被扩展的类型已经包含 接口要求的函数，则接口扩展 不能再重新实现这些函数，也不会再使用接口中的默认实现
+> 如果被扩展的类型已经包含 接口要求的函数, 则接口扩展 不能再重新实现这些函数, 也不会再使用接口中的默认实现
 > 
 > ```cangjie
 > class Foo {
@@ -300,13 +300,13 @@ import Question from "../../components/mdx/Question.astro";
 所以类是有可能 本身已经实现了 接口中的函数的, 此时 扩展接口的对应函数, 将不能在扩展时被重新实现
 
 
-> 禁止定义孤儿扩展，孤儿扩展指的是 **接口扩展既不与接口（包含接口继承链上的所有接口）定义在同一个包中，也不与被扩展类型定义在同一个包中**
+> 禁止定义孤儿扩展, 孤儿扩展指的是 **接口扩展既不与接口(包含接口继承链上的所有接口)定义在同一个包中, 也不与被扩展类型定义在同一个包中**
 > 
-> 即接口扩展只允许以下两种情况：
+> 即接口扩展只允许以下两种情况: 
 > 
 > - 接口扩展与类型定义处在同一个包
 > 
-> - 接口扩展实现的接口，和接口的继承链上 所有未被 被扩展类型实现的接口，都必须在同一个包中
+> - 接口扩展实现的接口, 和接口的继承链上 所有未被 被扩展类型实现的接口, 都必须在同一个包中
 > 
 > 其它情况的接口扩展都是不允许定义的
 > 
@@ -364,48 +364,48 @@ import Question from "../../components/mdx/Question.astro";
     // case 1
     // AClass在另一个包 pkg1 中
     import pkg1.AClass
-
+    
     interface Iter1 {}
-
+    
     interface Iter2 {}
-
+    
     extend AClass <: Iter1 & Iter2 {}       // OK, 接口扩展定义 与 所有未实现的接口 定义在同一个包中
-
+    
     // case 2
     // AClass在包 pkg1 中
     import pkg1.AClass
     // Iter1在包 pkg2 中
     import pkg2.Iter1
-
+    
     interface Iter2 {}
-
+    
     extend AClass <: Iter1 & Iter2 {}       // Error, 接口扩展定义 未与AClass 定义在同一个包中, 也未与 Iter1 定义在一个包中(Iter1是未实现的接口)
-
+    
     // case 3
     // AClass和Iter1 都在包 pkg1 中, 但AClass未实现Iter1
     import pkg1.AClass
     import pkg1.Iter1
-
+    
     interface Iter2 {}
-
+    
     extend AClass <: Iter1 & Iter2 {}       // Error, 接口扩展定义 未与AClass 定义在同一个包中, 也未与 Iter1 定义在一个包中(Iter1是未实现的接口)
-
+    
     // case 4
     // AClass和Iter1 都在包 pkg1 中, 但AClass未实现Iter1
     import pkg1.AClass
     import pkg1.Iter1
-
+    
     interface Iter2 <: Iter1 {}
-
+    
     extend AClass <: Iter2 {}       // Error, 接口扩展定义 未与AClass 定义在同一个包中, 也未与 Iter1 定义在一个包中(Iter1是接口继承链上未实现的接口)
-
+    
     // case 5
     // AClass和Iter1 都在包 pkg1 中, 且AClass已经实现或扩展了Iter1
     import pkg1.AClass
     import pkg1.Iter1
-
+    
     interface Iter2 <: Iter1 {}
-
+    
     extend AClass <: Iter2 {}       // OK, 接口扩展定义 未与AClass 定义在同一个包中, 但与 所有未实现的接口 定义在同一个包中(AClass已经实现了Iter1)
     ```
 
@@ -415,17 +415,17 @@ import Question from "../../components/mdx/Question.astro";
 
 ### 扩展的成员
 
-> 扩展的成员包括：静态成员函数、实例成员函数、静态成员属性、实例成员属性、操作符重载函数
+> 扩展的成员包括: 静态成员函数、实例成员函数、静态成员属性、实例成员属性、操作符重载函数
 
 基本都是函数和属性, 不能扩展变量字段等
 
 #### 函数
 
-> 扩展可以对被扩展类型添加函数，这些函数可以是泛型函数，支持泛型约束，支持重载，也支持默认参数和命名参数
+> 扩展可以对被扩展类型添加函数, 这些函数可以是泛型函数, 支持泛型约束, 支持重载, 也支持默认参数和命名参数
 > 
 > 这些函数都不能是抽象函数
 > 
-> 例如：
+> 例如: 
 > 
 > ```cangjie
 > interface I {}
@@ -437,13 +437,13 @@ import Question from "../../components/mdx/Question.astro";
 
 ##### 修饰符
 
-> 扩展内的函数定义支持使用 `private`，`protected`（仅限于被扩展类型是 `class` 类型）或 `public` 修饰
+> 扩展内的函数定义支持使用`private`, `protected`(仅限于被扩展类型是`class`类型)或`public`修饰
 > 
-> 使用 `private` 修饰的函数只能在本扩展内使用，外部不可见
+> 使用`private`修饰的函数只能在本扩展内使用, 外部不可见
 > 
-> 使用 `protected` 修饰的成员函数除了能在本包内被访问，对包外的当前 `class` 子类也可以访问
+> 使用`protected`修饰的成员函数除了能在本包内被访问, 对包外的当前`class`子类也可以访问
 > 
-> 没有使用 `private`，`protected` 或 `public` 修饰的函数只能在本包内使用
+> 没有使用`private`, `protected`或`public`修饰的函数只能在本包内使用
 >
 > ```cangjie
 > // file1 在 包p1
@@ -481,7 +481,7 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 扩展内的函数支持使用 `static` 修饰
+> 扩展内的函数支持使用`static`修饰
 > 
 > ```cangjie
 > class Foo {}
@@ -491,7 +491,7 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 对 `struct` 类型的扩展可以定义 `mut` 函数
+> 对`struct`类型的扩展可以定义`mut`函数
 > 
 > ```cangjie
 > struct Foo {
@@ -507,7 +507,7 @@ import Question from "../../components/mdx/Question.astro";
 
 不影响原类型继承语义的函数, 在扩展中都可以被定义、添加
 
-> 扩展内的函数定义不支持使用 `open`、`override`、`redef` 修饰
+> 扩展内的函数定义不支持使用`open`、`override`、`redef`修饰
 > 
 > ```cangjie
 > class Foo {
@@ -530,7 +530,7 @@ import Question from "../../components/mdx/Question.astro";
 > 
 > 这些属性都不能是抽象属性
 > 
-> 例如：
+> 例如: 
 > 
 > ```cangjie
 > extend Int64 {
@@ -545,13 +545,13 @@ import Question from "../../components/mdx/Question.astro";
 
 ##### 修饰符
 
-> 扩展内的属性定义支持使用 `private`，`protected`（仅限于被扩展类型是 `class` 类型）或 `public` 修饰
+> 扩展内的属性定义支持使用`private`, `protected`(仅限于被扩展类型是`class`类型)或`public`修饰
 > 
-> 使用 `private` 修饰的属性只能在本扩展内使用，外部不可见
+> 使用`private`修饰的属性只能在本扩展内使用, 外部不可见
 > 
-> 使用 `protected` 修饰的属性除了能在本包内被访问，对包外的当前 `class` 子类也可以访问
+> 使用`protected`修饰的属性除了能在本包内被访问, 对包外的当前`class`子类也可以访问
 > 
-> 没有使用 `private`，`protected` 或 `public` 修饰的属性只能在本包内使用
+> 没有使用`private`, `protected`或`public`修饰的属性只能在本包内使用
 > 
 > ```cangjie
 > // file1 在 包p1
@@ -597,7 +597,7 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 扩展内的属性支持使用 `static` 修饰
+> 扩展内的属性支持使用`static`修饰
 > 
 > ```cangjie
 > class Foo {}
@@ -611,7 +611,7 @@ import Question from "../../components/mdx/Question.astro";
 
 上面的不影响原类型继承语义的扩展属性的定义, 与属性的正常定义方式被无二致
 
-> 扩展内的属性定义不支持使用 `open`、`override`、`redef` 修饰
+> 扩展内的属性定义不支持使用`open`、`override`、`redef`修饰
 > 
 > ```cangjie
 > class Foo {
@@ -640,13 +640,13 @@ import Question from "../../components/mdx/Question.astro";
 
 ### 泛型扩展
 
-> 如果被扩展的类型是泛型类型，有**两种**扩展语法可以对泛型类型扩展功能
+> 如果被扩展的类型是泛型类型, 有**两种**扩展语法可以对泛型类型扩展功能
 
 > 一种是上面介绍的非泛型扩展
 > 
-> 对于泛型类型，非泛型扩展可以针对特定的 泛型实例化类型 进行扩展
+> 对于泛型类型, 非泛型扩展可以针对特定的 泛型实例化类型 进行扩展
 > 
-> 在 `extend` 后允许是一个任意实例化完全的泛型类型
+> 在`extend`后允许是一个任意实例化完全的泛型类型
 > 
 > 为这些类型增加的功能只有在类型完全匹配时才能使用
 > 
@@ -655,7 +655,7 @@ import Question from "../../components/mdx/Question.astro";
 > extend Array<Int> {}      // ok
 > ```
 > 
-> 在扩展中，泛型类型的类型实参 必须符合 泛型类型定义处的约束要求，否则会编译报错
+> 在扩展中, 泛型类型的类型实参 必须符合 泛型类型定义处的约束要求, 否则会编译报错
 > 
 > ```cangjie
 > class Foo<T> where T <: ToString {}
@@ -668,11 +668,11 @@ import Question from "../../components/mdx/Question.astro";
 
 被扩展类型是泛型类型时, 如果扩展时指定所有的类型参数, 那么扩展方式就与上面介绍的方式保持一致
 
-> 另一种是在 `extend` 后面引入泛型形参的泛型扩展
+> 另一种是在`extend`后面引入泛型形参的泛型扩展
 > 
 > 泛型扩展可以用来扩展 未实例化 或 未完全实例化 的泛型类型
 > 
-> 在 `extend` 后允许声明泛型形参，这些泛型形参必须被 直接或间接 使用在被扩展的泛型类型上
+> 在`extend`后允许声明泛型形参, 这些泛型形参必须被 直接或间接 使用在被扩展的泛型类型上
 > 
 > 为这些类型增加的功能只有在 类型和约束完全匹配 时才能使用
 > 
@@ -680,7 +680,7 @@ import Question from "../../components/mdx/Question.astro";
 > extend<T> Array<T> {}                     // ok
 > ```
 > 
-> 泛型扩展引入的泛型变元必须在被扩展类型中使用，否则报未使用错误
+> 泛型扩展引入的泛型变元必须在被扩展类型中使用, 否则报未使用错误
 > 
 > ```cangjie
 > extend<T> Array<T> {}                 // ok
@@ -691,13 +691,13 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 
-如果被扩展类型未指定或未指定所有类型参数, 那么扩展语法就为: `extend<T> Array<T> {}`
+如果被扩展类型未指定或未指定所有类型参数, 那么扩展语法就为:`extend<T> Array<T> {}`
 
 要求`extend<T>`中的`T`, 必须要在被扩展类型中使用
 
-> 不管是泛型扩展还是非泛型扩展，对泛型类型扩展都不能重定义成员和重复实现接口
+> 不管是泛型扩展还是非泛型扩展, 对泛型类型扩展都不能重定义成员和重复实现接口
 
-> 当泛型扩展的泛型变元被直接使用在被扩展类型的类型实参时，对应的泛型变元会隐式引入被扩展类型定义时的泛型约束
+> 当泛型扩展的泛型变元被直接使用在被扩展类型的类型实参时, 对应的泛型变元会隐式引入被扩展类型定义时的泛型约束
 > 
 > ```cangjie
 > class Foo<T> where T <: ToString {}
@@ -705,7 +705,7 @@ import Question from "../../components/mdx/Question.astro";
 > extend<T> Foo<T> {}                   // 隐式引入 T <: ToString
 > ```
 
-> 泛型扩展引入的泛型形参不能用于被扩展类型或被实现的接口，否则会编译报错
+> 泛型扩展引入的泛型形参不能用于被扩展类型或被实现的接口, 否则会编译报错
 > 
 > ```cangjie
 > extend<T> T {} // error
@@ -714,7 +714,7 @@ import Question from "../../components/mdx/Question.astro";
 > 
 > 我们可以在泛型扩展中使用 **额外的泛型约束**
 > 
-> 通过这种方式添加的成员或接口，只有当该类型的实例在 满足 扩展的泛型约束 时才可以使用，否则会报错
+> 通过这种方式添加的成员或接口, 只有当该类型的实例在 满足 扩展的泛型约束 时才可以使用, 否则会报错
 > 
 > ```cangjie
 > class Foo<T> {
@@ -749,7 +749,7 @@ import Question from "../../components/mdx/Question.astro";
 
 > **泛型类型不能重复实现同一接口**
 > 
-> 对于同一个泛型类型，**无论它是否完全实例化，都不能重复实现同一接口**
+> 对于同一个泛型类型, **无论它是否完全实例化, 都不能重复实现同一接口**
 > 
 > 如果重复实现会在编译时报错
 > 
@@ -763,7 +763,7 @@ import Question from "../../components/mdx/Question.astro";
 > extend<T> Array<T> <: Bar<T> {}           // error, 不能重复实现同一个接口
 > ```
 > 
-> 对于同一个泛型类型，无论它是否完全实例化，都不能定义相同类型或相同签名的成员
+> 对于同一个泛型类型, 无论它是否完全实例化, 都不能定义相同类型或相同签名的成员
 > 
 > 如果重复定义会在编译时报错
 > 
@@ -803,17 +803,17 @@ import Question from "../../components/mdx/Question.astro";
 
 泛型扩展, 会自动引入 泛型类型的类型约束, 且可以额外添加约束
 
-泛型扩展, 对于同一个泛型类型，无论它是否完全实例化 都不能重复扩展同一接口, 更不能出现扩展函数重复定义的情况
+泛型扩展, 对于同一个泛型类型, 无论它是否完全实例化 都不能重复扩展同一接口, 更不能出现扩展函数重复定义的情况
 
 这里的实例化, 指 类型参数
 
 ### 扩展的访问和遮盖
 
-> 扩展的实例成员与类型定义处一样可以使用 `this`，`this` 的含义与类型定义中的保持一致
+> 扩展的实例成员与类型定义处一样可以使用`this`, `this`的含义与类型定义中的保持一致
 > 
-> 同样也可以省略 `this` 访问成员
+> 同样也可以省略`this`访问成员
 > 
-> 扩展的实例成员不能使用 `super`
+> 扩展的实例成员不能使用`super`
 > 
 > ```cangjie
 > class A {
@@ -830,7 +830,7 @@ import Question from "../../components/mdx/Question.astro";
 
 扩展的实例成员可以使用`this`, 但不能使用`super`
 
-> 扩展不能访问被扩展类型的 `private` 成员，其它修饰符修饰的成员遵循可见性原则
+> 扩展不能访问被扩展类型的`private`成员, 其它修饰符修饰的成员遵循可见性原则
 > 
 > ```cangjie
 > class A {
@@ -872,11 +872,11 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 在同一个 `package` 内对同一类型可以扩展任意多次
+> 在同一个`package`内对同一类型可以扩展任意多次
 
 扩展不允许出现遮盖, 其实也是不会出现遮盖情况, 因为扩展的成员看作与原类型成员同一作用域层级
 
-> 在扩展中可以直接使用（不加任何前缀修饰）其它对同一类型的扩展中的非 `private` 修饰的成员
+> 在扩展中可以直接使用(不加任何前缀修饰)其它对同一类型的扩展中的非`private`修饰的成员
 > 
 > ```cangjie
 > class Foo {}
@@ -894,17 +894,17 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 
-> 扩展泛型类型时，可以使用额外的泛型约束
+> 扩展泛型类型时, 可以使用额外的泛型约束
 > 
-> 泛型类型的扩展中能否直接使用其它对同一类型的扩展中的成员，除了满足上述可访问性规则之外，还需要满足以下约束规则：
+> 泛型类型的扩展中能否直接使用其它对同一类型的扩展中的成员, 除了满足上述可访问性规则之外, 还需要满足以下约束规则: 
 > 
-> - 如果两个扩展的约束**相同**，则两个扩展中可以直接使用对方的成员
+> - 如果两个扩展的约束**相同**, 则两个扩展中可以直接使用对方的成员
 > 
-> - 如果两个扩展的约束**不同**，且两个扩展的约束**有包含关系**，约束更严格的扩展 中可以直接使用 约束更宽松的扩展 中的成员，反之，则不可直接使用
+> - 如果两个扩展的约束**不同**, 且两个扩展的约束**有包含关系**, 约束更严格的扩展 中可以直接使用 约束更宽松的扩展 中的成员, 反之, 则不可直接使用
 > 
-> - 当两个扩展的约束不同时，且两个约束**不存在包含关系**，则两个扩展中 不可以直接使用对方的成员
+> - 当两个扩展的约束不同时, 且两个约束**不存在包含关系**, 则两个扩展中 不可以直接使用对方的成员
 > 
-> 示例：假设对同一个类型 `E<X>` 的两个扩展分别为扩展 1 和扩展 2 ，`X` 的约束在扩展 1 中比扩展 2 中更严格，那扩展 1 中可直接使用扩展2中的成员，反之，扩展 2 中不可直接使用扩展 1的成员
+> 示例: 假设对同一个类型`E<X>`的两个扩展分别为扩展 1 和扩展 2 , `X`的约束在扩展 1 中比扩展 2 中更严格, 那扩展 1 中可直接使用扩展2中的成员, 反之, 扩展 2 中不可直接使用扩展 1的成员
 > 
 > ```cangjie
 > // B <: A
@@ -936,7 +936,7 @@ import Question from "../../components/mdx/Question.astro";
 
 ### 扩展的继承
 
-> 如果被扩展的类型是 **`class`**，那么扩展的成员会被子类继承
+> 如果被扩展的类型是 **`class`**, 那么扩展的成员会被子类继承
 > 
 > ```cangjie
 > open class A {}
@@ -957,7 +957,7 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 需要注意的是，如果在父类中扩展了成员，由于继承规则限制，子类中就无法再定义同名成员，同时也无法覆盖或重新实现（允许函数重载）
+> 需要注意的是, 如果在父类中扩展了成员, 由于继承规则限制, 子类中就无法再定义同名成员, 同时也无法覆盖或重新实现(允许函数重载)
 > 
 > ```cangjie
 > open class A {}
@@ -973,7 +973,7 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 如果在同包内对同一个类型分别扩展实现父接口和子接口，那么编译器会先检查实现父接口的扩展，然后再检查实现子接口的扩展
+> 如果在同包内对同一个类型分别扩展实现父接口和子接口, 那么编译器会先检查实现父接口的扩展, 然后再检查实现子接口的扩展
 > 
 > ```cangjie
 > class Foo {}
@@ -999,13 +999,13 @@ import Question from "../../components/mdx/Question.astro";
 
 ### 扩展的导入与导出
 
-> `extend` 前不允许有修饰符，扩展只能与被扩展类型或接口一起导入导出
+> `extend`前不允许有修饰符, 扩展只能与被扩展类型或接口一起导入导出
 
 这个意思应该时, 不能单独导入或导出扩展, 而是扩展之后 导入或导出 被扩展的类型或接口
 
 #### 直接扩展的导出
 
-> 当直接扩展与被扩展类型的定义处在相同的 `package` 时，如果被扩展类型是导出的，扩展会与被扩展类型一起被导出，否则扩展不会被导出
+> 当直接扩展与被扩展类型的定义处在相同的`package`时, 如果被扩展类型是导出的, 扩展会与被扩展类型一起被导出, 否则扩展不会被导出
 > 
 > ```cangjie
 > package pkg1
@@ -1027,7 +1027,7 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 当直接扩展与被扩展类型的定义处在不同的 `package` 时，扩展永远不会被导出，只能在当前 `package` 使用
+> 当直接扩展与被扩展类型的定义处在不同的`package`时, 扩展永远不会被导出, 只能在当前`package`使用
 > 
 > ```cangjie
 > package pkg1
@@ -1063,7 +1063,7 @@ import Question from "../../components/mdx/Question.astro";
 
 #### 接口扩展的导出
 
-> 当接口扩展与被扩展类型**在相同的包**时，对于 外部可见类型 只可以扩展 同样外部可见的接口
+> 当接口扩展与被扩展类型**在相同的包**时, 对于 外部可见类型 只可以扩展 同样外部可见的接口
 > 
 > ```cangjie
 > package pkg1
@@ -1096,9 +1096,9 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 当接口扩展与被扩展类型**不在相同的包**时，扩展的访问等级 与 相应接口相同
+> 当接口扩展与被扩展类型**不在相同的包**时, 扩展的访问等级 与 相应接口相同
 > 
-> 如果扩展多个接口，扩展的访问等级是 `public` 当且仅当**所有接口**都是 `public` 的
+> 如果扩展多个接口, 扩展的访问等级是`public`当且仅当**所有接口**都是`public`的
 > 
 > ```cangjie
 > package pkg1
@@ -1136,7 +1136,7 @@ import Question from "../../components/mdx/Question.astro";
 
 ### 导入扩展
 
-> 扩展会与被扩展的类型和扩展实现的接口一起被导入，不能指定导入扩展
+> 扩展会与被扩展的类型和扩展实现的接口一起被导入, 不能指定导入扩展
 > 
 > ```cangjie
 > package pkg1
@@ -1157,7 +1157,7 @@ import Question from "../../components/mdx/Question.astro";
 > }
 > ```
 > 
-> 特别的，由于扩展不支持遮盖任何被扩展类型的成员，当导入的扩展发生重定义时将会报错
+> 特别的, 由于扩展不支持遮盖任何被扩展类型的成员, 当导入的扩展发生重定义时将会报错
 > 
 > ```cangjie
 > package pkg1
