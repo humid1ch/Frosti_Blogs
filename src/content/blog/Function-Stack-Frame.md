@@ -2,7 +2,7 @@
 draft: true
 title: "[程序员的自我修养] 超详解函数栈帧"
 pubDate: "2022-03-31"
-description: "程序运行背后的机制和由来, 可以看作是程序员的一种"自我修养". ------ 程序员的自我修养 "链接、装载与库""
+description: "程序运行背后的机制和由来, 可以看作是程序员的一种'自我修养'. ------ 程序员的自我修养 '链接、装载与库'"
 image: https://dxyt-july-image.oss-cn-beijing.aliyuncs.com/cover.webp
 tags:
     - 程序员的自我修养
