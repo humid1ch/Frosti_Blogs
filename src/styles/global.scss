@@ -1191,3 +1191,11 @@ blockquote p code {
 .custom-list ol ol ol ol ol > li::marker {
   content: counter(level6, lower-roman) ") ";
 }
+
+
+/* 关键：限制 span 容器的宽度 */
+.alert > span {
+    max-width: 100%;
+    min-width: 0; /* 允许缩小 */
+    overflow: hidden; /* 防止溢出 */
+}
