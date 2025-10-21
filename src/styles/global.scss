@@ -1125,7 +1125,7 @@ blockquote p code {
 /* 二级：1) */
 .custom-list ol {
   list-style-type: none;
-  counter-reset: level2;
+//  counter-reset: level2;
 }
 
 .custom-list ol > li {
