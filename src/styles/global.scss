@@ -986,6 +986,7 @@ main pre code {
 	padding-bottom: 1rem !important;
 	padding-left: 0 !important;
 	padding-right: 0 !important;
+    text-align: left !important;
 }
 
 .frosti-code-toolbar {
@@ -1199,3 +1200,5 @@ blockquote p code {
     min-width: 0; /* 允许缩小 */
     overflow: hidden; /* 防止溢出 */
 }
+
+
